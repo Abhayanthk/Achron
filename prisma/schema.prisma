@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+      provider = "prisma-client"
+      output   = "../generated/prisma"
+}
+
+datasource db {
+      provider = "postgresql"
+}
+
+model User {
+      id        String   @id @default(cuid())
+      email     String   @unique
+      name      String?
+      createdAt DateTime @default(now())
+      updatedAt DateTime @updatedAt
+
+      // Core Gamification
+      xp    Int @default(0)
+      level Int @default(1)
+
+      // Relations
+      sessions FocusSession[]
+      workLogs WorkLog[]
+      tasks    Task[]
+      habits   Habit[]
+      traits   Trait[]
+}
+
+model Trait {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      name    String
+      mastery String
+      level   Int    @default(1)
+}
+
+model FocusSession {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      startTime DateTime
+      endTime   DateTime?
+      duration  Int       @default(0) // in minutes
+      label     String // e.g., "Deep Work", "Coding"
+
+      status    String   @default("COMPLETED") // COMPLETED, ABORTED
+      createdAt DateTime @default(now())
+}
+
+model WorkLog {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      hours Float
+      type  String // "WASTE" or "WORK"
+      date  DateTime @default(now())
+}
+
+model Task {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      title       String
+      isCompleted Boolean   @default(false)
+      dueDate     DateTime?
+      createdAt   DateTime  @default(now())
+}
+
+model Habit {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      name           String
+      streak         Int        @default(0)
+      completedDates DateTime[]
+}

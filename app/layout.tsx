@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -12,17 +13,18 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      
-      <body className={`${outfit.className} antialiased`}>
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="w-full">
-            <SidebarTrigger className="relative z-10" />
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${outfit.className} antialiased`}>
+          <SidebarProvider defaultOpen={false}>
+            <AppSidebar />
+            <main className="w-full">
+              <SidebarTrigger className="relative z-10" />
+              {children}
+            </main>
+          </SidebarProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
