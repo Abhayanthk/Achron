@@ -1,6 +1,6 @@
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient } from '../generated/prisma/client'
+import { PrismaClient } from '@/generated/prisma/client'
 
 // For hot reloading
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
