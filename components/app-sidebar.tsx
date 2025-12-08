@@ -100,21 +100,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="group-data-[collapsible=icon]:p-0!">
           <SidebarGroupLabel className="text-zinc-500 tracking-wider text-[10px] uppercase font-bold mt-2 mb-2">Platform</SidebarGroupLabel>
-          <SidebarMenu>
+          <SidebarMenu className="gap-3 px-2 group-data-[collapsible=icon]:px-0! group-data-[collapsible=icon]:items-center">
             {navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton 
                     asChild 
                     isActive={activeItem === item.title}
                     onClick={() => setActiveItem(item.title)}
-                    className="bg-white text-black hover:bg-zinc-200 hover:text-black data-[active=true]:bg-zinc-100 data-[active=true]:text-black shadow-sm transition-all duration-200 ease-out hover:scale-[1.02] hover:shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+                    className="h-12 w-full justify-start gap-4 rounded-xl bg-white/5 text-zinc-400 hover:bg-white hover:text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-[1.02] data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 ease-out border border-transparent hover:border-white/50 group-data-[collapsible=icon]:p-0! group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:justify-center"
                     tooltip={item.title}
                 >
-                  <a href={item.url}>
-                    <item.icon className="text-zinc-600 group-hover:text-black group-data-[active=true]:text-black transition-colors" />
-                    <span className="font-medium">{item.title}</span>
+                  <a href={item.url} className="flex items-center gap-4 px-4 w-full group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center">
+                    <item.icon className="size-5" />
+                    <span className="font-semibold tracking-wide text-sm group-data-[collapsible=icon]:hidden">{item.title}</span>
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>

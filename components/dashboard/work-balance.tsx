@@ -43,7 +43,7 @@ export function WorkBalance() {
         <div className="relative h-12 w-full flex rounded-lg overflow-hidden border border-white/5 bg-zinc-950/50">
             {/* Waste Bar */}
             <motion.div 
-                className="h-full bg-gradient-to-r from-red-950/50 to-red-900/40 relative flex items-center justify-center group"
+                className="h-full bg-linear-to-r from-red-950/50 to-red-900/40 relative flex items-center justify-center group"
                 initial={{ width: 0 }}
                 animate={{ width: `${wastePercent}%` }}
                 transition={{ type: "spring", bounce: 0, duration: 0.8 }}
@@ -58,12 +58,12 @@ export function WorkBalance() {
 
             {/* Work Bar */}
             <motion.div 
-                className="h-full bg-gradient-to-r from-blue-900/40 to-blue-800/50 relative flex items-center justify-center group"
+                className="h-full bg-linear-to-r from-blue-900/40 to-blue-800/50 relative flex items-center justify-center group"
                 initial={{ width: 0 }}
                 animate={{ width: `${workPercent}%` }}
                 transition={{ type: "spring", bounce: 0, duration: 0.8 }}
             >
-                 <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%] animate-[shimmer_3s_infinite]" />
+                 <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.1)_50%,transparent_75%,transparent_100%)] bg-size-[250%_250%] animate-[shimmer_3s_infinite]" />
                  {workPercent > 10 && (
                     <span className="text-[10px] font-bold text-blue-400 group-hover:text-blue-300 transition-colors uppercase tracking-widest relative z-10">
                         Deep Work
