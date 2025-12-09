@@ -53,13 +53,18 @@ import {
 const navMain = [
   {
     title: "Home",
-    url: "#",
+    url: "/dashboard",
     icon: Home,
   },
   {
     title: "Explore",
     url: "#",
     icon: Search,
+  },
+  {
+    title: "My Journey",
+    url: "/journey",
+    icon: Map,
   },
   {
     title: "Capabilities",

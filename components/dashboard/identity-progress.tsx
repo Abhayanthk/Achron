@@ -1,6 +1,6 @@
 "use client"
 
-import { Brain, Dumbbell, Target, Trophy, Zap, Code, Terminal } from "lucide-react"
+import { Brain, Dumbbell, Target, Trophy, Zap, Code, Terminal, ChevronRight } from "lucide-react"
 
 const identities = [
   { id: 1, name: "Competitive Programmer", title: "Grandmaster", level: 42, icon: Terminal, color: "text-yellow-500", bg: "bg-yellow-500/10" },
@@ -13,18 +13,21 @@ export function IdentityProgress() {
   return (
     <div className="space-y-6">
       {/* Main Level Display */}
-      <div className="relative flex items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-gradient-to-r from-zinc-900 to-black p-6">
+      <a href="/journey" className="group relative flex items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-gradient-to-r from-zinc-900 to-black p-6 hover:border-white/20 transition-all cursor-pointer">
         <div>
-          <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-widest">Total Level</h3>
+          <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors">Total Level</h3>
           <p className="text-4xl font-bold text-white mt-1">LVL 77</p>
         </div>
-        <div className="text-right">
+        <div className="text-right flex flex-col items-end">
            <p className="text-xs text-zinc-500 mb-1 uppercase tracking-widest">Next Milestone</p>
-           <p className="text-lg font-bold text-white">LVL 80</p>
+           <p className="text-lg font-bold text-white flex items-center gap-2">
+                LVL 80
+                <ChevronRight className="size-4 text-zinc-600 group-hover:text-white transition-colors" />
+           </p>
         </div>
         {/* Background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-zinc-800/20 blur-3xl rounded-full -z-10" />
-      </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-zinc-800/20 blur-3xl rounded-full -z-10 group-hover:bg-zinc-800/30 transition-all" />
+      </a>
 
       {/* Identity List - No Progress Bars, Just Status */}
       <div className="flex flex-col gap-3">
