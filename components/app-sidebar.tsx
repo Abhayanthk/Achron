@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useUser, ClerkLoaded, ClerkLoading, SignOutButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
+import { useUser, useClerk, ClerkLoaded, ClerkLoading, SignOutButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 import {
   AudioWaveform,
@@ -76,6 +76,7 @@ const navMain = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [activeItem, setActiveItem] = React.useState("Home")
   const { user } = useUser()
+  const { openUserProfile } = useClerk()
 
   return (
     <Sidebar 
@@ -197,6 +198,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         </div>
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator className="bg-white/10" />
+                        <DropdownMenuSeparator className="bg-white/10" />
+                        <DropdownMenuGroup>
+                        <DropdownMenuItem 
+                            className="focus:bg-white/10 focus:text-white cursor-pointer"
+                            onClick={() => openUserProfile()}
+                        >
+                            <User className="mr-2 h-4 w-4" />
+                            Account
+                        </DropdownMenuItem>
+                        </DropdownMenuGroup>
                         <DropdownMenuGroup>
                         <DropdownMenuItem className="focus:bg-white/10 focus:text-white cursor-pointer">
                             <Sparkles className="mr-2 h-4 w-4" />

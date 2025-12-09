@@ -29,10 +29,8 @@ export const syncUser = inngest.createFunction(
     const { id, email_addresses, first_name, last_name, image_url, username } = event.data;
     const email = email_addresses[0]?.email_address;
     
-    let name = `${first_name || ''} ${last_name || ''}`.trim();
-    if (!name) {
-        name = username || null;
-    }
+    let fullName = `${first_name || ''} ${last_name || ''}`.trim();
+    let name = username || fullName;
 
     if (!email) {
         return { error: "No email found" };
@@ -43,11 +41,13 @@ export const syncUser = inngest.createFunction(
         where: { email: email },
         update: {
           name: name,
+          fullName: fullName,
         },
         create: {
           id: id,
           email: email,
           name: name,
+          fullName: fullName,
         },
       });
     });
