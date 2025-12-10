@@ -50,6 +50,8 @@ model Timer {
 
       name      String
       duration  Int
+      type      String   @default("FOCUS")
+      color     String   @default("bg-blue-500")
       createdAt DateTime @default(now())
 }
 

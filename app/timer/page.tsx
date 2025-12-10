@@ -10,6 +10,8 @@ import { Play, Pause, RefreshCw, ChevronLeft, BarChart3, Clock, Zap, Target, Plu
 import Link from "next/link"
 import { useState } from "react"
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
 
 // Mock Data for Analytics
 const weeklyData = [
@@ -45,9 +47,10 @@ const yearlyData = [
 ]
 
 export default function TimerPage() {
-    const { isActive, timeLeft, duration, sessionType, toggle, reset, formatTime, setSession, presets, addPreset } = useTimer()
+    const { isActive, timeLeft, duration, sessionType, toggle, reset, formatTime, setSession, presets, addPreset, isLoadingPresets } = useTimer()
     const [viewMode, setViewMode] = useState<"timer" | "stats">("timer")
     const [timeRange, setTimeRange] = useState<"week" | "month" | "year">("week")
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     const currentData = timeRange === "week" ? weeklyData : timeRange === "month" ? monthlyData : yearlyData
 
@@ -145,21 +148,31 @@ export default function TimerPage() {
 
                             {/* Presets Grid */}
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-                                {presets.map((preset) => (
-                                    <button
-                                        key={preset.id}
-                                        onClick={() => setSession(preset.duration, preset.type as SessionType)}
-                                        className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
-                                    >
-                                        <div className={`absolute top-4 right-4 h-2 w-2 rounded-full ${preset.color} opacity-50 group-hover:opacity-100 transition-opacity`} />
-                                        <span className="text-sm font-bold text-zinc-300 group-hover:text-white mb-1">{preset.name}</span>
-                                        <span className="text-xs text-zinc-500 font-mono">{Math.floor(preset.duration / 60)}m</span>
-                                    </button>
-                                ))}
+                                {isLoadingPresets ? (
+                                    Array(4).fill(0).map((_, i) => (
+                                        <div key={i} className="flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 h-[88px] relative">
+                                            <Skeleton className="h-4 w-24 mb-2 bg-zinc-800" />
+                                            <Skeleton className="h-3 w-12 bg-zinc-800" />
+                                            <Skeleton className="absolute top-4 right-4 h-2 w-2 rounded-full bg-zinc-800" />
+                                        </div>
+                                    ))
+                                ) : (
+                                    presets.map((preset) => (
+                                        <button
+                                            key={preset.id}
+                                            onClick={() => setSession(preset.duration, preset.type as SessionType)}
+                                            className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
+                                        >
+                                            <div className={`absolute top-4 right-4 h-2 w-2 rounded-full ${preset.color} opacity-50 group-hover:opacity-100 transition-opacity`} />
+                                            <span className="text-sm font-bold text-zinc-300 group-hover:text-white mb-1">{preset.name}</span>
+                                            <span className="text-xs text-zinc-500 font-mono">{Math.floor(preset.duration / 60)}m</span>
+                                        </button>
+                                    ))
+                                )}
                                 
-                                <Dialog>
+                                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                                     <DialogTrigger asChild>
-                                        <button className="flex flex-col items-center justify-center p-4 rounded-xl border border-dashed border-zinc-800 bg-transparent hover:bg-zinc-900/30 hover:border-zinc-700 transition-all text-zinc-500 hover:text-zinc-300">
+                                        <button className="flex flex-col items-center justify-center p-4 rounded-xl border border-dashed border-zinc-800 bg-transparent hover:bg-zinc-900/30 hover:border-zinc-700 transition-all text-zinc-500 hover:text-zinc-300 h-[88px]">
                                             <Plus className="size-6 mb-2 opacity-50" />
                                             <span className="text-xs font-medium">Add Custom</span>
                                         </button>
@@ -171,11 +184,20 @@ export default function TimerPage() {
                                         <form onSubmit={(e) => {
                                             e.preventDefault()
                                             const formData = new FormData(e.currentTarget)
-                                            addPreset({
+                                            const promise = addPreset({
                                                 name: formData.get("name") as string,
                                                 duration: parseInt(formData.get("duration") as string) * 60,
-                                                type: "CUSTOM",
-                                                color: "bg-pink-500" // Default color for custom
+                                                type: formData.get("type") as string,
+                                                color: formData.get("color") as string
+                                            })
+
+                                            toast.promise(promise, {
+                                                loading: 'Creating timer...',
+                                                success: () => {
+                                                    setIsDialogOpen(false)
+                                                    return 'Timer created'
+                                                },
+                                                error: 'Failed to create timer'
                                             })
                                         }} className="space-y-4 pt-4">
                                             <div className="space-y-2">
@@ -185,6 +207,28 @@ export default function TimerPage() {
                                             <div className="space-y-2">
                                                 <label className="text-xs font-medium text-zinc-400">Duration (minutes)</label>
                                                 <Input name="duration" type="number" placeholder="25" className="bg-zinc-900 border-zinc-800" required min="1" max="180" />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-xs font-medium text-zinc-400">Type</label>
+                                                <select name="type" className="w-full bg-zinc-900 border border-zinc-800 rounded-md p-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-white/20">
+                                                    <option value="DEEP WORK">Deep Work</option>
+                                                    <option value="FLOW">Flow</option>
+                                                    <option value="CODING">Coding</option>
+                                                    <option value="LEARNING">Learning</option>
+                                                    <option value="WRITING">Writing</option>
+                                                    <option value="CUSTOM">Custom</option>
+                                                </select>
+                                            </div>
+                                             <div className="space-y-2">
+                                                <label className="text-xs font-medium text-zinc-400">Color</label>
+                                                <div className="flex gap-2">
+                                                    {["bg-blue-500", "bg-purple-500", "bg-emerald-500", "bg-amber-500", "bg-pink-500", "bg-rose-500", "bg-cyan-500"].map((color) => (
+                                                        <label key={color} className="relative cursor-pointer group">
+                                                            <input type="radio" name="color" value={color} className="peer sr-only" defaultChecked={color === "bg-blue-500"} />
+                                                            <div className={`w-6 h-6 rounded-full ${color} opacity-50 peer-checked:opacity-100 peer-checked:ring-2 peer-checked:ring-white peer-checked:ring-offset-2 peer-checked:ring-offset-zinc-950 transition-all hover:opacity-80`}></div>
+                                                        </label>
+                                                    ))}
+                                                </div>
                                             </div>
                                             <Button type="submit" className="w-full bg-white text-black hover:bg-zinc-200">Create Preset</Button>
                                         </form>

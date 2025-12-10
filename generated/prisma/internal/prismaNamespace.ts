@@ -997,6 +997,8 @@ export const TimerScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   duration: 'duration',
+  type: 'type',
+  color: 'color',
   createdAt: 'createdAt'
 } as const
 

@@ -1,6 +1,7 @@
-"use client"
-
+'use client'
 import React, { createContext, useContext, useEffect, useState } from "react"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import axios from "axios"
 
 export type SessionType = "DEEP WORK" | "FLOW" | "CODING" | "LEARNING" | "WRITING" | "CUSTOM"
 
@@ -22,9 +23,9 @@ export interface TimerPreset {
 
 const DEFAULT_PRESETS: TimerPreset[] = [
     { id: "1", name: "Deep Work", duration: 90 * 60, type: "DEEP WORK", color: "bg-blue-500" },
-    { id: "2", name: "Flow State", duration: 45 * 60, type: "FLOW", color: "bg-purple-500" },
-    { id: "3", name: "Quick Focus", duration: 25 * 60, type: "CODING", color: "bg-emerald-500" },
-    { id: "4", name: "Learning", duration: 60 * 60, type: "LEARNING", color: "bg-amber-500" },
+//     { id: "2", name: "Flow State", duration: 45 * 60, type: "FLOW", color: "bg-purple-500" },
+//     { id: "3", name: "Quick Focus", duration: 25 * 60, type: "CODING", color: "bg-emerald-500" },
+//     { id: "4", name: "Learning", duration: 60 * 60, type: "LEARNING", color: "bg-amber-500" },
 ]
 
 interface TimerContextType extends TimerState {
@@ -35,7 +36,8 @@ interface TimerContextType extends TimerState {
   toggle: () => void
   formatTime: (seconds: number) => string
   presets: TimerPreset[]
-  addPreset: (preset: Omit<TimerPreset, "id">) => void
+  addPreset: (preset: Omit<TimerPreset, "id">) => Promise<any>
+  isLoadingPresets: boolean
 }
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined)
@@ -48,9 +50,49 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const [duration, setDuration] = useState(DEFAULT_DURATION)
   const [sessionType, setSessionType] = useState<SessionType | string>("DEEP WORK")
   const [sessionName, setSessionName] = useState<string | undefined>(undefined)
-  const [presets, setPresets] = useState<TimerPreset[]>(DEFAULT_PRESETS)
+  
+  const queryClient = useQueryClient();
 
-  // Load state from localStorage on mount
+  // Fetch User Presets
+  const { data: userPresets = [], isLoading: isLoadingPresets } = useQuery({
+    queryKey: ['timers'],
+    queryFn: async () => {
+        const res = await axios.get('/api/timer/get');
+        return res.data.timers.map((t: any) => ({
+            id: t.id,
+            name: t.name,
+            duration: t.duration,
+            type: t.type || "CUSTOM",
+            color: t.color || "bg-pink-500" 
+        }));
+    }
+  });
+
+  // Combine Defaults + User Presets
+  const presets = [...DEFAULT_PRESETS, ...userPresets];
+
+  // Add Preset Mutation
+  const addTimerMutation = useMutation({
+      mutationFn: async (newTimer: Omit<TimerPreset, "id">) => {
+          const res = await axios.post('/api/timer/add', {
+              name: newTimer.name,
+              duration: newTimer.duration, // in seconds from UI
+              type: newTimer.type,
+              color: newTimer.color
+          });
+          return res.data;
+      },
+      onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['timers'] });
+      }
+  });
+
+  const addPreset = async (preset: Omit<TimerPreset, "id">) => {
+      // Optimistically add to UI or just trigger mutation
+      return await addTimerMutation.mutateAsync(preset);
+  }
+
+  // Load state from localStorage on mount (Persist Active Timer State only)
   useEffect(() => {
     const savedState = localStorage.getItem("achron-timer-state")
     if (savedState) {
@@ -60,7 +102,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         setDuration(parsed.duration)
         setSessionType(parsed.sessionType)
         setSessionName(parsed.sessionName)
-        if (parsed.presets) setPresets(parsed.presets)
+        // No longer loading presets from local storage
       } catch (e) {
         console.error("Failed to parse timer state", e)
       }
@@ -75,9 +117,9 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       duration,
       sessionType,
       sessionName,
-      presets
+      // No longer saving presets to local storage
     }))
-  }, [isActive, timeLeft, duration, sessionType, sessionName, presets])
+  }, [isActive, timeLeft, duration, sessionType, sessionName])
 
   // Timer Interval
   useEffect(() => {
@@ -118,11 +160,6 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     setSessionName(newName)
   }
   
-  const addPreset = (preset: Omit<TimerPreset, "id">) => {
-      const newPreset = { ...preset, id: Math.random().toString(36).substr(2, 9) }
-      setPresets([...presets, newPreset])
-  }
-
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
@@ -143,7 +180,8 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       setSession,
       formatTime,
       presets,
-      addPreset
+      addPreset,
+      isLoadingPresets
     }}>
       {children}
     </TimerContext.Provider>

@@ -39,6 +39,8 @@ export type TimerMinAggregateOutputType = {
   userId: string | null
   name: string | null
   duration: number | null
+  type: string | null
+  color: string | null
   createdAt: Date | null
 }
 
@@ -47,6 +49,8 @@ export type TimerMaxAggregateOutputType = {
   userId: string | null
   name: string | null
   duration: number | null
+  type: string | null
+  color: string | null
   createdAt: Date | null
 }
 
@@ -55,6 +59,8 @@ export type TimerCountAggregateOutputType = {
   userId: number
   name: number
   duration: number
+  type: number
+  color: number
   createdAt: number
   _all: number
 }
@@ -73,6 +79,8 @@ export type TimerMinAggregateInputType = {
   userId?: true
   name?: true
   duration?: true
+  type?: true
+  color?: true
   createdAt?: true
 }
 
@@ -81,6 +89,8 @@ export type TimerMaxAggregateInputType = {
   userId?: true
   name?: true
   duration?: true
+  type?: true
+  color?: true
   createdAt?: true
 }
 
@@ -89,6 +99,8 @@ export type TimerCountAggregateInputType = {
   userId?: true
   name?: true
   duration?: true
+  type?: true
+  color?: true
   createdAt?: true
   _all?: true
 }
@@ -184,6 +196,8 @@ export type TimerGroupByOutputType = {
   userId: string
   name: string
   duration: number
+  type: string
+  color: string
   createdAt: Date
   _count: TimerCountAggregateOutputType | null
   _avg: TimerAvgAggregateOutputType | null
@@ -215,6 +229,8 @@ export type TimerWhereInput = {
   userId?: Prisma.StringFilter<"Timer"> | string
   name?: Prisma.StringFilter<"Timer"> | string
   duration?: Prisma.IntFilter<"Timer"> | number
+  type?: Prisma.StringFilter<"Timer"> | string
+  color?: Prisma.StringFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeFilter<"Timer"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -224,6 +240,8 @@ export type TimerOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -236,6 +254,8 @@ export type TimerWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Timer"> | string
   name?: Prisma.StringFilter<"Timer"> | string
   duration?: Prisma.IntFilter<"Timer"> | number
+  type?: Prisma.StringFilter<"Timer"> | string
+  color?: Prisma.StringFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeFilter<"Timer"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -245,6 +265,8 @@ export type TimerOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.TimerCountOrderByAggregateInput
   _avg?: Prisma.TimerAvgOrderByAggregateInput
@@ -261,6 +283,8 @@ export type TimerScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   name?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   duration?: Prisma.IntWithAggregatesFilter<"Timer"> | number
+  type?: Prisma.StringWithAggregatesFilter<"Timer"> | string
+  color?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Timer"> | Date | string
 }
 
@@ -268,6 +292,8 @@ export type TimerCreateInput = {
   id?: string
   name: string
   duration: number
+  type?: string
+  color?: string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutTimersInput
 }
@@ -277,6 +303,8 @@ export type TimerUncheckedCreateInput = {
   userId: string
   name: string
   duration: number
+  type?: string
+  color?: string
   createdAt?: Date | string
 }
 
@@ -284,6 +312,8 @@ export type TimerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
 }
@@ -293,6 +323,8 @@ export type TimerUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -301,6 +333,8 @@ export type TimerCreateManyInput = {
   userId: string
   name: string
   duration: number
+  type?: string
+  color?: string
   createdAt?: Date | string
 }
 
@@ -308,6 +342,8 @@ export type TimerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -316,6 +352,8 @@ export type TimerUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -334,6 +372,8 @@ export type TimerCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -346,6 +386,8 @@ export type TimerMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -354,6 +396,8 @@ export type TimerMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -407,6 +451,8 @@ export type TimerCreateWithoutUserInput = {
   id?: string
   name: string
   duration: number
+  type?: string
+  color?: string
   createdAt?: Date | string
 }
 
@@ -414,6 +460,8 @@ export type TimerUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
   duration: number
+  type?: string
+  color?: string
   createdAt?: Date | string
 }
 
@@ -451,6 +499,8 @@ export type TimerScalarWhereInput = {
   userId?: Prisma.StringFilter<"Timer"> | string
   name?: Prisma.StringFilter<"Timer"> | string
   duration?: Prisma.IntFilter<"Timer"> | number
+  type?: Prisma.StringFilter<"Timer"> | string
+  color?: Prisma.StringFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeFilter<"Timer"> | Date | string
 }
 
@@ -458,6 +508,8 @@ export type TimerCreateManyUserInput = {
   id?: string
   name: string
   duration: number
+  type?: string
+  color?: string
   createdAt?: Date | string
 }
 
@@ -465,6 +517,8 @@ export type TimerUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -472,6 +526,8 @@ export type TimerUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -479,6 +535,8 @@ export type TimerUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -489,6 +547,8 @@ export type TimerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userId?: boolean
   name?: boolean
   duration?: boolean
+  type?: boolean
+  color?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timer"]>
@@ -498,6 +558,8 @@ export type TimerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   name?: boolean
   duration?: boolean
+  type?: boolean
+  color?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timer"]>
@@ -507,6 +569,8 @@ export type TimerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   name?: boolean
   duration?: boolean
+  type?: boolean
+  color?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timer"]>
@@ -516,10 +580,12 @@ export type TimerSelectScalar = {
   userId?: boolean
   name?: boolean
   duration?: boolean
+  type?: boolean
+  color?: boolean
   createdAt?: boolean
 }
 
-export type TimerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "duration" | "createdAt", ExtArgs["result"]["timer"]>
+export type TimerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "duration" | "type" | "color" | "createdAt", ExtArgs["result"]["timer"]>
 export type TimerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -540,6 +606,8 @@ export type $TimerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     userId: string
     name: string
     duration: number
+    type: string
+    color: string
     createdAt: Date
   }, ExtArgs["result"]["timer"]>
   composites: {}
@@ -969,6 +1037,8 @@ export interface TimerFieldRefs {
   readonly userId: Prisma.FieldRef<"Timer", 'String'>
   readonly name: Prisma.FieldRef<"Timer", 'String'>
   readonly duration: Prisma.FieldRef<"Timer", 'Int'>
+  readonly type: Prisma.FieldRef<"Timer", 'String'>
+  readonly color: Prisma.FieldRef<"Timer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Timer", 'DateTime'>
 }
     

@@ -5,6 +5,7 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TimerProvider } from "@/components/providers/timer-context"
+import QueryProvider from "@/components/providers/query-provider";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
@@ -12,6 +13,8 @@ export const metadata = {
   title: "Achron",
   description: "Achron",
 };
+
+import { Toaster } from "@/components/ui/sonner"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -60,15 +63,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <html lang="en">
         <body className={`${outfit.className} antialiased`}>
-        <TimerProvider>
-          <SidebarProvider defaultOpen={false}>
-            <AppSidebar />
-            <main className="w-full">
-              <SidebarTrigger className="relative z-10" />
-              {children}
-            </main>
-          </SidebarProvider>
-        </TimerProvider>
+        <QueryProvider>
+          <TimerProvider>
+            <SidebarProvider defaultOpen={false}>
+              <AppSidebar />
+              <main className="w-full">
+                <SidebarTrigger className="relative z-10" />
+                {children}
+              </main>
+              <Toaster />
+            </SidebarProvider>
+          </TimerProvider>
+        </QueryProvider>
         </body>
       </html>
     </ClerkProvider>

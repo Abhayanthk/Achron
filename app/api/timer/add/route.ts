@@ -10,8 +10,7 @@ export async function POST(request: NextRequest) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const { name, duration } = await request.json();
-
+    const { name, duration, type, color } = await request.json();
     if (!name || !duration) {
       return new NextResponse("Missing required fields", { status: 400 });
     }
@@ -20,6 +19,8 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         duration,
+        type: type || "FOCUS",
+        color: color || "bg-blue-500",
         userId,
       },
     });
@@ -27,6 +28,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ timer }, { status: 201 });
   } catch (error: any) {      
     console.error("Error adding timer:", error);
-    return NextResponse.json({ error: error.code || error.message }, { status: 500 });
+    return NextResponse.json({ error: error.message, stack: error.stack, details: error }, { status: 500 });
   }
 }
