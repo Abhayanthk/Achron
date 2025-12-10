@@ -50,6 +50,11 @@ export type User = Prisma.UserModel
  */
 export type Trait = Prisma.TraitModel
 /**
+ * Model Timer
+ * 
+ */
+export type Timer = Prisma.TimerModel
+/**
  * Model FocusSession
  * 
  */

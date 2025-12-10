@@ -30,6 +30,7 @@ model User {
       tasks    Task[]
       habits   Habit[]
       traits   Trait[]
+      timers   Timer[]
 }
 
 model Trait {
@@ -40,6 +41,16 @@ model Trait {
       name    String
       mastery String
       level   Int    @default(1)
+}
+
+model Timer {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      name      String
+      duration  Int
+      createdAt DateTime @default(now())
 }
 
 model FocusSession {

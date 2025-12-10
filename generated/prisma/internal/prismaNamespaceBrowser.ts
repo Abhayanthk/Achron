@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Trait: 'Trait',
+  Timer: 'Timer',
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
@@ -98,6 +99,17 @@ export const TraitScalarFieldEnum = {
 } as const
 
 export type TraitScalarFieldEnum = (typeof TraitScalarFieldEnum)[keyof typeof TraitScalarFieldEnum]
+
+
+export const TimerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  duration: 'duration',
+  createdAt: 'createdAt'
+} as const
+
+export type TimerScalarFieldEnum = (typeof TimerScalarFieldEnum)[keyof typeof TimerScalarFieldEnum]
 
 
 export const FocusSessionScalarFieldEnum = {

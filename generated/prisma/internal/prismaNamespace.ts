@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Trait: 'Trait',
+  Timer: 'Timer',
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "trait" | "focusSession" | "workLog" | "task" | "habit"
+    modelProps: "user" | "trait" | "timer" | "focusSession" | "workLog" | "task" | "habit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -554,6 +555,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TraitCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TraitCountAggregateOutputType> | number
+        }
+      }
+    }
+    Timer: {
+      payload: Prisma.$TimerPayload<ExtArgs>
+      fields: Prisma.TimerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TimerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TimerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>
+        }
+        findFirst: {
+          args: Prisma.TimerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TimerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>
+        }
+        findMany: {
+          args: Prisma.TimerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>[]
+        }
+        create: {
+          args: Prisma.TimerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>
+        }
+        createMany: {
+          args: Prisma.TimerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TimerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>[]
+        }
+        delete: {
+          args: Prisma.TimerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>
+        }
+        update: {
+          args: Prisma.TimerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>
+        }
+        deleteMany: {
+          args: Prisma.TimerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TimerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TimerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>[]
+        }
+        upsert: {
+          args: Prisma.TimerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TimerPayload>
+        }
+        aggregate: {
+          args: Prisma.TimerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTimer>
+        }
+        groupBy: {
+          args: Prisma.TimerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TimerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TimerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TimerCountAggregateOutputType> | number
         }
       }
     }
@@ -917,6 +992,17 @@ export const TraitScalarFieldEnum = {
 export type TraitScalarFieldEnum = (typeof TraitScalarFieldEnum)[keyof typeof TraitScalarFieldEnum]
 
 
+export const TimerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  duration: 'duration',
+  createdAt: 'createdAt'
+} as const
+
+export type TimerScalarFieldEnum = (typeof TimerScalarFieldEnum)[keyof typeof TimerScalarFieldEnum]
+
+
 export const FocusSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1154,6 +1240,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   trait?: Prisma.TraitOmit
+  timer?: Prisma.TimerOmit
   focusSession?: Prisma.FocusSessionOmit
   workLog?: Prisma.WorkLogOmit
   task?: Prisma.TaskOmit

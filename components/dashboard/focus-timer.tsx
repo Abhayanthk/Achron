@@ -1,41 +1,20 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Play, Pause, RefreshCw, Zap } from "lucide-react"
+import { Play, Pause, RefreshCw, Maximize2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { useTimer } from "@/components/providers/timer-context"
+import Link from "next/link"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function FocusTimer() {
-  const [isActive, setIsActive] = useState(false)
-  const [time, setTime] = useState(25 * 60) // 25 minutes default
-  const [sessionType, setSessionType] = useState<"DEEP WORK" | "FLOW" | "CODING">("DEEP WORK")
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout
-
-    if (isActive && time > 0) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime - 1)
-      }, 1000)
-    } else if (time === 0) {
-      setIsActive(false)
-    }
-
-    return () => clearInterval(interval)
-  }, [isActive, time])
-
-  const toggleTimer = () => setIsActive(!isActive)
-  const resetTimer = () => {
-    setIsActive(false)
-    setTime(25 * 60)
-  }
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
-  }
+  const { isActive, timeLeft, sessionType, toggle, reset, formatTime, presets, setSession } = useTimer()
 
   return (
     <div className="h-full bg-black border border-white/5 rounded-xl p-6 flex flex-col items-center justify-between relative overflow-hidden">
@@ -49,18 +28,43 @@ export function FocusTimer() {
         </div>
 
         {/* Header */}
-        <div className="relative z-10 flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-                <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75", isActive ? "duration-1000" : "hidden")}></span>
-                <span className={cn("relative inline-flex rounded-full h-2 w-2", isActive ? "bg-blue-500" : "bg-zinc-700")}></span>
-            </span>
-            <span className="text-xs font-bold text-zinc-400 tracking-widest uppercase">{sessionType}</span>
+        <div className="relative z-10 flex items-center justify-between w-full">
+            <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                    <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75", isActive ? "duration-1000" : "hidden")}></span>
+                    <span className={cn("relative inline-flex rounded-full h-2 w-2", isActive ? "bg-blue-500" : "bg-zinc-700")}></span>
+                </span>
+                
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <button className="text-xs font-bold text-zinc-400 tracking-widest uppercase hover:text-white transition-colors text-left truncate max-w-[120px]">
+                            {sessionType}
+                        </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="bg-zinc-950 border-zinc-800">
+                        {presets.map((preset) => (
+                            <DropdownMenuItem 
+                                key={preset.id}
+                                className="text-zinc-400 focus:text-white focus:bg-white/10 cursor-pointer text-xs"
+                                onClick={() => setSession(preset.duration, preset.type)}
+                            >
+                                {preset.name} ({Math.floor(preset.duration / 60)}m)
+                            </DropdownMenuItem>
+                        ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+            <Link href="/timer">
+                 <Button variant="ghost" size="icon" className="h-6 w-6 text-zinc-500 hover:text-white -mr-2">
+                    <Maximize2 className="size-3" />
+                 </Button>
+            </Link>
         </div>
 
         {/* Timer Display */}
         <div className="relative z-10 my-4">
             <div className="text-6xl font-mono font-bold text-white tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                {formatTime(time)}
+                {formatTime(timeLeft)}
             </div>
         </div>
 
@@ -69,7 +73,7 @@ export function FocusTimer() {
             <Button 
                 variant="outline" 
                 size="icon" 
-                onClick={toggleTimer}
+                onClick={toggle}
                 className={cn(
                     "h-12 w-12 rounded-full border-2 transition-all hover:scale-105 active:scale-95",
                     isActive ? "border-blue-500/50 text-blue-400 bg-blue-500/10 hover:bg-blue-500/20" : "border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 hover:text-white"
@@ -81,7 +85,7 @@ export function FocusTimer() {
             <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={resetTimer}
+                onClick={reset}
                 className="h-10 w-10 text-zinc-600 hover:text-zinc-400 hover:bg-transparent"
             >
                 <RefreshCw className="size-4" />

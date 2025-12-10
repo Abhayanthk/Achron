@@ -4,6 +4,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { TimerProvider } from "@/components/providers/timer-context"
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <html lang="en">
         <body className={`${outfit.className} antialiased`}>
+        <TimerProvider>
           <SidebarProvider defaultOpen={false}>
             <AppSidebar />
             <main className="w-full">
@@ -66,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
             </main>
           </SidebarProvider>
+        </TimerProvider>
         </body>
       </html>
     </ClerkProvider>
