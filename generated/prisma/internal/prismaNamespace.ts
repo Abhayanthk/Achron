@@ -387,6 +387,7 @@ export const ModelName = {
   User: 'User',
   Trait: 'Trait',
   Timer: 'Timer',
+  AlarmSound: 'AlarmSound',
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "trait" | "timer" | "focusSession" | "workLog" | "task" | "habit"
+    modelProps: "user" | "trait" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "habit"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -629,6 +630,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TimerCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TimerCountAggregateOutputType> | number
+        }
+      }
+    }
+    AlarmSound: {
+      payload: Prisma.$AlarmSoundPayload<ExtArgs>
+      fields: Prisma.AlarmSoundFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AlarmSoundFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AlarmSoundFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>
+        }
+        findFirst: {
+          args: Prisma.AlarmSoundFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AlarmSoundFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>
+        }
+        findMany: {
+          args: Prisma.AlarmSoundFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>[]
+        }
+        create: {
+          args: Prisma.AlarmSoundCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>
+        }
+        createMany: {
+          args: Prisma.AlarmSoundCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AlarmSoundCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>[]
+        }
+        delete: {
+          args: Prisma.AlarmSoundDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>
+        }
+        update: {
+          args: Prisma.AlarmSoundUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>
+        }
+        deleteMany: {
+          args: Prisma.AlarmSoundDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AlarmSoundUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AlarmSoundUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>[]
+        }
+        upsert: {
+          args: Prisma.AlarmSoundUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlarmSoundPayload>
+        }
+        aggregate: {
+          args: Prisma.AlarmSoundAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAlarmSound>
+        }
+        groupBy: {
+          args: Prisma.AlarmSoundGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AlarmSoundGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AlarmSoundCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AlarmSoundCountAggregateOutputType> | number
         }
       }
     }
@@ -999,19 +1074,32 @@ export const TimerScalarFieldEnum = {
   duration: 'duration',
   type: 'type',
   color: 'color',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  alarmSoundId: 'alarmSoundId'
 } as const
 
 export type TimerScalarFieldEnum = (typeof TimerScalarFieldEnum)[keyof typeof TimerScalarFieldEnum]
 
 
+export const AlarmSoundScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  url: 'url',
+  isCustom: 'isCustom',
+  createdAt: 'createdAt'
+} as const
+
+export type AlarmSoundScalarFieldEnum = (typeof AlarmSoundScalarFieldEnum)[keyof typeof AlarmSoundScalarFieldEnum]
+
+
 export const FocusSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  timerId: 'timerId',
   startTime: 'startTime',
   endTime: 'endTime',
   duration: 'duration',
-  label: 'label',
   status: 'status',
   createdAt: 'createdAt'
 } as const
@@ -1126,6 +1214,13 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1136,13 +1231,6 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 /**
@@ -1243,6 +1331,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   trait?: Prisma.TraitOmit
   timer?: Prisma.TimerOmit
+  alarmSound?: Prisma.AlarmSoundOmit
   focusSession?: Prisma.FocusSessionOmit
   workLog?: Prisma.WorkLogOmit
   task?: Prisma.TaskOmit

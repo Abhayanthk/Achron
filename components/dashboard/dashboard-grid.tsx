@@ -16,7 +16,20 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
+
 export function DashboardGrid() {
+  const { data: analyticsData = [] } = useQuery({
+    queryKey: ['analytics', 'week'],
+    queryFn: async () => {
+        const res = await axios.get('/api/analytics?range=week');
+        return res.data.data;
+    }
+  });
+
+  const totalFocusHours = analyticsData.reduce((acc: any, curr: any) => acc + curr.hours, 0);
+
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 p-4 lg:gap-6 min-h-screen">
       
@@ -113,7 +126,7 @@ export function DashboardGrid() {
         <div className="flex flex-col h-full justify-between min-h-[200px]">
             <div className="flex items-end justify-between">
                 <div>
-                     <p className="text-3xl font-bold text-white mt-1">38.5h</p>
+                     <p className="text-3xl font-bold text-white mt-1">{totalFocusHours.toFixed(1)}h</p>
                      <p className="text-xs text-zinc-500">Focus time this week</p>
                 </div>
             </div>

@@ -53,6 +53,22 @@ model Timer {
       type      String   @default("FOCUS")
       color     String   @default("bg-blue-500")
       createdAt DateTime @default(now())
+
+      alarmSoundId String?
+      alarmSound   AlarmSound? @relation(fields: [alarmSoundId], references: [id])
+
+      sessions FocusSession[]
+}
+
+model AlarmSound {
+      id        String   @id @default(cuid())
+      userId    String? // Optional: System sounds have null userId
+      name      String
+      url       String
+      isCustom  Boolean  @default(false)
+      createdAt DateTime @default(now())
+
+      timers Timer[]
 }
 
 model FocusSession {
@@ -60,12 +76,14 @@ model FocusSession {
       userId String
       user   User   @relation(fields: [userId], references: [id])
 
+      timerId String?
+      timer   Timer?  @relation(fields: [timerId], references: [id])
+
       startTime DateTime
       endTime   DateTime?
-      duration  Int       @default(0) // in minutes
-      label     String // e.g., "Deep Work", "Coding"
+      duration  Int       @default(0) // in seconds
 
-      status    String   @default("COMPLETED") // COMPLETED, ABORTED
+      status    String   @default("COMPLETED") // COMPLETED, ABORTED, ACTIVE
       createdAt DateTime @default(now())
 }
 

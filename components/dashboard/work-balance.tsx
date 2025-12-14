@@ -5,14 +5,43 @@ import { motion } from "framer-motion"
 import { Plus, Minus, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import axios from "axios"
+import { toast } from "sonner"
 
 export function WorkBalance() {
-  const [wasteHours, setWasteHours] = useState(15)
-  const [workHours, setWorkHours] = useState(2) // Default start
+  const queryClient = useQueryClient()
+
+  const { data: balance = { workHours: 0, wasteHours: 15 } } = useQuery({
+    queryKey: ['balance'],
+    queryFn: async () => {
+        const res = await axios.get('/api/stats/balance');
+        return res.data;
+    }
+  });
+
+  const updateWasteMutation = useMutation({
+      mutationFn: async (delta: number) => {
+          await axios.post('/api/stats/balance', { delta });
+      },
+      onSuccess: (_, delta) => {
+          queryClient.invalidateQueries({ queryKey: ['balance'] });
+          toast.success(delta > 0 ? "Added waste hour" : "Removed waste hour");
+      },
+      onError: () => {
+          toast.error("Failed to update stats");
+      }
+  });
+
+  const wasteHours = balance.wasteHours
+  const workHours = balance.workHours
 
   const totalHours = wasteHours + workHours
-  const wastePercent = (wasteHours / totalHours) * 100
-  const workPercent = (workHours / totalHours) * 100
+  // Avoid division by zero
+  const safeTotal = totalHours === 0 ? 1 : totalHours
+
+  const wastePercent = (wasteHours / safeTotal) * 100
+  const workPercent = (workHours / safeTotal) * 100
 
   return (
     <div className="h-full bg-black/40 border border-white/5 rounded-xl p-6 flex flex-col justify-between backdrop-blur-sm relative overflow-hidden">
@@ -28,12 +57,12 @@ export function WorkBalance() {
             </div>
             <div className="flex gap-4 text-xs font-mono">
                 <div className="flex flex-col items-end">
-                    <span className="text-red-400 font-bold">{wasteHours}h</span>
+                    <span className="text-red-400 font-bold">{wasteHours.toFixed(1)}h</span>
                     <span className="text-zinc-600 text-[9px] uppercase">Wasted</span>
                 </div>
                 <div className="w-px h-6 bg-white/10" />
                 <div className="flex flex-col items-end">
-                    <span className="text-blue-400 font-bold">{workHours}h</span>
+                    <span className="text-blue-400 font-bold">{workHours.toFixed(1)}h</span>
                     <span className="text-zinc-600 text-[9px] uppercase">Work</span>
                 </div>
             </div>
@@ -84,7 +113,8 @@ export function WorkBalance() {
                     variant="outline" 
                     size="sm" 
                     className="h-7 text-[10px] border-zinc-800 bg-black/50 hover:bg-zinc-900 hover:text-white"
-                    onClick={() => setWorkHours(h => h + 1)}
+                    onClick={() => updateWasteMutation.mutate(1)}
+                    disabled={updateWasteMutation.isPending}
                  >
                     <Plus className="size-3 mr-1" /> Add Hour
                  </Button>

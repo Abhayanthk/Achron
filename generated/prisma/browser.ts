@@ -33,6 +33,11 @@ export type Trait = Prisma.TraitModel
  */
 export type Timer = Prisma.TimerModel
 /**
+ * Model AlarmSound
+ * 
+ */
+export type AlarmSound = Prisma.AlarmSoundModel
+/**
  * Model FocusSession
  * 
  */

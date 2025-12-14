@@ -1,17 +1,19 @@
 
 "use client"
-import { useTimer, SessionType } from "@/components/providers/timer-context"
+import { useTimer, SessionType, AlarmSoundType } from "@/components/providers/timer-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
-import { Play, Pause, RefreshCw, ChevronLeft, BarChart3, Clock, Zap, Target, Plus } from "lucide-react"
+import { Play, Pause, RefreshCw, ChevronLeft, BarChart3, Clock, Zap, Target, Plus, Settings2, Check, Smartphone, Bell, Music2 } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from 'recharts'
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
 
 // Mock Data for Analytics
 const weeklyData = [
@@ -47,12 +49,67 @@ const yearlyData = [
 ]
 
 export default function TimerPage() {
-    const { isActive, timeLeft, duration, sessionType, toggle, reset, formatTime, setSession, presets, addPreset, isLoadingPresets } = useTimer()
+    const { isActive, timeLeft, duration, sessionType, toggle, reset, formatTime, setSession, presets, addPreset, isLoadingPresets,  alarmSound, setAlarmSound, playPreview} = useTimer()
     const [viewMode, setViewMode] = useState<"timer" | "stats">("timer")
     const [timeRange, setTimeRange] = useState<"week" | "month" | "year">("week")
+    const [unit, setUnit] = useState<"hours" | "minutes">("hours")
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-    const currentData = timeRange === "week" ? weeklyData : timeRange === "month" ? monthlyData : yearlyData
+    // Fetch Analytics Data
+    const { data: analyticsData = [], isLoading: isLoadingAnalytics } = useQuery({
+        queryKey: ['analytics', timeRange],
+        queryFn: async () => {
+            const res = await axios.get(`/api/analytics?range=${timeRange}`);
+            return res.data.data;
+        }
+    });
+
+    // Data Normalization Helper
+    const fillData = (data: any[], range: string) => {
+        if (range === 'week') {
+            const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+            return days.map(day => {
+                const found = data.find(d => d.name === day)
+                return { name: day, hours: found ? found.hours : 0 }
+            })
+        }
+        if (range === 'year') {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            return months.map(month => {
+                const found = data.find(d => d.name === month)
+                return { name: month, hours: found ? found.hours : 0 }
+            })
+        }
+        if (range === 'month') {
+             // Generate days based on current month? Or just generic 1-30?
+             // Simplest: 1-30/31. 
+             // Let's assume generic 30 days for visual consistency or use data names if they are "Day X"
+             // API endpoint for 'month' returns data with name: "Week X" or Day?
+             // Let's stick to data for month for now, as it's variable length.
+             // OR: fill "Week 1", "Week 2", "Week 3", "Week 4", "Week 5"
+             const weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"]
+             // Check if data names match "Week X". 
+             const hasWeeks = data.some(d => d.name.startsWith("Week"))
+             if (hasWeeks) {
+                 return weeks.map(week => {
+                     const found = data.find(d => d.name === week)
+                     return { name: week, hours: found ? found.hours : 0 }
+                 })
+             }
+             // If not weeks (e.g. days), just return data or fill 1-31?
+             return data
+        }
+        return data
+    }
+
+    const rawData = fillData(analyticsData, timeRange);
+    const currentData = rawData.map((d: any) => ({
+        ...d,
+        value: unit === 'minutes' ? Number((d.hours * 60).toFixed(0)) : d.hours
+    }));
+    
+    // Calculate Stats
+    const totalHours = currentData.reduce((acc: number, curr: any) => acc + curr.hours, 0);
 
     return (
         <div className="flex flex-col h-full bg-black min-h-screen text-white p-6 md:p-12 relative overflow-hidden">
@@ -93,6 +150,61 @@ export default function TimerPage() {
                         Analytics
                     </button>
                 </div>
+                
+                 {/* Start of Alarm Settings Dialog */}
+                 <div className="flex items-center gap-2">
+                    <Dialog>
+                        <DialogTrigger asChild>
+                             <button className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors bg-zinc-900/50 p-2 rounded-full border border-white/5">
+                                <Settings2 className="size-4" />
+                             </button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-zinc-950 border-zinc-800 text-white w-full max-w-sm">
+                            <DialogHeader>
+                                <DialogTitle>Timer Settings</DialogTitle>
+                            </DialogHeader>
+                            <div className="pt-4 space-y-6">
+                                <div className="space-y-4">
+                                     <div className="flex items-center justify-between">
+                                          <label className="text-sm font-medium text-zinc-400">Alarm Sound</label>
+                                          <button onClick={playPreview} className="text-xs text-blue-400 hover:text-blue-300 font-medium">
+                                              Test Sound
+                                          </button>
+                                     </div>
+                                     <div className="grid grid-cols-1 gap-2">
+                                          {[
+                                              { id: 'digital', name: 'Digital', icon: Smartphone, desc: 'Sharp electronic beep' },
+                                              { id: 'chime', name: 'Zen Chime', icon: Music2, desc: 'Soft harmonic tones' },
+                                              { id: 'bell', name: 'Bell', icon: Bell, desc: 'Ring with decay' }
+                                          ].map((sound) => (
+                                              <button
+                                                  key={sound.id}
+                                                  onClick={() => setAlarmSound(sound.id as AlarmSoundType)}
+                                                  className={cn(
+                                                      "flex items-center justify-between p-3 rounded-xl border transition-all",
+                                                      alarmSound === sound.id 
+                                                          ? "bg-zinc-900 border-blue-500/50 text-white" 
+                                                          : "bg-transparent border-zinc-800 text-zinc-400 hover:bg-zinc-900/50"
+                                                  )}
+                                              >
+                                                  <div className="flex items-center gap-3">
+                                                      <div className={cn("p-2 rounded-lg", alarmSound === sound.id ? "bg-blue-500/10 text-blue-400" : "bg-zinc-800 text-zinc-500")}>
+                                                          <sound.icon className="size-4" />
+                                                      </div>
+                                                      <div className="text-left">
+                                                            <div className="text-sm font-medium">{sound.name}</div>
+                                                            <div className="text-[10px] text-zinc-500">{sound.desc}</div>
+                                                      </div>
+                                                  </div>
+                                                  {alarmSound === sound.id && <Check className="size-4 text-blue-500" />}
+                                              </button>
+                                          ))}
+                                     </div>
+                                </div>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                 </div>
              </header>
 
             <main className="relative z-10 flex flex-col items-center justify-center flex-1 w-full max-w-4xl mx-auto">
@@ -160,7 +272,7 @@ export default function TimerPage() {
                                     presets.map((preset) => (
                                         <button
                                             key={preset.id}
-                                            onClick={() => setSession(preset.duration, preset.type as SessionType)}
+                                            onClick={() => setSession(preset.duration, preset.type as SessionType, preset.name, preset.id)}
                                             className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
                                         >
                                             <div className={`absolute top-4 right-4 h-2 w-2 rounded-full ${preset.color} opacity-50 group-hover:opacity-100 transition-opacity`} />
@@ -251,8 +363,8 @@ export default function TimerPage() {
                                         <Clock className="size-4" />
                                         <span className="text-xs font-bold uppercase tracking-wider">Total Focus</span>
                                     </div>
-                                    <p className="text-3xl font-bold text-white">42.5h</p>
-                                    <p className="text-xs text-emerald-500 mt-1">+12% vs last week</p>
+                                    <p className="text-3xl font-bold text-white">{totalHours.toFixed(1)}h</p>
+                                    <p className="text-xs text-zinc-500 mt-1">This {timeRange}</p>
                                 </div>
                                 <div className="p-6 rounded-2xl bg-zinc-900/50 border border-white/5">
                                     <div className="flex items-center gap-3 text-zinc-400 mb-2">
@@ -267,9 +379,12 @@ export default function TimerPage() {
                                         <Target className="size-4" />
                                         <span className="text-xs font-bold uppercase tracking-wider">Daily Goal</span>
                                     </div>
-                                    <p className="text-3xl font-bold text-white">4/6h</p>
+                                    <p className="text-3xl font-bold text-white">{totalHours.toFixed(1)}/6h</p>
                                     <div className="h-1.5 w-full bg-zinc-800 rounded-full mt-3 overflow-hidden">
-                                        <div className="h-full w-[66%] bg-blue-500 rounded-full" />
+                                        <div 
+                                            className="h-full bg-blue-500 rounded-full" 
+                                            style={{ width: `${Math.min((totalHours / 6) * 100, 100)}%` }}
+                                        />
                                     </div>
                                 </div>
                            </div>
@@ -278,48 +393,77 @@ export default function TimerPage() {
                             <div className="h-[400px] w-full p-6 rounded-2xl bg-zinc-900/30 border border-white/5">
                                 <div className="flex items-center justify-between mb-6">
                                     <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Focus Distribution</h3>
-                                    <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
-                                        {(['week', 'month', 'year'] as const).map((r) => (
-                                            <button
-                                                key={r}
-                                                onClick={() => setTimeRange(r)}
-                                                className={cn(
-                                                    "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
-                                                    timeRange === r ? "bg-white text-black" : "text-zinc-500 hover:text-zinc-300"
-                                                )}
-                                            >
-                                                {r}
-                                            </button>
-                                        ))}
+                                    <div className="flex gap-4">
+                                        {/* Unit Toggle */}
+                                        <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
+                                            {(['hours', 'minutes'] as const).map((u) => (
+                                                <button
+                                                    key={u}
+                                                    onClick={() => setUnit(u)}
+                                                    className={cn(
+                                                        "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
+                                                        unit === u ? "bg-white text-black" : "text-zinc-500 hover:text-zinc-300"
+                                                    )}
+                                                >
+                                                    {u === 'hours' ? 'HR' : 'MIN'}
+                                                </button>
+                                            ))}
+                                        </div>
+
+                                        {/* Time Range Toggle */}
+                                        <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
+                                            {(['week', 'month', 'year'] as const).map((r) => (
+                                                <button
+                                                    key={r}
+                                                    onClick={() => setTimeRange(r)}
+                                                    className={cn(
+                                                        "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
+                                                        timeRange === r ? "bg-white text-black" : "text-zinc-500 hover:text-zinc-300"
+                                                    )}
+                                                >
+                                                    {r}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={currentData}>
-                                        <XAxis 
-                                            dataKey="name" 
-                                            stroke="#52525b" 
-                                            fontSize={12} 
-                                            tickLine={false} 
-                                            axisLine={false}
-                                        />
-                                        <YAxis 
-                                            stroke="#52525b" 
-                                            fontSize={12} 
-                                            tickLine={false} 
-                                            axisLine={false}
-                                            tickFormatter={(value) => `${value}h`}
-                                        />
-                                        <Tooltip 
-                                            contentStyle={{ backgroundColor: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}
-                                            cursor={{ fill: '#27272a' }}
-                                        />
-                                        <Bar dataKey="hours" radius={[4, 4, 0, 0]}>
-                                            {currentData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={entry.hours > (timeRange === 'year' ? 100 : 6) ? '#3b82f6' : '#27272a'} />
-                                            ))}
-                                        </Bar>
-                                    </BarChart>
-                                </ResponsiveContainer>
+                                {isLoadingAnalytics ? (
+                                    <div className="w-full h-full flex items-end justify-between gap-2 p-4 animate-pulse">
+                                         {Array(7).fill(0).map((_, i) => (
+                                            <div key={i} className="w-full bg-zinc-800 rounded-t-lg" style={{ height: `${20 + Math.random() * 60}%`}} />
+                                         ))}
+                                    </div>
+                                ) : (
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <BarChart data={currentData}>
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
+                                            <XAxis 
+                                                dataKey="name" 
+                                                stroke="#52525b" 
+                                                fontSize={12} 
+                                                tickLine={false} 
+                                                axisLine={false}
+                                                dy={10}
+                                            />
+                                            <YAxis 
+                                                stroke="#52525b" 
+                                                fontSize={12} 
+                                                tickLine={false} 
+                                                axisLine={false}
+                                                tickFormatter={(value) => `${value}${unit === 'hours' ? 'h' : 'm'}`}
+                                            />
+                                            <Tooltip 
+                                                contentStyle={{ backgroundColor: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}
+                                                cursor={{ fill: '#27272a' }}
+                                            />
+                                            <Bar 
+                                                dataKey="value" 
+                                                radius={[4, 4, 0, 0]} 
+                                                fill="#3b82f6"
+                                            />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                )}
                             </div>
                         </motion.div>
                     )}

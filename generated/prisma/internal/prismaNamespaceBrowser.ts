@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Trait: 'Trait',
   Timer: 'Timer',
+  AlarmSound: 'AlarmSound',
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
@@ -108,19 +109,32 @@ export const TimerScalarFieldEnum = {
   duration: 'duration',
   type: 'type',
   color: 'color',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  alarmSoundId: 'alarmSoundId'
 } as const
 
 export type TimerScalarFieldEnum = (typeof TimerScalarFieldEnum)[keyof typeof TimerScalarFieldEnum]
 
 
+export const AlarmSoundScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  url: 'url',
+  isCustom: 'isCustom',
+  createdAt: 'createdAt'
+} as const
+
+export type AlarmSoundScalarFieldEnum = (typeof AlarmSoundScalarFieldEnum)[keyof typeof AlarmSoundScalarFieldEnum]
+
+
 export const FocusSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  timerId: 'timerId',
   startTime: 'startTime',
   endTime: 'endTime',
   duration: 'duration',
-  label: 'label',
   status: 'status',
   createdAt: 'createdAt'
 } as const
