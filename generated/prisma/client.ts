@@ -79,3 +79,8 @@ export type Task = Prisma.TaskModel
  * 
  */
 export type Habit = Prisma.HabitModel
+/**
+ * Model XpLog
+ * 
+ */
+export type XpLog = Prisma.XpLogModel

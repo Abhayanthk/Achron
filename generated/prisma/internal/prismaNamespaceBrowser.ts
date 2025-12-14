@@ -58,7 +58,8 @@ export const ModelName = {
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
-  Habit: 'Habit'
+  Habit: 'Habit',
+  XpLog: 'XpLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -85,7 +86,8 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   xp: 'xp',
-  level: 'level'
+  level: 'level',
+  alarmSound: 'alarmSound'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -174,6 +176,18 @@ export const HabitScalarFieldEnum = {
 } as const
 
 export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
+
+
+export const XpLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  amount: 'amount',
+  source: 'source',
+  description: 'description',
+  createdAt: 'createdAt'
+} as const
+
+export type XpLogScalarFieldEnum = (typeof XpLogScalarFieldEnum)[keyof typeof XpLogScalarFieldEnum]
 
 
 export const SortOrder = {

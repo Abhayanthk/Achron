@@ -391,7 +391,8 @@ export const ModelName = {
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
-  Habit: 'Habit'
+  Habit: 'Habit',
+  XpLog: 'XpLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "trait" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "habit"
+    modelProps: "user" | "trait" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "habit" | "xpLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1003,6 +1004,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    XpLog: {
+      payload: Prisma.$XpLogPayload<ExtArgs>
+      fields: Prisma.XpLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.XpLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.XpLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>
+        }
+        findFirst: {
+          args: Prisma.XpLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.XpLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>
+        }
+        findMany: {
+          args: Prisma.XpLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>[]
+        }
+        create: {
+          args: Prisma.XpLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>
+        }
+        createMany: {
+          args: Prisma.XpLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.XpLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>[]
+        }
+        delete: {
+          args: Prisma.XpLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>
+        }
+        update: {
+          args: Prisma.XpLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.XpLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.XpLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.XpLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.XpLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$XpLogPayload>
+        }
+        aggregate: {
+          args: Prisma.XpLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateXpLog>
+        }
+        groupBy: {
+          args: Prisma.XpLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.XpLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.XpLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.XpLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1050,7 +1125,8 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   xp: 'xp',
-  level: 'level'
+  level: 'level',
+  alarmSound: 'alarmSound'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1139,6 +1215,18 @@ export const HabitScalarFieldEnum = {
 } as const
 
 export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
+
+
+export const XpLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  amount: 'amount',
+  source: 'source',
+  description: 'description',
+  createdAt: 'createdAt'
+} as const
+
+export type XpLogScalarFieldEnum = (typeof XpLogScalarFieldEnum)[keyof typeof XpLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1336,6 +1424,7 @@ export type GlobalOmitConfig = {
   workLog?: Prisma.WorkLogOmit
   task?: Prisma.TaskOmit
   habit?: Prisma.HabitOmit
+  xpLog?: Prisma.XpLogOmit
 }
 
 /* Types for Logging */

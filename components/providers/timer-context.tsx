@@ -63,7 +63,19 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const [currentTimerId, setCurrentTimerId] = useState<string | null>(null)
   
   // Settings
-  const [alarmSound, setAlarmSound] = useState<AlarmSoundType>("digital")
+  const [alarmSound, setAlarmSoundState] = useState<AlarmSoundType>("digital")
+  const alarmSoundRef = useRef<AlarmSoundType>("digital")
+
+  const setAlarmSound = (sound: AlarmSoundType) => {
+      setAlarmSoundState(sound)
+      alarmSoundRef.current = sound
+      localStorage.setItem("achron-timer-alarm-sound", sound)
+      
+      // Save to server
+      if (user?.id) {
+          axios.patch('/api/user/settings', { alarmSound: sound }).catch(console.error)
+      }
+  }
 
   // Timer Execution State
   const [status, setStatus] = useState<'IDLE' | 'RUNNING' | 'PAUSED'>('IDLE')
@@ -93,6 +105,13 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     queryKey: ['timers'],
     queryFn: async () => {
         const res = await axios.get('/api/timer/get');
+        
+        // Load alarm sound from server
+        if (res.data.alarmSound) {
+            setAlarmSoundState(res.data.alarmSound as AlarmSoundType)
+            alarmSoundRef.current = res.data.alarmSound as AlarmSoundType
+        }
+        
         return res.data.timers.map((t: any) => ({
             id: t.id,
             name: t.name,
@@ -136,7 +155,19 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         setSessionName(parsed.sessionName)
         setCurrentTimerId(parsed.currentTimerId || null) 
         if (parsed.activeSessionId) setActiveSessionId(parsed.activeSessionId)
-        if (parsed.alarmSound) setAlarmSound(parsed.alarmSound)
+        
+        // Priority: Server > LocalStorage > Default
+        // But we might load from server LATER, so this is tentative init
+        // actually let's stick to what we have or separate storage key
+        // I created "achron-timer-alarm-sound" separate key above for clarity
+        const cachedSound = localStorage.getItem("achron-timer-alarm-sound") as AlarmSoundType
+        if (cachedSound) {
+             setAlarmSoundState(cachedSound)
+             alarmSoundRef.current = cachedSound
+        } else if (parsed.alarmSound) {
+             setAlarmSoundState(parsed.alarmSound)
+             alarmSoundRef.current = parsed.alarmSound
+        }
         
         // Restore Status (RUNNING or PAUSED)
         if (parsed.status === 'RUNNING') {
@@ -250,7 +281,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       sessionName,
       activeSessionId, 
       currentTimerId,
-      alarmSound
+      // alarmSound can be saved here too but we prefer the dedicated key or server
     }))
   }, [status, startTime, accumulatedTime, timeLeft, duration, sessionType, sessionName, activeSessionId, currentTimerId, alarmSound])
 
@@ -301,7 +332,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
               audioContextRef.current = ctx;
           }
           
-          if (alarmSound === 'chime') {
+          if (alarmSoundRef.current === 'chime') {
              // Chime: Two tones via FM synthesisish or just simple harmony
              const now = ctx.currentTime;
              
@@ -328,7 +359,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
              osc1.stop(now + 2.0);
              osc2.stop(now + 2.0);
              
-          } else if (alarmSound === 'bell') {
+          } else if (alarmSoundRef.current === 'bell') {
              // Bell: Additive symptoms
              const now = ctx.currentTime;
              const fundamental = 440;

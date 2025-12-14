@@ -24,6 +24,9 @@ model User {
       xp    Int @default(0)
       level Int @default(1)
 
+      // Preferences
+      alarmSound String @default("digital")
+
       // Relations
       sessions FocusSession[]
       workLogs WorkLog[]
@@ -31,6 +34,7 @@ model User {
       habits   Habit[]
       traits   Trait[]
       timers   Timer[]
+      xpLogs   XpLog[]
 }
 
 model Trait {
@@ -116,4 +120,16 @@ model Habit {
       name           String
       streak         Int        @default(0)
       completedDates DateTime[]
+}
+
+model XpLog {
+      id     String @id @default(cuid())
+      userId String
+      user   User   @relation(fields: [userId], references: [id])
+
+      amount      Int
+      source      String // "TIMER", "HABIT", "TASK", "DAILY"
+      description String? // e.g. "Focus Session: Deep Work"
+
+      createdAt DateTime @default(now())
 }

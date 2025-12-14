@@ -40,13 +40,28 @@ export async function POST(request: NextRequest) {
     // Also update XP (Simple gamification hook)
     // 1 XP per minute
     const xpEarned = Math.floor(durationSeconds / 60);
+    console.log(`[SESSION_END] Duration: ${durationSeconds}, XP Earned: ${xpEarned}`);
+    
     if (xpEarned > 0) {
+        console.log(`[SESSION_END] Updating User XP`);
         const user = await prisma.user.update({
             where: { id: userId },
             data: {
                 xp: { increment: xpEarned }
             }
         });
+        
+        console.log(`[SESSION_END] Creating XPLog Entry`);
+        await prisma.xpLog.create({
+            data: {
+                userId: userId,
+                amount: xpEarned,
+                source: "TIMER",
+                description: "Focus Session"
+            }
+        });
+    } else {
+         console.log(`[SESSION_END] No XP gained (less than 1 min)`);
     }
 
     return NextResponse.json({ success: true, duration: durationSeconds }, { status: 200 });

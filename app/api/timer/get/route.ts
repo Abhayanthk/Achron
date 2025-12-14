@@ -11,13 +11,21 @@ export async function GET(request: NextRequest) {
         if (!userId) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
-        const timers = await prisma.timer.findMany({
-            where: {    
-                userId,
-            },
-        });
+        
+        const [timers, user] = await Promise.all([
+            prisma.timer.findMany({
+                where: { userId },
+            }),
+            prisma.user.findUnique({
+                where: { id: userId },
+                select: { alarmSound: true }
+            })
+        ]);
 
-        return NextResponse.json({ timers });
+        return NextResponse.json({ 
+            timers, 
+            alarmSound: user?.alarmSound || "digital" 
+        });
     } catch (error: any) {
         console.error("Error fetching timers:", error);
         return NextResponse.json({ error: error.code || error.message }, { status: 500 });
