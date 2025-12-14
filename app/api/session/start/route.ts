@@ -12,25 +12,26 @@ export async function POST(request: NextRequest) {
 
     const { timerId } = await request.json();
 
-    if (!timerId) {
-      return new NextResponse("Missing timerId", { status: 400 });
-    }
+    let validTimerId = null;
 
-    // Verify timer belongs to user (optional but good security)
-    const timer = await prisma.timer.findFirst({
-        where: { id: timerId, userId }
-    });
+    if (timerId) {
+      // Verify timer belongs to user
+      const timer = await prisma.timer.findFirst({
+        where: { id: timerId, userId },
+      });
 
-    if (!timer) {
-        // If timer not found (maybe system default?), handle differently or just proceed if we allow generic sessions
-        // For now, strict: must match a timer
-        return new NextResponse("Timer not found", { status: 404 });
+      if (!timer) {
+        console.warn(`Timer ${timerId} not found for user ${userId}, creating generic session.`);
+        validTimerId = null;
+      } else {
+        validTimerId = timer.id;
+      }
     }
 
     const session = await prisma.focusSession.create({
       data: {
         userId,
-        timerId,
+        timerId: validTimerId,
         startTime: new Date(),
         status: "ACTIVE",
         duration: 0

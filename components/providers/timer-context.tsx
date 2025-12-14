@@ -420,13 +420,11 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
            setStartTime(now);
            setStatus('RUNNING');
            
-           if (currentTimerId) {
-                try {
-                    const res = await axios.post('/api/session/start', { timerId: currentTimerId });
-                    setActiveSessionId(res.data.sessionId);
-                } catch (err: any) {
-                    console.error("Failed to start session", err);
-                }
+           try {
+               const res = await axios.post('/api/session/start', { timerId: currentTimerId });
+               setActiveSessionId(res.data.sessionId);
+           } catch (err: any) {
+               console.error("Failed to start session", err);
            }
             
             // Prime Audio Context on user interaction
