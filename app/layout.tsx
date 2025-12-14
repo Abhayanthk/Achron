@@ -6,6 +6,8 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { TimerProvider } from "@/components/providers/timer-context"
 import QueryProvider from "@/components/providers/query-provider";
+import { MiniTimer } from "@/components/timer/mini-timer";
+import { TimerPiP } from "@/components/timer/timer-pip";
 
 const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600"] });
 
@@ -71,6 +73,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <SidebarTrigger className="relative z-10" />
                 {children}
               </main>
+              <MiniTimer />
+              <TimerPiP />
               <Toaster />
             </SidebarProvider>
           </TimerProvider>

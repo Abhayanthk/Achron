@@ -44,6 +44,9 @@ interface TimerContextType extends TimerState {
   alarmSound: AlarmSoundType
   setAlarmSound: (sound: AlarmSoundType) => void
   playPreview: () => void
+  status: 'IDLE' | 'RUNNING' | 'PAUSED'
+  togglePiP: () => Promise<void>
+  pipWindow: Window | null
 }
 
 const TimerContext = createContext<TimerContextType | undefined>(undefined)
@@ -73,8 +76,12 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
   
   
-  // Audio Context Ref for synthetic sound (no file needed)
+  // Audio Context Ref for synthetic sound
   const audioContextRef = useRef<AudioContext | null>(null)
+  
+  // PiP Window Ref
+  const pipWindowRef = useRef<Window | null>(null)
+  const [pipWindow, setPipWindow] = useState<Window | null>(null)
   
   const queryClient = useQueryClient();
 
@@ -586,6 +593,81 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
+  // PiP Toggle
+  const togglePiP = async () => {
+    if (pipWindowRef.current) {
+        pipWindowRef.current.close()
+        pipWindowRef.current = null
+        setPipWindow(null)
+        return
+    }
+
+    if ("documentPictureInPicture" in window) {
+        try {
+            // @ts-ignore
+            const win = await window.documentPictureInPicture.requestWindow({
+                width: 300,
+                height: 150,
+            });
+            
+            pipWindowRef.current = win;
+            setPipWindow(win);
+
+            // Copy styles (Safely)
+            [...document.styleSheets].forEach((styleSheet) => {
+                try {
+                    // Try to link first (better for caching)
+                    if (styleSheet.href) {
+                        const link = win.document.createElement('link');
+                        link.rel = 'stylesheet';
+                        link.type = 'text/css';
+                        link.href = styleSheet.href;
+                        win.document.head.appendChild(link);
+                    } else {
+                         // Fallback for inline styles
+                        const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
+                        const style = win.document.createElement('style');
+                        style.textContent = cssRules;
+                        win.document.head.appendChild(style);
+                    }
+                } catch (e) {
+                     console.warn("Could not copy stylesheet", e)
+                }
+            });
+            
+            const baseStyle = win.document.createElement('style');
+            baseStyle.textContent = `
+                body { 
+                    background-color: #09090b; 
+                    color: white; 
+                    display: flex; 
+                    flex-direction: column; 
+                    align-items: center; 
+                    justify-content: center;
+                    height: 100vh;
+                    margin: 0;
+                    font-family: system-ui, -apple-system, sans-serif;
+                    overflow: hidden;
+                }
+            `;
+            win.document.head.appendChild(baseStyle);
+
+        } catch (err) {
+            console.error("PiP failed", err);
+        }
+    }
+  }
+
+  // Lazy Cleanup: Only check if window is closed when the timer ticks
+  // This avoids aggressive polling that might misfire during tab throttling.
+  useEffect(() => {
+      if (pipWindow && pipWindow.closed) {
+          setPipWindow(null);
+          pipWindowRef.current = null;
+      }
+  }, [timeLeft, pipWindow]);
+  
+  // Timer Context Value
   return (
     <TimerContext.Provider value={{
       isActive,
@@ -604,7 +686,10 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       isLoadingPresets,
       alarmSound,
       setAlarmSound,
-      playPreview: playAlarm
+      playPreview: playAlarm,
+      status,
+      togglePiP,
+      pipWindow
     }}>
       {children}
     </TimerContext.Provider>
