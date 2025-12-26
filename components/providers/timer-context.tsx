@@ -7,6 +7,7 @@ import { useUser } from "@clerk/nextjs"
 
 export type SessionType = "DEEP WORK" | "FLOW" | "CODING" | "LEARNING" | "WRITING" | "CUSTOM"
 export type AlarmSoundType = "digital" | "chime" | "bell"
+type StatusType = 'IDLE' | 'RUNNING' | 'PAUSED'
 
 interface TimerState {
   isActive: boolean
@@ -31,6 +32,10 @@ const DEFAULT_PRESETS: TimerPreset[] = [
 //     { id: "4", name: "Learning", duration: 60 * 60, type: "LEARNING", color: "bg-amber-500" },
 ]
 
+// interface test{
+//       addPresent: (present: Omit<TimerPreset, "id">) => Promise<any>
+// }
+
 interface TimerContextType extends TimerState {
   start: () => void
   pause: () => void
@@ -44,7 +49,7 @@ interface TimerContextType extends TimerState {
   alarmSound: AlarmSoundType
   setAlarmSound: (sound: AlarmSoundType) => void
   playPreview: () => void
-  status: 'IDLE' | 'RUNNING' | 'PAUSED'
+  status: StatusType
   togglePiP: () => Promise<void>
   pipWindow: Window | null
 }
@@ -56,7 +61,7 @@ interface TimerContextType extends TimerState {
 // so if we define the type of the pipe here, then useContext will know what type of data it will be receiving
 const TimerContext = createContext<TimerContextType | undefined>(undefined)
 
-const DEFAULT_DURATION = 25 * 60
+const DEFAULT_DURATION = typeof window !== 'undefined' ? Number(localStorage.getItem("achron-timer-duration")) || 25 * 60 : 25 * 60
 
 export function TimerProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser()
@@ -70,26 +75,31 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   // Settings
   const [alarmSound, setAlarmSoundState] = useState<AlarmSoundType>("digital")
   const alarmSoundRef = useRef<AlarmSoundType>("digital")
-
-  const setAlarmSound = (sound: AlarmSoundType) => {
+      type SetAlarmSound = (sound: AlarmSoundType) => void
+  const setAlarmSound: SetAlarmSound = (sound) => {
       setAlarmSoundState(sound)
       alarmSoundRef.current = sound
       localStorage.setItem("achron-timer-alarm-sound", sound)
-      
+      console.log("Alarm sound set to: ", sound)
       // Save to server
       if (user?.id) {
+            // Note: here we don't define the type of alarmSound in the axios patch request
+            // You don’t mention the type because this line is runtime JavaScript, and types do not exist at runtime(Only COMPILE TIME).
           axios.patch('/api/user/settings', { alarmSound: sound }).catch(console.error)
       }
   }
 
   // Timer Execution State
-  const [status, setStatus] = useState<'IDLE' | 'RUNNING' | 'PAUSED'>('IDLE')
+  const [status, setStatus] = useState<StatusType>('IDLE')
   const [startTime, setStartTime] = useState<number | null>(null) // When current segment started
   const [accumulatedTime, setAccumulatedTime] = useState(0) // Seconds elapsed before current segment
   const [timeLeft, setTimeLeft] = useState(DEFAULT_DURATION)
-  
+//   A Web Worker is a browser feature that lets you run JavaScript 
+// in a separate thread from the UI thread, so you can do work without 
+// blocking or disrupting the user interface.
+// Simple words -> backGround worker in the browser
   const workerRef = useRef<Worker | null>(null)
-  
+
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null)
   
   
@@ -107,12 +117,13 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 
   // Fetch User Presets (unchanged)... 
   const { data: userPresets = [], isLoading: isLoadingPresets } = useQuery({
+    // Note: here userPresets and isLoadingPresents are aliases for data and isLoading
     queryKey: ['timers'],
     queryFn: async () => {
         const res = await axios.get('/api/timer/get');
-        
         // Load alarm sound from server
         if (res.data.alarmSound) {
+            // Note: as is used when you already have a value and you want to tell TS what it is.
             setAlarmSoundState(res.data.alarmSound as AlarmSoundType)
             alarmSoundRef.current = res.data.alarmSound as AlarmSoundType
         }
