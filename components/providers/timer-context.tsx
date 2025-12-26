@@ -49,6 +49,11 @@ interface TimerContextType extends TimerState {
   pipWindow: Window | null
 }
 
+// why do we define the context type here?
+// we define the type here so that we can use tell what useContext will be returning
+// but why define useContext type here?
+// Here the main point: useContext and createContext are like a pipe, the createContext defines the type of the pipe and useContext uses the type of the pipe
+// so if we define the type of the pipe here, then useContext will know what type of data it will be receiving
 const TimerContext = createContext<TimerContextType | undefined>(undefined)
 
 const DEFAULT_DURATION = 25 * 60
