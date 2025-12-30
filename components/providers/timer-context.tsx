@@ -50,8 +50,6 @@ interface TimerContextType extends TimerState {
   setAlarmSound: (sound: AlarmSoundType) => void
   playPreview: () => void
   status: StatusType
-  togglePiP: () => Promise<void>
-  pipWindow: Window | null
 }
 
 // why do we define the context type here?
@@ -106,9 +104,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   // Audio Context Ref for synthetic sound
   const audioContextRef = useRef<AudioContext | null>(null)
   
-  // PiP Window Ref
-  const pipWindowRef = useRef<Window | null>(null)
-  const [pipWindow, setPipWindow] = useState<Window | null>(null)
+
   
   const queryClient = useQueryClient();
 
@@ -173,9 +169,6 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         if (parsed.activeSessionId) setActiveSessionId(parsed.activeSessionId)
         
         // Priority: Server > LocalStorage > Default
-        // But we might load from server LATER, so this is tentative init
-        // actually let's stick to what we have or separate storage key
-        // I created "achron-timer-alarm-sound" separate key above for clarity
         const cachedSound = localStorage.getItem("achron-timer-alarm-sound") as AlarmSoundType
         if (cachedSound) {
              setAlarmSoundState(cachedSound)
@@ -187,10 +180,41 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         
         // Restore Status (RUNNING or PAUSED)
         if (parsed.status === 'RUNNING') {
-             setStatus('RUNNING')
-             setStartTime(parsed.startTime)
-             setAccumulatedTime(parsed.accumulatedTime || 0)
-             // timeLeft will be auto-calculated by tick effect immediately
+             // CHECK IF FINISHED WHILE AWAY
+             const now = Date.now()
+             const elapsedSinceBoot = (now - parsed.startTime) / 1000
+             const totalElapsed = (parsed.accumulatedTime || 0) + elapsedSinceBoot
+             const remaining = parsed.duration - totalElapsed
+
+             if (remaining <= 0) {
+                 // FINISHED WHILE AWAY
+                 // Don't set running. Finish it immediately.
+                 setStatus('IDLE')
+                 setAccumulatedTime(0)
+                 setStartTime(null)
+                 setTimeLeft(parsed.duration)
+
+                 if (parsed.activeSessionId) {
+                     // We use the raw parsed ID because ref/state might be too slow
+                     const finalDuration = totalElapsed // or duration?
+                     // actually we should cap it at duration usually or let it flow?
+                     // endSession uses the logic.
+                     endSession(parsed.activeSessionId, finalDuration).then((res) => {
+                         if (res) {
+                            toast.success("Session Completed While Away", {
+                                description: "Your timer finished while you were gone."
+                            })
+                         }
+                     })
+                     // Clear active session immediately to prevent double-finish
+                     setActiveSessionId(null);
+                 }
+             } else {
+                 // Still running, catch up
+                 setStatus('RUNNING')
+                 setStartTime(parsed.startTime)
+                 setAccumulatedTime(parsed.accumulatedTime || 0)
+             }
         } else if (parsed.status === 'PAUSED') {
             setStatus('PAUSED')
             setAccumulatedTime(parsed.accumulatedTime || 0)
@@ -206,43 +230,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  // Initialize Worker
-  useEffect(() => {
-    workerRef.current = new Worker('/timer-worker.js');
-    
-    workerRef.current.onmessage = (e) => {
-        if (e.data.type === 'TICK') {
-           // This forces a re-render/check in the active effect below?
-           // No, we need to trigger the update logic here or have the effect depend on something the worker touches?
-           // Actually, best pattern: The Worker drives the state update directly or we use a ref to hold state and force update?
-           // Existing logic uses `useEffect` with `interval`. We want to replace that `setInterval`.
-           // So we'll emit an event or update a state that triggers calculation.
-           // However, updating React state 10 times a second is fine.
-           // Let's make `onmessage` trigger the "tick" logic directly.
-        }
-    }
-    
-    return () => {
-        workerRef.current?.terminate();
-    }
-  }, [])
   
-  // Timer Tick Logic (Driven by Worker or Interval)
-  useEffect(() => {
-     // We will move the logic into the Worker's onmessage handler effectively,
-     // but we need access to latest state (duration, startTime, etc.)
-     // To avoid stale closures, we can use a ref for the latest state OR
-     // use the fact that `useEffect` re-binds.
-     // But `useEffect` re-binding every 100ms is expensive if we tear down the worker.
-     // Better: Keep worker running, but updating a `tick` state?
-     // Actually, simplest migration:
-     // The existing `useEffect` at line 180 sets up an interval.
-     // We will DELETE that useEffect and put the logic in the worker.onmessage
-     
-  }, []) 
-  // Wait, I can't put it in the empty dependency array effect above easily without Refs.
-  // Re-creating the worker effect matches the `status` dependency? 
-  // No, we don't want to recreate the worker.
   
   // Ref approach for state to avoid closure staleness in the static worker callback
   const statusRef = useRef(status);
@@ -268,8 +256,12 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   }, [status, startTime, accumulatedTime, duration, activeSessionId])
 
   useEffect(() => {
-    if (!workerRef.current) return;
-    
+    // initialize worker
+    workerRef.current = new Worker('/timer-worker.js');
+      // Here, the worker is initialized only once and the onmessage event is set up to handle the timer ticks.
+      // so whenever it TICKS, this onmessage event is called and the timer is updated. 
+      // also even through useEffect is called only once, but after creating a new worker
+      // this onmessage function is saved in the memory and is called just setInterval is called.
     workerRef.current.onmessage = () => {
         if (statusRef.current === 'RUNNING' && startTimeRef.current) {
             const now = Date.now()
@@ -283,6 +275,10 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
                 finish()
             }
         }
+    }
+
+    return () => {
+        workerRef.current?.terminate();
     }
   }, []) // Bind once. Uses refs for latest data.
   // Save state
@@ -302,22 +298,48 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   }, [status, startTime, accumulatedTime, timeLeft, duration, sessionType, sessionName, activeSessionId, currentTimerId, alarmSound])
 
   // End Session Helper (unchanged mostly, but we might use PATCH inside logic)
-  const endSession = async (id: string, passedDuration?: number): Promise<{ sessionId: string, duration: number } | null> => {
+  const endSessionMutation = useMutation({
+      // for giving multiple arguments in the mutation function we have pass an object
+      // mutation function only accept one argument
+      mutationFn: async ({ id, passedDuration }: { id: string, passedDuration?: number }) => {
+            const res = await axios.post("/api/session/end",{
+                  userId: user?.id,
+                  sessionId: id,
+                  duration: passedDuration !== undefined ? Math.floor(passedDuration) : undefined
+            });
+            const duration = res.data.duration;
+            return { sessionId: id, duration };
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['analytics'] });
+        queryClient.invalidateQueries({ queryKey: ['balance'] });
+      }
+  })
+
+  const endSession = async (id: string, passedDuration?: number) => {
       try {
-          const res = await axios.post('/api/session/end', { 
-            userId: user?.id,
-            sessionId: id,
-            duration: passedDuration !== undefined ? Math.floor(passedDuration) : undefined
-          });
-          const duration = res.data.duration;
-          queryClient.invalidateQueries({ queryKey: ['analytics'] });
-          queryClient.invalidateQueries({ queryKey: ['balance'] });
-          return { sessionId: id, duration };
-      } catch (err) {
-          console.error("Failed to end session", err);
+          return await endSessionMutation.mutateAsync({ id, passedDuration });
+      } catch (error) {
+          console.error("Failed to end session", error);
           return null;
       }
   }
+//   const endSession = async (id: string, passedDuration?: number): Promise<{ sessionId: string, duration: number } | null> => {
+//       try {
+//           const res = await axios.post('/api/session/end', { 
+//             userId: user?.id,
+//             sessionId: id,
+//             duration: passedDuration !== undefined ? Math.floor(passedDuration) : undefined
+//           });
+//           const duration = res.data.duration;
+//           queryClient.invalidateQueries({ queryKey: ['analytics'] });
+//           queryClient.invalidateQueries({ queryKey: ['balance'] });
+//           return { sessionId: id, duration };
+//       } catch (err) {
+//           console.error("Failed to end session", err);
+//           return null;
+//       }
+//   }
   
   // Update Session Helper (PATCH)
   const updateSession = async (id: string, duration: number, statusStr: string) => {
@@ -488,24 +510,24 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
              const mins = Math.max(1, Math.ceil(newAccumulated / 60))
              const toastId = toast("Timer Paused", {
                  description: `Recorded ${mins} minutes so far.`,
-                 action: {
-                     label: "Undo",
-                     onClick: async () => {
-                         try {
-                             await axios.delete(`/api/session/${currentSessionId}`)
-                             queryClient.invalidateQueries({ queryKey: ['analytics'] })
-                             queryClient.invalidateQueries({ queryKey: ['balance'] })
-                             setActiveSessionId(null)
-                             setStatus('IDLE')
-                             setAccumulatedTime(0)
-                             setTimeLeft(durationRef.current)
-                             toast.success("Session deleted")
-                             toast.dismiss(toastId)
-                         } catch (e) {
-                             toast.error("Failed to delete")
-                         }
-                     }
-                 }
+            //      action: {
+            //          label: "Undo",
+            //          onClick: async () => {
+            //              try {
+            //                  await axios.delete(`/api/session/${currentSessionId}`)
+            //                  queryClient.invalidateQueries({ queryKey: ['analytics'] })
+            //                  queryClient.invalidateQueries({ queryKey: ['balance'] })
+            //                  setActiveSessionId(null)
+            //                  setStatus('IDLE')
+            //                  setAccumulatedTime(0)
+            //                  setTimeLeft(durationRef.current)
+            //                  toast.success("Session deleted")
+            //                  toast.dismiss(toastId)
+            //              } catch (e) {
+            //                  toast.error("Failed to delete")
+            //              }
+            //          }
+            //      }
              })
         }
     }
@@ -622,12 +644,11 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     setTimeLeft(newDuration)
     setSessionType(newType)
     setSessionName(newName)
-
     // Try to match preset if no ID passed (backwards compat)
     if (newId) {
         setCurrentTimerId(newId);
     } else {
-        const match = presets.find(p => p.duration === newDuration && p.type === newType);
+        const match = presets.find(p => p.duration === newDuration && p.type === newType && p.name === newName);
         setCurrentTimerId(match ? match.id : null);
     }
   }
@@ -638,79 +659,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
-  // PiP Toggle
-  const togglePiP = async () => {
-    if (pipWindowRef.current) {
-        pipWindowRef.current.close()
-        pipWindowRef.current = null
-        setPipWindow(null)
-        return
-    }
 
-    if ("documentPictureInPicture" in window) {
-        try {
-            // @ts-ignore
-            const win = await window.documentPictureInPicture.requestWindow({
-                width: 300,
-                height: 150,
-            });
-            
-            pipWindowRef.current = win;
-            setPipWindow(win);
-
-            // Copy styles (Safely)
-            [...document.styleSheets].forEach((styleSheet) => {
-                try {
-                    // Try to link first (better for caching)
-                    if (styleSheet.href) {
-                        const link = win.document.createElement('link');
-                        link.rel = 'stylesheet';
-                        link.type = 'text/css';
-                        link.href = styleSheet.href;
-                        win.document.head.appendChild(link);
-                    } else {
-                         // Fallback for inline styles
-                        const cssRules = [...styleSheet.cssRules].map((rule) => rule.cssText).join('');
-                        const style = win.document.createElement('style');
-                        style.textContent = cssRules;
-                        win.document.head.appendChild(style);
-                    }
-                } catch (e) {
-                     console.warn("Could not copy stylesheet", e)
-                }
-            });
-            
-            const baseStyle = win.document.createElement('style');
-            baseStyle.textContent = `
-                body { 
-                    background-color: #09090b; 
-                    color: white; 
-                    display: flex; 
-                    flex-direction: column; 
-                    align-items: center; 
-                    justify-content: center;
-                    height: 100vh;
-                    margin: 0;
-                    font-family: system-ui, -apple-system, sans-serif;
-                    overflow: hidden;
-                }
-            `;
-            win.document.head.appendChild(baseStyle);
-
-        } catch (err) {
-            console.error("PiP failed", err);
-        }
-    }
-  }
-
-  // Lazy Cleanup: Only check if window is closed when the timer ticks
-  // This avoids aggressive polling that might misfire during tab throttling.
-  useEffect(() => {
-      if (pipWindow && pipWindow.closed) {
-          setPipWindow(null);
-          pipWindowRef.current = null;
-      }
-  }, [timeLeft, pipWindow]);
   
   // Timer Context Value
   return (
@@ -732,9 +681,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       alarmSound,
       setAlarmSound,
       playPreview: playAlarm,
-      status,
-      togglePiP,
-      pipWindow
+      status
     }}>
       {children}
     </TimerContext.Provider>
