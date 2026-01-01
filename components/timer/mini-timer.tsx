@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react'
 import { useTimer } from "@/components/providers/timer-context"
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Pause, Square, PictureInPicture2, X } from 'lucide-react'
+import { Play, Pause, Square, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 export function MiniTimer() {
-    const { isActive, timeLeft, formatTime, toggle, sessionType, status, togglePiP, pipWindow } = useTimer()
+    const { isActive, timeLeft, formatTime, toggle, sessionType, status } = useTimer()
     const pathname = usePathname()
     const [isVisible, setIsVisible] = useState(false)
 
@@ -25,7 +25,7 @@ export function MiniTimer() {
 
     // If PiP is active, we validly MIGHT want to hide the in-page widget?
     // Or keep it? Let's hide in-page widget if PiP is open to avoid clutter.
-    if (pipWindow) return null;
+
 
     if (!isVisible) return null;
 
@@ -56,15 +56,7 @@ export function MiniTimer() {
                         {isActive ? <Pause className="size-4 fill-current" /> : <Play className="size-4 fill-current" />}
                     </Button>
                     
-                    <Button 
-                        size="icon" 
-                        variant="ghost" 
-                        className="h-8 w-8 hover:bg-white/10 text-zinc-300 hover:text-white"
-                        onClick={togglePiP}
-                        title="Pop Out Player"
-                    >
-                        <PictureInPicture2 className="size-4" />
-                    </Button>
+
                 </div>
             </motion.div>
         </AnimatePresence>
