@@ -32,10 +32,6 @@ const DEFAULT_PRESETS: TimerPreset[] = [
 //     { id: "4", name: "Learning", duration: 60 * 60, type: "LEARNING", color: "bg-amber-500" },
 ]
 
-// interface test{
-//       addPresent: (present: Omit<TimerPreset, "id">) => Promise<any>
-// }
-
 interface TimerContextType extends TimerState {
   start: () => void
   pause: () => void
@@ -59,7 +55,7 @@ interface TimerContextType extends TimerState {
 // so if we define the type of the pipe here, then useContext will know what type of data it will be receiving
 const TimerContext = createContext<TimerContextType | undefined>(undefined)
 
-const DEFAULT_DURATION = typeof window !== 'undefined' ? Number(localStorage.getItem("achron-timer-duration")) || 25 * 60 : 25 * 60
+const DEFAULT_DURATION = typeof window !== 'undefined' ? Number(localStorage.getItem("achron-timer-duration")) || 90 * 60 : 90 * 60
 
 export function TimerProvider({ children }: { children: React.ReactNode }) {
   const { user } = useUser()

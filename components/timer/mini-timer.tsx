@@ -23,10 +23,6 @@ export function MiniTimer() {
         setIsVisible(hasActiveSession && !isTimerPage)
     }, [pathname, status])
 
-    // If PiP is active, we validly MIGHT want to hide the in-page widget?
-    // Or keep it? Let's hide in-page widget if PiP is open to avoid clutter.
-
-
     if (!isVisible) return null;
 
     return (
