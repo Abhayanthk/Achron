@@ -1,34 +1,24 @@
-"use client"
-
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { motion } from "framer-motion"
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
 
-// Generate exactly 52 weeks of data ending today
-const generateYearData = () => {
-    const data = []
+// Helper to generate the last 52 weeks of dates (skeleton)
+const generateDates = () => {
+    const dates = []
     const today = new Date()
     const daysToGenerate = 52 * 7 // 364 days
     
-    // Start from today and go backwards
+    // Start from today and go backwards to build chronological list
     for (let i = daysToGenerate - 1; i >= 0; i--) {
         const date = new Date(today)
         date.setDate(today.getDate() - i)
-        // More realistic "random" data with some clumps
-        const random = Math.random()
-        let intensity = 0
-        if (random > 0.92) intensity = 4
-        else if (random > 0.85) intensity = 3
-        else if (random > 0.70) intensity = 2
-        else if (random > 0.40) intensity = 1
-        
-        data.push({ date, intensity })
+        dates.push(date)
     }
-    return data
+    return dates
 }
-
-const data = generateYearData()
 
 const INTENSITY_STYLES = {
     0: "bg-[#1a1a1a]", 
@@ -41,38 +31,42 @@ const INTENSITY_STYLES = {
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 export function XPHeatmap() {
-  const [hoveredDay, setHoveredDay] = useState<{date: Date, intensity: number} | null>(null)
+  const [hoveredDay, setHoveredDay] = useState<{date: Date, intensity: number, xp: number} | null>(null)
 
-  // Group by weeks
-  const weeks: { date: Date; intensity: number }[][] = []
-  for (let i = 0; i < data.length; i += 7) {
-      weeks.push(data.slice(i, i + 7))
-  }
-
-  // Calculate month labels
-  const monthLabels: { label: string, index: number }[] = []
-  let lastMonth = -1
-  
-  weeks.forEach((week, i) => {
-      const firstDayOfWeek = week[0].date
-      const mouthIndex = firstDayOfWeek.getMonth()
-      
-      // Only add label if month changes
-      if (mouthIndex !== lastMonth) {
-          // Prevent "Double December" issue: 
-          // If we are at index 0 and it matches the LAST month of the data (which is likely), 
-          // we might want to skip it if it's too close to end, but simpler:
-          // Just filtering out the very first label if it's the same as the current month (end of graph)
-          // to keep the "future" focus.
-          
-          monthLabels.push({ label: MONTHS[mouthIndex], index: i })
-          lastMonth = mouthIndex
+  // Fetch Real Data
+  const { data: xpData = [] } = useQuery({
+      queryKey: ['analytics', 'heatmap'],
+      queryFn: async () => {
+          const res = await axios.get('/api/analytics?range=heatmap');
+          return res.data.data; // Array of { date: "YYYY-MM-DD", amount: number }
       }
   })
 
-  // Hacky fix for "Two Decembers": Remove the first label if it matches the last label
-  if (monthLabels.length > 0 && monthLabels[0].label === monthLabels[monthLabels.length - 1].label) {
-      monthLabels.shift()
+  // Normalize API data for fast lookup
+  const xpMap = new Map<string, number>();
+  xpData.forEach((item: any) => {
+      xpMap.set(item.date, item.amount);
+  });
+
+  // Build the grid data
+  const skeletonDates = generateDates();
+  const gridData = skeletonDates.map(date => {
+      const dateStr = date.toISOString().split('T')[0];
+      const xp = xpMap.get(dateStr) || 0;
+      
+      let intensity = 0;
+      if (xp > 1000) intensity = 4;
+      else if (xp > 500) intensity = 3;
+      else if (xp > 250) intensity = 2;
+      else if (xp > 0) intensity = 1;
+
+      return { date, intensity, xp };
+  });
+
+  // Group by weeks
+  const weeks: { date: Date; intensity: number; xp: number }[][] = []
+  for (let i = 0; i < gridData.length; i += 7) {
+      weeks.push(gridData.slice(i, i + 7))
   }
 
   return (
@@ -113,7 +107,7 @@ export function XPHeatmap() {
                                     <PopoverContent className="w-auto p-2 bg-zinc-950 border-zinc-800 text-zinc-400 text-xs font-mono shadow-xl">
                                         <div className="flex flex-col gap-1">
                                             <span className="text-zinc-200 font-bold">{day.date.toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}</span>
-                                            <span className="text-blue-400">{day.intensity === 0 ? 'No activity' : `${day.intensity * 250} XP Gained`}</span>
+                                            <span className="text-blue-400">{day.xp === 0 ? 'No activity' : `${day.xp} XP Gained`}</span>
                                         </div>
                                     </PopoverContent>
                                 </Popover>

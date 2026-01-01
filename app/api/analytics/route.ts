@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 function getStartOfWeek(date: Date) {
     const d = new Date(date);
     const day = d.getDay();
+//     js starts the week with sunday(0) but we want monday
     const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
     d.setDate(diff);
     d.setHours(0, 0, 0, 0);
@@ -57,9 +58,6 @@ export async function GET(request: NextRequest) {
         data = Array.from(weeklyMap).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
 
     } else if (range === "month") {
-        // Last 4 weeks distribution? Or just days of month? 
-        // User mock data showed "Week 1, Week 2..."
-        // Let's do current month broken by weeks
         queryStartDate = new Date(now.getFullYear(), now.getMonth(), 1);
         
         const sessions = await prisma.focusSession.findMany({
@@ -91,6 +89,31 @@ export async function GET(request: NextRequest) {
         
         // Cleanup Week 5 if empty? No, ok to show 0.
         data = Array.from(weeklyMap).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
+
+    } else if (range === "heatmap") {
+        queryStartDate = new Date();
+        queryStartDate.setDate(queryStartDate.getDate() - 365);
+        
+        const logs = await prisma.xpLog.findMany({
+            where: {
+                userId,
+                createdAt: { gte: queryStartDate }
+            },
+            select: {
+                amount: true,
+                createdAt: true
+            }
+        });
+
+        const dailyMap = new Map<string, number>();
+        logs.forEach(log => {
+            const dateStr = log.createdAt.toISOString().split('T')[0];
+            const current = dailyMap.get(dateStr) || 0;
+            dailyMap.set(dateStr, current + log.amount);
+        });
+        
+        // Return array of { date: "YYYY-MM-DD", amount: 150 }
+        data = Array.from(dailyMap).map(([date, amount]) => ({ date, amount }));
 
     } else if (range === "year") {
         queryStartDate = new Date(now.getFullYear(), 0, 1);
