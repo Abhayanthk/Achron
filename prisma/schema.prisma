@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
       provider = "prisma-client"
       output   = "../generated/prisma"
@@ -13,123 +8,156 @@ datasource db {
 }
 
 model User {
-      id        String   @id @default(cuid())
-      email     String   @unique
-      name      String?
-      fullName  String?
-      createdAt DateTime @default(now())
-      updatedAt DateTime @updatedAt
-
-      // Core Gamification
-      xp    Int @default(0)
-      level Int @default(1)
-
-      // Preferences
-      alarmSound String @default("digital")
-
-      // Relations
-      sessions FocusSession[]
-      workLogs WorkLog[]
-      tasks    Task[]
-      habits   Habit[]
-      traits   Trait[]
-      timers   Timer[]
-      xpLogs   XpLog[]
+      id             String          @id @default(cuid())
+      email          String          @unique
+      name           String?
+      createdAt      DateTime        @default(now())
+      updatedAt      DateTime        @updatedAt
+      xp             Int             @default(0)
+      level          Int             @default(1)
+      fullName       String?
+      alarmSound     String          @default("digital")
+      categories     Category[]
+      sessions       FocusSession[]
+      habits         Habit[]
+      tasks          Task[]
+      timers         Timer[]
+      traits         Trait[]
+      workLogs       WorkLog[]
+      xpLogs         XpLog[]
+      dailyLogs      DailyLog[]
+      reminders      Reminder[]
+      nonNegotiables NonNegotiable[]
 }
 
 model Trait {
-      id     String @id @default(cuid())
-      userId String
-      user   User   @relation(fields: [userId], references: [id])
-
+      id      String @id @default(cuid())
+      userId  String
       name    String
       mastery String
       level   Int    @default(1)
+      user    User   @relation(fields: [userId], references: [id])
 }
 
 model Timer {
-      id     String @id @default(cuid())
-      userId String
-      user   User   @relation(fields: [userId], references: [id])
-
-      name      String
-      duration  Int
-      type      String   @default("FOCUS")
-      color     String   @default("bg-blue-500")
-      createdAt DateTime @default(now())
-
+      id           String         @id @default(cuid())
+      userId       String
+      name         String
+      duration     Int
+      createdAt    DateTime       @default(now())
+      color        String         @default("bg-blue-500")
+      type         String         @default("FOCUS")
       alarmSoundId String?
-      alarmSound   AlarmSound? @relation(fields: [alarmSoundId], references: [id])
-
-      sessions FocusSession[]
+      sessions     FocusSession[]
+      alarmSound   AlarmSound?    @relation(fields: [alarmSoundId], references: [id])
+      user         User           @relation(fields: [userId], references: [id])
 }
 
 model AlarmSound {
       id        String   @id @default(cuid())
-      userId    String? // Optional: System sounds have null userId
+      userId    String?
       name      String
       url       String
       isCustom  Boolean  @default(false)
       createdAt DateTime @default(now())
-
-      timers Timer[]
+      timers    Timer[]
 }
 
 model FocusSession {
-      id     String @id @default(cuid())
-      userId String
-      user   User   @relation(fields: [userId], references: [id])
-
-      timerId String?
-      timer   Timer?  @relation(fields: [timerId], references: [id])
-
+      id        String    @id @default(cuid())
+      userId    String
       startTime DateTime
       endTime   DateTime?
-      duration  Int       @default(0) // in seconds
-
-      status    String   @default("COMPLETED") // COMPLETED, ABORTED, ACTIVE
-      createdAt DateTime @default(now())
+      duration  Int       @default(0)
+      status    String    @default("COMPLETED")
+      createdAt DateTime  @default(now())
+      timerId   String?
+      timer     Timer?    @relation(fields: [timerId], references: [id])
+      user      User      @relation(fields: [userId], references: [id])
 }
 
 model WorkLog {
-      id     String @id @default(cuid())
+      id     String   @id @default(cuid())
       userId String
-      user   User   @relation(fields: [userId], references: [id])
-
-      hours Float
-      type  String // "WASTE" or "WORK"
-      date  DateTime @default(now())
+      hours  Float
+      type   String
+      date   DateTime @default(now())
+      user   User     @relation(fields: [userId], references: [id])
 }
 
 model Task {
-      id     String @id @default(cuid())
-      userId String
-      user   User   @relation(fields: [userId], references: [id])
-
+      id          String    @id @default(cuid())
+      userId      String
       title       String
       isCompleted Boolean   @default(false)
       dueDate     DateTime?
       createdAt   DateTime  @default(now())
+      description String?
+      status      String    @default("PENDING")
+      updatedAt   DateTime  @updatedAt
+      categoryId  String?
+      xp          Int       @default(10)
+      category    Category? @relation(fields: [categoryId], references: [id])
+      user        User      @relation(fields: [userId], references: [id])
+}
+
+model Category {
+      id        String     @id @default(cuid())
+      userId    String
+      name      String
+      color     String?
+      createdAt DateTime   @default(now())
+      user      User       @relation(fields: [userId], references: [id])
+      tasks     Task[]
+      dailyLogs DailyLog[]
 }
 
 model Habit {
-      id     String @id @default(cuid())
-      userId String
-      user   User   @relation(fields: [userId], references: [id])
-
+      id             String     @id @default(cuid())
+      userId         String
       name           String
       streak         Int        @default(0)
       completedDates DateTime[]
+      user           User       @relation(fields: [userId], references: [id])
 }
 
 model XpLog {
-      id     String @id @default(cuid())
-      userId String
-      user   User   @relation(fields: [userId], references: [id])
-
+      id          String   @id @default(cuid())
+      userId      String
       amount      Int
-      source      String // "TIMER", "HABIT", "TASK", "DAILY"
-      description String? // e.g. "Focus Session: Deep Work"
+      source      String
+      description String?
+      createdAt   DateTime @default(now())
+      user        User     @relation(fields: [userId], references: [id])
+}
 
+model DailyLog {
+      id         String    @id @default(cuid())
+      userId     String
+      title      String
+      content    String    @db.Text
+      date       DateTime  @default(now())
+      isFavorite Boolean   @default(false)
+      createdAt  DateTime  @default(now())
+      updatedAt  DateTime  @updatedAt
+      user       User      @relation(fields: [userId], references: [id])
+      categoryId String?
+      category   Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Reminder {
+      id        String   @id @default(cuid())
+      userId    String
+      content   String
       createdAt DateTime @default(now())
+      user      User     @relation(fields: [userId], references: [id])
+}
+
+model NonNegotiable {
+      id             String     @id @default(cuid())
+      userId         String
+      title          String
+      completedDates DateTime[]
+      createdAt      DateTime   @default(now())
+      user           User       @relation(fields: [userId], references: [id])
 }

@@ -20,8 +20,18 @@ export type TaskModel = runtime.Types.Result.DefaultSelection<Prisma.$TaskPayloa
 
 export type AggregateTask = {
   _count: TaskCountAggregateOutputType | null
+  _avg: TaskAvgAggregateOutputType | null
+  _sum: TaskSumAggregateOutputType | null
   _min: TaskMinAggregateOutputType | null
   _max: TaskMaxAggregateOutputType | null
+}
+
+export type TaskAvgAggregateOutputType = {
+  xp: number | null
+}
+
+export type TaskSumAggregateOutputType = {
+  xp: number | null
 }
 
 export type TaskMinAggregateOutputType = {
@@ -31,6 +41,11 @@ export type TaskMinAggregateOutputType = {
   isCompleted: boolean | null
   dueDate: Date | null
   createdAt: Date | null
+  description: string | null
+  status: string | null
+  updatedAt: Date | null
+  categoryId: string | null
+  xp: number | null
 }
 
 export type TaskMaxAggregateOutputType = {
@@ -40,6 +55,11 @@ export type TaskMaxAggregateOutputType = {
   isCompleted: boolean | null
   dueDate: Date | null
   createdAt: Date | null
+  description: string | null
+  status: string | null
+  updatedAt: Date | null
+  categoryId: string | null
+  xp: number | null
 }
 
 export type TaskCountAggregateOutputType = {
@@ -49,9 +69,22 @@ export type TaskCountAggregateOutputType = {
   isCompleted: number
   dueDate: number
   createdAt: number
+  description: number
+  status: number
+  updatedAt: number
+  categoryId: number
+  xp: number
   _all: number
 }
 
+
+export type TaskAvgAggregateInputType = {
+  xp?: true
+}
+
+export type TaskSumAggregateInputType = {
+  xp?: true
+}
 
 export type TaskMinAggregateInputType = {
   id?: true
@@ -60,6 +93,11 @@ export type TaskMinAggregateInputType = {
   isCompleted?: true
   dueDate?: true
   createdAt?: true
+  description?: true
+  status?: true
+  updatedAt?: true
+  categoryId?: true
+  xp?: true
 }
 
 export type TaskMaxAggregateInputType = {
@@ -69,6 +107,11 @@ export type TaskMaxAggregateInputType = {
   isCompleted?: true
   dueDate?: true
   createdAt?: true
+  description?: true
+  status?: true
+  updatedAt?: true
+  categoryId?: true
+  xp?: true
 }
 
 export type TaskCountAggregateInputType = {
@@ -78,6 +121,11 @@ export type TaskCountAggregateInputType = {
   isCompleted?: true
   dueDate?: true
   createdAt?: true
+  description?: true
+  status?: true
+  updatedAt?: true
+  categoryId?: true
+  xp?: true
   _all?: true
 }
 
@@ -119,6 +167,18 @@ export type TaskAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TaskAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TaskSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TaskMinAggregateInputType
@@ -149,6 +209,8 @@ export type TaskGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: TaskCountAggregateInputType | true
+  _avg?: TaskAvgAggregateInputType
+  _sum?: TaskSumAggregateInputType
   _min?: TaskMinAggregateInputType
   _max?: TaskMaxAggregateInputType
 }
@@ -160,7 +222,14 @@ export type TaskGroupByOutputType = {
   isCompleted: boolean
   dueDate: Date | null
   createdAt: Date
+  description: string | null
+  status: string
+  updatedAt: Date
+  categoryId: string | null
+  xp: number
   _count: TaskCountAggregateOutputType | null
+  _avg: TaskAvgAggregateOutputType | null
+  _sum: TaskSumAggregateOutputType | null
   _min: TaskMinAggregateOutputType | null
   _max: TaskMaxAggregateOutputType | null
 }
@@ -190,6 +259,12 @@ export type TaskWhereInput = {
   isCompleted?: Prisma.BoolFilter<"Task"> | boolean
   dueDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
+  description?: Prisma.StringNullableFilter<"Task"> | string | null
+  status?: Prisma.StringFilter<"Task"> | string
+  updatedAt?: Prisma.DateTimeFilter<"Task"> | Date | string
+  categoryId?: Prisma.StringNullableFilter<"Task"> | string | null
+  xp?: Prisma.IntFilter<"Task"> | number
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -200,6 +275,12 @@ export type TaskOrderByWithRelationInput = {
   isCompleted?: Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  xp?: Prisma.SortOrder
+  category?: Prisma.CategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -213,6 +294,12 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   isCompleted?: Prisma.BoolFilter<"Task"> | boolean
   dueDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
+  description?: Prisma.StringNullableFilter<"Task"> | string | null
+  status?: Prisma.StringFilter<"Task"> | string
+  updatedAt?: Prisma.DateTimeFilter<"Task"> | Date | string
+  categoryId?: Prisma.StringNullableFilter<"Task"> | string | null
+  xp?: Prisma.IntFilter<"Task"> | number
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
@@ -223,9 +310,16 @@ export type TaskOrderByWithAggregationInput = {
   isCompleted?: Prisma.SortOrder
   dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  xp?: Prisma.SortOrder
   _count?: Prisma.TaskCountOrderByAggregateInput
+  _avg?: Prisma.TaskAvgOrderByAggregateInput
   _max?: Prisma.TaskMaxOrderByAggregateInput
   _min?: Prisma.TaskMinOrderByAggregateInput
+  _sum?: Prisma.TaskSumOrderByAggregateInput
 }
 
 export type TaskScalarWhereWithAggregatesInput = {
@@ -238,6 +332,11 @@ export type TaskScalarWhereWithAggregatesInput = {
   isCompleted?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
   dueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Task"> | Date | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  status?: Prisma.StringWithAggregatesFilter<"Task"> | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Task"> | Date | string
+  categoryId?: Prisma.StringNullableWithAggregatesFilter<"Task"> | string | null
+  xp?: Prisma.IntWithAggregatesFilter<"Task"> | number
 }
 
 export type TaskCreateInput = {
@@ -246,6 +345,11 @@ export type TaskCreateInput = {
   isCompleted?: boolean
   dueDate?: Date | string | null
   createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  xp?: number
+  category?: Prisma.CategoryCreateNestedOneWithoutTasksInput
   user: Prisma.UserCreateNestedOneWithoutTasksInput
 }
 
@@ -256,6 +360,11 @@ export type TaskUncheckedCreateInput = {
   isCompleted?: boolean
   dueDate?: Date | string | null
   createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  categoryId?: string | null
+  xp?: number
 }
 
 export type TaskUpdateInput = {
@@ -264,6 +373,11 @@ export type TaskUpdateInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  category?: Prisma.CategoryUpdateOneWithoutTasksNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTasksNestedInput
 }
 
@@ -274,6 +388,11 @@ export type TaskUncheckedUpdateInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskCreateManyInput = {
@@ -283,6 +402,11 @@ export type TaskCreateManyInput = {
   isCompleted?: boolean
   dueDate?: Date | string | null
   createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  categoryId?: string | null
+  xp?: number
 }
 
 export type TaskUpdateManyMutationInput = {
@@ -291,6 +415,10 @@ export type TaskUpdateManyMutationInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskUncheckedUpdateManyInput = {
@@ -300,6 +428,11 @@ export type TaskUncheckedUpdateManyInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskListRelationFilter = {
@@ -319,6 +452,15 @@ export type TaskCountOrderByAggregateInput = {
   isCompleted?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  xp?: Prisma.SortOrder
+}
+
+export type TaskAvgOrderByAggregateInput = {
+  xp?: Prisma.SortOrder
 }
 
 export type TaskMaxOrderByAggregateInput = {
@@ -328,6 +470,11 @@ export type TaskMaxOrderByAggregateInput = {
   isCompleted?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  xp?: Prisma.SortOrder
 }
 
 export type TaskMinOrderByAggregateInput = {
@@ -337,6 +484,15 @@ export type TaskMinOrderByAggregateInput = {
   isCompleted?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  description?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrder
+  xp?: Prisma.SortOrder
+}
+
+export type TaskSumOrderByAggregateInput = {
+  xp?: Prisma.SortOrder
 }
 
 export type TaskCreateNestedManyWithoutUserInput = {
@@ -381,12 +537,59 @@ export type TaskUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
 }
 
+export type TaskCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutCategoryInput, Prisma.TaskUncheckedCreateWithoutCategoryInput> | Prisma.TaskCreateWithoutCategoryInput[] | Prisma.TaskUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutCategoryInput | Prisma.TaskCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.TaskCreateManyCategoryInputEnvelope
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+}
+
+export type TaskUncheckedCreateNestedManyWithoutCategoryInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutCategoryInput, Prisma.TaskUncheckedCreateWithoutCategoryInput> | Prisma.TaskCreateWithoutCategoryInput[] | Prisma.TaskUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutCategoryInput | Prisma.TaskCreateOrConnectWithoutCategoryInput[]
+  createMany?: Prisma.TaskCreateManyCategoryInputEnvelope
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+}
+
+export type TaskUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutCategoryInput, Prisma.TaskUncheckedCreateWithoutCategoryInput> | Prisma.TaskCreateWithoutCategoryInput[] | Prisma.TaskUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutCategoryInput | Prisma.TaskCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.TaskUpsertWithWhereUniqueWithoutCategoryInput | Prisma.TaskUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.TaskCreateManyCategoryInputEnvelope
+  set?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  disconnect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  delete?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  update?: Prisma.TaskUpdateWithWhereUniqueWithoutCategoryInput | Prisma.TaskUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.TaskUpdateManyWithWhereWithoutCategoryInput | Prisma.TaskUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
+}
+
+export type TaskUncheckedUpdateManyWithoutCategoryNestedInput = {
+  create?: Prisma.XOR<Prisma.TaskCreateWithoutCategoryInput, Prisma.TaskUncheckedCreateWithoutCategoryInput> | Prisma.TaskCreateWithoutCategoryInput[] | Prisma.TaskUncheckedCreateWithoutCategoryInput[]
+  connectOrCreate?: Prisma.TaskCreateOrConnectWithoutCategoryInput | Prisma.TaskCreateOrConnectWithoutCategoryInput[]
+  upsert?: Prisma.TaskUpsertWithWhereUniqueWithoutCategoryInput | Prisma.TaskUpsertWithWhereUniqueWithoutCategoryInput[]
+  createMany?: Prisma.TaskCreateManyCategoryInputEnvelope
+  set?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  disconnect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  delete?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  connect?: Prisma.TaskWhereUniqueInput | Prisma.TaskWhereUniqueInput[]
+  update?: Prisma.TaskUpdateWithWhereUniqueWithoutCategoryInput | Prisma.TaskUpdateWithWhereUniqueWithoutCategoryInput[]
+  updateMany?: Prisma.TaskUpdateManyWithWhereWithoutCategoryInput | Prisma.TaskUpdateManyWithWhereWithoutCategoryInput[]
+  deleteMany?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
+}
+
 export type TaskCreateWithoutUserInput = {
   id?: string
   title: string
   isCompleted?: boolean
   dueDate?: Date | string | null
   createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  xp?: number
+  category?: Prisma.CategoryCreateNestedOneWithoutTasksInput
 }
 
 export type TaskUncheckedCreateWithoutUserInput = {
@@ -395,6 +598,11 @@ export type TaskUncheckedCreateWithoutUserInput = {
   isCompleted?: boolean
   dueDate?: Date | string | null
   createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  categoryId?: string | null
+  xp?: number
 }
 
 export type TaskCreateOrConnectWithoutUserInput = {
@@ -433,6 +641,63 @@ export type TaskScalarWhereInput = {
   isCompleted?: Prisma.BoolFilter<"Task"> | boolean
   dueDate?: Prisma.DateTimeNullableFilter<"Task"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Task"> | Date | string
+  description?: Prisma.StringNullableFilter<"Task"> | string | null
+  status?: Prisma.StringFilter<"Task"> | string
+  updatedAt?: Prisma.DateTimeFilter<"Task"> | Date | string
+  categoryId?: Prisma.StringNullableFilter<"Task"> | string | null
+  xp?: Prisma.IntFilter<"Task"> | number
+}
+
+export type TaskCreateWithoutCategoryInput = {
+  id?: string
+  title: string
+  isCompleted?: boolean
+  dueDate?: Date | string | null
+  createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  xp?: number
+  user: Prisma.UserCreateNestedOneWithoutTasksInput
+}
+
+export type TaskUncheckedCreateWithoutCategoryInput = {
+  id?: string
+  userId: string
+  title: string
+  isCompleted?: boolean
+  dueDate?: Date | string | null
+  createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  xp?: number
+}
+
+export type TaskCreateOrConnectWithoutCategoryInput = {
+  where: Prisma.TaskWhereUniqueInput
+  create: Prisma.XOR<Prisma.TaskCreateWithoutCategoryInput, Prisma.TaskUncheckedCreateWithoutCategoryInput>
+}
+
+export type TaskCreateManyCategoryInputEnvelope = {
+  data: Prisma.TaskCreateManyCategoryInput | Prisma.TaskCreateManyCategoryInput[]
+  skipDuplicates?: boolean
+}
+
+export type TaskUpsertWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.TaskWhereUniqueInput
+  update: Prisma.XOR<Prisma.TaskUpdateWithoutCategoryInput, Prisma.TaskUncheckedUpdateWithoutCategoryInput>
+  create: Prisma.XOR<Prisma.TaskCreateWithoutCategoryInput, Prisma.TaskUncheckedCreateWithoutCategoryInput>
+}
+
+export type TaskUpdateWithWhereUniqueWithoutCategoryInput = {
+  where: Prisma.TaskWhereUniqueInput
+  data: Prisma.XOR<Prisma.TaskUpdateWithoutCategoryInput, Prisma.TaskUncheckedUpdateWithoutCategoryInput>
+}
+
+export type TaskUpdateManyWithWhereWithoutCategoryInput = {
+  where: Prisma.TaskScalarWhereInput
+  data: Prisma.XOR<Prisma.TaskUpdateManyMutationInput, Prisma.TaskUncheckedUpdateManyWithoutCategoryInput>
 }
 
 export type TaskCreateManyUserInput = {
@@ -441,6 +706,11 @@ export type TaskCreateManyUserInput = {
   isCompleted?: boolean
   dueDate?: Date | string | null
   createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  categoryId?: string | null
+  xp?: number
 }
 
 export type TaskUpdateWithoutUserInput = {
@@ -449,6 +719,11 @@ export type TaskUpdateWithoutUserInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  category?: Prisma.CategoryUpdateOneWithoutTasksNestedInput
 }
 
 export type TaskUncheckedUpdateWithoutUserInput = {
@@ -457,6 +732,11 @@ export type TaskUncheckedUpdateWithoutUserInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskUncheckedUpdateManyWithoutUserInput = {
@@ -465,6 +745,63 @@ export type TaskUncheckedUpdateManyWithoutUserInput = {
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type TaskCreateManyCategoryInput = {
+  id?: string
+  userId: string
+  title: string
+  isCompleted?: boolean
+  dueDate?: Date | string | null
+  createdAt?: Date | string
+  description?: string | null
+  status?: string
+  updatedAt?: Date | string
+  xp?: number
+}
+
+export type TaskUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  user?: Prisma.UserUpdateOneRequiredWithoutTasksNestedInput
+}
+
+export type TaskUncheckedUpdateWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
+export type TaskUncheckedUpdateManyWithoutCategoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -476,6 +813,12 @@ export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isCompleted?: boolean
   dueDate?: boolean
   createdAt?: boolean
+  description?: boolean
+  status?: boolean
+  updatedAt?: boolean
+  categoryId?: boolean
+  xp?: boolean
+  category?: boolean | Prisma.Task$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
@@ -486,6 +829,12 @@ export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isCompleted?: boolean
   dueDate?: boolean
   createdAt?: boolean
+  description?: boolean
+  status?: boolean
+  updatedAt?: boolean
+  categoryId?: boolean
+  xp?: boolean
+  category?: boolean | Prisma.Task$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
@@ -496,6 +845,12 @@ export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   isCompleted?: boolean
   dueDate?: boolean
   createdAt?: boolean
+  description?: boolean
+  status?: boolean
+  updatedAt?: boolean
+  categoryId?: boolean
+  xp?: boolean
+  category?: boolean | Prisma.Task$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
@@ -506,22 +861,31 @@ export type TaskSelectScalar = {
   isCompleted?: boolean
   dueDate?: boolean
   createdAt?: boolean
+  description?: boolean
+  status?: boolean
+  updatedAt?: boolean
+  categoryId?: boolean
+  xp?: boolean
 }
 
-export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "isCompleted" | "dueDate" | "createdAt", ExtArgs["result"]["task"]>
+export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "isCompleted" | "dueDate" | "createdAt" | "description" | "status" | "updatedAt" | "categoryId" | "xp", ExtArgs["result"]["task"]>
 export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.Task$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.Task$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TaskIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.Task$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Task"
   objects: {
+    category: Prisma.$CategoryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -531,6 +895,11 @@ export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isCompleted: boolean
     dueDate: Date | null
     createdAt: Date
+    description: string | null
+    status: string
+    updatedAt: Date
+    categoryId: string | null
+    xp: number
   }, ExtArgs["result"]["task"]>
   composites: {}
 }
@@ -925,6 +1294,7 @@ readonly fields: TaskFieldRefs;
  */
 export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  category<T extends Prisma.Task$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -961,6 +1331,11 @@ export interface TaskFieldRefs {
   readonly isCompleted: Prisma.FieldRef<"Task", 'Boolean'>
   readonly dueDate: Prisma.FieldRef<"Task", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Task", 'DateTime'>
+  readonly description: Prisma.FieldRef<"Task", 'String'>
+  readonly status: Prisma.FieldRef<"Task", 'String'>
+  readonly updatedAt: Prisma.FieldRef<"Task", 'DateTime'>
+  readonly categoryId: Prisma.FieldRef<"Task", 'String'>
+  readonly xp: Prisma.FieldRef<"Task", 'Int'>
 }
     
 
@@ -1354,6 +1729,25 @@ export type TaskDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Tasks to delete.
    */
   limit?: number
+}
+
+/**
+ * Task.category
+ */
+export type Task$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
 }
 
 /**

@@ -40,11 +40,11 @@ export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
   name: string | null
-  fullName: string | null
   createdAt: Date | null
   updatedAt: Date | null
   xp: number | null
   level: number | null
+  fullName: string | null
   alarmSound: string | null
 }
 
@@ -52,11 +52,11 @@ export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
   name: string | null
-  fullName: string | null
   createdAt: Date | null
   updatedAt: Date | null
   xp: number | null
   level: number | null
+  fullName: string | null
   alarmSound: string | null
 }
 
@@ -64,11 +64,11 @@ export type UserCountAggregateOutputType = {
   id: number
   email: number
   name: number
-  fullName: number
   createdAt: number
   updatedAt: number
   xp: number
   level: number
+  fullName: number
   alarmSound: number
   _all: number
 }
@@ -88,11 +88,11 @@ export type UserMinAggregateInputType = {
   id?: true
   email?: true
   name?: true
-  fullName?: true
   createdAt?: true
   updatedAt?: true
   xp?: true
   level?: true
+  fullName?: true
   alarmSound?: true
 }
 
@@ -100,11 +100,11 @@ export type UserMaxAggregateInputType = {
   id?: true
   email?: true
   name?: true
-  fullName?: true
   createdAt?: true
   updatedAt?: true
   xp?: true
   level?: true
+  fullName?: true
   alarmSound?: true
 }
 
@@ -112,11 +112,11 @@ export type UserCountAggregateInputType = {
   id?: true
   email?: true
   name?: true
-  fullName?: true
   createdAt?: true
   updatedAt?: true
   xp?: true
   level?: true
+  fullName?: true
   alarmSound?: true
   _all?: true
 }
@@ -211,11 +211,11 @@ export type UserGroupByOutputType = {
   id: string
   email: string
   name: string | null
-  fullName: string | null
   createdAt: Date
   updatedAt: Date
   xp: number
   level: number
+  fullName: string | null
   alarmSound: string
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
@@ -246,38 +246,46 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringNullableFilter<"User"> | string | null
-  fullName?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   xp?: Prisma.IntFilter<"User"> | number
   level?: Prisma.IntFilter<"User"> | number
+  fullName?: Prisma.StringNullableFilter<"User"> | string | null
   alarmSound?: Prisma.StringFilter<"User"> | string
+  categories?: Prisma.CategoryListRelationFilter
   sessions?: Prisma.FocusSessionListRelationFilter
-  workLogs?: Prisma.WorkLogListRelationFilter
-  tasks?: Prisma.TaskListRelationFilter
   habits?: Prisma.HabitListRelationFilter
-  traits?: Prisma.TraitListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
   timers?: Prisma.TimerListRelationFilter
+  traits?: Prisma.TraitListRelationFilter
+  workLogs?: Prisma.WorkLogListRelationFilter
   xpLogs?: Prisma.XpLogListRelationFilter
+  dailyLogs?: Prisma.DailyLogListRelationFilter
+  reminders?: Prisma.ReminderListRelationFilter
+  nonNegotiables?: Prisma.NonNegotiableListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   level?: Prisma.SortOrder
+  fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   alarmSound?: Prisma.SortOrder
+  categories?: Prisma.CategoryOrderByRelationAggregateInput
   sessions?: Prisma.FocusSessionOrderByRelationAggregateInput
-  workLogs?: Prisma.WorkLogOrderByRelationAggregateInput
-  tasks?: Prisma.TaskOrderByRelationAggregateInput
   habits?: Prisma.HabitOrderByRelationAggregateInput
-  traits?: Prisma.TraitOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
   timers?: Prisma.TimerOrderByRelationAggregateInput
+  traits?: Prisma.TraitOrderByRelationAggregateInput
+  workLogs?: Prisma.WorkLogOrderByRelationAggregateInput
   xpLogs?: Prisma.XpLogOrderByRelationAggregateInput
+  dailyLogs?: Prisma.DailyLogOrderByRelationAggregateInput
+  reminders?: Prisma.ReminderOrderByRelationAggregateInput
+  nonNegotiables?: Prisma.NonNegotiableOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -287,30 +295,34 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringNullableFilter<"User"> | string | null
-  fullName?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   xp?: Prisma.IntFilter<"User"> | number
   level?: Prisma.IntFilter<"User"> | number
+  fullName?: Prisma.StringNullableFilter<"User"> | string | null
   alarmSound?: Prisma.StringFilter<"User"> | string
+  categories?: Prisma.CategoryListRelationFilter
   sessions?: Prisma.FocusSessionListRelationFilter
-  workLogs?: Prisma.WorkLogListRelationFilter
-  tasks?: Prisma.TaskListRelationFilter
   habits?: Prisma.HabitListRelationFilter
-  traits?: Prisma.TraitListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
   timers?: Prisma.TimerListRelationFilter
+  traits?: Prisma.TraitListRelationFilter
+  workLogs?: Prisma.WorkLogListRelationFilter
   xpLogs?: Prisma.XpLogListRelationFilter
+  dailyLogs?: Prisma.DailyLogListRelationFilter
+  reminders?: Prisma.ReminderListRelationFilter
+  nonNegotiables?: Prisma.NonNegotiableListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   level?: Prisma.SortOrder
+  fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   alarmSound?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
@@ -326,11 +338,11 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  fullName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   xp?: Prisma.IntWithAggregatesFilter<"User"> | number
   level?: Prisma.IntWithAggregatesFilter<"User"> | number
+  fullName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   alarmSound?: Prisma.StringWithAggregatesFilter<"User"> | string
 }
 
@@ -338,87 +350,103 @@ export type UserCreateInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
 }
 
@@ -426,11 +454,11 @@ export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -438,11 +466,11 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -450,11 +478,11 @@ export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  fullName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   level?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
   alarmSound?: Prisma.SortOrder
 }
 
@@ -467,11 +495,11 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  fullName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   level?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
   alarmSound?: Prisma.SortOrder
 }
 
@@ -479,11 +507,11 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  fullName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   level?: Prisma.SortOrder
+  fullName?: Prisma.SortOrder
   alarmSound?: Prisma.SortOrder
 }
 
@@ -587,6 +615,20 @@ export type UserUpdateOneRequiredWithoutTasksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasksInput, Prisma.UserUpdateWithoutTasksInput>, Prisma.UserUncheckedUpdateWithoutTasksInput>
 }
 
+export type UserCreateNestedOneWithoutCategoriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCategoriesInput, Prisma.UserUncheckedCreateWithoutCategoriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCategoriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCategoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCategoriesInput, Prisma.UserUncheckedCreateWithoutCategoriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCategoriesInput
+  upsert?: Prisma.UserUpsertWithoutCategoriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCategoriesInput, Prisma.UserUpdateWithoutCategoriesInput>, Prisma.UserUncheckedUpdateWithoutCategoriesInput>
+}
+
 export type UserCreateNestedOneWithoutHabitsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutHabitsInput, Prisma.UserUncheckedCreateWithoutHabitsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutHabitsInput
@@ -615,40 +657,90 @@ export type UserUpdateOneRequiredWithoutXpLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutXpLogsInput, Prisma.UserUpdateWithoutXpLogsInput>, Prisma.UserUncheckedUpdateWithoutXpLogsInput>
 }
 
+export type UserCreateNestedOneWithoutDailyLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDailyLogsInput, Prisma.UserUncheckedCreateWithoutDailyLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDailyLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutDailyLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDailyLogsInput, Prisma.UserUncheckedCreateWithoutDailyLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDailyLogsInput
+  upsert?: Prisma.UserUpsertWithoutDailyLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDailyLogsInput, Prisma.UserUpdateWithoutDailyLogsInput>, Prisma.UserUncheckedUpdateWithoutDailyLogsInput>
+}
+
+export type UserCreateNestedOneWithoutRemindersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRemindersInput, Prisma.UserUncheckedCreateWithoutRemindersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRemindersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRemindersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRemindersInput, Prisma.UserUncheckedCreateWithoutRemindersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRemindersInput
+  upsert?: Prisma.UserUpsertWithoutRemindersInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRemindersInput, Prisma.UserUpdateWithoutRemindersInput>, Prisma.UserUncheckedUpdateWithoutRemindersInput>
+}
+
+export type UserCreateNestedOneWithoutNonNegotiablesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNonNegotiablesInput, Prisma.UserUncheckedCreateWithoutNonNegotiablesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNonNegotiablesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNonNegotiablesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNonNegotiablesInput, Prisma.UserUncheckedCreateWithoutNonNegotiablesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNonNegotiablesInput
+  upsert?: Prisma.UserUpsertWithoutNonNegotiablesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNonNegotiablesInput, Prisma.UserUpdateWithoutNonNegotiablesInput>, Prisma.UserUncheckedUpdateWithoutNonNegotiablesInput>
+}
+
 export type UserCreateWithoutTraitsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTraitsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTraitsInput = {
@@ -671,72 +763,88 @@ export type UserUpdateWithoutTraitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTraitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTimersInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTimersInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTimersInput = {
@@ -759,72 +867,88 @@ export type UserUpdateWithoutTimersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -847,72 +971,88 @@ export type UserUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWorkLogsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkLogsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkLogsInput = {
@@ -935,72 +1075,88 @@ export type UserUpdateWithoutWorkLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTasksInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTasksInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTasksInput = {
@@ -1023,72 +1179,192 @@ export type UserUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCategoriesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCategoriesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCategoriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCategoriesInput, Prisma.UserUncheckedCreateWithoutCategoriesInput>
+}
+
+export type UserUpsertWithoutCategoriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCategoriesInput, Prisma.UserUncheckedUpdateWithoutCategoriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCategoriesInput, Prisma.UserUncheckedCreateWithoutCategoriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCategoriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCategoriesInput, Prisma.UserUncheckedUpdateWithoutCategoriesInput>
+}
+
+export type UserUpdateWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutHabitsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutHabitsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutHabitsInput = {
@@ -1111,72 +1387,88 @@ export type UserUpdateWithoutHabitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHabitsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutXpLogsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutXpLogsInput = {
   id?: string
   email: string
   name?: string | null
-  fullName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   xp?: number
   level?: number
+  fullName?: string | null
   alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
-  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
-  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutXpLogsInput = {
@@ -1199,36 +1491,356 @@ export type UserUpdateWithoutXpLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutXpLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
-  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutDailyLogsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutDailyLogsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutDailyLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDailyLogsInput, Prisma.UserUncheckedCreateWithoutDailyLogsInput>
+}
+
+export type UserUpsertWithoutDailyLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDailyLogsInput, Prisma.UserUncheckedUpdateWithoutDailyLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDailyLogsInput, Prisma.UserUncheckedCreateWithoutDailyLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDailyLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDailyLogsInput, Prisma.UserUncheckedUpdateWithoutDailyLogsInput>
+}
+
+export type UserUpdateWithoutDailyLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDailyLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutRemindersInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutRemindersInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutRemindersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRemindersInput, Prisma.UserUncheckedCreateWithoutRemindersInput>
+}
+
+export type UserUpsertWithoutRemindersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRemindersInput, Prisma.UserUncheckedUpdateWithoutRemindersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRemindersInput, Prisma.UserUncheckedCreateWithoutRemindersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRemindersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRemindersInput, Prisma.UserUncheckedUpdateWithoutRemindersInput>
+}
+
+export type UserUpdateWithoutRemindersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRemindersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNonNegotiablesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNonNegotiablesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  xp?: number
+  level?: number
+  fullName?: string | null
+  alarmSound?: string
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
+  habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
+  traits?: Prisma.TraitUncheckedCreateNestedManyWithoutUserInput
+  workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
+  xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNonNegotiablesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNonNegotiablesInput, Prisma.UserUncheckedCreateWithoutNonNegotiablesInput>
+}
+
+export type UserUpsertWithoutNonNegotiablesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNonNegotiablesInput, Prisma.UserUncheckedUpdateWithoutNonNegotiablesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNonNegotiablesInput, Prisma.UserUncheckedCreateWithoutNonNegotiablesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNonNegotiablesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNonNegotiablesInput, Prisma.UserUncheckedUpdateWithoutNonNegotiablesInput>
+}
+
+export type UserUpdateWithoutNonNegotiablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNonNegotiablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+  habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
+  traits?: Prisma.TraitUncheckedUpdateManyWithoutUserNestedInput
+  workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
+  xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1237,23 +1849,31 @@ export type UserUncheckedUpdateWithoutXpLogsInput = {
  */
 
 export type UserCountOutputType = {
+  categories: number
   sessions: number
-  workLogs: number
-  tasks: number
   habits: number
-  traits: number
+  tasks: number
   timers: number
+  traits: number
+  workLogs: number
   xpLogs: number
+  dailyLogs: number
+  reminders: number
+  nonNegotiables: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  categories?: boolean | UserCountOutputTypeCountCategoriesArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
-  workLogs?: boolean | UserCountOutputTypeCountWorkLogsArgs
-  tasks?: boolean | UserCountOutputTypeCountTasksArgs
   habits?: boolean | UserCountOutputTypeCountHabitsArgs
-  traits?: boolean | UserCountOutputTypeCountTraitsArgs
+  tasks?: boolean | UserCountOutputTypeCountTasksArgs
   timers?: boolean | UserCountOutputTypeCountTimersArgs
+  traits?: boolean | UserCountOutputTypeCountTraitsArgs
+  workLogs?: boolean | UserCountOutputTypeCountWorkLogsArgs
   xpLogs?: boolean | UserCountOutputTypeCountXpLogsArgs
+  dailyLogs?: boolean | UserCountOutputTypeCountDailyLogsArgs
+  reminders?: boolean | UserCountOutputTypeCountRemindersArgs
+  nonNegotiables?: boolean | UserCountOutputTypeCountNonNegotiablesArgs
 }
 
 /**
@@ -1269,22 +1889,15 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CategoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FocusSessionWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountWorkLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WorkLogWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TaskWhereInput
 }
 
 /**
@@ -1297,8 +1910,8 @@ export type UserCountOutputTypeCountHabitsArgs<ExtArgs extends runtime.Types.Ext
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountTraitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TraitWhereInput
+export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
 }
 
 /**
@@ -1311,8 +1924,43 @@ export type UserCountOutputTypeCountTimersArgs<ExtArgs extends runtime.Types.Ext
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountTraitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TraitWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWorkLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountXpLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.XpLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRemindersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReminderWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNonNegotiablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NonNegotiableWhereInput
 }
 
 
@@ -1320,19 +1968,23 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   email?: boolean
   name?: boolean
-  fullName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   xp?: boolean
   level?: boolean
+  fullName?: boolean
   alarmSound?: boolean
+  categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  workLogs?: boolean | Prisma.User$workLogsArgs<ExtArgs>
-  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
-  traits?: boolean | Prisma.User$traitsArgs<ExtArgs>
+  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   timers?: boolean | Prisma.User$timersArgs<ExtArgs>
+  traits?: boolean | Prisma.User$traitsArgs<ExtArgs>
+  workLogs?: boolean | Prisma.User$workLogsArgs<ExtArgs>
   xpLogs?: boolean | Prisma.User$xpLogsArgs<ExtArgs>
+  dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
+  reminders?: boolean | Prisma.User$remindersArgs<ExtArgs>
+  nonNegotiables?: boolean | Prisma.User$nonNegotiablesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1340,11 +1992,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   name?: boolean
-  fullName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   xp?: boolean
   level?: boolean
+  fullName?: boolean
   alarmSound?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1352,11 +2004,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   name?: boolean
-  fullName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   xp?: boolean
   level?: boolean
+  fullName?: boolean
   alarmSound?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -1364,23 +2016,27 @@ export type UserSelectScalar = {
   id?: boolean
   email?: boolean
   name?: boolean
-  fullName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   xp?: boolean
   level?: boolean
+  fullName?: boolean
   alarmSound?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "fullName" | "createdAt" | "updatedAt" | "xp" | "level" | "alarmSound", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "xp" | "level" | "fullName" | "alarmSound", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
-  workLogs?: boolean | Prisma.User$workLogsArgs<ExtArgs>
-  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
-  traits?: boolean | Prisma.User$traitsArgs<ExtArgs>
+  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   timers?: boolean | Prisma.User$timersArgs<ExtArgs>
+  traits?: boolean | Prisma.User$traitsArgs<ExtArgs>
+  workLogs?: boolean | Prisma.User$workLogsArgs<ExtArgs>
   xpLogs?: boolean | Prisma.User$xpLogsArgs<ExtArgs>
+  dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
+  reminders?: boolean | Prisma.User$remindersArgs<ExtArgs>
+  nonNegotiables?: boolean | Prisma.User$nonNegotiablesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1389,23 +2045,27 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    categories: Prisma.$CategoryPayload<ExtArgs>[]
     sessions: Prisma.$FocusSessionPayload<ExtArgs>[]
-    workLogs: Prisma.$WorkLogPayload<ExtArgs>[]
-    tasks: Prisma.$TaskPayload<ExtArgs>[]
     habits: Prisma.$HabitPayload<ExtArgs>[]
-    traits: Prisma.$TraitPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
     timers: Prisma.$TimerPayload<ExtArgs>[]
+    traits: Prisma.$TraitPayload<ExtArgs>[]
+    workLogs: Prisma.$WorkLogPayload<ExtArgs>[]
     xpLogs: Prisma.$XpLogPayload<ExtArgs>[]
+    dailyLogs: Prisma.$DailyLogPayload<ExtArgs>[]
+    reminders: Prisma.$ReminderPayload<ExtArgs>[]
+    nonNegotiables: Prisma.$NonNegotiablePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
     name: string | null
-    fullName: string | null
     createdAt: Date
     updatedAt: Date
     xp: number
     level: number
+    fullName: string | null
     alarmSound: string
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1801,13 +2461,17 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  categories<T extends Prisma.User$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  workLogs<T extends Prisma.User$workLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   habits<T extends Prisma.User$habitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  traits<T extends Prisma.User$traitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$traitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TraitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   timers<T extends Prisma.User$timersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  traits<T extends Prisma.User$traitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$traitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TraitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  workLogs<T extends Prisma.User$workLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   xpLogs<T extends Prisma.User$xpLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$xpLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$XpLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dailyLogs<T extends Prisma.User$dailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reminders<T extends Prisma.User$remindersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  nonNegotiables<T extends Prisma.User$nonNegotiablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$nonNegotiablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NonNegotiablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1840,11 +2504,11 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly fullName: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly xp: Prisma.FieldRef<"User", 'Int'>
   readonly level: Prisma.FieldRef<"User", 'Int'>
+  readonly fullName: Prisma.FieldRef<"User", 'String'>
   readonly alarmSound: Prisma.FieldRef<"User", 'String'>
 }
     
@@ -2234,6 +2898,30 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.categories
+ */
+export type User$categoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
+  orderBy?: Prisma.CategoryOrderByWithRelationInput | Prisma.CategoryOrderByWithRelationInput[]
+  cursor?: Prisma.CategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
+}
+
+/**
  * User.sessions
  */
 export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2255,54 +2943,6 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.FocusSessionScalarFieldEnum | Prisma.FocusSessionScalarFieldEnum[]
-}
-
-/**
- * User.workLogs
- */
-export type User$workLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the WorkLog
-   */
-  select?: Prisma.WorkLogSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the WorkLog
-   */
-  omit?: Prisma.WorkLogOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.WorkLogInclude<ExtArgs> | null
-  where?: Prisma.WorkLogWhereInput
-  orderBy?: Prisma.WorkLogOrderByWithRelationInput | Prisma.WorkLogOrderByWithRelationInput[]
-  cursor?: Prisma.WorkLogWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.WorkLogScalarFieldEnum | Prisma.WorkLogScalarFieldEnum[]
-}
-
-/**
- * User.tasks
- */
-export type User$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Task
-   */
-  select?: Prisma.TaskSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Task
-   */
-  omit?: Prisma.TaskOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TaskInclude<ExtArgs> | null
-  where?: Prisma.TaskWhereInput
-  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
-  cursor?: Prisma.TaskWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
 }
 
 /**
@@ -2330,27 +2970,27 @@ export type User$habitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 /**
- * User.traits
+ * User.tasks
  */
-export type User$traitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Trait
+   * Select specific fields to fetch from the Task
    */
-  select?: Prisma.TraitSelect<ExtArgs> | null
+  select?: Prisma.TaskSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Trait
+   * Omit specific fields from the Task
    */
-  omit?: Prisma.TraitOmit<ExtArgs> | null
+  omit?: Prisma.TaskOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TraitInclude<ExtArgs> | null
-  where?: Prisma.TraitWhereInput
-  orderBy?: Prisma.TraitOrderByWithRelationInput | Prisma.TraitOrderByWithRelationInput[]
-  cursor?: Prisma.TraitWhereUniqueInput
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TraitScalarFieldEnum | Prisma.TraitScalarFieldEnum[]
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
 }
 
 /**
@@ -2378,6 +3018,54 @@ export type User$timersArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 }
 
 /**
+ * User.traits
+ */
+export type User$traitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Trait
+   */
+  select?: Prisma.TraitSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Trait
+   */
+  omit?: Prisma.TraitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TraitInclude<ExtArgs> | null
+  where?: Prisma.TraitWhereInput
+  orderBy?: Prisma.TraitOrderByWithRelationInput | Prisma.TraitOrderByWithRelationInput[]
+  cursor?: Prisma.TraitWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TraitScalarFieldEnum | Prisma.TraitScalarFieldEnum[]
+}
+
+/**
+ * User.workLogs
+ */
+export type User$workLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkLog
+   */
+  select?: Prisma.WorkLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkLog
+   */
+  omit?: Prisma.WorkLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkLogInclude<ExtArgs> | null
+  where?: Prisma.WorkLogWhereInput
+  orderBy?: Prisma.WorkLogOrderByWithRelationInput | Prisma.WorkLogOrderByWithRelationInput[]
+  cursor?: Prisma.WorkLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkLogScalarFieldEnum | Prisma.WorkLogScalarFieldEnum[]
+}
+
+/**
  * User.xpLogs
  */
 export type User$xpLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2399,6 +3087,78 @@ export type User$xpLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.XpLogScalarFieldEnum | Prisma.XpLogScalarFieldEnum[]
+}
+
+/**
+ * User.dailyLogs
+ */
+export type User$dailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyLog
+   */
+  select?: Prisma.DailyLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyLog
+   */
+  omit?: Prisma.DailyLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyLogInclude<ExtArgs> | null
+  where?: Prisma.DailyLogWhereInput
+  orderBy?: Prisma.DailyLogOrderByWithRelationInput | Prisma.DailyLogOrderByWithRelationInput[]
+  cursor?: Prisma.DailyLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyLogScalarFieldEnum | Prisma.DailyLogScalarFieldEnum[]
+}
+
+/**
+ * User.reminders
+ */
+export type User$remindersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reminder
+   */
+  select?: Prisma.ReminderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reminder
+   */
+  omit?: Prisma.ReminderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReminderInclude<ExtArgs> | null
+  where?: Prisma.ReminderWhereInput
+  orderBy?: Prisma.ReminderOrderByWithRelationInput | Prisma.ReminderOrderByWithRelationInput[]
+  cursor?: Prisma.ReminderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReminderScalarFieldEnum | Prisma.ReminderScalarFieldEnum[]
+}
+
+/**
+ * User.nonNegotiables
+ */
+export type User$nonNegotiablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NonNegotiable
+   */
+  select?: Prisma.NonNegotiableSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NonNegotiable
+   */
+  omit?: Prisma.NonNegotiableOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NonNegotiableInclude<ExtArgs> | null
+  where?: Prisma.NonNegotiableWhereInput
+  orderBy?: Prisma.NonNegotiableOrderByWithRelationInput | Prisma.NonNegotiableOrderByWithRelationInput[]
+  cursor?: Prisma.NonNegotiableWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NonNegotiableScalarFieldEnum | Prisma.NonNegotiableScalarFieldEnum[]
 }
 
 /**

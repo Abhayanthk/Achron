@@ -68,7 +68,6 @@ export function XPHeatmap() {
   for (let i = 0; i < gridData.length; i += 7) {
       weeks.push(gridData.slice(i, i + 7))
   }
-
   return (
     <div className="w-full h-full flex flex-col bg-black/40 border border-white/5 rounded-xl p-4 backdrop-blur-sm">
         {/* Compact Header */}

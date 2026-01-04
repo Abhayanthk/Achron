@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useUser, useClerk, ClerkLoaded, ClerkLoading, SignOutButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 
 import {
@@ -20,7 +21,8 @@ import {
   Settings,
   ChevronsUpDown,
   LogOut,
-  Sparkles
+  Sparkles,
+
 } from "lucide-react"
 
 import {
@@ -95,14 +97,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               size="lg"
               className="data-[state=open]:bg-white/5 data-[state=open]:text-white hover:bg-white/5 hover:text-white transition-all duration-300"
+              asChild
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-zinc-950 border border-zinc-800 text-white shadow-[0_0_15px_-3px_rgba(255,255,255,0.3)]">
-                <Command className="size-4" />
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold text-white tracking-wide">Archon</span>
-                <span className="truncate text-xs text-zinc-500">System v2.4</span>
-              </div>
+              <Link href="/">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-zinc-950 border border-zinc-800 text-white shadow-[0_0_15px_-3px_rgba(255,255,255,0.3)]">
+                  <Command className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold text-white tracking-wide">Archon</span>
+                  <span className="truncate text-xs text-zinc-500">System v2.4</span>
+                </div>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

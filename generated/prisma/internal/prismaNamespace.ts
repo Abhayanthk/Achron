@@ -391,8 +391,12 @@ export const ModelName = {
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
+  Category: 'Category',
   Habit: 'Habit',
-  XpLog: 'XpLog'
+  XpLog: 'XpLog',
+  DailyLog: 'DailyLog',
+  Reminder: 'Reminder',
+  NonNegotiable: 'NonNegotiable'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "trait" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "habit" | "xpLog"
+    modelProps: "user" | "trait" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "category" | "habit" | "xpLog" | "dailyLog" | "reminder" | "nonNegotiable"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -930,6 +934,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Category: {
+      payload: Prisma.$CategoryPayload<ExtArgs>
+      fields: Prisma.CategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.CategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
+        }
+        findMany: {
+          args: Prisma.CategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[]
+        }
+        create: {
+          args: Prisma.CategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
+        }
+        createMany: {
+          args: Prisma.CategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.CategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
+        }
+        update: {
+          args: Prisma.CategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.CategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCategory>
+        }
+        groupBy: {
+          args: Prisma.CategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number
+        }
+      }
+    }
     Habit: {
       payload: Prisma.$HabitPayload<ExtArgs>
       fields: Prisma.HabitFieldRefs
@@ -1078,6 +1156,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DailyLog: {
+      payload: Prisma.$DailyLogPayload<ExtArgs>
+      fields: Prisma.DailyLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DailyLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DailyLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        findFirst: {
+          args: Prisma.DailyLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DailyLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        findMany: {
+          args: Prisma.DailyLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>[]
+        }
+        create: {
+          args: Prisma.DailyLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        createMany: {
+          args: Prisma.DailyLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DailyLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>[]
+        }
+        delete: {
+          args: Prisma.DailyLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        update: {
+          args: Prisma.DailyLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.DailyLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DailyLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DailyLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.DailyLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DailyLogPayload>
+        }
+        aggregate: {
+          args: Prisma.DailyLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDailyLog>
+        }
+        groupBy: {
+          args: Prisma.DailyLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DailyLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DailyLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    Reminder: {
+      payload: Prisma.$ReminderPayload<ExtArgs>
+      fields: Prisma.ReminderFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReminderFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReminderFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>
+        }
+        findFirst: {
+          args: Prisma.ReminderFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReminderFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>
+        }
+        findMany: {
+          args: Prisma.ReminderFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>[]
+        }
+        create: {
+          args: Prisma.ReminderCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>
+        }
+        createMany: {
+          args: Prisma.ReminderCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReminderCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>[]
+        }
+        delete: {
+          args: Prisma.ReminderDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>
+        }
+        update: {
+          args: Prisma.ReminderUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReminderDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReminderUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReminderUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReminderUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReminderPayload>
+        }
+        aggregate: {
+          args: Prisma.ReminderAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReminder>
+        }
+        groupBy: {
+          args: Prisma.ReminderGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReminderGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReminderCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReminderCountAggregateOutputType> | number
+        }
+      }
+    }
+    NonNegotiable: {
+      payload: Prisma.$NonNegotiablePayload<ExtArgs>
+      fields: Prisma.NonNegotiableFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NonNegotiableFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NonNegotiableFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>
+        }
+        findFirst: {
+          args: Prisma.NonNegotiableFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NonNegotiableFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>
+        }
+        findMany: {
+          args: Prisma.NonNegotiableFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>[]
+        }
+        create: {
+          args: Prisma.NonNegotiableCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>
+        }
+        createMany: {
+          args: Prisma.NonNegotiableCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NonNegotiableCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>[]
+        }
+        delete: {
+          args: Prisma.NonNegotiableDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>
+        }
+        update: {
+          args: Prisma.NonNegotiableUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>
+        }
+        deleteMany: {
+          args: Prisma.NonNegotiableDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NonNegotiableUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NonNegotiableUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>[]
+        }
+        upsert: {
+          args: Prisma.NonNegotiableUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NonNegotiablePayload>
+        }
+        aggregate: {
+          args: Prisma.NonNegotiableAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNonNegotiable>
+        }
+        groupBy: {
+          args: Prisma.NonNegotiableGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NonNegotiableGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NonNegotiableCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NonNegotiableCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1121,11 +1421,11 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
-  fullName: 'fullName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   xp: 'xp',
   level: 'level',
+  fullName: 'fullName',
   alarmSound: 'alarmSound'
 } as const
 
@@ -1148,9 +1448,9 @@ export const TimerScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   duration: 'duration',
-  type: 'type',
-  color: 'color',
   createdAt: 'createdAt',
+  color: 'color',
+  type: 'type',
   alarmSoundId: 'alarmSoundId'
 } as const
 
@@ -1172,12 +1472,12 @@ export type AlarmSoundScalarFieldEnum = (typeof AlarmSoundScalarFieldEnum)[keyof
 export const FocusSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  timerId: 'timerId',
   startTime: 'startTime',
   endTime: 'endTime',
   duration: 'duration',
   status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  timerId: 'timerId'
 } as const
 
 export type FocusSessionScalarFieldEnum = (typeof FocusSessionScalarFieldEnum)[keyof typeof FocusSessionScalarFieldEnum]
@@ -1200,10 +1500,26 @@ export const TaskScalarFieldEnum = {
   title: 'title',
   isCompleted: 'isCompleted',
   dueDate: 'dueDate',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  description: 'description',
+  status: 'status',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId',
+  xp: 'xp'
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  color: 'color',
+  createdAt: 'createdAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const HabitScalarFieldEnum = {
@@ -1227,6 +1543,42 @@ export const XpLogScalarFieldEnum = {
 } as const
 
 export type XpLogScalarFieldEnum = (typeof XpLogScalarFieldEnum)[keyof typeof XpLogScalarFieldEnum]
+
+
+export const DailyLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  content: 'content',
+  date: 'date',
+  isFavorite: 'isFavorite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
+
+
+export const ReminderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  createdAt: 'createdAt'
+} as const
+
+export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+export const NonNegotiableScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  completedDates: 'completedDates',
+  createdAt: 'createdAt'
+} as const
+
+export type NonNegotiableScalarFieldEnum = (typeof NonNegotiableScalarFieldEnum)[keyof typeof NonNegotiableScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1423,8 +1775,12 @@ export type GlobalOmitConfig = {
   focusSession?: Prisma.FocusSessionOmit
   workLog?: Prisma.WorkLogOmit
   task?: Prisma.TaskOmit
+  category?: Prisma.CategoryOmit
   habit?: Prisma.HabitOmit
   xpLog?: Prisma.XpLogOmit
+  dailyLog?: Prisma.DailyLogOmit
+  reminder?: Prisma.ReminderOmit
+  nonNegotiable?: Prisma.NonNegotiableOmit
 }
 
 /* Types for Logging */

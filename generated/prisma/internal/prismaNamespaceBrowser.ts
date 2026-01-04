@@ -58,8 +58,12 @@ export const ModelName = {
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
+  Category: 'Category',
   Habit: 'Habit',
-  XpLog: 'XpLog'
+  XpLog: 'XpLog',
+  DailyLog: 'DailyLog',
+  Reminder: 'Reminder',
+  NonNegotiable: 'NonNegotiable'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,11 +86,11 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
-  fullName: 'fullName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   xp: 'xp',
   level: 'level',
+  fullName: 'fullName',
   alarmSound: 'alarmSound'
 } as const
 
@@ -109,9 +113,9 @@ export const TimerScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   duration: 'duration',
-  type: 'type',
-  color: 'color',
   createdAt: 'createdAt',
+  color: 'color',
+  type: 'type',
   alarmSoundId: 'alarmSoundId'
 } as const
 
@@ -133,12 +137,12 @@ export type AlarmSoundScalarFieldEnum = (typeof AlarmSoundScalarFieldEnum)[keyof
 export const FocusSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  timerId: 'timerId',
   startTime: 'startTime',
   endTime: 'endTime',
   duration: 'duration',
   status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  timerId: 'timerId'
 } as const
 
 export type FocusSessionScalarFieldEnum = (typeof FocusSessionScalarFieldEnum)[keyof typeof FocusSessionScalarFieldEnum]
@@ -161,10 +165,26 @@ export const TaskScalarFieldEnum = {
   title: 'title',
   isCompleted: 'isCompleted',
   dueDate: 'dueDate',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  description: 'description',
+  status: 'status',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId',
+  xp: 'xp'
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  color: 'color',
+  createdAt: 'createdAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const HabitScalarFieldEnum = {
@@ -188,6 +208,42 @@ export const XpLogScalarFieldEnum = {
 } as const
 
 export type XpLogScalarFieldEnum = (typeof XpLogScalarFieldEnum)[keyof typeof XpLogScalarFieldEnum]
+
+
+export const DailyLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  content: 'content',
+  date: 'date',
+  isFavorite: 'isFavorite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  categoryId: 'categoryId'
+} as const
+
+export type DailyLogScalarFieldEnum = (typeof DailyLogScalarFieldEnum)[keyof typeof DailyLogScalarFieldEnum]
+
+
+export const ReminderScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  createdAt: 'createdAt'
+} as const
+
+export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+export const NonNegotiableScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  completedDates: 'completedDates',
+  createdAt: 'createdAt'
+} as const
+
+export type NonNegotiableScalarFieldEnum = (typeof NonNegotiableScalarFieldEnum)[keyof typeof NonNegotiableScalarFieldEnum]
 
 
 export const SortOrder = {

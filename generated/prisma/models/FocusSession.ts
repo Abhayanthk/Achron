@@ -37,34 +37,34 @@ export type FocusSessionSumAggregateOutputType = {
 export type FocusSessionMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  timerId: string | null
   startTime: Date | null
   endTime: Date | null
   duration: number | null
   status: string | null
   createdAt: Date | null
+  timerId: string | null
 }
 
 export type FocusSessionMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  timerId: string | null
   startTime: Date | null
   endTime: Date | null
   duration: number | null
   status: string | null
   createdAt: Date | null
+  timerId: string | null
 }
 
 export type FocusSessionCountAggregateOutputType = {
   id: number
   userId: number
-  timerId: number
   startTime: number
   endTime: number
   duration: number
   status: number
   createdAt: number
+  timerId: number
   _all: number
 }
 
@@ -80,34 +80,34 @@ export type FocusSessionSumAggregateInputType = {
 export type FocusSessionMinAggregateInputType = {
   id?: true
   userId?: true
-  timerId?: true
   startTime?: true
   endTime?: true
   duration?: true
   status?: true
   createdAt?: true
+  timerId?: true
 }
 
 export type FocusSessionMaxAggregateInputType = {
   id?: true
   userId?: true
-  timerId?: true
   startTime?: true
   endTime?: true
   duration?: true
   status?: true
   createdAt?: true
+  timerId?: true
 }
 
 export type FocusSessionCountAggregateInputType = {
   id?: true
   userId?: true
-  timerId?: true
   startTime?: true
   endTime?: true
   duration?: true
   status?: true
   createdAt?: true
+  timerId?: true
   _all?: true
 }
 
@@ -200,12 +200,12 @@ export type FocusSessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type FocusSessionGroupByOutputType = {
   id: string
   userId: string
-  timerId: string | null
   startTime: Date
   endTime: Date | null
   duration: number
   status: string
   createdAt: Date
+  timerId: string | null
   _count: FocusSessionCountAggregateOutputType | null
   _avg: FocusSessionAvgAggregateOutputType | null
   _sum: FocusSessionSumAggregateOutputType | null
@@ -234,27 +234,27 @@ export type FocusSessionWhereInput = {
   NOT?: Prisma.FocusSessionWhereInput | Prisma.FocusSessionWhereInput[]
   id?: Prisma.StringFilter<"FocusSession"> | string
   userId?: Prisma.StringFilter<"FocusSession"> | string
-  timerId?: Prisma.StringNullableFilter<"FocusSession"> | string | null
   startTime?: Prisma.DateTimeFilter<"FocusSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"FocusSession"> | Date | string | null
   duration?: Prisma.IntFilter<"FocusSession"> | number
   status?: Prisma.StringFilter<"FocusSession"> | string
   createdAt?: Prisma.DateTimeFilter<"FocusSession"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  timerId?: Prisma.StringNullableFilter<"FocusSession"> | string | null
   timer?: Prisma.XOR<Prisma.TimerNullableScalarRelationFilter, Prisma.TimerWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type FocusSessionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  timerId?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
+  timerId?: Prisma.SortOrderInput | Prisma.SortOrder
   timer?: Prisma.TimerOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type FocusSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -263,25 +263,25 @@ export type FocusSessionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FocusSessionWhereInput[]
   NOT?: Prisma.FocusSessionWhereInput | Prisma.FocusSessionWhereInput[]
   userId?: Prisma.StringFilter<"FocusSession"> | string
-  timerId?: Prisma.StringNullableFilter<"FocusSession"> | string | null
   startTime?: Prisma.DateTimeFilter<"FocusSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"FocusSession"> | Date | string | null
   duration?: Prisma.IntFilter<"FocusSession"> | number
   status?: Prisma.StringFilter<"FocusSession"> | string
   createdAt?: Prisma.DateTimeFilter<"FocusSession"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  timerId?: Prisma.StringNullableFilter<"FocusSession"> | string | null
   timer?: Prisma.XOR<Prisma.TimerNullableScalarRelationFilter, Prisma.TimerWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type FocusSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  timerId?: Prisma.SortOrderInput | Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrderInput | Prisma.SortOrder
   duration?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  timerId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FocusSessionCountOrderByAggregateInput
   _avg?: Prisma.FocusSessionAvgOrderByAggregateInput
   _max?: Prisma.FocusSessionMaxOrderByAggregateInput
@@ -295,12 +295,12 @@ export type FocusSessionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FocusSessionScalarWhereWithAggregatesInput | Prisma.FocusSessionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"FocusSession"> | string
   userId?: Prisma.StringWithAggregatesFilter<"FocusSession"> | string
-  timerId?: Prisma.StringNullableWithAggregatesFilter<"FocusSession"> | string | null
   startTime?: Prisma.DateTimeWithAggregatesFilter<"FocusSession"> | Date | string
   endTime?: Prisma.DateTimeNullableWithAggregatesFilter<"FocusSession"> | Date | string | null
   duration?: Prisma.IntWithAggregatesFilter<"FocusSession"> | number
   status?: Prisma.StringWithAggregatesFilter<"FocusSession"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FocusSession"> | Date | string
+  timerId?: Prisma.StringNullableWithAggregatesFilter<"FocusSession"> | string | null
 }
 
 export type FocusSessionCreateInput = {
@@ -310,19 +310,19 @@ export type FocusSessionCreateInput = {
   duration?: number
   status?: string
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutSessionsInput
   timer?: Prisma.TimerCreateNestedOneWithoutSessionsInput
+  user: Prisma.UserCreateNestedOneWithoutSessionsInput
 }
 
 export type FocusSessionUncheckedCreateInput = {
   id?: string
   userId: string
-  timerId?: string | null
   startTime: Date | string
   endTime?: Date | string | null
   duration?: number
   status?: string
   createdAt?: Date | string
+  timerId?: string | null
 }
 
 export type FocusSessionUpdateInput = {
@@ -332,30 +332,30 @@ export type FocusSessionUpdateInput = {
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutSessionsNestedInput
   timer?: Prisma.TimerUpdateOneWithoutSessionsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutSessionsNestedInput
 }
 
 export type FocusSessionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FocusSessionCreateManyInput = {
   id?: string
   userId: string
-  timerId?: string | null
   startTime: Date | string
   endTime?: Date | string | null
   duration?: number
   status?: string
   createdAt?: Date | string
+  timerId?: string | null
 }
 
 export type FocusSessionUpdateManyMutationInput = {
@@ -370,12 +370,12 @@ export type FocusSessionUpdateManyMutationInput = {
 export type FocusSessionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FocusSessionListRelationFilter = {
@@ -391,12 +391,12 @@ export type FocusSessionOrderByRelationAggregateInput = {
 export type FocusSessionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  timerId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  timerId?: Prisma.SortOrder
 }
 
 export type FocusSessionAvgOrderByAggregateInput = {
@@ -406,23 +406,23 @@ export type FocusSessionAvgOrderByAggregateInput = {
 export type FocusSessionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  timerId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  timerId?: Prisma.SortOrder
 }
 
 export type FocusSessionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  timerId?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  timerId?: Prisma.SortOrder
 }
 
 export type FocusSessionSumOrderByAggregateInput = {
@@ -529,12 +529,12 @@ export type FocusSessionCreateWithoutUserInput = {
 
 export type FocusSessionUncheckedCreateWithoutUserInput = {
   id?: string
-  timerId?: string | null
   startTime: Date | string
   endTime?: Date | string | null
   duration?: number
   status?: string
   createdAt?: Date | string
+  timerId?: string | null
 }
 
 export type FocusSessionCreateOrConnectWithoutUserInput = {
@@ -569,12 +569,12 @@ export type FocusSessionScalarWhereInput = {
   NOT?: Prisma.FocusSessionScalarWhereInput | Prisma.FocusSessionScalarWhereInput[]
   id?: Prisma.StringFilter<"FocusSession"> | string
   userId?: Prisma.StringFilter<"FocusSession"> | string
-  timerId?: Prisma.StringNullableFilter<"FocusSession"> | string | null
   startTime?: Prisma.DateTimeFilter<"FocusSession"> | Date | string
   endTime?: Prisma.DateTimeNullableFilter<"FocusSession"> | Date | string | null
   duration?: Prisma.IntFilter<"FocusSession"> | number
   status?: Prisma.StringFilter<"FocusSession"> | string
   createdAt?: Prisma.DateTimeFilter<"FocusSession"> | Date | string
+  timerId?: Prisma.StringNullableFilter<"FocusSession"> | string | null
 }
 
 export type FocusSessionCreateWithoutTimerInput = {
@@ -625,12 +625,12 @@ export type FocusSessionUpdateManyWithWhereWithoutTimerInput = {
 
 export type FocusSessionCreateManyUserInput = {
   id?: string
-  timerId?: string | null
   startTime: Date | string
   endTime?: Date | string | null
   duration?: number
   status?: string
   createdAt?: Date | string
+  timerId?: string | null
 }
 
 export type FocusSessionUpdateWithoutUserInput = {
@@ -645,22 +645,22 @@ export type FocusSessionUpdateWithoutUserInput = {
 
 export type FocusSessionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FocusSessionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  timerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type FocusSessionCreateManyTimerInput = {
@@ -708,82 +708,82 @@ export type FocusSessionUncheckedUpdateManyWithoutTimerInput = {
 export type FocusSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  timerId?: boolean
   startTime?: boolean
   endTime?: boolean
   duration?: boolean
   status?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  timerId?: boolean
   timer?: boolean | Prisma.FocusSession$timerArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["focusSession"]>
 
 export type FocusSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  timerId?: boolean
   startTime?: boolean
   endTime?: boolean
   duration?: boolean
   status?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  timerId?: boolean
   timer?: boolean | Prisma.FocusSession$timerArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["focusSession"]>
 
 export type FocusSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  timerId?: boolean
   startTime?: boolean
   endTime?: boolean
   duration?: boolean
   status?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  timerId?: boolean
   timer?: boolean | Prisma.FocusSession$timerArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["focusSession"]>
 
 export type FocusSessionSelectScalar = {
   id?: boolean
   userId?: boolean
-  timerId?: boolean
   startTime?: boolean
   endTime?: boolean
   duration?: boolean
   status?: boolean
   createdAt?: boolean
+  timerId?: boolean
 }
 
-export type FocusSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "timerId" | "startTime" | "endTime" | "duration" | "status" | "createdAt", ExtArgs["result"]["focusSession"]>
+export type FocusSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "startTime" | "endTime" | "duration" | "status" | "createdAt" | "timerId", ExtArgs["result"]["focusSession"]>
 export type FocusSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   timer?: boolean | Prisma.FocusSession$timerArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type FocusSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   timer?: boolean | Prisma.FocusSession$timerArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type FocusSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   timer?: boolean | Prisma.FocusSession$timerArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $FocusSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "FocusSession"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     timer: Prisma.$TimerPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    timerId: string | null
     startTime: Date
     endTime: Date | null
     duration: number
     status: string
     createdAt: Date
+    timerId: string | null
   }, ExtArgs["result"]["focusSession"]>
   composites: {}
 }
@@ -1178,8 +1178,8 @@ readonly fields: FocusSessionFieldRefs;
  */
 export interface Prisma__FocusSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   timer<T extends Prisma.FocusSession$timerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FocusSession$timerArgs<ExtArgs>>): Prisma.Prisma__TimerClient<runtime.Types.Result.GetResult<Prisma.$TimerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1211,12 +1211,12 @@ export interface Prisma__FocusSessionClient<T, Null = never, ExtArgs extends run
 export interface FocusSessionFieldRefs {
   readonly id: Prisma.FieldRef<"FocusSession", 'String'>
   readonly userId: Prisma.FieldRef<"FocusSession", 'String'>
-  readonly timerId: Prisma.FieldRef<"FocusSession", 'String'>
   readonly startTime: Prisma.FieldRef<"FocusSession", 'DateTime'>
   readonly endTime: Prisma.FieldRef<"FocusSession", 'DateTime'>
   readonly duration: Prisma.FieldRef<"FocusSession", 'Int'>
   readonly status: Prisma.FieldRef<"FocusSession", 'String'>
   readonly createdAt: Prisma.FieldRef<"FocusSession", 'DateTime'>
+  readonly timerId: Prisma.FieldRef<"FocusSession", 'String'>
 }
     
 

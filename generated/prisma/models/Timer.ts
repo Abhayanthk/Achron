@@ -39,9 +39,9 @@ export type TimerMinAggregateOutputType = {
   userId: string | null
   name: string | null
   duration: number | null
-  type: string | null
-  color: string | null
   createdAt: Date | null
+  color: string | null
+  type: string | null
   alarmSoundId: string | null
 }
 
@@ -50,9 +50,9 @@ export type TimerMaxAggregateOutputType = {
   userId: string | null
   name: string | null
   duration: number | null
-  type: string | null
-  color: string | null
   createdAt: Date | null
+  color: string | null
+  type: string | null
   alarmSoundId: string | null
 }
 
@@ -61,9 +61,9 @@ export type TimerCountAggregateOutputType = {
   userId: number
   name: number
   duration: number
-  type: number
-  color: number
   createdAt: number
+  color: number
+  type: number
   alarmSoundId: number
   _all: number
 }
@@ -82,9 +82,9 @@ export type TimerMinAggregateInputType = {
   userId?: true
   name?: true
   duration?: true
-  type?: true
-  color?: true
   createdAt?: true
+  color?: true
+  type?: true
   alarmSoundId?: true
 }
 
@@ -93,9 +93,9 @@ export type TimerMaxAggregateInputType = {
   userId?: true
   name?: true
   duration?: true
-  type?: true
-  color?: true
   createdAt?: true
+  color?: true
+  type?: true
   alarmSoundId?: true
 }
 
@@ -104,9 +104,9 @@ export type TimerCountAggregateInputType = {
   userId?: true
   name?: true
   duration?: true
-  type?: true
-  color?: true
   createdAt?: true
+  color?: true
+  type?: true
   alarmSoundId?: true
   _all?: true
 }
@@ -202,9 +202,9 @@ export type TimerGroupByOutputType = {
   userId: string
   name: string
   duration: number
-  type: string
-  color: string
   createdAt: Date
+  color: string
+  type: string
   alarmSoundId: string | null
   _count: TimerCountAggregateOutputType | null
   _avg: TimerAvgAggregateOutputType | null
@@ -236,13 +236,13 @@ export type TimerWhereInput = {
   userId?: Prisma.StringFilter<"Timer"> | string
   name?: Prisma.StringFilter<"Timer"> | string
   duration?: Prisma.IntFilter<"Timer"> | number
-  type?: Prisma.StringFilter<"Timer"> | string
-  color?: Prisma.StringFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeFilter<"Timer"> | Date | string
+  color?: Prisma.StringFilter<"Timer"> | string
+  type?: Prisma.StringFilter<"Timer"> | string
   alarmSoundId?: Prisma.StringNullableFilter<"Timer"> | string | null
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  alarmSound?: Prisma.XOR<Prisma.AlarmSoundNullableScalarRelationFilter, Prisma.AlarmSoundWhereInput> | null
   sessions?: Prisma.FocusSessionListRelationFilter
+  alarmSound?: Prisma.XOR<Prisma.AlarmSoundNullableScalarRelationFilter, Prisma.AlarmSoundWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type TimerOrderByWithRelationInput = {
@@ -250,13 +250,13 @@ export type TimerOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   alarmSoundId?: Prisma.SortOrderInput | Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
-  alarmSound?: Prisma.AlarmSoundOrderByWithRelationInput
   sessions?: Prisma.FocusSessionOrderByRelationAggregateInput
+  alarmSound?: Prisma.AlarmSoundOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type TimerWhereUniqueInput = Prisma.AtLeast<{
@@ -267,13 +267,13 @@ export type TimerWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"Timer"> | string
   name?: Prisma.StringFilter<"Timer"> | string
   duration?: Prisma.IntFilter<"Timer"> | number
-  type?: Prisma.StringFilter<"Timer"> | string
-  color?: Prisma.StringFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeFilter<"Timer"> | Date | string
+  color?: Prisma.StringFilter<"Timer"> | string
+  type?: Prisma.StringFilter<"Timer"> | string
   alarmSoundId?: Prisma.StringNullableFilter<"Timer"> | string | null
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  alarmSound?: Prisma.XOR<Prisma.AlarmSoundNullableScalarRelationFilter, Prisma.AlarmSoundWhereInput> | null
   sessions?: Prisma.FocusSessionListRelationFilter
+  alarmSound?: Prisma.XOR<Prisma.AlarmSoundNullableScalarRelationFilter, Prisma.AlarmSoundWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type TimerOrderByWithAggregationInput = {
@@ -281,9 +281,9 @@ export type TimerOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   alarmSoundId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TimerCountOrderByAggregateInput
   _avg?: Prisma.TimerAvgOrderByAggregateInput
@@ -300,9 +300,9 @@ export type TimerScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   name?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   duration?: Prisma.IntWithAggregatesFilter<"Timer"> | number
-  type?: Prisma.StringWithAggregatesFilter<"Timer"> | string
-  color?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Timer"> | Date | string
+  color?: Prisma.StringWithAggregatesFilter<"Timer"> | string
+  type?: Prisma.StringWithAggregatesFilter<"Timer"> | string
   alarmSoundId?: Prisma.StringNullableWithAggregatesFilter<"Timer"> | string | null
 }
 
@@ -310,12 +310,12 @@ export type TimerCreateInput = {
   id?: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutTimersInput
-  alarmSound?: Prisma.AlarmSoundCreateNestedOneWithoutTimersInput
+  color?: string
+  type?: string
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutTimerInput
+  alarmSound?: Prisma.AlarmSoundCreateNestedOneWithoutTimersInput
+  user: Prisma.UserCreateNestedOneWithoutTimersInput
 }
 
 export type TimerUncheckedCreateInput = {
@@ -323,9 +323,9 @@ export type TimerUncheckedCreateInput = {
   userId: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
   alarmSoundId?: string | null
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutTimerInput
 }
@@ -334,12 +334,12 @@ export type TimerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
-  alarmSound?: Prisma.AlarmSoundUpdateOneWithoutTimersNestedInput
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   sessions?: Prisma.FocusSessionUpdateManyWithoutTimerNestedInput
+  alarmSound?: Prisma.AlarmSoundUpdateOneWithoutTimersNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
 }
 
 export type TimerUncheckedUpdateInput = {
@@ -347,9 +347,9 @@ export type TimerUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   alarmSoundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutTimerNestedInput
 }
@@ -359,9 +359,9 @@ export type TimerCreateManyInput = {
   userId: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
   alarmSoundId?: string | null
 }
 
@@ -369,9 +369,9 @@ export type TimerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TimerUncheckedUpdateManyInput = {
@@ -379,9 +379,9 @@ export type TimerUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   alarmSoundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -400,9 +400,9 @@ export type TimerCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   alarmSoundId?: Prisma.SortOrder
 }
 
@@ -415,9 +415,9 @@ export type TimerMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   alarmSoundId?: Prisma.SortOrder
 }
 
@@ -426,9 +426,9 @@ export type TimerMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  color?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   alarmSoundId?: Prisma.SortOrder
 }
 
@@ -545,20 +545,20 @@ export type TimerCreateWithoutUserInput = {
   id?: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
-  alarmSound?: Prisma.AlarmSoundCreateNestedOneWithoutTimersInput
+  color?: string
+  type?: string
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutTimerInput
+  alarmSound?: Prisma.AlarmSoundCreateNestedOneWithoutTimersInput
 }
 
 export type TimerUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
   alarmSoundId?: string | null
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutTimerInput
 }
@@ -597,9 +597,9 @@ export type TimerScalarWhereInput = {
   userId?: Prisma.StringFilter<"Timer"> | string
   name?: Prisma.StringFilter<"Timer"> | string
   duration?: Prisma.IntFilter<"Timer"> | number
-  type?: Prisma.StringFilter<"Timer"> | string
-  color?: Prisma.StringFilter<"Timer"> | string
   createdAt?: Prisma.DateTimeFilter<"Timer"> | Date | string
+  color?: Prisma.StringFilter<"Timer"> | string
+  type?: Prisma.StringFilter<"Timer"> | string
   alarmSoundId?: Prisma.StringNullableFilter<"Timer"> | string | null
 }
 
@@ -607,11 +607,11 @@ export type TimerCreateWithoutAlarmSoundInput = {
   id?: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutTimersInput
+  color?: string
+  type?: string
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutTimerInput
+  user: Prisma.UserCreateNestedOneWithoutTimersInput
 }
 
 export type TimerUncheckedCreateWithoutAlarmSoundInput = {
@@ -619,9 +619,9 @@ export type TimerUncheckedCreateWithoutAlarmSoundInput = {
   userId: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutTimerInput
 }
 
@@ -655,11 +655,11 @@ export type TimerCreateWithoutSessionsInput = {
   id?: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutTimersInput
+  color?: string
+  type?: string
   alarmSound?: Prisma.AlarmSoundCreateNestedOneWithoutTimersInput
+  user: Prisma.UserCreateNestedOneWithoutTimersInput
 }
 
 export type TimerUncheckedCreateWithoutSessionsInput = {
@@ -667,9 +667,9 @@ export type TimerUncheckedCreateWithoutSessionsInput = {
   userId: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
   alarmSoundId?: string | null
 }
 
@@ -693,11 +693,11 @@ export type TimerUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   alarmSound?: Prisma.AlarmSoundUpdateOneWithoutTimersNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
 }
 
 export type TimerUncheckedUpdateWithoutSessionsInput = {
@@ -705,9 +705,9 @@ export type TimerUncheckedUpdateWithoutSessionsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   alarmSoundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -715,9 +715,9 @@ export type TimerCreateManyUserInput = {
   id?: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
   alarmSoundId?: string | null
 }
 
@@ -725,20 +725,20 @@ export type TimerUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  alarmSound?: Prisma.AlarmSoundUpdateOneWithoutTimersNestedInput
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   sessions?: Prisma.FocusSessionUpdateManyWithoutTimerNestedInput
+  alarmSound?: Prisma.AlarmSoundUpdateOneWithoutTimersNestedInput
 }
 
 export type TimerUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   alarmSoundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutTimerNestedInput
 }
@@ -747,9 +747,9 @@ export type TimerUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   alarmSoundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
@@ -758,20 +758,20 @@ export type TimerCreateManyAlarmSoundInput = {
   userId: string
   name: string
   duration: number
-  type?: string
-  color?: string
   createdAt?: Date | string
+  color?: string
+  type?: string
 }
 
 export type TimerUpdateWithoutAlarmSoundInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   sessions?: Prisma.FocusSessionUpdateManyWithoutTimerNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTimersNestedInput
 }
 
 export type TimerUncheckedUpdateWithoutAlarmSoundInput = {
@@ -779,9 +779,9 @@ export type TimerUncheckedUpdateWithoutAlarmSoundInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutTimerNestedInput
 }
 
@@ -790,9 +790,9 @@ export type TimerUncheckedUpdateManyWithoutAlarmSoundInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  type?: Prisma.StringFieldUpdateOperationsInput | string
-  color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  color?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -831,13 +831,13 @@ export type TimerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userId?: boolean
   name?: boolean
   duration?: boolean
-  type?: boolean
-  color?: boolean
   createdAt?: boolean
+  color?: boolean
+  type?: boolean
   alarmSoundId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
   sessions?: boolean | Prisma.Timer$sessionsArgs<ExtArgs>
+  alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.TimerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timer"]>
 
@@ -846,12 +846,12 @@ export type TimerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   name?: boolean
   duration?: boolean
-  type?: boolean
-  color?: boolean
   createdAt?: boolean
+  color?: boolean
+  type?: boolean
   alarmSoundId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timer"]>
 
 export type TimerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -859,12 +859,12 @@ export type TimerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   name?: boolean
   duration?: boolean
-  type?: boolean
-  color?: boolean
   createdAt?: boolean
+  color?: boolean
+  type?: boolean
   alarmSoundId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["timer"]>
 
 export type TimerSelectScalar = {
@@ -872,43 +872,43 @@ export type TimerSelectScalar = {
   userId?: boolean
   name?: boolean
   duration?: boolean
-  type?: boolean
-  color?: boolean
   createdAt?: boolean
+  color?: boolean
+  type?: boolean
   alarmSoundId?: boolean
 }
 
-export type TimerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "duration" | "type" | "color" | "createdAt" | "alarmSoundId", ExtArgs["result"]["timer"]>
+export type TimerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "duration" | "createdAt" | "color" | "type" | "alarmSoundId", ExtArgs["result"]["timer"]>
 export type TimerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
   sessions?: boolean | Prisma.Timer$sessionsArgs<ExtArgs>
+  alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.TimerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TimerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TimerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   alarmSound?: boolean | Prisma.Timer$alarmSoundArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TimerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Timer"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
-    alarmSound: Prisma.$AlarmSoundPayload<ExtArgs> | null
     sessions: Prisma.$FocusSessionPayload<ExtArgs>[]
+    alarmSound: Prisma.$AlarmSoundPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
     name: string
     duration: number
-    type: string
-    color: string
     createdAt: Date
+    color: string
+    type: string
     alarmSoundId: string | null
   }, ExtArgs["result"]["timer"]>
   composites: {}
@@ -1304,9 +1304,9 @@ readonly fields: TimerFieldRefs;
  */
 export interface Prisma__TimerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  alarmSound<T extends Prisma.Timer$alarmSoundArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Timer$alarmSoundArgs<ExtArgs>>): Prisma.Prisma__AlarmSoundClient<runtime.Types.Result.GetResult<Prisma.$AlarmSoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.Timer$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Timer$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  alarmSound<T extends Prisma.Timer$alarmSoundArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Timer$alarmSoundArgs<ExtArgs>>): Prisma.Prisma__AlarmSoundClient<runtime.Types.Result.GetResult<Prisma.$AlarmSoundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1340,9 +1340,9 @@ export interface TimerFieldRefs {
   readonly userId: Prisma.FieldRef<"Timer", 'String'>
   readonly name: Prisma.FieldRef<"Timer", 'String'>
   readonly duration: Prisma.FieldRef<"Timer", 'Int'>
-  readonly type: Prisma.FieldRef<"Timer", 'String'>
-  readonly color: Prisma.FieldRef<"Timer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Timer", 'DateTime'>
+  readonly color: Prisma.FieldRef<"Timer", 'String'>
+  readonly type: Prisma.FieldRef<"Timer", 'String'>
   readonly alarmSoundId: Prisma.FieldRef<"Timer", 'String'>
 }
     
@@ -1740,25 +1740,6 @@ export type TimerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Timer.alarmSound
- */
-export type Timer$alarmSoundArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AlarmSound
-   */
-  select?: Prisma.AlarmSoundSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AlarmSound
-   */
-  omit?: Prisma.AlarmSoundOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AlarmSoundInclude<ExtArgs> | null
-  where?: Prisma.AlarmSoundWhereInput
-}
-
-/**
  * Timer.sessions
  */
 export type Timer$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1780,6 +1761,25 @@ export type Timer$sessionsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.FocusSessionScalarFieldEnum | Prisma.FocusSessionScalarFieldEnum[]
+}
+
+/**
+ * Timer.alarmSound
+ */
+export type Timer$alarmSoundArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AlarmSound
+   */
+  select?: Prisma.AlarmSoundSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AlarmSound
+   */
+  omit?: Prisma.AlarmSoundOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AlarmSoundInclude<ExtArgs> | null
+  where?: Prisma.AlarmSoundWhereInput
 }
 
 /**

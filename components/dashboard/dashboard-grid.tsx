@@ -5,6 +5,7 @@ import { BentoCard } from "./bento-card"
 import { ActivityChart } from "./activity-chart"
 import { NonNegotiables } from "./non-negotiables"
 import { TaskList } from "./task-list"
+import { ReminderList } from "./reminder-list"
 import { ProjectCard } from "./project-card"
 import { HabitsSession } from "./habits-session"
 import { IdentityProgress } from "./identity-progress"
@@ -62,23 +63,16 @@ export function DashboardGrid() {
 
       {/* ROW 3: Daily Log (4) + Non-Negotiables (4) + Habit Mastery (4) */}
       <BentoCard 
-        title="Daily Log" 
-        className="md:col-span-2 lg:col-span-4"
-        action={<Link href="#"><Button variant="ghost" size="icon" className="h-6 w-6"><ArrowUpRight className="size-4 text-zinc-500 hover:text-white" /></Button></Link>}
+        title="Reminders" 
+        className="md:col-span-2 lg:col-span-4" 
       >
-        <div className="flex flex-col items-center justify-center h-full min-h-[120px] py-6 text-center bg-white/5 rounded-lg border border-white/5 cursor-pointer hover:bg-white/10 transition-colors group/diary gap-2">
-            <Book className="size-6 text-zinc-400 group-hover/diary:text-white transition-colors" />
-            <div>
-                <h4 className="text-base font-medium text-white">New Entry</h4>
-                <p className="text-[10px] text-zinc-500">Record your day</p>
-            </div>
-        </div>
+        <ReminderList />
       </BentoCard>
 
-       <BentoCard 
+      <BentoCard 
         title="Non-Negotiables" 
         className="md:col-span-2 lg:col-span-4"
-        action={<Settings className="size-4 text-zinc-600 hover:text-white cursor-pointer" />}
+        action={<Link href="/non-negotiables"><Settings className="size-4 text-zinc-600 hover:text-white cursor-pointer" /></Link>}
       >
         <NonNegotiables />
       </BentoCard>
@@ -136,13 +130,20 @@ export function DashboardGrid() {
         </div>
       </BentoCard>
 
-      <BentoCard title="Reminders" className="md:col-span-4 lg:col-span-4 lg:row-span-2">
-        <div className="flex flex-col justify-center items-center h-full gap-3 py-6 opacity-60 hover:opacity-100 transition-opacity">
-            <Layout className="size-8 text-zinc-700" />
-            <p className="text-center text-xs text-zinc-500">Workspace clean</p>
-            <Button variant="outline" size="sm" className="w-full max-w-[120px] text-xs h-7">Set Reminder</Button>
+      <BentoCard 
+        title="Daily Log" 
+        className="md:col-span-4 lg:col-span-4 lg:row-span-2"
+        action={<Link href="/logs/new"><Button variant="ghost" size="icon" className="h-6 w-6"><ArrowUpRight className="size-4 text-zinc-500 hover:text-white" /></Button></Link>}
+      >
+        <div className="flex flex-col items-center justify-center h-full min-h-[120px] py-6 text-center bg-white/5 rounded-lg border border-white/5 cursor-pointer hover:bg-white/10 transition-colors group/diary gap-2">
+            <Book className="size-6 text-zinc-400 group-hover/diary:text-white transition-colors" />
+            <div>
+                <h4 className="text-base font-medium text-white">New Entry</h4>
+                <p className="text-[10px] text-zinc-500">Record your day</p>
+            </div>
         </div>
       </BentoCard>
+
     </div>
   )
 }

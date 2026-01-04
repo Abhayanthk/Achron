@@ -73,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <SidebarTrigger className="relative z-10" />
                 {children}
               </main>
-              <MiniTimer />
+              <MiniTimer />        
 
               <Toaster />
             </SidebarProvider>

@@ -53,6 +53,11 @@ export type WorkLog = Prisma.WorkLogModel
  */
 export type Task = Prisma.TaskModel
 /**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
  * Model Habit
  * 
  */
@@ -62,3 +67,18 @@ export type Habit = Prisma.HabitModel
  * 
  */
 export type XpLog = Prisma.XpLogModel
+/**
+ * Model DailyLog
+ * 
+ */
+export type DailyLog = Prisma.DailyLogModel
+/**
+ * Model Reminder
+ * 
+ */
+export type Reminder = Prisma.ReminderModel
+/**
+ * Model NonNegotiable
+ * 
+ */
+export type NonNegotiable = Prisma.NonNegotiableModel
