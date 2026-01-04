@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Save, Loader2, Calendar, Plus, Trash2, Bold, Italic, List, CheckSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-export default function NewLogPage() {
+function NewLogContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("edit");
@@ -271,4 +271,12 @@ export default function NewLogPage() {
         </div>
     </div>
   );
+}
+
+export default function NewLogPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black text-white flex items-center justify-center"><Loader2 className="animate-spin" /></div>}>
+            <NewLogContent />
+        </Suspense>
+    );
 }
