@@ -191,10 +191,8 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
                  setTimeLeft(parsed.duration)
 
                  if (parsed.activeSessionId) {
-                     // We use the raw parsed ID because ref/state might be too slow
-                     const finalDuration = totalElapsed // or duration?
-                     // actually we should cap it at duration usually or let it flow?
-                     // endSession uses the logic.
+                  // While AlwaysCompare, time can exceed the time taken to finish the session
+                     const finalDuration = Math.min(totalElapsed, parsed.duration) 
                      endSession(parsed.activeSessionId, finalDuration).then((res) => {
                          if (res) {
                             toast.success("Session Completed While Away", {
