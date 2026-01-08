@@ -4,13 +4,20 @@ import { useState, useEffect } from "react";
 import { useTimer } from "@/components/providers/timer-context";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, Square, X, SquareArrowOutUpRight } from "lucide-react";
+import {
+  Play,
+  Pause,
+  Square,
+  X,
+  SquareArrowOutUpRight,
+  RefreshCw,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export function MiniTimer() {
-  const { isActive, timeLeft, formatTime, toggle, sessionType, status } =
+  const { isActive, timeLeft, formatTime, toggle, sessionType, status, reset } =
     useTimer();
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
@@ -66,6 +73,14 @@ export function MiniTimer() {
               ) : (
                 <Play className="size-4 fill-current" />
               )}
+            </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8 hover:bg-white/10 text-zinc-300 hover:text-white"
+              onClick={reset}
+            >
+              <RefreshCw className="size-4" />
             </Button>
           </div>
         </div>
