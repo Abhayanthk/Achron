@@ -65,17 +65,42 @@ export async function PUT(
             const exists = current.completedDates.some(d => d.toISOString() === targetDate);
 
             let updatedDates = [...current.completedDates];
+            let xpChange = 0;
+            let logSource = "";
+
             if (exists) {
+                // REMOVE date (Undo)
                 updatedDates = updatedDates.filter(d => d.toISOString() !== targetDate);
+                xpChange = -50;
+                logSource = "NON_NEGOTIABLE_UNDO";
             } else {
+                // ADD date (Complete)
                 updatedDates.push(new Date(date));
+                xpChange = 50;
+                logSource = "NON_NEGOTIABLE_COMPLETION";
             }
 
-            const updated = await prisma.nonNegotiable.update({
-                where: { id, userId },
-                data: { completedDates: updatedDates }
-            });
-            return NextResponse.json(updated);
+            const operations = [
+                 prisma.nonNegotiable.update({
+                    where: { id, userId },
+                    data: { completedDates: updatedDates }
+                }),
+                prisma.user.update({
+                    where: { id: userId },
+                    data: { xp: { increment: xpChange } }
+                }),
+                prisma.xpLog.create({
+                    data: {
+                        userId,
+                        amount: xpChange,
+                        source: logSource,
+                        description: `${exists ? "Undid" : "Completed"} non-negotiable: ${current.title}`
+                    }
+                })
+            ];
+
+            const results = await prisma.$transaction(operations);
+            return NextResponse.json(results[0]);
         }
 
         return new NextResponse("Invalid action", { status: 400 });

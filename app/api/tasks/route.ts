@@ -2,6 +2,20 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
+const PRIORITY_MAP = {
+  RED: 300,
+  ORANGE: 200,
+  YELLOW: 100,
+  WHITE: 50,
+};
+
+const getPriorityFromXP = (xp: number) => {
+  if (xp >= 300) return "RED";
+  if (xp >= 200) return "ORANGE";
+  if (xp >= 100) return "YELLOW";
+  return "WHITE";
+};
+
 export async function GET(req: Request) {
   try {
     const { userId } = await auth();
@@ -37,7 +51,12 @@ export async function GET(req: Request) {
       },
     });
 
-    return NextResponse.json(tasks);
+    const tasksWithPriority = tasks.map((task) => ({
+      ...task,
+      priority: getPriorityFromXP(task.xp),
+    }));
+
+    return NextResponse.json(tasksWithPriority);
   } catch (error) {
     console.error("[TASKS_GET]", error);
     return NextResponse.json({ error: "Internal Error" }, { status: 500 });
@@ -52,7 +71,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { title, description, dueDate, status, categoryId } = body;
+    const { title, description, dueDate, status, categoryId, priority } = body;
 
     if (!title) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
@@ -68,6 +87,7 @@ export async function POST(req: Request) {
         dueDate: dueDate ? new Date(dueDate) : null,
         status: status || "PENDING",
         categoryId,
+        xp: priority ? (PRIORITY_MAP[priority as keyof typeof PRIORITY_MAP] || 50) : 50,
       },
     });
 
@@ -93,24 +113,81 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const { title, description, dueDate, status, isCompleted, categoryId } = body;
+    const { title, description, dueDate, status, isCompleted, categoryId, priority } = body;
 
-    const task = await prisma.task.update({
-      where: {
-        id: taskId,
-        userId,
-      },
-      data: {
+    // Fetch current task to determine XP changes
+    const currentTask = await prisma.task.findUnique({
+      where: { id: taskId, userId },
+    });
+
+    if (!currentTask) {
+      return NextResponse.json({ error: "Task not found" }, { status: 404 });
+    }
+
+    // Determine new XP value if priority is changing, otherwise use current
+    const newXp = priority 
+      ? (PRIORITY_MAP[priority as keyof typeof PRIORITY_MAP] || 50) 
+      : currentTask.xp;
+
+    const dataToUpdate = {
         ...(title && { title }),
         ...(description !== undefined && { description }),
         ...(dueDate !== undefined && { dueDate: dueDate ? new Date(dueDate) : null }),
         ...(status && { status }),
         ...(isCompleted !== undefined && { isCompleted }),
         ...(categoryId !== undefined && { categoryId }),
-      },
-    });
+        ...(priority && { xp: newXp }),
+      };
 
-    return NextResponse.json(task);
+    // Prepare transaction operations
+    const operations: any[] = [
+      prisma.task.update({
+        where: { id: taskId, userId },
+        data: dataToUpdate,
+      }),
+    ];
+
+    // Handle XP Update if isCompleted changed
+    if (isCompleted !== undefined && isCompleted !== currentTask.isCompleted) {
+        if (isCompleted) {
+            // Task Completed: Add XP
+            operations.push(
+                prisma.user.update({
+                    where: { id: userId },
+                    data: { xp: { increment: newXp } }
+                }),
+                prisma.xpLog.create({
+                    data: {
+                        userId,
+                        amount: newXp,
+                        source: "TASK_COMPLETION",
+                        description: `Completed task: ${title || currentTask.title}`
+                    }
+                })
+            );
+        } else {
+            // Task Uncompleted: Remove XP
+            operations.push(
+                prisma.user.update({
+                    where: { id: userId },
+                    data: { xp: { decrement: newXp } }
+                }),
+                prisma.xpLog.create({
+                    data: {
+                        userId,
+                        amount: -newXp,
+                        source: "TASK_UNDO",
+                        description: `Undid task: ${title || currentTask.title}`
+                    }
+                })
+            );
+        }
+    }
+
+    const results = await prisma.$transaction(operations);
+    const updatedTask = results[0]; // The first operation is always the task update
+
+    return NextResponse.json(updatedTask);
   } catch (error) {
     console.error("[TASKS_PATCH]", error);
     return NextResponse.json({ error: "Internal Error" }, { status: 500 });

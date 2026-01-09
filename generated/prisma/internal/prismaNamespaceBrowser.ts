@@ -192,7 +192,11 @@ export const HabitScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   streak: 'streak',
-  completedDates: 'completedDates'
+  completedDates: 'completedDates',
+  targetDays: 'targetDays',
+  startDate: 'startDate',
+  archived: 'archived',
+  updatedAt: 'updatedAt'
 } as const
 
 export type HabitScalarFieldEnum = (typeof HabitScalarFieldEnum)[keyof typeof HabitScalarFieldEnum]
