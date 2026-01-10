@@ -1,20 +1,20 @@
 
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const { userId } = await auth();
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await req.json();
     const { projectId, title, order, startDate, endDate, color } = body;
 
     if (!projectId || !title) {
-      return new NextResponse("Project ID and Title are required", { status: 400 });
+      return NextResponse.json({ error: "Project ID and Title are required" }, { status: 400 });
     }
 
     // Verify Project Ownership
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
         where: { id: projectId, userId }
     });
     
-    if (!project) return new NextResponse("Project not found", { status: 404 });
+    if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
 
     const section = await prisma.section.create({
       data: {
@@ -38,21 +38,21 @@ export async function POST(req: Request) {
     return NextResponse.json(section);
   } catch (error) {
     console.error("[SECTIONS_POST]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+    return NextResponse.json({ error: "Internal Error" }, { status: 500 });
   }
 }
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: NextRequest) {
     try {
       const { userId } = await auth();
       if (!userId) {
-        return new NextResponse("Unauthorized", { status: 401 });
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
   
       const body = await req.json();
-      const { id, title, order, startDate, endDate, color } = body;
+      const { id, title, order, startDate, endDate, color, status } = body;
 
-      if (!id) return new NextResponse("ID required", { status: 400 });
+      if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
       // Check ownership via project
       const section = await prisma.section.findUnique({
@@ -61,7 +61,7 @@ export async function PATCH(req: Request) {
       });
 
       if (!section || section.project.userId !== userId) {
-          return new NextResponse("Not found or unauthorized", { status: 404 });
+          return NextResponse.json({ error: "Not found or unauthorized" }, { status: 404 });
       }
   
       const updatedSection = await prisma.section.update({
@@ -74,27 +74,28 @@ export async function PATCH(req: Request) {
           ...(startDate !== undefined && { startDate: startDate ? new Date(startDate) : null }),
           ...(endDate !== undefined && { endDate: endDate ? new Date(endDate) : null }),
           ...(color && { color }),
+          ...(status && { status }),
         },
       });
   
       return NextResponse.json(updatedSection);
     } catch (error) {
       console.error("[SECTIONS_PATCH]", error);
-      return new NextResponse("Internal Error", { status: 500 });
+      return NextResponse.json({ error: "Internal Error" }, { status: 500 });
     }
   }
 
-  export async function DELETE(req: Request) {
+  export async function DELETE(req: NextRequest) {
     try {
       const { userId } = await auth();
       if (!userId) {
-        return new NextResponse("Unauthorized", { status: 401 });
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
   
       const { searchParams } = new URL(req.url);
       const id = searchParams.get("id");
 
-      if (!id) return new NextResponse("ID required", { status: 400 });
+      if (!id) return NextResponse.json({ error: "ID required" }, { status: 400 });
 
       // Check ownership
       const section = await prisma.section.findUnique({
@@ -103,7 +104,7 @@ export async function PATCH(req: Request) {
       });
 
       if (!section || section.project.userId !== userId) {
-        return new NextResponse("Not found or unauthorized", { status: 404 });
+        return NextResponse.json({ error: "Not found or unauthorized" }, { status: 404 });
     }
   
       await prisma.section.delete({
@@ -115,6 +116,6 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ success: true });
     } catch (error) {
       console.error("[SECTIONS_DELETE]", error);
-      return new NextResponse("Internal Error", { status: 500 });
+      return NextResponse.json({ error: "Internal Error" }, { status: 500 });
     }
   }

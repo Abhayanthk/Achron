@@ -11,6 +11,7 @@ import {
   Pencil,
   X,
   Check,
+  Loader2,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -46,10 +47,12 @@ interface ProjectSidebarProps {
     }
   ) => Promise<void>;
   onDeleteSection: (sectionId: string) => void;
-  onUpdateSectionStatus: (sectionId: string, status: string) => void;
+  onUpdateSectionStatus: (sectionId: string, status: string) => Promise<void>;
   onUpdateSection: (sectionId: string, data: { title: string }) => void;
   onUpdateProjectStatus: (status: string) => void;
   isLoading?: boolean;
+  updateProjectStatusPending?: boolean;
+  updateSectionStatusPending?: boolean;
 }
 
 export function ProjectSidebar({
@@ -62,12 +65,17 @@ export function ProjectSidebar({
   onUpdateSection,
   onUpdateProjectStatus,
   isLoading,
+  updateProjectStatusPending,
+  updateSectionStatusPending,
 }: ProjectSidebarProps) {
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
   >({});
 
   const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
+  const [updatingSectionStatusId, setUpdatingSectionStatusId] = useState<
+    string | null
+  >(null);
   const [editTitle, setEditTitle] = useState("");
 
   const toggleSection = (id: string) => {
@@ -165,11 +173,13 @@ export function ProjectSidebar({
 
               {/* Check/Complete Section */}
               <button
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.stopPropagation();
                   const newStatus =
                     section.status === "COMPLETED" ? "ACTIVE" : "COMPLETED";
-                  onUpdateSectionStatus(section.id, newStatus);
+                  setUpdatingSectionStatusId(section.id);
+                  await onUpdateSectionStatus(section.id, newStatus);
+                  setUpdatingSectionStatusId(null);
                 }}
                 className={cn(
                   "p-0.5 transition-colors",
@@ -178,7 +188,10 @@ export function ProjectSidebar({
                     : "text-zinc-600 hover:text-emerald-500"
                 )}
               >
-                {section.status === "COMPLETED" ? (
+                {updateSectionStatusPending &&
+                section.id === updatingSectionStatusId ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : section.status === "COMPLETED" ? (
                   <CheckCircle2 className="h-4 w-4" />
                 ) : (
                   <Circle className="h-4 w-4" />
@@ -326,7 +339,8 @@ export function ProjectSidebar({
           <>
             <button
               onClick={handleCompleteProject}
-              className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg transition-colors"
+              disabled={updateProjectStatusPending}
+              className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Complete Project
             </button>
@@ -336,7 +350,8 @@ export function ProjectSidebar({
                   projectStatus === "PAUSED" ? "ACTIVE" : "PAUSED"
                 )
               }
-              className="w-full py-2 bg-white/5 hover:bg-white/10 text-zinc-400 text-xs font-medium rounded-lg transition-colors"
+              disabled={updateProjectStatusPending}
+              className="w-full py-2 bg-white/5 hover:bg-white/10 text-zinc-400 text-xs font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {projectStatus === "PAUSED" ? "Resume Project" : "Pause Project"}
             </button>

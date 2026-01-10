@@ -77,12 +77,20 @@ export default function ProjectDetailsPage() {
     },
   });
 
-  const { mutate: updateSectionStatus } = useMutation({
+  const {
+    mutateAsync: updateSectionStatus,
+    isPending: updateSectionStatusPending,
+  } = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       await axios.patch("/api/projects/sections", { id, status });
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["project", id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["project", id] });
+      toast.success("Section status updated");
+    },
+    onError: () => {
+      toast.error("Failed to update section status");
+    },
   });
 
   const { mutate: updateSection } = useMutation({
@@ -100,15 +108,16 @@ export default function ProjectDetailsPage() {
     },
   });
 
-  const { mutate: updateProjectStatus } = useMutation({
-    mutationFn: async (status: string) => {
-      await axios.patch(`/api/projects/${id}`, { status });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["project", id] });
-      toast.success("Project status updated");
-    },
-  });
+  const { mutate: updateProjectStatus, isPending: updateProjectStatusPending } =
+    useMutation({
+      mutationFn: async (status: string) => {
+        await axios.patch(`/api/projects/${id}`, { status });
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["project", id] });
+        toast.success("Project status updated");
+      },
+    });
 
   if (isLoading) {
     return (
@@ -166,13 +175,15 @@ export default function ProjectDetailsPage() {
           onAddTask={async (secId, data) =>
             await addTask({ sectionId: secId, data })
           }
-          onUpdateSectionStatus={(secId, status) =>
-            updateSectionStatus({ id: secId, status })
+          onUpdateSectionStatus={async (secId, status) =>
+            await updateSectionStatus({ id: secId, status })
           }
           onUpdateSection={(secId, data) =>
             updateSection({ id: secId, ...data })
           }
           onUpdateProjectStatus={(status) => updateProjectStatus(status)}
+          updateProjectStatusPending={updateProjectStatusPending}
+          updateSectionStatusPending={updateSectionStatusPending}
         />
 
         <div className="flex-1 relative">

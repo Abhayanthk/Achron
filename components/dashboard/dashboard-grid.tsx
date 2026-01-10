@@ -98,7 +98,7 @@ export function DashboardGrid() {
         title="Habit Mastery"
         className="md:col-span-2 lg:col-span-4"
         action={
-          <Link href="#">
+          <Link href="/habits">
             <Button variant="ghost" size="icon" className="h-6 w-6">
               <ArrowUpRight className="size-4 text-zinc-500 hover:text-white" />
             </Button>
@@ -148,7 +148,7 @@ export function DashboardGrid() {
         title="Active Projects"
         className="md:col-span-4 lg:col-span-5"
         action={
-          <Link href="#">
+          <Link href="/projects">
             <Button variant="ghost" size="icon" className="h-6 w-6">
               <ArrowUpRight className="size-4 text-zinc-500 hover:text-white" />
             </Button>
