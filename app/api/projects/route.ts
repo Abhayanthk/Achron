@@ -10,10 +10,42 @@ export async function GET(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const { searchParams } = new URL(req.url);
+    const query = searchParams.get("search");
+    const filter = searchParams.get("filter") || "ACTIVE";
+
+    let statusFilter: any = "ACTIVE";
+
+    switch (filter) {
+      case "ALL":
+        statusFilter = { in: ["ACTIVE", "PAUSED", "COMPLETED"] };
+        break;
+      case "ACTIVE":
+        statusFilter = "ACTIVE";
+        break;
+      case "ON_HOLD":
+        statusFilter = "PAUSED";
+        break;
+      case "COMPLETED":
+        statusFilter = "COMPLETED";
+        break;
+      case "DELETED":
+        statusFilter = "DELETED";
+        break;
+      default:
+        statusFilter = "ACTIVE";
+    }
+
     const projects = await prisma.project.findMany({
       where: {
         userId,
-        status: "ACTIVE", 
+        status: statusFilter,
+        ...(query && {
+          title: {
+            contains: query,
+            mode: "insensitive",
+          },
+        }),
       },
       orderBy: {
         updatedAt: "desc",

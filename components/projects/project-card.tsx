@@ -3,7 +3,10 @@
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Calendar, Layers } from "lucide-react";
+import { ArrowRight, Calendar, Layers, Trash2, Loader2 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
@@ -24,6 +27,20 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteProject, isPending: isDeleting } = useMutation({
+    mutationFn: async () => {
+      await axios.delete(`/api/projects/${project.id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      toast.success("Project moved to trash");
+    },
+    onError: () => {
+      toast.error("Failed to delete project");
+    },
+  });
 
   return (
     <motion.div
@@ -51,9 +68,26 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 style={{ backgroundColor: project.color }}
               />
             </div>
-            <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500 border border-white/5 px-2 py-1 rounded-full">
-              {project.status}
-            </span>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500 border border-white/5 px-2 py-1 rounded-full">
+                {project.status === "PAUSED" ? "ON HOLD" : project.status}
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (confirm("Move project to trash?")) deleteProject();
+                }}
+                disabled={isDeleting}
+                className="p-1.5 text-zinc-500 hover:text-red-500 hover:bg-white/5 rounded-md transition-colors opacity-0 group-hover:opacity-100"
+              >
+                {isDeleting ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Trash2 className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
 
           <h3 className="text-xl font-semibold text-zinc-100 group-hover:text-white transition-colors">

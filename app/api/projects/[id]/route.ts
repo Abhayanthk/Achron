@@ -96,10 +96,13 @@ export async function DELETE(
 
     const { id } = await params;
 
-    const project = await prisma.project.delete({
+    const project = await prisma.project.update({
       where: {
         id,
         userId,
+      },
+      data: {
+        status: "DELETED",
       },
     });
 
