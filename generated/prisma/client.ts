@@ -75,6 +75,16 @@ export type WorkLog = Prisma.WorkLogModel
  */
 export type Task = Prisma.TaskModel
 /**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model Section
+ * 
+ */
+export type Section = Prisma.SectionModel
+/**
  * Model Category
  * 
  */

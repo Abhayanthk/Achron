@@ -58,6 +58,8 @@ export const ModelName = {
   FocusSession: 'FocusSession',
   WorkLog: 'WorkLog',
   Task: 'Task',
+  Project: 'Project',
+  Section: 'Section',
   Category: 'Category',
   Habit: 'Habit',
   XpLog: 'XpLog',
@@ -170,10 +172,44 @@ export const TaskScalarFieldEnum = {
   status: 'status',
   updatedAt: 'updatedAt',
   categoryId: 'categoryId',
-  xp: 'xp'
+  xp: 'xp',
+  sectionId: 'sectionId',
+  startDate: 'startDate'
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const SectionScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  title: 'title',
+  status: 'status',
+  order: 'order',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  color: 'color',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SectionScalarFieldEnum = (typeof SectionScalarFieldEnum)[keyof typeof SectionScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {

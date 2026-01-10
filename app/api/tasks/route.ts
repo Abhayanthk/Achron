@@ -71,14 +71,20 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { title, description, dueDate, status, categoryId, priority } = body;
+    const { title, description, dueDate, status, categoryId, priority, sectionId, startDate } = body;
 
     if (!title) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
-    if (!categoryId) {
-      return NextResponse.json({ error: "Category is required" }, { status: 400 });
-    }
+    
+    // Category is optional if it's a project task (has sectionId), otherwise enforce it?
+    // For now, let's relax it generally or check if either exists.
+    // Ideally user should pick a category OR it's a project task.
+    // Let's just allow null categoryId if schema supports it.
+    // if (!categoryId && !sectionId) {
+    //   return NextResponse.json({ error: "Category or Project Section is required" }, { status: 400 });
+    // }
+    
     const task = await prisma.task.create({
       data: {
         userId,
@@ -87,6 +93,8 @@ export async function POST(req: Request) {
         dueDate: dueDate ? new Date(dueDate) : null,
         status: status || "PENDING",
         categoryId,
+        sectionId,
+        startDate: startDate ? new Date(startDate) : null, // Support timeline start date
         xp: priority ? (PRIORITY_MAP[priority as keyof typeof PRIORITY_MAP] || 50) : 50,
       },
     });
