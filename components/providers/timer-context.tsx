@@ -215,13 +215,24 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
             if (parsed.activeSessionId) {
               // While AlwaysCompare, time can exceed the time taken to finish the session
               const finalDuration = Math.min(totalElapsed, parsed.duration);
-              endSession(parsed.activeSessionId, finalDuration).then((res) => {
-                if (res) {
-                  toast.success("Session Completed While Away", {
+              endSession(parsed.activeSessionId, finalDuration)
+                .then((res) => {
+                  if (res) {
+                    toast.success("Session Completed While Away", {
+                      description: "Your timer finished while you were gone.",
+                    });
+                  } else {
+                    toast.error("Failed to End Session", {
+                      description: "Your timer finished while you were gone.",
+                    });
+                  }
+                })
+                .catch((err) => {
+                  console.log("Error while ending session", err);
+                  toast.error("Failed to End Session", {
                     description: "Your timer finished while you were gone.",
                   });
-                }
-              });
+                });
               // Clear active session immediately to prevent double-finish
               setActiveSessionId(null);
             }
@@ -349,14 +360,40 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       queryClient.invalidateQueries({ queryKey: ["balance"] });
     },
   });
+  type RetryOptions = {
+    retries?: number;
+    delayMs?: number;
+  };
 
-  const endSession = async (id: string, passedDuration?: number) => {
-    try {
-      return await endSessionMutation.mutateAsync({ id, passedDuration });
-    } catch (error) {
-      console.error("Failed to end session", error);
-      return null;
-    }
+  const endSession = async (
+    id: string,
+    passedDuration?: number,
+    options: RetryOptions = { retries: 2, delayMs: 1000 }
+  ) => {
+    const { retries = 2, delayMs = 1000 } = options;
+
+    const attempt = async (remainingRetries: number): Promise<any> => {
+      try {
+        return await endSessionMutation.mutateAsync({ id, passedDuration });
+      } catch (error) {
+        const isNetworkError =
+          axios.isAxiosError(error) &&
+          (!error.response || error.code === "ERR_NETWORK");
+
+        if (!isNetworkError || remainingRetries <= 0) {
+          console.error("Failed to end session", error);
+          return null;
+        }
+
+        console.warn(
+          `Retrying session end... (${remainingRetries} attempts left)`
+        );
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+        return attempt(remainingRetries - 1);
+      }
+    };
+
+    return attempt(retries);
   };
   //   const endSession = async (id: string, passedDuration?: number): Promise<{ sessionId: string, duration: number } | null> => {
   //       try {

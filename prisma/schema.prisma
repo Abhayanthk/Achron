@@ -8,36 +8,27 @@ datasource db {
 }
 
 model User {
-      id             String          @id @default(cuid())
-      email          String          @unique
-      name           String?
-      createdAt      DateTime        @default(now())
-      updatedAt      DateTime        @updatedAt
-      xp             Int             @default(0)
-      level          Int             @default(1)
-      fullName       String?
-      alarmSound     String          @default("digital")
-      categories     Category[]
-      sessions       FocusSession[]
-      habits         Habit[]
-      tasks          Task[]
-      timers         Timer[]
-      traits         Trait[]
+      id         String         @id @default(cuid())
+      email      String         @unique
+      name       String?
+      createdAt  DateTime       @default(now())
+      updatedAt  DateTime       @updatedAt
+      xp         Int            @default(0)
+      level      Int            @default(1)
+      fullName   String?
+      alarmSound String         @default("digital")
+      categories Category[]
+      sessions   FocusSession[]
+      habits     Habit[]
+      tasks      Task[]
+      timers     Timer[]
+
       workLogs       WorkLog[]
       xpLogs         XpLog[]
       dailyLogs      DailyLog[]
       reminders      Reminder[]
       nonNegotiables NonNegotiable[]
       projects       Project[]
-}
-
-model Trait {
-      id      String @id @default(cuid())
-      userId  String
-      name    String
-      mastery String
-      level   Int    @default(1)
-      user    User   @relation(fields: [userId], references: [id])
 }
 
 model Timer {

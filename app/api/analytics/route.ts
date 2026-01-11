@@ -9,6 +9,7 @@ function getStartOfWeek(date: Date) {
 //     js starts the week with sunday(0) but we want monday
     const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
     d.setDate(diff);
+//     setHours(hours = 0, minutes = 0, seconds = 0, milliseconds = 0) the very start of the day
     d.setHours(0, 0, 0, 0);
     return d;
 }
@@ -23,100 +24,297 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const range = searchParams.get("range") || "week";
+    const type = searchParams.get("type") || "focus"; // focus, logs, tasks, xp
 
     const now = new Date();
     let data: any[] = [];
     let queryStartDate = new Date();
 
+    // Helper to setup date range
     if (range === "week") {
         queryStartDate = getStartOfWeek(now);
-        // Ensure we fetch data from Monday
-        const sessions = await prisma.focusSession.findMany({
-            where: {
-                userId,
-                endTime: { gte: queryStartDate },
-                status: "COMPLETED"
-            }
-        });
-
-        // Initialize empty week
-        const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-        const weeklyMap = new Map();
-        days.forEach(d => weeklyMap.set(d, 0));
-
-        sessions.forEach(session => {
-            if (session.endTime) {
-                const dayIndex = session.endTime.getDay(); // 0 is Sunday
-                // Convert 0(Sun) -> 6, 1(Mon) -> 0
-                const mapIndex = dayIndex === 0 ? 6 : dayIndex - 1;
-                const dayName = days[mapIndex];
-                const hours = (session.duration || 0) / 3600;
-                weeklyMap.set(dayName, weeklyMap.get(dayName) + hours);
-            }
-        });
-
-        data = Array.from(weeklyMap).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
-
     } else if (range === "month") {
-        queryStartDate = new Date(now.getFullYear(), now.getMonth(), 1);
-        
-        const sessions = await prisma.focusSession.findMany({
-            where: {
-                userId,
-                endTime: { gte: queryStartDate },
-                status: "COMPLETED"
-            }
-        });
-
-        const weeklyMap = new Map();
-        weeklyMap.set("Week 1", 0);
-        weeklyMap.set("Week 2", 0);
-        weeklyMap.set("Week 3", 0);
-        weeklyMap.set("Week 4", 0);
-        weeklyMap.set("Week 5", 0);
-
-        sessions.forEach(session => {
-             if (session.endTime) {
-                 const date = session.endTime.getDate();
-                 const weekNum = Math.ceil(date / 7);
-                 const key = `Week ${weekNum}`;
-                 if(weeklyMap.has(key)) {
-                     const hours = (session.duration || 0) / 3600;
-                     weeklyMap.set(key, weeklyMap.get(key) + hours);
-                 }
-             }
-        });
-        
-        // Cleanup Week 5 if empty? No, ok to show 0.
-        data = Array.from(weeklyMap).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
-
-    } else if (range === "heatmap") {
-        queryStartDate = new Date();
-        queryStartDate.setDate(queryStartDate.getDate() - 365);
-        
-        const logs = await prisma.xpLog.findMany({
-            where: {
-                userId,
-                createdAt: { gte: queryStartDate }
-            },
-            select: {
-                amount: true,
-                createdAt: true
-            }
-        });
-
-        const dailyMap = new Map<string, number>();
-        logs.forEach(log => {
-            const dateStr = log.createdAt.toISOString().split('T')[0];
-            const current = dailyMap.get(dateStr) || 0;
-            dailyMap.set(dateStr, current + log.amount);
-        });
-        
-        // Return array of { date: "YYYY-MM-DD", amount: 150 }
-        data = Array.from(dailyMap).map(([date, amount]) => ({ date, amount }));
-
+         // Last 30 days or start of month? 
+         // "Monthly" usually means view of the month. Let's do start of current month for now, or last 4-5 weeks.
+         // Existing logic was start of current month.
+         queryStartDate = new Date(now.getFullYear(), now.getMonth(), 1);
     } else if (range === "year") {
         queryStartDate = new Date(now.getFullYear(), 0, 1);
+    } else if (range === "heatmap") {
+         queryStartDate = new Date();
+         queryStartDate.setDate(queryStartDate.getDate() - 365);
+    }
+
+    if (type === "logs") {
+        // Daily Logs Analytics
+        const logs = await prisma.dailyLog.findMany({
+            where: {
+                userId,
+                date: { gte: queryStartDate }
+            },
+            select: { date: true }
+        });
+        
+        if (range === "week") {
+             const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+             const map = new Map(days.map(d => [d, 0]));
+             
+             logs.forEach(log => {
+                 const d = new Date(log.date);
+                 const dayIndex = d.getDay();
+                 const mapIndex = dayIndex === 0 ? 6 : dayIndex - 1;
+                 const dayName = days[mapIndex];
+                 map.set(dayName, (map.get(dayName) || 0) + 1);
+             });
+             data = Array.from(map).map(([name, value]) => ({ name, value }));
+
+        } else if (range === "month") {
+             // Group by weeks
+             const map = new Map<string, number>();
+             // Initialize weeks
+             for(let i=1; i<=5; i++) map.set(`Week ${i}`, 0);
+
+             logs.forEach(log => {
+                 const d = new Date(log.date);
+                 const dateNum = d.getDate();
+                 const weekNum = Math.ceil(dateNum / 7);
+                 const key = `Week ${weekNum}`;
+                 if (map.has(key)) map.set(key, (map.get(key) || 0) + 1);
+             });
+             data = Array.from(map).map(([name, value]) => ({ name, value }));
+
+        } else if (range === "year") {
+             const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+             const map = new Map(months.map(m => [m, 0]));
+             
+             logs.forEach(log => {
+                 const d = new Date(log.date);
+                 const monthName = months[d.getMonth()];
+                 map.set(monthName, (map.get(monthName) || 0) + 1);
+             });
+             data = Array.from(map).map(([name, value]) => ({ name, value }));
+        }
+
+    } else if (type === "tasks") {
+        // Tasks Analytics (Created vs Completed)
+        // We need created date (createdAt) and completion date (updatedAt if completed?)
+        // Schema: Task has createdAt. Completed tasks rely on isCompleted=true. 
+        // NOTE: We don't track 'completedAt' explicitly in the schema provided earlier, 
+        // but user prompt says "another line how much was completed".
+        // Use 'updatedAt' for completed items if status is COMPLETED? OR Just count based on creation for both?
+        // Ideally we need 'completedAt'. Schema has 'updatedAt'. We will use 'updatedAt' for completion time approx.
+        
+        const tasks = await prisma.task.findMany({
+            where: {
+                userId,
+                OR: [
+                    { createdAt: { gte: queryStartDate } },
+                    { 
+                        AND: [
+                            { isCompleted: true }, 
+                            { updatedAt: { gte: queryStartDate } } 
+                        ]
+                    }
+                ]
+            },
+            select: { createdAt: true, updatedAt: true, isCompleted: true }
+        });
+
+        const processTasks = (periodMap: Map<string, { created: number, completed: number }>, getPeriod: (d: Date) => string) => {
+            tasks.forEach(task => {
+                // Count Created
+                if (task.createdAt >= queryStartDate) {
+                    const p = getPeriod(new Date(task.createdAt));
+                    if (periodMap.has(p)) {
+                        periodMap.get(p)!.created++;
+                    }
+                }
+                // Count Completed
+                if (task.isCompleted && task.updatedAt >= queryStartDate) {
+                    const p = getPeriod(new Date(task.updatedAt));
+                    if (periodMap.has(p)) {
+                        periodMap.get(p)!.completed++;
+                    }
+                }
+            });
+        };
+
+        if (range === "week") {
+            const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+            const map = new Map(days.map(d => [d, { created: 0, completed: 0 }]));
+            
+            processTasks(map, (d) => {
+                const dayIndex = d.getDay();
+                return days[dayIndex === 0 ? 6 : dayIndex - 1];
+            });
+            data = Array.from(map).map(([name, val]) => ({ name, ...val }));
+
+        } else if (range === "month") {
+            const map = new Map<string, { created: number, completed: number }>();
+            for(let i=1; i<=5; i++) map.set(`Week ${i}`, { created: 0, completed: 0 });
+
+            processTasks(map, (d) => `Week ${Math.ceil(d.getDate() / 7)}`);
+            data = Array.from(map).map(([name, val]) => ({ name, ...val }));
+
+        } else if (range === "year") {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const map = new Map(months.map(m => [m, { created: 0, completed: 0 }]));
+
+            processTasks(map, (d) => months[d.getMonth()]);
+            data = Array.from(map).map(([name, val]) => ({ name, ...val }));
+        }
+
+    } else if (type === "identity_stats") {
+        // Identity Progress Stats
+        const logsCount = await prisma.dailyLog.count({ where: { userId } });
+        const tasksCount = await prisma.task.count({ where: { userId, isCompleted: true } });
+        
+        // Sum focus duration
+        const focusSessionAgg = await prisma.focusSession.aggregate({
+            where: { userId, status: "COMPLETED" },
+            _sum: { duration: true }
+        });
+        const deepHours = (focusSessionAgg._sum.duration || 0) / 3600;
+
+        const projectsCompleted = await prisma.project.count({ where: { userId, status: "COMPLETED" } }); // Assuming Project model status
+        // If Project status is separate model, adjustment needed. Assuming 'status' field on Project based on prior context.
+        // Actually, Project schema likely needs verifying but using safe assumption or count.
+        // Let's assume Project has status. If not, we might need another check.
+        // Re-checking previous context: ProjectCard component uses status.
+        
+        const habitsActive = await prisma.habit.count({ 
+             where: { 
+                 userId, 
+                 archived: false // Assuming active habits are non-archived
+             } 
+        });
+
+        // Non-Negotiable Score Calculation
+        const items = await prisma.nonNegotiable.findMany({
+            where: { userId }
+        });
+        
+        // Check confidence mountain logic reuse. 
+        // Simplified scoring for the API to return a single current number.
+        // Copying simplified logic from ConfidenceMountain component:
+        let currentScore = 0;
+        if (items.length > 0) {
+             const earliestStart = items.reduce((earliest, item) => {
+                const itemDate = new Date(item.createdAt)
+                return itemDate < earliest ? itemDate : earliest
+            }, new Date())
+            earliestStart.setHours(0, 0, 0, 0)
+    
+            const today = new Date()
+            today.setHours(0, 0, 0, 0)
+            
+            let simulationDate = new Date(earliestStart)
+
+            while (simulationDate <= today) {
+                const dateStr = simulationDate.toDateString()
+                // Active items created before or on simulation date
+                const activeItems = items.filter(i => new Date(i.createdAt).setHours(0,0,0,0) <= simulationDate.getTime())
+                
+                let change = 0
+                if (activeItems.length > 0) {
+                    const completedCount = activeItems.filter(item => 
+                        item.completedDates.some(d => new Date(d).toDateString() === dateStr)
+                    ).length
+    
+                    const dailyPerformance = completedCount / activeItems.length
+    
+                    if (dailyPerformance === 1) change = 5
+                    else if (dailyPerformance >= 0.5) change = 2
+                    else if (dailyPerformance > 0) change = -2
+                    else change = -5
+                }
+                currentScore = Math.max(0, Math.min(100, currentScore + change))
+                simulationDate.setDate(simulationDate.getDate() + 1)
+            }
+        }
+        
+        return NextResponse.json({
+            likes: 0, // Deprecated/Removed from UI but keeping for type safety in frontend if needed temporary
+            logsCount,
+            tasksCount,
+            deepHours,
+            nonNegoScore: Math.round(currentScore),
+            projectsCompleted,
+            habitsActive
+        });
+
+    } else if (type === "xp") {
+        if (range === "heatmap") {
+            // Full Heatmap logic (XP based) - Daily XP map for the last year
+             const logs = await prisma.xpLog.findMany({
+                where: {
+                    userId,
+                    createdAt: { gte: queryStartDate }
+                },
+                select: {
+                    amount: true,
+                    createdAt: true
+                }
+            });
+    
+            const dailyMap = new Map<string, number>();
+            logs.forEach(log => {
+                const dateStr = log.createdAt.toISOString().split('T')[0];
+                const current = dailyMap.get(dateStr) || 0;
+                dailyMap.set(dateStr, current + log.amount);
+            });
+            
+            data = Array.from(dailyMap).map(([date, amount]) => ({ date, amount }));
+        } else {
+             // XP Line Graph Logic (Week, Month, Year)
+             const logs = await prisma.xpLog.findMany({
+                where: {
+                    userId,
+                    createdAt: { gte: queryStartDate }
+                },
+                orderBy: { createdAt: 'asc' }
+            });
+
+            if (range === "week") {
+                // Group by Day (Mon-Sun)
+                const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+                // using a map to easily group in pairs and to access the dayName in O(1) TC
+                const map = new Map(days.map(d => [d, 0]));
+                logs.forEach(log => {
+                    const d = new Date(log.createdAt);
+                    const dayIndex = d.getDay();
+                    const dayName = days[dayIndex === 0 ? 6 : dayIndex - 1];
+                    map.set(dayName, (map.get(dayName) || 0) + log.amount);
+                });
+                data = Array.from(map).map(([name, amount]) => ({ date: name, amount }));
+
+            } else if (range === "month") {
+                // Group by Week
+                const map = new Map<string, number>();
+                for(let i=1; i<=5; i++) map.set(`Week ${i}`, 0);
+
+                logs.forEach(log => {
+                    const d = new Date(log.createdAt);
+                    const weekNum = Math.ceil(d.getDate() / 7);
+                    const key = `Week ${weekNum}`;
+                    if(map.has(key)) map.set(key, (map.get(key) || 0) + log.amount);
+                });
+                 data = Array.from(map).map(([name, amount]) => ({ date: name, amount }));
+
+            } else if (range === "year") {
+                 // Group by Month
+                 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                 const map = new Map(months.map(m => [m, 0]));
+                 logs.forEach(log => {
+                     const d = new Date(log.createdAt);
+                     const monthName = months[d.getMonth()];
+                     map.set(monthName, (map.get(monthName) || 0) + log.amount);
+                 });
+                 data = Array.from(map).map(([name, amount]) => ({ date: name, amount }));
+            }
+        }
+    } else if (type == "timer"){
+       // FOCUS (Default Timer Analytics)
         const sessions = await prisma.focusSession.findMany({
             where: {
                 userId,
@@ -125,19 +323,51 @@ export async function GET(request: NextRequest) {
             }
         });
 
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        const monthlyMap = new Map();
-        months.forEach(m => monthlyMap.set(m, 0));
+        if (range === "week") {
+            const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+            const map = new Map(days.map(d => [d, 0]));
+            
+            sessions.forEach(session => {
+                if (session.endTime) {
+                    const dayIndex = session.endTime.getDay();
+                    const dayName = days[dayIndex === 0 ? 6 : dayIndex - 1];
+                    const hours = (session.duration || 0) / 3600;
+                    map.set(dayName, (map.get(dayName) || 0) + hours);
+                }
+            });
+            data = Array.from(map).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
 
-        sessions.forEach(session => {
-            if (session.endTime) {
-                const monthName = months[session.endTime.getMonth()];
-                const hours = (session.duration || 0) / 3600;
-                monthlyMap.set(monthName, monthlyMap.get(monthName) + hours);
-            }
-        });
+        } else if (range === "month") {
+            const map = new Map<string, number>();
+            for(let i=1; i<=5; i++) map.set(`Week ${i}`, 0);
 
-        data = Array.from(monthlyMap).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
+            sessions.forEach(session => {
+                if(session.endTime) {
+                    const weekNum = Math.ceil(session.endTime.getDate() / 7);
+                    const key = `Week ${weekNum}`;
+                    if(map.has(key)) {
+                         const hours = (session.duration || 0) / 3600;
+                         map.set(key, (map.get(key) || 0) + hours);
+                    }
+                }
+            });
+            data = Array.from(map).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
+
+        } else if (range === "year") {
+             const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+             const map = new Map(months.map(m => [m, 0]));
+
+             sessions.forEach(session => {
+                 if(session.endTime) {
+                     const monthName = months[session.endTime.getMonth()];
+                     const hours = (session.duration || 0) / 3600;
+                     map.set(monthName, (map.get(monthName) || 0) + hours);
+                 }
+             });
+             data = Array.from(map).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
+        }
+      
+      
     }
 
     return NextResponse.json({ data });

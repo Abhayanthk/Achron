@@ -52,7 +52,6 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Trait: 'Trait',
   Timer: 'Timer',
   AlarmSound: 'AlarmSound',
   FocusSession: 'FocusSession',
@@ -97,17 +96,6 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-export const TraitScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  mastery: 'mastery',
-  level: 'level'
-} as const
-
-export type TraitScalarFieldEnum = (typeof TraitScalarFieldEnum)[keyof typeof TraitScalarFieldEnum]
 
 
 export const TimerScalarFieldEnum = {

@@ -385,7 +385,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
-  Trait: 'Trait',
   Timer: 'Timer',
   AlarmSound: 'AlarmSound',
   FocusSession: 'FocusSession',
@@ -414,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "trait" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "project" | "section" | "category" | "habit" | "xpLog" | "dailyLog" | "reminder" | "nonNegotiable"
+    modelProps: "user" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "project" | "section" | "category" | "habit" | "xpLog" | "dailyLog" | "reminder" | "nonNegotiable"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -489,80 +488,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
-        }
-      }
-    }
-    Trait: {
-      payload: Prisma.$TraitPayload<ExtArgs>
-      fields: Prisma.TraitFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.TraitFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.TraitFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>
-        }
-        findFirst: {
-          args: Prisma.TraitFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.TraitFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>
-        }
-        findMany: {
-          args: Prisma.TraitFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>[]
-        }
-        create: {
-          args: Prisma.TraitCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>
-        }
-        createMany: {
-          args: Prisma.TraitCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.TraitCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>[]
-        }
-        delete: {
-          args: Prisma.TraitDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>
-        }
-        update: {
-          args: Prisma.TraitUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>
-        }
-        deleteMany: {
-          args: Prisma.TraitDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.TraitUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.TraitUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>[]
-        }
-        upsert: {
-          args: Prisma.TraitUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TraitPayload>
-        }
-        aggregate: {
-          args: Prisma.TraitAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTrait>
-        }
-        groupBy: {
-          args: Prisma.TraitGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TraitGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.TraitCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TraitCountAggregateOutputType> | number
         }
       }
     }
@@ -1582,17 +1507,6 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const TraitScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  mastery: 'mastery',
-  level: 'level'
-} as const
-
-export type TraitScalarFieldEnum = (typeof TraitScalarFieldEnum)[keyof typeof TraitScalarFieldEnum]
-
-
 export const TimerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1957,7 +1871,6 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
-  trait?: Prisma.TraitOmit
   timer?: Prisma.TimerOmit
   alarmSound?: Prisma.AlarmSoundOmit
   focusSession?: Prisma.FocusSessionOmit

@@ -9,7 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/Trait'
 export type * from './models/Timer'
 export type * from './models/AlarmSound'
 export type * from './models/FocusSession'

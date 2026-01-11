@@ -23,11 +23,6 @@ export * from './enums';
  */
 export type User = Prisma.UserModel
 /**
- * Model Trait
- * 
- */
-export type Trait = Prisma.TraitModel
-/**
  * Model Timer
  * 
  */
