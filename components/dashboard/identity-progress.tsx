@@ -79,11 +79,11 @@ export function IdentityProgress() {
   ];
 
   return (
-    <div className="space-y-6 h-full flex flex-col">
+    <div className="space-y-6 h-full flex flex-col pb-12">
       {/* Main Level Display */}
       <a
         href="/journey"
-        className="group relative flex items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-gradient-to-r from-zinc-900 to-black p-6 hover:border-white/20 transition-all cursor-pointer shrink-0"
+        className="group relative flex items-center justify-between overflow-hidden rounded-xl border border-white/10 bg-linear-to-r from-zinc-900 to-black p-6 hover:border-white/20 transition-all cursor-pointer shrink-0"
       >
         <div>
           <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors">
@@ -104,43 +104,33 @@ export function IdentityProgress() {
       </a>
 
       {/* Grid of Stats */}
-      <div className="grid grid-cols-2 gap-3 flex-1">
+      <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
         {statItems.map((item, idx) => (
           <div
             key={idx}
             className={cn(
-              "flex flex-col justify-center p-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors",
-              idx === statItems.length - 1 && statItems.length % 2 !== 0
-                ? "col-span-2 flex-row items-center justify-between"
+              "flex flex-col justify-between p-3 rounded-xl border border-white/5 bg-linear-to-br from-white/5 to-white/2 hover:from-white/10 hover:to-white/5 hover:border-white/10 transition-all group/card",
+              idx === statItems.length - 1 && statItems.length % 3 !== 0
+                ? "col-span-3 sm:col-span-1" // Handle oddouts if any, though 6 is even for 3
                 : ""
             )}
           >
-            <div className="flex items-center gap-3 mb-2">
-              <div className={`p-1.5 rounded-md ${item.bg} ${item.color}`}>
-                <item.icon className="size-4" />
-              </div>
-              {idx === statItems.length - 1 && statItems.length % 2 !== 0 && (
-                <span className="text-sm font-medium text-zinc-400">
-                  {item.label}
-                </span>
-              )}
+            <div className="flex justify-between items-start mb-2">
+              {/* <div
+                className={cn(
+                  "p-1.5 rounded-lg bg-black/40 ring-1 ring-inset ring-white/10 group-hover/card:scale-110 transition-transform",
+                  item.color
+                )}
+              >
+                <item.icon className="size-3.5" />
+              </div> */}
             </div>
-            <div
-              className={cn(
-                idx === statItems.length - 1 && statItems.length % 2 !== 0
-                  ? "text-right"
-                  : ""
-              )}
-            >
-              {!(
-                idx === statItems.length - 1 && statItems.length % 2 !== 0
-              ) && (
-                <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider block mb-1">
-                  {item.label}
-                </span>
-              )}
-              <span className="text-xl font-bold text-white tracking-tight">
+            <div>
+              <span className="text-xl font-bold text-white tracking-tight leading-none block mb-1">
                 {item.value}
+              </span>
+              <span className="text-[9px] font-medium text-zinc-500 uppercase tracking-widest line-clamp-1 group-hover/card:text-zinc-400 transition-colors">
+                {item.label}
               </span>
             </div>
           </div>

@@ -50,7 +50,7 @@ export function DashboardGrid() {
           title="Identity Progression"
           className="h-full"
           action={
-            <Link href="#">
+            <Link href="/journey">
               <Button variant="ghost" size="icon" className="h-6 w-6">
                 <ArrowUpRight className="size-4 text-zinc-500 hover:text-white" />
               </Button>
