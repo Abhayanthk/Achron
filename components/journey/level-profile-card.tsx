@@ -18,7 +18,7 @@ export function LevelProfileCard() {
   const { data: xpData = [] } = useQuery({
     queryKey: ["analytics", "xp", "all"],
     queryFn: async () => {
-      const res = await axios.get("/api/analytics?type=xp&range=heatmap");
+      const res = await axios.get("/api/analytics?type=xp&range=all");
       return res.data.data;
     },
   });

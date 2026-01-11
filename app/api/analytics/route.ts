@@ -265,7 +265,17 @@ export async function GET(request: NextRequest) {
             });
             
             data = Array.from(dailyMap).map(([date, amount]) => ({ date, amount }));
-        } else {
+        }else if (range === "all"){
+            // Full XP Line Graph Logic (All Time)
+            const logs = await prisma.xpLog.findMany({
+                where: {
+                    userId
+                },
+                orderBy: { createdAt: 'asc' }
+            });
+            data = logs.map(log => ({ date: log.createdAt.toISOString().split('T')[0], amount: log.amount }));
+        } 
+        else {
              // XP Line Graph Logic (Week, Month, Year)
              const logs = await prisma.xpLog.findMany({
                 where: {

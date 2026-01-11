@@ -13,6 +13,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { cn } from "@/lib/utils";
+import { calculateLevelFromXp, TITLES } from "@/lib/level-system";
 
 export function IdentityProgress() {
   const { data: stats } = useQuery({
@@ -77,6 +78,18 @@ export function IdentityProgress() {
       bg: "bg-orange-500/10",
     },
   ];
+  //   Fetching all XP logs
+  const { data: xpLogs = [] } = useQuery({
+    queryKey: ["analytics", "xp", "all"],
+    queryFn: async () => {
+      const res = await axios.get("/api/analytics?type=xp&range=all");
+      return res.data.data;
+    },
+  });
+  const { level, currentXp, nextLevelXp, progress, title } =
+    calculateLevelFromXp(
+      xpLogs.reduce((acc: number, curr: any) => acc + curr.amount, 0)
+    );
 
   return (
     <div className="space-y-6 h-full flex flex-col pb-12">
@@ -87,16 +100,16 @@ export function IdentityProgress() {
       >
         <div>
           <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-widest group-hover:text-zinc-300 transition-colors">
-            Total Level
+            Level
           </h3>
-          <p className="text-4xl font-bold text-white mt-1">LVL 77</p>
+          <p className="text-4xl font-bold text-white mt-1">LVL {level}</p>
         </div>
         <div className="text-right flex flex-col items-end">
           <p className="text-xs text-zinc-500 mb-1 uppercase tracking-widest">
             Next Milestone
           </p>
           <p className="text-lg font-bold text-white flex items-center gap-2">
-            LVL 80
+            LVL {level + 1}
           </p>
         </div>
         {/* Background glow */}
