@@ -49,7 +49,7 @@ export function NonNegotiables() {
       setTogglingId(null);
     },
   });
-  console.log("items", items);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 text-xs text-zinc-500 mb-2">
