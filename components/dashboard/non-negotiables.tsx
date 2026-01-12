@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Check, Flame } from "lucide-react";
+import { Check, Flame, Loader2 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { cn } from "@/lib/utils";
@@ -34,7 +34,7 @@ export function NonNegotiables() {
   ).length;
 
   const total = items.length;
-
+  const [togglingId, setTogglingId] = React.useState<string | null>(null);
   const { mutate: toggleMutation, isPending: isToggling } = useMutation({
     mutationFn: async ({ id, date }: { id: string; date: Date }) => {
       return axios.put(`/api/non-negotiables/${id}`, {
@@ -45,8 +45,11 @@ export function NonNegotiables() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["non-negotiables"] });
     },
+    onSettled: () => {
+      setTogglingId(null);
+    },
   });
-
+  console.log("items", items);
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2 text-xs text-zinc-500 mb-2">
@@ -84,17 +87,26 @@ export function NonNegotiables() {
               >
                 {item.title}
               </span>
-              <button
-                onClick={() => toggleMutation({ id: item.id, date: today })}
-                className={cn(
-                  "flex size-6 items-center justify-center rounded-full border transition-all",
-                  isCompleted
-                    ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-500"
-                    : "border-zinc-700 bg-black/20 text-transparent hover:border-zinc-500"
-                )}
-              >
-                <Check className="size-3" />
-              </button>
+              {isToggling && item.id === togglingId ? (
+                <Loader2 className="animate-spin size-6 text-zinc-500" />
+              ) : (
+                <button
+                  onClick={() => {
+                    if (!isCompleted) {
+                      setTogglingId(item.id);
+                      toggleMutation({ id: item.id, date: today });
+                    }
+                  }}
+                  className={cn(
+                    "flex size-6 items-center justify-center rounded-full border transition-all",
+                    isCompleted
+                      ? "border-emerald-500/50 bg-emerald-500/20 text-emerald-500"
+                      : "border-zinc-700 bg-black/20 text-transparent hover:border-zinc-500"
+                  )}
+                >
+                  <Check className="size-3" />
+                </button>
+              )}
             </div>
           );
         })}
