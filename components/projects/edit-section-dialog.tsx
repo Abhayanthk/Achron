@@ -105,7 +105,7 @@ export function EditSectionDialog({
                       : null
                   )
                 }
-                className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 [color-scheme:dark]"
+                className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 scheme-dark"
               />
             </div>
             <div className="space-y-2">
@@ -124,7 +124,7 @@ export function EditSectionDialog({
                       : null
                   )
                 }
-                className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 [color-scheme:dark]"
+                className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 scheme-dark"
               />
             </div>
           </div>

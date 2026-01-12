@@ -114,7 +114,7 @@ export function CreateTaskDialog({
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 [color-scheme:dark]"
+                className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-2 py-1.5 text-xs text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 scheme-dark"
               />
             </div>
 

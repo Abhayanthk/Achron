@@ -368,9 +368,9 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const endSession = async (
     id: string,
     passedDuration?: number,
-    options: RetryOptions = { retries: 2, delayMs: 1000 }
+    options: RetryOptions = { retries: 3, delayMs: 2000 }
   ) => {
-    const { retries = 2, delayMs = 1000 } = options;
+    const { retries = 3, delayMs = 2000 } = options;
 
     const attempt = async (remainingRetries: number): Promise<any> => {
       try {
@@ -380,7 +380,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
           axios.isAxiosError(error) &&
           (!error.response || error.code === "ERR_NETWORK");
 
-        if (!isNetworkError || remainingRetries <= 0) {
+        if (remainingRetries <= 0) {
           console.error("Failed to end session", error);
           return null;
         }

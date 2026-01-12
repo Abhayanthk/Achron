@@ -47,7 +47,7 @@ export default function HabitsPage() {
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col lg:flex-row">
       {/* Sidebar / Info Panel */}
-      <aside className="w-full lg:w-80 border-r border-white/5 bg-zinc-900/30 p-6 flex-shrink-0">
+      <aside className="w-full lg:w-80 border-r border-white/5 bg-zinc-900/30 p-6 shrink-0">
         <div className="space-y-8 sticky top-6">
           <div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
