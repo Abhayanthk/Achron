@@ -23,6 +23,7 @@ export interface NonNegotiable {
 export default function NonNegotiablesPage() {
   const [newItem, setNewItem] = useState("");
   const queryClient = useQueryClient();
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const { data: items = [], isLoading } = useQuery({
     queryKey: ["non-negotiables"],
@@ -43,7 +44,7 @@ export default function NonNegotiablesPage() {
     },
   });
 
-  const toggleMutation = useMutation({
+  const { mutate: toggleMutation, isPending: isToggling } = useMutation({
     mutationFn: async ({ id, date }: { id: string; date: Date }) => {
       return axios.put(`/api/non-negotiables/${id}`, {
         action: "toggle",
@@ -89,6 +90,9 @@ export default function NonNegotiablesPage() {
           }
         }
       }
+    },
+    onSettled: () => {
+      setTogglingId(null);
     },
   });
 
@@ -187,10 +191,12 @@ export default function NonNegotiablesPage() {
                   key={item.id}
                   item={item}
                   isCompleted={isCompletedToday(item)}
-                  onToggle={() =>
-                    toggleMutation.mutate({ id: item.id, date: today })
-                  }
+                  onToggle={() => {
+                    setTogglingId(item.id);
+                    toggleMutation({ id: item.id, date: today });
+                  }}
                   onDelete={() => deleteMutation.mutate(item.id)}
+                  isToggling={togglingId === item.id}
                 />
               ))}
 

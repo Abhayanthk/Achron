@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Trash2, Flame } from "lucide-react";
+import { Check, Trash2, Flame, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NonNegotiable } from "@/app/non-negotiables/page";
 
@@ -11,6 +11,7 @@ interface PremiumTaskCardProps {
   onToggle: () => void;
   onDelete: () => void;
   streak?: number; // Future proofing
+  isToggling?: boolean;
 }
 
 export function PremiumTaskCard({
@@ -18,6 +19,7 @@ export function PremiumTaskCard({
   isCompleted,
   onToggle,
   onDelete,
+  isToggling,
 }: PremiumTaskCardProps) {
   return (
     <motion.div
@@ -37,32 +39,35 @@ export function PremiumTaskCard({
       >
         <div className="flex items-center justify-between z-10 relative">
           <div className="flex items-center gap-4 flex-1">
-            <button
-              onClick={() => {
-                if (!isCompleted) {
-                  onToggle();
-                }
-              }}
-              className={cn(
-                "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-300",
-                isCompleted
-                  ? "border-emerald-500 bg-emerald-500 text-black shadow-lg shadow-emerald-500/20"
-                  : "border-zinc-700 bg-zinc-900/50 hover:border-zinc-500 text-transparent"
-              )}
-            >
-              <AnimatePresence>
-                {isCompleted && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                  >
-                    <Check className="h-6 w-6" strokeWidth={3} />
-                  </motion.div>
+            {isToggling ? (
+              <Loader2 className="size-12 animate-spin text-emerald-500" />
+            ) : (
+              <button
+                onClick={() => {
+                  if (!isCompleted) {
+                    onToggle();
+                  }
+                }}
+                className={cn(
+                  "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 transition-all duration-300",
+                  isCompleted
+                    ? "border-emerald-500 bg-emerald-500 text-black shadow-lg shadow-emerald-500/20"
+                    : "border-zinc-700 bg-zinc-900/50 hover:border-zinc-500 text-transparent cursor-pointer"
                 )}
-              </AnimatePresence>
-            </button>
-
+              >
+                <AnimatePresence>
+                  {isCompleted && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                    >
+                      <Check className="h-6 w-6" strokeWidth={3} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
+            )}
             <div className="flex flex-col gap-1">
               <h3
                 className={cn(
