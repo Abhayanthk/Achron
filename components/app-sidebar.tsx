@@ -40,6 +40,8 @@ import {
   BookOpenText,
 } from "lucide-react";
 
+import { usePathname } from "next/navigation";
+
 import {
   Sidebar,
   SidebarContent,
@@ -90,7 +92,7 @@ const navMain = [
   },
   {
     title: "Non-Negotiable",
-    url: "/non-negotiable",
+    url: "/non-negotiables",
     icon: ShieldCheck,
   },
   {
@@ -111,7 +113,7 @@ const navMain = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [activeItem, setActiveItem] = React.useState("Home");
+  const pathname = usePathname();
   const { user } = useUser();
   const { openUserProfile } = useClerk();
 
@@ -157,8 +159,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
                   asChild
-                  isActive={activeItem === item.title}
-                  onClick={() => setActiveItem(item.title)}
+                  isActive={
+                    pathname === item.url ||
+                    pathname?.startsWith(`${item.url}/`)
+                  }
                   className="h-12 w-full justify-start gap-4 rounded-xl bg-white/5 text-zinc-400 hover:bg-white hover:text-black hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-[1.02] data-[active=true]:bg-white data-[active=true]:text-black data-[active=true]:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 ease-out border border-transparent hover:border-white/50 group-data-[collapsible=icon]:p-0! group-data-[collapsible=icon]:size-10! group-data-[collapsible=icon]:justify-center"
                   tooltip={item.title}
                 >
