@@ -74,11 +74,6 @@ const navMain = [
     icon: Home,
   },
   {
-    title: "Explore",
-    url: "#",
-    icon: Search,
-  },
-  {
     title: "My Journey",
     url: "/journey",
     icon: Map,
