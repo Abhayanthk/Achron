@@ -22,7 +22,7 @@ export function CreateSectionDialog({
   defaultColor,
   trigger,
 }: CreateSectionDialogProps) {
-  const [endDate, setEndDate] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [color, setColor] = useState(defaultColor);
@@ -53,10 +53,11 @@ export function CreateSectionDialog({
   };
 
   return (
+    // pass seter function to dialog to change isOpen state
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <button className="p-1 hover:bg-white/5 rounded-md text-zinc-400 hover:text-white transition-colors">
+          <button className="p-1 hover:bg-white/5 rounded-md text-zinc-400 hover:text-white transition-colors cursor-pointer">
             <Plus className="h-4 w-4" />
           </button>
         )}
@@ -74,17 +75,19 @@ export function CreateSectionDialog({
               placeholder="e.g. Planning Phase"
               className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10"
               autoFocus
-              onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              onKeyDown={(e) =>
+                e.key === "Enter" && title && dueDate && handleSubmit()
+              }
             />
           </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-400">
-              End Date
+              due Date
             </label>
             <input
               type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
               className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 scheme-dark"
             />
           </div>
@@ -98,7 +101,7 @@ export function CreateSectionDialog({
                   key={c}
                   onClick={() => setColor(c)}
                   className={cn(
-                    "h-6 w-6 rounded-full border-2 transition-all",
+                    "h-6 w-6 rounded-full border-2 transition-all cursor-pointer",
                     color === c
                       ? "border-white scale-110"
                       : "border-transparent hover:scale-110"
