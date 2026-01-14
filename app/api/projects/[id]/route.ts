@@ -60,8 +60,10 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await req.json();
-    const { title, description, startDate, endDate, color, status } = body;
-
+    let { title, description, startDate, endDate, color, status } = body;
+    if(status === "COMPLETED") {
+      endDate = new Date();
+    }
     const project = await prisma.project.update({
       where: {
         id,

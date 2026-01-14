@@ -61,7 +61,10 @@ export default function ProjectsPage() {
 
   const { mutate: createProject, isPending: isCreating } = useMutation({
     mutationFn: async () => {
-      await axios.post("/api/projects", newProject);
+      await axios.post("/api/projects", {
+        ...newProject,
+        startDate: new Date(),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
