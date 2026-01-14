@@ -113,7 +113,7 @@ export function DashboardGrid() {
         title="Tasks"
         className="md:col-span-4 lg:col-span-7"
         action={
-          <Link href="#">
+          <Link href="/tasks">
             <Button variant="ghost" size="icon" className="h-6 w-6">
               <ArrowUpRight className="size-4 text-zinc-500 hover:text-white" />
             </Button>
@@ -126,13 +126,15 @@ export function DashboardGrid() {
           </div>
           <div className="hidden sm:block w-px bg-white/10 self-stretch my-2"></div>
           <div className="w-full sm:w-auto flex flex-col gap-2 min-w-[120px]">
-            <Button
-              className="w-full justify-start text-xs h-8"
-              variant="outline"
-            >
-              {" "}
-              <Plus className="mr-2 size-3" /> Add Task
-            </Button>
+            <Link href="/tasks?action=new" className="w-full">
+              <Button
+                className="w-full justify-start text-xs h-8"
+                variant="outline"
+              >
+                {" "}
+                <Plus className="mr-2 size-3" /> Add Task
+              </Button>
+            </Link>
             <Button
               className="w-full justify-start text-xs h-8"
               variant="ghost"
