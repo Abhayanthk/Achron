@@ -22,6 +22,7 @@ export function CreateSectionDialog({
   defaultColor,
   trigger,
 }: CreateSectionDialogProps) {
+  const [endDate, setEndDate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [color, setColor] = useState(defaultColor);
@@ -76,7 +77,17 @@ export function CreateSectionDialog({
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             />
           </div>
-
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-zinc-400">
+              End Date
+            </label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 scheme-dark"
+            />
+          </div>
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-400">
               Color Tag

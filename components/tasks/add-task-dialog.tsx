@@ -117,7 +117,7 @@ export function AddTaskDialog({ open, onOpenChange }: AddTaskDialogProps) {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div className="space-y-2">
-            <label className="text-xs uppercase tracking-wider font-semibold text-zinc-500">
+            <label className="text-xs uppercase tracking-wider font-semibold text-zinc-300">
               Task Title
             </label>
             <Input
@@ -130,19 +130,19 @@ export function AddTaskDialog({ open, onOpenChange }: AddTaskDialogProps) {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-wider font-semibold text-zinc-500">
+              <label className="text-xs uppercase tracking-wider font-semibold text-zinc-300">
                 Due Date
               </label>
               <Input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="bg-zinc-900/50 border-zinc-800 text-white focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500 h-10"
+                className="bg-zinc-900/50 border-zinc-800 text-white focus-visible:ring-emerald-500/50 focus-visible:border-emerald-500 h-10 scheme-dark"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs uppercase tracking-wider font-semibold text-zinc-500">
+              <label className="text-xs uppercase tracking-wider font-semibold text-zinc-300">
                 Priority
               </label>
               <div className="flex gap-2">
@@ -194,7 +194,7 @@ export function AddTaskDialog({ open, onOpenChange }: AddTaskDialogProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs uppercase tracking-wider font-semibold text-zinc-500">
+            <label className="text-xs uppercase tracking-wider font-semibold text-zinc-300">
               Category
             </label>
             <div className="flex gap-2 flex-wrap p-3 rounded-xl bg-zinc-900/30 border border-white/5 min-h-[60px]">
@@ -229,6 +229,8 @@ export function AddTaskDialog({ open, onOpenChange }: AddTaskDialogProps) {
                 onOpenChange={setIsCategoryPopoverOpen}
               >
                 <PopoverTrigger asChild>
+                  {/* `asChild` lets Radix attach Popover trigger behavior directly to this button */}
+
                   <button
                     type="button"
                     className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-dashed border-zinc-800 text-xs font-medium text-zinc-500 hover:text-zinc-300 hover:border-zinc-700 transition-colors bg-white/5 hover:bg-white/10"
@@ -279,7 +281,7 @@ export function AddTaskDialog({ open, onOpenChange }: AddTaskDialogProps) {
             </Button>
             <Button
               type="submit"
-              disabled={isCreating || !title}
+              disabled={isCreating || !title || !categoryId || !date}
               className="bg-white text-black hover:bg-zinc-200 font-semibold shadow-lg shadow-white/10"
             >
               {isCreating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

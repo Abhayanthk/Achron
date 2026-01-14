@@ -94,7 +94,6 @@ export function DraggableSection({
     if (!isResizing.current) return;
     e.stopPropagation();
     isResizing.current = false;
-
     // Commit resize
     if (resizeOffset !== 0) {
       // Don't reset resizeOffset immediately - wait for the commit to come back via props
@@ -118,7 +117,10 @@ export function DraggableSection({
         filter: isCompleted ? "grayscale(100%)" : "none",
         zIndex: isDragging.current || isResizing.current ? 50 : 1,
       }}
-      transition={{ type: "spring", stiffness: 500, damping: 30 }} // Snappy transition
+      transition={{
+        duration: 0.08,
+        ease: "linear",
+      }}
       className={cn(
         "absolute top-0 h-8 rounded-md backdrop-blur-md border border-white/10 shadow-lg flex items-center px-1 overflow-visible transition-colors select-none touch-none",
         isCompleted
@@ -145,7 +147,7 @@ export function DraggableSection({
           onClick={(e) => e.stopPropagation()}
         >
           {/* Visual Handle - Larger hit area implemented by parent w-8 */}
-          <div className="w-1.5 h-4 bg-white/20 rounded-full group-hover/resize:bg-white/50 transition-colors pointer-events-none" />
+          <div className="w-8 h-4 bg-white/20 rounded-full group-hover/resize:bg-white/50 transition-colors pointer-events-none" />
         </div>
       )}
     </motion.div>
