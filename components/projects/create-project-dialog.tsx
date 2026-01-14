@@ -102,8 +102,20 @@ export const CreateProjectDialog = ({
             </div>
           </div>
           <button
-            disabled={!newProject.title || isCreating}
-            onClick={() => createProject(newProject)}
+            disabled={!newProject.title || isCreating || !newProject.description}
+            onClick={async () => {
+              try {
+                await createProject(newProject);
+                onOpenChange(false);
+                setNewProject({
+                  title: "",
+                  description: "",
+                  color: "#3b82f6",
+                });
+              } catch {
+                // handled in mutation
+              }
+            }}
             className="w-full mt-4 flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg font-medium hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {isCreating ? (
