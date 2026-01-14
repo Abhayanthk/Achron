@@ -36,7 +36,12 @@ interface Section {
 interface ProjectSidebarProps {
   sections: Section[];
   projectStatus: string;
-  onAddSection: (title: string, color: string) => Promise<void>;
+  onAddSection: (
+    title: string,
+    color: string,
+    dueDate: string,
+    startDate: string
+  ) => Promise<void>;
   onAddTask: (
     sectionId: string,
     data: {
@@ -46,7 +51,7 @@ interface ProjectSidebarProps {
       dueDate: string | null;
     }
   ) => Promise<void>;
-  onDeleteSection: (sectionId: string) => void;
+  onDeleteSection: (sectionId: string) => Promise<void>;
   onUpdateSectionStatus: (sectionId: string, status: string) => Promise<void>;
   onUpdateSection: (sectionId: string, data: { title: string }) => void;
   onUpdateProjectStatus: (status: string) => void;
@@ -71,7 +76,7 @@ export function ProjectSidebar({
   const [expandedSections, setExpandedSections] = useState<
     Record<string, boolean>
   >({});
-
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
   const [updatingSectionStatusId, setUpdatingSectionStatusId] = useState<
     string | null
@@ -262,14 +267,26 @@ export function ProjectSidebar({
                       }
                     />
                     <button
-                      onClick={(e) => {
+                      onClick={async (e) => {
                         e.stopPropagation();
-                        if (confirm("Delete section?"))
-                          onDeleteSection(section.id);
+                        if (confirm("Delete section?")) {
+                          setDeletingId(section.id);
+                          try {
+                            await onDeleteSection(section.id);
+                          } catch {
+                            // catch is haddled by the parent
+                          } finally {
+                            setDeletingId(null);
+                          }
+                        }
                       }}
                       className="p-1 text-zinc-500 hover:text-red-400"
                     >
-                      <Trash2 className="h-3 w-3" />
+                      {deletingId === section.id ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <Trash2 className="h-3 w-3" />
+                      )}
                     </button>
                   </div>
                 </>
@@ -321,7 +338,7 @@ export function ProjectSidebar({
             </AnimatePresence>
           </div>
         ))}
-
+        {/* Case when sections are empty */}
         {!isLoading && sections.length === 0 && (
           <div className="p-4 text-center text-xs text-zinc-500">
             No sections created.

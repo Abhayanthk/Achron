@@ -12,7 +12,12 @@ import { Loader2, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CreateSectionDialogProps {
-  onConfirm: (title: string, color: string) => Promise<void>;
+  onConfirm: (
+    title: string,
+    color: string,
+    dueDate: string,
+    startDate: string
+  ) => Promise<void>;
   defaultColor: string;
   trigger?: React.ReactNode;
 }
@@ -23,6 +28,7 @@ export function CreateSectionDialog({
   trigger,
 }: CreateSectionDialogProps) {
   const [dueDate, setDueDate] = useState("");
+  const [startDate, setStartDate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [color, setColor] = useState(defaultColor);
@@ -42,7 +48,7 @@ export function CreateSectionDialog({
     if (!title) return;
     setIsLoading(true);
     try {
-      await onConfirm(title, color);
+      await onConfirm(title, color, dueDate, startDate);
       setTitle("");
       setIsOpen(false);
     } catch {
@@ -68,7 +74,7 @@ export function CreateSectionDialog({
         </DialogHeader>
         <div className="space-y-4 mt-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400">Title</label>
+            <label className="text-sm font-medium text-zinc-200">Title</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -81,8 +87,19 @@ export function CreateSectionDialog({
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400">
-              due Date
+            <label className="text-sm font-medium text-zinc-300">
+              Start Date
+            </label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="w-full bg-zinc-900/50 border border-white/10 rounded-lg px-3 py-2 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-white/10 scheme-dark"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-zinc-300">
+              End Date
             </label>
             <input
               type="date"
@@ -92,7 +109,7 @@ export function CreateSectionDialog({
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400">
+            <label className="text-sm font-medium text-zinc-300">
               Color Tag
             </label>
             <div className="flex items-center gap-2 flex-wrap">
@@ -113,7 +130,7 @@ export function CreateSectionDialog({
           </div>
 
           <button
-            disabled={!title || isLoading}
+            disabled={!title || isLoading || !startDate || !dueDate}
             onClick={handleSubmit}
             className="w-full mt-2 flex items-center justify-center gap-2 bg-white text-black py-2 rounded-lg font-medium hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >

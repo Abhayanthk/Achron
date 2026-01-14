@@ -27,9 +27,18 @@ export default function ProjectDetailsPage() {
 
   // Mutations
   const { mutate: addSection } = useMutation({
-    mutationFn: async ({ title, color }: { title: string; color: string }) => {
-      const startDate = project?.startDate || new Date().toISOString();
-      const endDate = addDays(new Date(startDate), 14).toISOString();
+    mutationFn: async ({
+      title,
+      color,
+      dueDate,
+      startDate,
+    }: {
+      title: string;
+      color: string;
+      dueDate: string;
+      startDate: string;
+    }) => {
+      const endDate = dueDate;
 
       await axios.post("/api/projects/sections", {
         projectId: id,
@@ -45,7 +54,7 @@ export default function ProjectDetailsPage() {
     },
   });
 
-  const { mutate: deleteSection } = useMutation({
+  const { mutateAsync: deleteSection } = useMutation({
     mutationFn: async (sectionId: string) => {
       await axios.delete(`/api/projects/sections?id=${sectionId}`);
     },
@@ -168,10 +177,10 @@ export default function ProjectDetailsPage() {
           sections={project.sections || []}
           projectStatus={project.status}
           isLoading={isLoading}
-          onAddSection={async (title, color) =>
-            await addSection({ title, color })
+          onAddSection={async (title, color, dueDate, startDate) =>
+            await addSection({ title, color, dueDate, startDate })
           }
-          onDeleteSection={(secId) => deleteSection(secId)}
+          onDeleteSection={async (secId) => await deleteSection(secId)}
           onAddTask={async (secId, data) =>
             await addTask({ sectionId: secId, data })
           }
