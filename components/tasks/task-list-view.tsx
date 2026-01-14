@@ -14,7 +14,7 @@ import { format, isSameDay, isPast, isFuture } from "date-fns";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
-
+import { useState } from "react";
 interface Task {
   id: string;
   title: string;
@@ -42,6 +42,7 @@ const PRIORITY_COLORS = {
 };
 
 export function TaskListView({ filter, searchQuery }: TaskListViewProps) {
+  const [toggleTaskId, setToggleTaskId] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const { data: tasks, isLoading } = useQuery({
     queryKey: ["tasks"],
@@ -69,6 +70,9 @@ export function TaskListView({ filter, searchQuery }: TaskListViewProps) {
     },
     onError: () => {
       toast.error("Failed to toggle task");
+    },
+    onSettled: () => {
+      setToggleTaskId(null);
     },
   });
   //   const toggleTask = async (id: string, currentStatus: boolean) => {
@@ -185,13 +189,14 @@ export function TaskListView({ filter, searchQuery }: TaskListViewProps) {
             />
 
             <button
-              onClick={() =>
-                toggleTask({ id: task.id, currentStatus: task.isCompleted })
-              }
+              onClick={() => {
+                toggleTask({ id: task.id, currentStatus: task.isCompleted });
+                setToggleTaskId(task.id);
+              }}
               className="mt-0.5 shrink-0 z-10 cursor-pointer"
             >
-              {isToggling ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
+              {toggleTaskId === task.id && isToggling ? (
+                <Loader2 className="h-5 w-5 animate-spin text-zinc-300" />
               ) : task.isCompleted ? (
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
               ) : (
