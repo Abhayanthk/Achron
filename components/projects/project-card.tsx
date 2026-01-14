@@ -52,7 +52,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div
         className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-10"
         style={{
-          background: `radial-gradient(circle at center, ${project.color}, transparent 70%)`,
+          background: `radial-gradient(circle at center, ${project.color}, transparent 100%)`,
         }}
       />
 
@@ -64,7 +64,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               style={{ backgroundColor: `${project.color}20` }}
             >
               <div
-                className="h-2.5 w-2.5 rounded-full"
+                className="h-2.5 w-2.5 rounded-full animate-pulse"
                 style={{ backgroundColor: project.color }}
               />
             </div>
