@@ -167,7 +167,7 @@ export function TaskListView({ filter, searchQuery }: TaskListViewProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, height: 0 }}
             className={cn(
-              "group flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer relative overflow-hidden",
+              "group flex items-center gap-4 p-4 rounded-xl border transition-all relative overflow-hidden",
               "bg-zinc-900/50 hover:bg-zinc-900/80 border-white/5",
               PRIORITY_COLORS[task.priority || "WHITE"]
                 .split(" ")[1]

@@ -114,7 +114,11 @@ export function DashboardGrid() {
         className="md:col-span-4 lg:col-span-7"
         action={
           <Link href="/tasks">
-            <Button variant="ghost" size="icon" className="h-6 w-6">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 cursor-pointer"
+            >
               <ArrowUpRight className="size-4 text-zinc-500 hover:text-white" />
             </Button>
           </Link>
@@ -128,20 +132,20 @@ export function DashboardGrid() {
           <div className="w-full sm:w-auto flex flex-col gap-2 min-w-[120px]">
             <Link href="/tasks?action=new" className="w-full">
               <Button
-                className="w-full justify-start text-xs h-8"
+                className="w-full justify-start text-xs h-8 cursor-pointer"
                 variant="outline"
               >
                 {" "}
                 <Plus className="mr-2 size-3" /> Add Task
               </Button>
             </Link>
-            <Button
+            {/* <Button
               className="w-full justify-start text-xs h-8"
               variant="ghost"
             >
               {" "}
               <Calendar className="mr-2 size-3 text-zinc-500" /> Calendar
-            </Button>
+            </Button> */}
           </div>
         </div>
       </BentoCard>

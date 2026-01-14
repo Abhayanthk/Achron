@@ -51,9 +51,12 @@ export function DraggableSection({
     e.preventDefault();
     isDragging.current = true;
     startX.current = e.clientX;
+
+    window.addEventListener("pointermove", handleDragMove);
+    window.addEventListener("pointerup", handleDragStop);
   };
 
-  const handleDragMove = (e: React.PointerEvent) => {
+  const handleDragMove = (e: PointerEvent) => {
     if (!isDragging.current) return;
     e.preventDefault();
     const diff = e.clientX - startX.current;
@@ -63,6 +66,9 @@ export function DraggableSection({
   const handleDragStop = () => {
     if (!isDragging.current) return;
     isDragging.current = false;
+
+    window.removeEventListener("pointermove", handleDragMove);
+    window.removeEventListener("pointerup", handleDragStop);
 
     // Commit drag
     if (dragOffset !== 0) {
@@ -77,9 +83,12 @@ export function DraggableSection({
     e.stopPropagation();
     isResizing.current = true;
     startX.current = e.clientX;
+
+    window.addEventListener("pointermove", handleResizeMove);
+    window.addEventListener("pointerup", handleResizeStop);
   };
 
-  const handleResizeMove = (e: React.PointerEvent) => {
+  const handleResizeMove = (e: PointerEvent) => {
     if (!isResizing.current) return;
     e.preventDefault();
     e.stopPropagation();
@@ -90,10 +99,14 @@ export function DraggableSection({
     }
   };
 
-  const handleResizeStop = (e: React.PointerEvent) => {
+  const handleResizeStop = (e: PointerEvent) => {
     if (!isResizing.current) return;
     e.stopPropagation();
     isResizing.current = false;
+
+    window.removeEventListener("pointermove", handleResizeMove);
+    window.removeEventListener("pointerup", handleResizeStop);
+
     // Commit resize
     if (resizeOffset !== 0) {
       // Don't reset resizeOffset immediately - wait for the commit to come back via props
@@ -105,9 +118,6 @@ export function DraggableSection({
     <motion.div
       // Manual Drag Event Handlers
       onPointerDown={handleDragStart}
-      onPointerMove={handleDragMove}
-      onPointerUp={handleDragStop}
-      onPointerLeave={handleDragStop}
       // Interaction States
       initial={false}
       animate={{
@@ -118,7 +128,7 @@ export function DraggableSection({
         zIndex: isDragging.current || isResizing.current ? 50 : 1,
       }}
       transition={{
-        duration: 0.08,
+        duration: 0.1,
         ease: "linear",
       }}
       className={cn(
@@ -141,13 +151,10 @@ export function DraggableSection({
           className="absolute right-0 top-0 bottom-0 w-8 cursor-e-resize flex items-center justify-center group/resize z-20"
           // Manual Resize Event Handlers
           onPointerDown={handleResizeStart}
-          onPointerMove={handleResizeMove}
-          onPointerUp={handleResizeStop}
-          onPointerLeave={handleResizeStop}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Visual Handle - Larger hit area implemented by parent w-8 */}
-          <div className="w-8 h-4 bg-white/20 rounded-full group-hover/resize:bg-white/50 transition-colors pointer-events-none" />
+          <div className="w-1.5 h-4 bg-white/20 rounded-full group-hover/resize:bg-white/50 transition-colors pointer-events-none" />
         </div>
       )}
     </motion.div>
