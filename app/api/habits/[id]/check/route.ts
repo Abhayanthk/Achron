@@ -43,13 +43,7 @@ export async function POST(
     const isCompleted = completedDates.some((d) => isSameDay(d, checkDate));
 
     if (isCompleted) {
-        // UNCHECK logic
-        // Allow unchecking, remove date, decrement streak, remove XP?
-        // Simplification: Just remove date. Recalculating streak perfectly is hard without history.
-        // But assuming streak is just consecutive count ending today.
-        // If unchecking today, streak--
-        // For XP, we should decrement user XP.
-        
+
         // Remove date
         const newDates = completedDates.filter((d) => !isSameDay(d, checkDate));
         
@@ -67,9 +61,6 @@ export async function POST(
                 where: { id: userId },
                 data: { xp: { decrement: 50 } }
             }),
-            // Ideally remove XpLog too, but we might not find the exact one easily without ID.
-            // We'll create a negative log or just leave it for now to avoid complexity.
-            // Let's create a negative Log to balance it.
             prisma.xpLog.create({
                 data: {
                     userId,
@@ -83,9 +74,6 @@ export async function POST(
         return NextResponse.json({ ...habit, completedDates: newDates, streak: newStreak });
 
     } else {
-        // CHECK logic
-        
-        // 1. Calculate Penalty first (ensure streak is accurate up to yesterday)
         let currentStreak = habit.streak;
         const sortedDates = completedDates.sort((a, b) => b.getTime() - a.getTime());
         const lastCompletedDate = sortedDates[0];

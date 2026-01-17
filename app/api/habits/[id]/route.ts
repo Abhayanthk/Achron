@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-
+// Archie a habit
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> } // Params are async in Next.js 15+
@@ -34,7 +34,7 @@ export async function PATCH(
     return NextResponse.json({ error: "Internal Error" }, { status: 500 });
   }
 }
-
+// Delete a habit
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

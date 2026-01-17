@@ -47,12 +47,14 @@ export function HabitCard({ habit }: HabitCardProps) {
   const { currentRank, color, progress, nextRankThreshold } = getHabitRank(
     habit.streak
   );
-
   const { mutate: toggleCheck, isPending } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(`/api/habits/${habit.id}/check`);
+      const res = await axios.post(`/api/habits/${habit.id}/check`, {
+        date: new Date().toISOString(),
+      });
       return res.data;
     },
+    //     this runs before the mutation, so the UI can be updated before the mutation is completed
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["habits"] });
       const previousHabits = queryClient.getQueryData(["habits"]);
@@ -88,8 +90,10 @@ export function HabitCard({ habit }: HabitCardProps) {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["habits"] });
-      if (!isCompletedToday) {
+      if (isCompletedToday) {
         toast.success("Habit Completed! (+50 XP)");
+      } else {
+        toast.success("Habit Uncompleted! (-50 XP)");
       }
     },
   });
@@ -173,7 +177,7 @@ export function HabitCard({ habit }: HabitCardProps) {
         onClick={() => toggleCheck()}
         disabled={isPending}
         className={cn(
-          "mt-2 w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 transform group-hover:scale-110",
+          "mt-2 w-16 cursor-pointer h-16 rounded-full flex items-center justify-center transition-all duration-300 transform group-hover:scale-110",
           isCompletedToday
             ? "bg-blue-600 text-white shadow-[0_0_30px_rgba(37,99,235,0.6)]"
             : "bg-zinc-800 text-zinc-600 hover:bg-zinc-700 hover:text-white border border-white/5"

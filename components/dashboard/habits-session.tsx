@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2, Flame, Trophy, Crown } from "lucide-react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -50,11 +51,11 @@ export function HabitsSession() {
           {topHabits.map((habit: any) => {
             const { currentRank, color, progress } = getHabitRank(habit.streak);
             return (
-              <div
+              <Link
                 key={habit.id}
-                onClick={() => toggleMutation.mutate(habit.id)}
+                href={`/habits`}
                 className={cn(
-                  "relative overflow-hidden rounded-lg bg-white/5 border border-white/5 p-3 group hover:bg-white/10 transition-colors cursor-pointer",
+                  "relative inline-block overflow-hidden rounded-lg bg-white/5 border border-white/5 p-3 group hover:bg-white/10 transition-colors cursor-pointer",
                   toggleMutation.isPending && "opacity-50 pointer-events-none"
                 )}
               >
@@ -90,7 +91,7 @@ export function HabitsSession() {
                     )}
                   />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
