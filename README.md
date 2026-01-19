@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Archon
 
-## Getting Started
+Archon is a gamified productivity platform designed to help you build your identity through consistent action. Track habits, manage projects, and level up your life with detailed analytics and focus tools.
 
-First, run the development server:
+**Live Demo:** [https://achron.vercel.app/](https://achron.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Main Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Gamified Productivity**: Earn XP and level up your "Identity" by completing tasks and sticking to habits.
+- **Dashboard Analytics**: Visualize your progress with Consistency Heatmaps, Confidence Mountains, and dynamic XP graphs.
+- **Project Management**: Organize your work with active projects, timelines, sections, and tasks.
+- **Habit Tracking**: Build streaks and monitor daily habits to foster consistency.
+- **Focus Timer**: Dedicated deep work timer with customizable presets to keep you in the flow.
+- **Non-Negotiables**: Track critical daily commitments that are essential to your personal growth.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Future Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Timer & XP History**: Detailed history of your focus sessions and XP earned.
+- **AI Integration**: Smart suggestions and automated descriptions to streamline your workflow.
+- **Enhanced Analytics**: Deeper insights into your identity stats and productivity trends using AI.
