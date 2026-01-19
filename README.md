@@ -12,6 +12,7 @@ Archon is a gamified productivity platform designed to help you build your ident
 - **Habit Tracking**: Build streaks and monitor daily habits to foster consistency.
 - **Focus Timer**: Dedicated deep work timer with customizable presets to keep you in the flow.
 - **Non-Negotiables**: Track critical daily commitments that are essential to your personal growth.
+- **Daily Logs**: Capture daily thoughts, reflections, and learnings.
 
 ## Future Features
 
