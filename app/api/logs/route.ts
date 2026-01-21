@@ -70,7 +70,7 @@ export async function POST(req: Request) {
         categoryId: categoryId === "none" ? null : categoryId,
       },
     });
-
+    
     return NextResponse.json(log);
   } catch (error) {
     console.error("[LOGS_POST]", error);
