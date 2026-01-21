@@ -12,6 +12,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -102,13 +104,20 @@ export default function TimerPage() {
   const [timeRange, setTimeRange] = useState<"week" | "month" | "year">("week");
   const [unit, setUnit] = useState<"hours" | "minutes">("hours");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [pendingPreset, setPendingPreset] = useState<{
+    duration: number;
+    type: string;
+    name: string;
+    id: string;
+  } | null>(null);
 
   // Fetch Analytics Data
   const { data: analyticsData = [], isLoading: isLoadingAnalytics } = useQuery({
     queryKey: ["analytics", timeRange],
     queryFn: async () => {
       const res = await axios.get(
-        `/api/analytics?range=${timeRange}&type=timer`
+        `/api/analytics?range=${timeRange}&type=timer`,
       );
       return res.data.data;
     },
@@ -116,6 +125,7 @@ export default function TimerPage() {
   // Data Normalization Helper
   const fillData = (data: any[], range: string) => {
     if (range === "week") {
+      // Current week days
       const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
       return days.map((day) => {
         const found = data.find((d) => d.name === day);
@@ -143,12 +153,7 @@ export default function TimerPage() {
       });
     }
     if (range === "month") {
-      // Generate days based on current month? Or just generic 1-30?
-      // Simplest: 1-30/31.
-      // Let's assume generic 30 days for visual consistency or use data names if they are "Day X"
-      // API endpoint for 'month' returns data with name: "Week X" or Day?
-      // Let's stick to data for month for now, as it's variable length.
-      // OR: fill "Week 1", "Week 2", "Week 3", "Week 4", "Week 5"
+      // selects all weeks from the current month
       const weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5"];
       // Check if data names match "Week X".
       const hasWeeks = data.some((d) => d.name.startsWith("Week"));
@@ -173,7 +178,7 @@ export default function TimerPage() {
   // Calculate Stats
   const totalHours = currentData.reduce(
     (acc: number, curr: any) => acc + curr.hours,
-    0
+    0,
   );
 
   return (
@@ -184,7 +189,7 @@ export default function TimerPage() {
         <div
           className={cn(
             "absolute inset-0 transition-opacity duration-1000",
-            isActive ? "opacity-30" : "opacity-0"
+            isActive ? "opacity-30" : "opacity-0",
           )}
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/10 blur-[120px] rounded-full animate-pulse" />
@@ -207,7 +212,7 @@ export default function TimerPage() {
               "px-4 py-1.5 rounded-full text-xs font-medium transition-all",
               viewMode === "timer"
                 ? "bg-white text-black shadow-lg"
-                : "text-zinc-400 hover:text-white"
+                : "text-zinc-400 hover:text-white",
             )}
           >
             Timer
@@ -218,7 +223,7 @@ export default function TimerPage() {
               "px-4 py-1.5 rounded-full text-xs font-medium transition-all",
               viewMode === "stats"
                 ? "bg-white text-black shadow-lg"
-                : "text-zinc-400 hover:text-white"
+                : "text-zinc-400 hover:text-white",
             )}
           >
             Analytics
@@ -280,7 +285,7 @@ export default function TimerPage() {
                           "flex items-center justify-between p-3 rounded-xl border transition-all",
                           alarmSound === sound.id
                             ? "bg-zinc-900 border-blue-500/50 text-white"
-                            : "bg-transparent border-zinc-800 text-zinc-400 hover:bg-zinc-900/50"
+                            : "bg-transparent border-zinc-800 text-zinc-400 hover:bg-zinc-900/50",
                         )}
                       >
                         <div className="flex items-center gap-3">
@@ -289,7 +294,7 @@ export default function TimerPage() {
                               "p-2 rounded-lg",
                               alarmSound === sound.id
                                 ? "bg-blue-500/10 text-blue-400"
-                                : "bg-zinc-800 text-zinc-500"
+                                : "bg-zinc-800 text-zinc-500",
                             )}
                           >
                             <sound.icon className="size-4" />
@@ -332,13 +337,13 @@ export default function TimerPage() {
                   <span
                     className={cn(
                       "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
-                      isActive ? "bg-blue-400" : "hidden"
+                      isActive ? "bg-blue-400" : "hidden",
                     )}
                   ></span>
                   <span
                     className={cn(
                       "relative inline-flex rounded-full h-3 w-3",
-                      isActive ? "bg-blue-500" : "bg-zinc-700"
+                      isActive ? "bg-blue-500" : "bg-zinc-700",
                     )}
                   ></span>
                 </span>
@@ -366,7 +371,7 @@ export default function TimerPage() {
                     "h-20 w-20 rounded-full text-xl transition-all shadow-[0_0_40px_rgba(0,0,0,0.5)]",
                     isActive
                       ? "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-white hover:border-red-500/50"
-                      : "bg-white text-black hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.2)]"
+                      : "bg-white text-black hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.2)]",
                   )}
                   onClick={toggle}
                 >
@@ -404,14 +409,24 @@ export default function TimerPage() {
                   : presets.map((preset) => (
                       <button
                         key={preset.id}
-                        onClick={() =>
-                          setSession(
-                            preset.duration,
-                            preset.type as SessionType,
-                            preset.name,
-                            preset.id
-                          )
-                        }
+                        onClick={() => {
+                          if (isActive) {
+                            setPendingPreset({
+                              duration: preset.duration,
+                              type: preset.type,
+                              name: preset.name,
+                              id: preset.id,
+                            });
+                            setShowResetConfirm(true);
+                          } else {
+                            setSession(
+                              preset.duration,
+                              preset.type as SessionType,
+                              preset.name,
+                              preset.id,
+                            );
+                          }
+                        }}
                         className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
                       >
                         <div
@@ -542,6 +557,48 @@ export default function TimerPage() {
                     </form>
                   </DialogContent>
                 </Dialog>
+
+                <Dialog
+                  open={showResetConfirm}
+                  onOpenChange={setShowResetConfirm}
+                >
+                  <DialogContent className="bg-zinc-950 border-zinc-800 text-white">
+                    <DialogHeader>
+                      <DialogTitle>Reset Timer?</DialogTitle>
+                      <DialogDescription className="text-zinc-400">
+                        A timer is currently running. Switching presets will
+                        reset the current session.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="flex gap-2 mt-4">
+                      <Button
+                        variant="ghost"
+                        onClick={() => setShowResetConfirm(false)}
+                        className="bg-transparent hover:bg-zinc-900 text-zinc-400 hover:text-white"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          if (pendingPreset) {
+                            setSession(
+                              pendingPreset.duration,
+                              pendingPreset.type as SessionType,
+                              pendingPreset.name,
+                              pendingPreset.id,
+                            );
+                            reset();
+                            setShowResetConfirm(false);
+                            setPendingPreset(null);
+                          }
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                      >
+                        Switch & Reset
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
             </motion.div>
           ) : (
@@ -613,7 +670,7 @@ export default function TimerPage() {
                             "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
                             unit === u
                               ? "bg-white text-black"
-                              : "text-zinc-500 hover:text-zinc-300"
+                              : "text-zinc-500 hover:text-zinc-300",
                           )}
                         >
                           {u === "hours" ? "HR" : "MIN"}
@@ -631,7 +688,7 @@ export default function TimerPage() {
                             "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
                             timeRange === r
                               ? "bg-white text-black"
-                              : "text-zinc-500 hover:text-zinc-300"
+                              : "text-zinc-500 hover:text-zinc-300",
                           )}
                         >
                           {r}
