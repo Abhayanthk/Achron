@@ -109,3 +109,8 @@ export type Reminder = Prisma.ReminderModel
  * 
  */
 export type NonNegotiable = Prisma.NonNegotiableModel
+/**
+ * Model CalendarEvent
+ * 
+ */
+export type CalendarEvent = Prisma.CalendarEventModel

@@ -64,7 +64,8 @@ export const ModelName = {
   XpLog: 'XpLog',
   DailyLog: 'DailyLog',
   Reminder: 'Reminder',
-  NonNegotiable: 'NonNegotiable'
+  NonNegotiable: 'NonNegotiable',
+  CalendarEvent: 'CalendarEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -272,6 +273,22 @@ export const NonNegotiableScalarFieldEnum = {
 } as const
 
 export type NonNegotiableScalarFieldEnum = (typeof NonNegotiableScalarFieldEnum)[keyof typeof NonNegotiableScalarFieldEnum]
+
+
+export const CalendarEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  start: 'start',
+  end: 'end',
+  allDay: 'allDay',
+  color: 'color',
+  categoryId: 'categoryId',
+  recurrence: 'recurrence',
+  isCompleted: 'isCompleted'
+} as const
+
+export type CalendarEventScalarFieldEnum = (typeof CalendarEventScalarFieldEnum)[keyof typeof CalendarEventScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,0 +1,63 @@
+// Variable overrides
+$bg-primary: #09090b; // zinc-950
+$text-primary: #e4e4e7; // zinc-200
+$text-secondary: #a1a1aa; // zinc-400
+$border-color: rgba(255, 255, 255, 0.1);
+
+// Calendar variables
+$out-of-range-bg-color: rgba(255, 255, 255, 0.02);
+$out-of-range-color: #52525b; // zinc-600
+
+$calendar-border: $border-color;
+$cell-border: $border-color;
+
+$event-bg: #27272a; // zinc-800
+$event-border: $border-color;
+$event-color: $text-primary;
+$event-border-radius: 6px;
+
+$time-selection-bg-color: rgba(255, 255, 255, 0.1);
+$date-selection-bg-color: rgba(255, 255, 255, 0.1);
+
+$today-highlight-bg: rgba(255, 255, 255, 0.05);
+
+// Toolbar buttons
+$btn-color: $text-primary;
+$btn-bg: transparent;
+$btn-border: $border-color;
+
+// Import default styles
+@import 'react-big-calendar/lib/sass/styles';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles';
+
+// Additional overrides not covered by variables
+.rbc-calendar {
+  color: $text-primary;
+  font-family: inherit;
+}
+
+.rbc-header {
+  color: $text-secondary;
+  font-weight: 500;
+  padding: 8px 4px;
+}
+
+.rbc-toolbar {
+  button {
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    &:active, &.rbc-active {
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+.rbc-show-more {
+  background-color: transparent !important;
+  color: $text-secondary !important;
+}
+

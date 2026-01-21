@@ -185,6 +185,7 @@ export type CategoryWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   tasks?: Prisma.TaskListRelationFilter
   dailyLogs?: Prisma.DailyLogListRelationFilter
+  calendarEvents?: Prisma.CalendarEventListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -196,6 +197,7 @@ export type CategoryOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   dailyLogs?: Prisma.DailyLogOrderByRelationAggregateInput
+  calendarEvents?: Prisma.CalendarEventOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -210,6 +212,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   tasks?: Prisma.TaskListRelationFilter
   dailyLogs?: Prisma.DailyLogListRelationFilter
+  calendarEvents?: Prisma.CalendarEventListRelationFilter
 }, "id">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -242,6 +245,7 @@ export type CategoryCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutCategoriesInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -252,6 +256,7 @@ export type CategoryUncheckedCreateInput = {
   createdAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -262,6 +267,7 @@ export type CategoryUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -272,6 +278,7 @@ export type CategoryUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -410,6 +417,22 @@ export type CategoryUpdateOneWithoutDailyLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutDailyLogsInput, Prisma.CategoryUpdateWithoutDailyLogsInput>, Prisma.CategoryUncheckedUpdateWithoutDailyLogsInput>
 }
 
+export type CategoryCreateNestedOneWithoutCalendarEventsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCalendarEventsInput, Prisma.CategoryUncheckedCreateWithoutCalendarEventsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCalendarEventsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutCalendarEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutCalendarEventsInput, Prisma.CategoryUncheckedCreateWithoutCalendarEventsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutCalendarEventsInput
+  upsert?: Prisma.CategoryUpsertWithoutCalendarEventsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutCalendarEventsInput, Prisma.CategoryUpdateWithoutCalendarEventsInput>, Prisma.CategoryUncheckedUpdateWithoutCalendarEventsInput>
+}
+
 export type CategoryCreateWithoutUserInput = {
   id?: string
   name: string
@@ -417,6 +440,7 @@ export type CategoryCreateWithoutUserInput = {
   createdAt?: Date | string
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutUserInput = {
@@ -426,6 +450,7 @@ export type CategoryUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutUserInput = {
@@ -472,6 +497,7 @@ export type CategoryCreateWithoutTasksInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCategoriesInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutTasksInput = {
@@ -481,6 +507,7 @@ export type CategoryUncheckedCreateWithoutTasksInput = {
   color?: string | null
   createdAt?: Date | string
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutTasksInput = {
@@ -506,6 +533,7 @@ export type CategoryUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutTasksInput = {
@@ -515,6 +543,7 @@ export type CategoryUncheckedUpdateWithoutTasksInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutDailyLogsInput = {
@@ -524,6 +553,7 @@ export type CategoryCreateWithoutDailyLogsInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCategoriesInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutDailyLogsInput = {
@@ -533,6 +563,7 @@ export type CategoryUncheckedCreateWithoutDailyLogsInput = {
   color?: string | null
   createdAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutDailyLogsInput = {
@@ -558,6 +589,7 @@ export type CategoryUpdateWithoutDailyLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutDailyLogsInput = {
@@ -567,6 +599,63 @@ export type CategoryUncheckedUpdateWithoutDailyLogsInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutCalendarEventsInput = {
+  id?: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCategoriesInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutCalendarEventsInput = {
+  id?: string
+  userId: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutCalendarEventsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutCalendarEventsInput, Prisma.CategoryUncheckedCreateWithoutCalendarEventsInput>
+}
+
+export type CategoryUpsertWithoutCalendarEventsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutCalendarEventsInput, Prisma.CategoryUncheckedUpdateWithoutCalendarEventsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutCalendarEventsInput, Prisma.CategoryUncheckedCreateWithoutCalendarEventsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutCalendarEventsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutCalendarEventsInput, Prisma.CategoryUncheckedUpdateWithoutCalendarEventsInput>
+}
+
+export type CategoryUpdateWithoutCalendarEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutCalendarEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyUserInput = {
@@ -583,6 +672,7 @@ export type CategoryUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutUserInput = {
@@ -592,6 +682,7 @@ export type CategoryUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutUserInput = {
@@ -609,11 +700,13 @@ export type CategoryUncheckedUpdateManyWithoutUserInput = {
 export type CategoryCountOutputType = {
   tasks: number
   dailyLogs: number
+  calendarEvents: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | CategoryCountOutputTypeCountTasksArgs
   dailyLogs?: boolean | CategoryCountOutputTypeCountDailyLogsArgs
+  calendarEvents?: boolean | CategoryCountOutputTypeCountCalendarEventsArgs
 }
 
 /**
@@ -640,6 +733,13 @@ export type CategoryCountOutputTypeCountDailyLogsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.DailyLogWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountCalendarEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CalendarEventWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -650,6 +750,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tasks?: boolean | Prisma.Category$tasksArgs<ExtArgs>
   dailyLogs?: boolean | Prisma.Category$dailyLogsArgs<ExtArgs>
+  calendarEvents?: boolean | Prisma.Category$calendarEventsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -684,6 +785,7 @@ export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tasks?: boolean | Prisma.Category$tasksArgs<ExtArgs>
   dailyLogs?: boolean | Prisma.Category$dailyLogsArgs<ExtArgs>
+  calendarEvents?: boolean | Prisma.Category$calendarEventsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -699,6 +801,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     user: Prisma.$UserPayload<ExtArgs>
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     dailyLogs: Prisma.$DailyLogPayload<ExtArgs>[]
+    calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1103,6 +1206,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tasks<T extends Prisma.Category$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dailyLogs<T extends Prisma.Category$dailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$dailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  calendarEvents<T extends Prisma.Category$calendarEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1578,6 +1682,30 @@ export type Category$dailyLogsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.DailyLogScalarFieldEnum | Prisma.DailyLogScalarFieldEnum[]
+}
+
+/**
+ * Category.calendarEvents
+ */
+export type Category$calendarEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CalendarEvent
+   */
+  select?: Prisma.CalendarEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CalendarEvent
+   */
+  omit?: Prisma.CalendarEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CalendarEventInclude<ExtArgs> | null
+  where?: Prisma.CalendarEventWhereInput
+  orderBy?: Prisma.CalendarEventOrderByWithRelationInput | Prisma.CalendarEventOrderByWithRelationInput[]
+  cursor?: Prisma.CalendarEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CalendarEventScalarFieldEnum | Prisma.CalendarEventScalarFieldEnum[]
 }
 
 /**
