@@ -7,9 +7,9 @@ import { Loader2, Zap, Target, TrendingUp, AlertOctagon } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { LevelProfileCard } from "@/components/journey/level-profile-card";
-import { BurnoutIndicator } from "@/components/journey/BurnoutIndicator";
-import { IdentityShift } from "@/components/journey/IdentityShift";
-import { ExecutionChart } from "@/components/journey/ExecutionChart";
+import { RealityAlignmentChart } from "@/components/journey/RealityAlignmentChart";
+import { IdentityAlignmentScatter } from "@/components/journey/IdentityAlignmentScatter";
+import { BurnoutEfficiencyScatter } from "@/components/journey/BurnoutEfficiencyScatter";
 
 import { LogsAnalytics } from "@/components/analytics/logs-analytics";
 import { TasksAnalytics } from "@/components/analytics/tasks-analytics";
@@ -110,18 +110,15 @@ export default function JourneyPage() {
           />
         </section>
 
-        {/* Psychological Signals Grid */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1 space-y-6 flex flex-col">
-            <BurnoutIndicator analysis={analysis.burnout_analysis} />
-            <div className="flex-1">
-              <IdentityShift analysis={analysis.identity_analysis} />
-            </div>
-          </div>
-          <div className="lg:col-span-2 flex flex-col gap-6">
-            <ExecutionChart data={dailyMetrics} />
-            <ConfidenceMountain items={nonNegotiables} />
-          </div>
+        {/* Reality Alignment Section - Primary Visual */}
+        <section className="space-y-6">
+          <RealityAlignmentChart data={analysis?.reality_timeline || []} />
+        </section>
+
+        {/* Secondary Alignment Charts */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <IdentityAlignmentScatter data={analysis?.identity_scatter || []} />
+          <BurnoutEfficiencyScatter data={analysis?.burnout_curve || []} />
         </section>
 
         <div className="w-full h-px bg-white/10 my-8" />
@@ -139,6 +136,9 @@ export default function JourneyPage() {
 
           <div className="lg:col-span-2">
             <XpHistoryGraph />
+          </div>
+          <div className="lg:col-span-1">
+            <ConfidenceMountain items={nonNegotiables} />
           </div>
           <div className="lg:col-span-1">
             <TimerAnalytics />

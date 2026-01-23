@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from data_loader import focus_session_data, task_data, calendar_data, daily_report, xp_data, daily_log_data
-from metrics import detect_burnout, analyze_identity_drift, analyze_log_sentiment
+from metrics import analyze_log_sentiment, calculate_reality_alignment, calculate_identity_alignment, calculate_burnout_efficiency
 
 app = FastAPI()
 # source .venv/bin/activate activate the virtual environment
@@ -20,16 +20,18 @@ def analyze_day(payload: dict):
 
       daily_metrics = daily_report(focus_session_per_day, tasksData, calendarData, xpData)
       
-      # Advanced Analysis
+      # Advanced Analysis - Reality Alignment
       sentiment_map = analyze_log_sentiment(logData)
-      burnout_analysis = detect_burnout(daily_metrics, sentiment_data=sentiment_map)
       
-      identity_analysis = analyze_identity_drift(xpData)
+      reality_timeline = calculate_reality_alignment(daily_metrics, sentiment_map)
+      identity_scatter = calculate_identity_alignment(daily_metrics, sentiment_map)
+      burnout_curve = calculate_burnout_efficiency(daily_metrics)
 
 
       return {
           "daily_metrics": daily_metrics,
-          "burnout_analysis": burnout_analysis,
-          "identity_analysis": identity_analysis,
+          "reality_timeline": reality_timeline,
+          "identity_scatter": identity_scatter,
+          "burnout_curve": burnout_curve,
           "log_sentiment_score": sentiment_map
       }

@@ -1,7 +1,8 @@
+from textblob import TextBlob
 from datetime import datetime, timedelta
 from collections import defaultdict
 import statistics
-from textblob import TextBlob
+import math
 
 def analyze_log_sentiment(daily_logs):
     """
@@ -16,202 +17,133 @@ def analyze_log_sentiment(daily_logs):
         sentiment_map[log['date']] += blob.sentiment.polarity
         count_map[log['date']] += 1
     
-    # Average it out
-    
-
     final_map = {}
     for date, total_score in sentiment_map.items():
         final_map[date] = total_score / count_map[date]
-    print(final_map)
     return final_map
 
-import numpy as np
-from sklearn.linear_model import LinearRegression
-
-def calculate_slope(values):
+def normalize_series(values):
     """
-    Calculates the slope of a list of values using sklearn LinearRegression.
-    Returns 0 if len(values) < 2.
+    Min-Max normalization to 0-1 range.
     """
-    if len(values) < 2:
-        return 0
-    
-    n = len(values)
-    # Reshape x for sklearn: [[0], [1], [2], ...]
-    x = np.array(range(n)).reshape(-1, 1)
-    y = np.array(values)
-    
-    model = LinearRegression()
-    model.fit(x, y)
-    
-    return model.coef_[0]
+    if not values:
+        return []
+    min_val = min(values)
+    max_val = max(values)
+    if max_val == min_val:
+        return [0.5 for _ in values] # Default middle if all same
+    return [(v - min_val) / (max_val - min_val) for v in values]
 
-def detect_burnout(daily_report_data, sentiment_data={}):
+def calculate_reality_alignment(daily_metrics, sentiment_map):
     """
-    Detects burnout risk based on 14-day trends AND sentiment analysis.
-    Burnout Signal: Declining Focus + Declining XP + Increasing/Steady Planning + Negative Sentiment.
+    1. Reality Alignment Timeline
+    x-axis: date
+    y-axes (normalized 0-1):
+        - execution_rate
+        - xp_per_hour (xp_per_focus_hour)
+        - sentiment_rolling_7d
     """
-    # Sort data by date just in case
-    sorted_data = sorted(daily_report_data, key=lambda x: x['date'])
+    # Sort by date
+    sorted_metrics = sorted(daily_metrics, key=lambda x: x['date'])
     
-    # Get last 14 days
-    last_14_days = sorted_data[-14:]
-    if len(last_14_days) < 3:
-        return {
-            "is_burnout_risk": False, 
-            "risk_score": 0, 
-            "slopes": {"focus": 0, "xp": 0, "planning": 0},
-            "reasons": ["Insufficient data for trend analysis"]
-        }
-
-    focus_values = [d['total_focus_duration'] for d in last_14_days]
-    xp_values = [d['xp_earned'] for d in last_14_days]
-    planned_values = [d['tasks_planned'] for d in last_14_days]
-
-    focus_slope = calculate_slope(focus_values)
-    xp_slope = calculate_slope(xp_values)
-    planning_slope = calculate_slope(planned_values)
+    dates = []
+    execution_rates = []
+    xp_rates = []
+    raw_sentiments = []
     
-    # Calculate average sentiment for this period
-    sentiment_scores = []
-    for d in last_14_days:
-        score = sentiment_data.get(d['date'], 0)
-        sentiment_scores.append(score)
-    
-    avg_sentiment = statistics.mean(sentiment_scores) if sentiment_scores else 0
-
-    # Risk Logic (Weighted Model)
-    risk_score = 0
-    reasons = []
-
-    if focus_slope < -5: # Declining focus 
-        risk_score += 1
-        reasons.append("Declining Focus")
-    
-    if xp_slope < -10: # Declining output
-        risk_score += 1
-        reasons.append("Declining Output")
+    # Extract raw series
+    for m in sorted_metrics:
+        date = m['date']
+        dates.append(date)
         
-    if planning_slope >= 0: # Planning is not slowing down
-        risk_score += 1
-        reasons.append("Sustained Planning Load")
+        # Execution Rate (already 0-1 typically, but we treat it as values)
+        execution_rates.append(m.get('execution_rate', 0))
         
-    if avg_sentiment < -0.1: # Negative Sentiment
-        risk_score += 1
-        reasons.append("Negative Log Sentiment")
+        # XP Per Hour
+        xp_rates.append(m.get('xp_per_hour', 0))
+        
+        # Sentiment (fill missing with 0)
+        raw_sentiments.append(sentiment_map.get(date, 0))
 
-    # Burnout threshold: 2 signals + high planning OR 3 signals
-    is_burnout_risk = (risk_score >= 3) or (risk_score >= 2 and planning_slope >= 0)
+    # Calculate 7-day rolling average for sentiment
+    sentiment_rolling = []
+    for i in range(len(raw_sentiments)):
+        window = raw_sentiments[max(0, i-6):i+1]
+        avg = statistics.mean(window) if window else 0
+        sentiment_rolling.append(avg)
 
-    return {
-        "is_burnout_risk": bool(is_burnout_risk),
-        "risk_score": risk_score,
-        "slopes": {
-            "focus": round(focus_slope, 2),
-            "xp": round(xp_slope, 2),
-            "planning": round(planning_slope, 2)
-        },
-        "avg_sentiment": round(avg_sentiment, 2),
-        "reasons": reasons
-    }
-
-def analyze_identity_drift(xp_logs):
-    """
-    Analyzes identity drift by comparing recent (7d) vs baseline (30d) category focus using XP Logs.
-    Returns drift status, distributions, and metric range explanations.
-    """
-    now = datetime.now()
-    seven_days_ago = now - timedelta(days=7)
-    thirty_days_ago = now - timedelta(days=30)
+    # Normalize all to 0-1 for the "Alignment" check
+    # Note: Execution rate is usually 0-1, but XP and Sentiment are different scales.
+    # To visualize "Divergence", they should be on same relative scale.
+    norm_execution = normalize_series(execution_rates)
+    norm_xp = normalize_series(xp_rates)
+    norm_sentiment = normalize_series(sentiment_rolling)
     
-    recent_dist = defaultdict(int)
-    baseline_dist = defaultdict(int)
+    timeline_data = []
+    for i, date in enumerate(dates):
+        timeline_data.append({
+            "date": date,
+            "normalized_execution": round(norm_execution[i], 2),
+            "normalized_xp": round(norm_xp[i], 2),
+            "normalized_sentiment": round(norm_sentiment[i], 2),
+            "raw_execution": execution_rates[i],
+            "raw_xp": xp_rates[i],
+            "raw_sentiment": sentiment_rolling[i]
+        })
+        
+    return timeline_data
 
-    for log in xp_logs:
-        # log['date'] is "YYYY-MM-DD"
-        # We need to parse it to compare
-        try:
-            log_date = datetime.strptime(log['date'], "%Y-%m-%d")
-        except:
-            continue
+def calculate_identity_alignment(daily_metrics, sentiment_map):
+    """
+    2. Identity Alignment Scatter
+    x: sentiment_score (-1 to 1)
+    y: execution_rate (0 to 1)
+    """
+    scatter_data = []
+    
+    for m in daily_metrics:
+        date = m['date']
+        sentiment = sentiment_map.get(date, 0)
+        execution = m.get('execution_rate', 0)
+        
+        # Determine Quadrant Label (Implicit)
+        # Stoic: Low Sentiment, High Execution
+        # Aligned: High Sentiment, High Execution
+        # Delusional: High Sentiment, Low Execution
+        # Drifting: Low Sentiment, Low Execution
+        status = "Unknown"
+        if execution >= 0.5:
+            status = "Aligned" if sentiment >= 0 else "Stoic"
+        else:
+            status = "Delusional" if sentiment >= 0 else "Drifting"
             
-        category = log.get('source') or "Uncategorized" # Assuming 'source' holds category name or we need to pass categories mapping
-        amount = log['amount']
-
-        if log_date >= seven_days_ago:
-            recent_dist[category] += amount
+        scatter_data.append({
+            "date": date,
+            "x_sentiment": round(sentiment, 2),
+            "y_execution": round(execution, 2),
+            "status": status
+        })
         
-        if log_date >= thirty_days_ago:
-            baseline_dist[category] += amount
+    return scatter_data
 
-    # Find top categories
-    def get_top(dist):
-        if not dist: return None, 0
-        return max(dist.items(), key=lambda x: x[1])
-
-    top_recent, val_recent = get_top(recent_dist)
-    top_baseline, val_baseline = get_top(baseline_dist)
-    
-    drift_detected = (top_recent != top_baseline) and (top_recent is not None) and (top_baseline is not None)
-
-    return {
-        "drift_detected": drift_detected,
-        "current_identity": [top_recent, val_recent] if top_recent else None,
-        "baseline_identity": [top_baseline, val_baseline] if top_baseline else None,
-        "recent_distribution": dict(recent_dist),
-        "baseline_distribution": dict(baseline_dist),
-        "ranges": {
-            "drift_score": "Boolean (True/False). True means your #1 focus category has changed in the last 7 days compared to the last 30.",
-            "xp_values": "Raw XP points. >1000/week is high focus in a category.",
-            "distribution": "Higher value = More focus. A balanced distribution means generalist, spiked means specialist."
-        }
-    }
-
-def analyze_identity_drift_from_tasks(tasks_data):
+def calculate_burnout_efficiency(daily_metrics):
     """
-    Uses completed tasks to analyze identity drift.
+    3. Burnout Efficiency Curve
+    x: focus_hours
+    y: xp_per_focus_hour
     """
-    # Filter completed tasks
-    completed = [t for t in tasks_data if t['isCompleted']]
+    curve_data = []
     
-    # Time windows
-    # We don't have exact completion date in the simple task dict from data_loader 
-    # (it has 'plannedDate' or 'createdDate'). 
-    # We should assume plannedDate ~ completionDate for this analysis or use createdDate approx.
-    # Let's use the date provided in the task dict.
-    
-    now_str = datetime.now().strftime("%Y-%m-%d")
-    seven_days_ago_str = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-    thirty_days_ago_str = (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
-
-    recent_dist = defaultdict(int)
-    baseline_dist = defaultdict(int)
-
-    for task in completed:
-        date = task.get('plannedDate') or task.get('createdDate')
-        category = task.get('category') or "Uncategorized"
-        xp = task.get('xp', 10)
-
-        if date >= seven_days_ago_str:
-            recent_dist[category] += xp
+    for m in daily_metrics:
+        # Convert total_focus_duration (seconds) to hours
+        focus_hours = m.get('total_focus_duration', 0) / 3600
+        xp_per_hour = m.get('xp_per_hour', 0)
         
-        if date >= thirty_days_ago_str:
-            baseline_dist[category] += xp
-
-    # Find top categories
-    def get_top(dist):
-        if not dist: return None, 0
-        return max(dist.items(), key=lambda x: x[1])
-
-    top_recent, val_recent = get_top(recent_dist)
-    top_baseline, val_baseline = get_top(baseline_dist)
-    
-    drift_detected = (top_recent != top_baseline) and (top_recent is not None) and (top_baseline is not None)
-
-    return {
-        "drift_detected": drift_detected,
-        "current_identity": top_recent,
-        "baseline_identity": top_baseline,
-        "recent_distribution": dict(recent_dist),
-        "baseline_distribution": dict(baseline_dist)
-    }
+        if focus_hours > 0:
+            curve_data.append({
+                "date": m['date'],
+                "x_focus_hours": round(focus_hours, 2),
+                "y_efficiency": round(xp_per_hour, 2)
+            })
+            
+    return curve_data
