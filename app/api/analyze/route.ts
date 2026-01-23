@@ -47,7 +47,7 @@ export async function GET(req: NextRequest){
                   userId,
             }
       })
-      const analysisResponse = await axios.post("http://localhost:8000/analyze-day", {
+      const analysisResponse = await axios.post(process.env.IS_PRODUCTION ? "https://achron-ai-service-production.up.railway.app/analyze-day" : "http://localhost:8000/analyze-day", {
             dailyLog,
             tasks,
             focusSession,
