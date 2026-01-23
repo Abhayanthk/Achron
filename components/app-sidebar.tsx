@@ -38,6 +38,7 @@ import {
   CalendarSync,
   SquareKanban,
   BookOpenText,
+  Calendar,
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
@@ -109,6 +110,11 @@ const navMain = [
     title: "Daily Logs",
     url: "/logs",
     icon: BookOpenText,
+  },
+  {
+    title: "Calendar",
+    url: "/calendar",
+    icon: Calendar,
   },
 ];
 
