@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   useUser,
   useClerk,
@@ -140,6 +141,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link href="/">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-zinc-950 border border-zinc-800 text-white shadow-[0_0_15px_-3px_rgba(255,255,255,0.3)]">
                   <Command className="size-4" />
+
+                  {/* <Image
+                    src="/favicon.ico"
+                    alt="Logo"
+                    width={32}
+                    height={32}
+                    className="rounded-lg"
+                  /> */}
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold text-white tracking-wide">

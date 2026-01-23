@@ -21,10 +21,10 @@ export async function GET(req: NextRequest){
 
             },
             include: {
-                  category: true
+                  category: true,
+                  section: true
             }
       })
-      console.log(tasks)
       const focusSession = await prisma.focusSession.findMany({
             where: {
                   userId,
@@ -34,10 +34,25 @@ export async function GET(req: NextRequest){
                   timer: true
             }
       })
+      const calendarEvents = await prisma.calendarEvent.findMany({
+            where: {
+                  userId,
+            },
+            include: {
+                  category: true
+            }
+      })
+      const xpLogs = await prisma.xpLog.findMany({
+            where: {
+                  userId,
+            }
+      })
       const analysisResponse = await axios.post("http://localhost:8000/analyze-day", {
             dailyLog,
             tasks,
-            focusSession
+            focusSession,
+            calendarEvents,
+            xpLogs
       })
 
       return NextResponse.json(analysisResponse.data)
