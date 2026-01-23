@@ -9,8 +9,9 @@ It is built for learning system design, not for production use.
 Current scope (v1):
 
 - Clean and normalize productivity data
-- Compute basic metrics (no AI yet)
-- Prepare structured input for future local LLM analysis
+- Compute basic metrics
+- Combine all the data into a single report
+- Use NLP models to generate insights
 
 Non-goals (for now):
 
