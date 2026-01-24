@@ -284,6 +284,8 @@ export default function CalendarPage() {
           style={{ height: "100%" }}
           views={["month", "week", "day", "agenda"]}
           className="text-white"
+          step={60}
+          timeslots={1}
         />
       </div>
 
