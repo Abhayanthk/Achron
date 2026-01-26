@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Particles from "@/components/Particles";
 
@@ -27,14 +28,37 @@ export default function Home() {
           the abyss.
         </p>
         {/* pointer-events-auto is used to interact with the button */}
-        <Link href="/dashboard" className="pointer-events-auto">
-          <Button
-            size="lg"
-            className="bg-white text-black hover:bg-zinc-200 hover:scale-105 transition-all shadow-lg shadow-white/10 cursor-pointer"
-          >
-            Enter System
-          </Button>
-        </Link>
+        <div className="flex flex-row gap-4 pointer-events-auto">
+          <SignedIn>
+            <Link href="/dashboard">
+              <Button
+                size="lg"
+                className="bg-white text-black hover:bg-zinc-200 hover:scale-105 transition-all shadow-lg shadow-white/10 cursor-pointer"
+              >
+                Enter System
+              </Button>
+            </Link>
+          </SignedIn>
+          <SignedOut>
+            <Link href="/sign-in">
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-transparent text-white border-white hover:bg-white/10 hover:scale-105 transition-all shadow-lg shadow-white/5 cursor-pointer"
+              >
+                Log In
+              </Button>
+            </Link>
+            <Link href="/sign-up">
+              <Button
+                size="lg"
+                className="bg-white text-black hover:bg-zinc-200 hover:scale-105 transition-all shadow-lg shadow-white/10 cursor-pointer"
+              >
+                Sign Up
+              </Button>
+            </Link>
+          </SignedOut>
+        </div>
       </div>
     </div>
   );

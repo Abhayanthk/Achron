@@ -47,13 +47,24 @@ export async function GET(req: NextRequest){
                   userId,
             }
       })
+      const AccountCreatedDate = await prisma.user.findUnique({
+            where: {
+                  id: userId
+            },
+            select: {
+                  createdAt: true
+            }
+      })
+      const accountCreatedDate = AccountCreatedDate?.createdAt
       const analysisResponse = await axios.post(process.env.IS_PRODUCTION ? "https://achron-ai-service-production.up.railway.app/analyze-day" : "http://localhost:8000/analyze-day", {
             dailyLog,
             tasks,
             focusSession,
             calendarEvents,
-            xpLogs
+            xpLogs,
+            accountCreatedDate
       })
+ 
 
       return NextResponse.json(analysisResponse.data)
       } catch (error: any) {
