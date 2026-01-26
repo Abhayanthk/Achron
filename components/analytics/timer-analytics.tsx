@@ -11,28 +11,32 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { cn } from "@/lib/utils";
+import { useDateNavigator } from "@/hooks/useDateNavigation";
+import SegmentedControlButton from "./segmentedControlButton";
+import DateNavButtons from "./dateNavButtons";
 
 export function TimerAnalytics() {
   const [range, setRange] = useState<"week" | "month" | "year">("week");
-  const [unit, setUnit] = useState<"hours" | "minutes">("hours");
-
+  const [unit, setUnit] = useState<"hrs" | "mins">("hrs");
+  const { date, goPrev, goNext, goToday } = useDateNavigator(range);
   const { data: analyticsData = [], isLoading } = useQuery({
-    queryKey: ["analytics", "focus", range],
+    queryKey: ["analytics", "timer", range, date],
     queryFn: async () => {
-      const res = await axios.get(`/api/analytics?type=timer&range=${range}`);
+      const res = await axios.get(
+        `/api/analytics?type=timer&range=${range}&startDate=${date}`,
+      );
       return res.data.data;
     },
   });
 
   const data = analyticsData.map((d: any) => ({
     ...d,
-    value: unit === "minutes" ? Number((d.hours * 60).toFixed(0)) : d.hours,
+    value: unit === "mins" ? Number((d.hours * 60).toFixed(0)) : d.hours,
   }));
 
   return (
-    <div className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="w-full bg-zinc-950/50 backdrop-blur-sm border border-white/5 rounded-2xl p-6">
+      <div className="flex items-center justify-between">
         <div>
           <h3 className="text-lg font-bold text-white">Focus Depth</h3>
           <p className="text-xs text-zinc-500 uppercase tracking-widest">
@@ -40,40 +44,25 @@ export function TimerAnalytics() {
           </p>
         </div>
         <div className="flex gap-4">
-          <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
-            {(["hours", "minutes"] as const).map((u) => (
-              <button
-                key={u}
-                onClick={() => setUnit(u)}
-                className={cn(
-                  "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
-                  unit === u
-                    ? "bg-white text-black"
-                    : "text-zinc-500 hover:text-zinc-300"
-                )}
-              >
-                {u === "hours" ? "HR" : "MIN"}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
-            {(["week", "month", "year"] as const).map((r) => (
-              <button
-                key={r}
-                onClick={() => setRange(r)}
-                className={cn(
-                  "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
-                  range === r
-                    ? "bg-white text-black"
-                    : "text-zinc-500 hover:text-zinc-300"
-                )}
-              >
-                {r}
-              </button>
-            ))}
-          </div>
+          <SegmentedControlButton
+            options={["hrs", "mins"]}
+            value={unit}
+            onChange={setUnit}
+            size="sm"
+          />
+          <SegmentedControlButton
+            options={["week", "month", "year"]}
+            value={range}
+            onChange={setRange}
+            size="sm"
+          />
         </div>
       </div>
+      <DateNavButtons
+        handleDateChangeLeft={goPrev}
+        handleDateChangeRight={goNext}
+        handleToday={goToday}
+      />
 
       <div className="h-[250px] w-full">
         {isLoading ? (
@@ -101,10 +90,12 @@ export function TimerAnalytics() {
                   backgroundColor: "#18181b",
                   border: "1px solid #27272a",
                   borderRadius: "8px",
+                  color: "#fff",
                 }}
                 cursor={{ fill: "#27272a" }}
               />
               <Bar
+                name={unit === "hrs" ? "Hrs" : "Mins"}
                 dataKey="value"
                 radius={[4, 4, 0, 0]}
                 fill="#3b82f6"

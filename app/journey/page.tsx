@@ -125,10 +125,10 @@ export default function JourneyPage() {
             <XpHistoryGraph />
           </div>
           <div className="lg:col-span-1">
-            <ConfidenceMountain items={nonNegotiables} />
-          </div>
-          <div className="lg:col-span-1">
             <TimerAnalytics />
+          </div>
+          <div className="lg:col-span-3 border border-white/10 p-4 rounded-xl">
+            <ConfidenceMountain items={nonNegotiables} />
           </div>
         </section>
       </div>

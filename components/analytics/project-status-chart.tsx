@@ -32,7 +32,7 @@ export function ProjectStatusChart() {
 
   if (isLoading) {
     return (
-      <Card className="bg-zinc-900/50 border-white/5">
+      <Card className="bg-zinc-950/50 backdrop-blur-sm border-white/10">
         <div className="h-[300px] flex items-center justify-center">
           <Loader2 className="animate-spin text-zinc-500" />
         </div>
@@ -41,7 +41,7 @@ export function ProjectStatusChart() {
   }
 
   return (
-    <Card className="bg-zinc-900/50 border-white/5 h-full">
+    <Card className="bg-zinc-950/50 backdrop-blur-sm border-white/10 h-full">
       <CardHeader>
         <CardTitle className="text-lg font-bold text-white">
           Project Status

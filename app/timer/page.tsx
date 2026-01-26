@@ -5,16 +5,7 @@ import {
   AlarmSoundType,
 } from "@/components/providers/timer-context";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogDescription,
-} from "@/components/ui/dialog";
+
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -26,12 +17,6 @@ import {
   Clock,
   Zap,
   Target,
-  Plus,
-  Settings2,
-  Check,
-  Smartphone,
-  Bell,
-  Music2,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -46,42 +31,15 @@ import {
   CartesianGrid,
 } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { toast } from "sonner";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-// Mock Data for Analytics
-const weeklyData = [
-  { name: "Mon", hours: 4.5 },
-  { name: "Tue", hours: 6.2 },
-  { name: "Wed", hours: 3.8 },
-  { name: "Thu", hours: 7.5 },
-  { name: "Fri", hours: 5.0 },
-  { name: "Sat", hours: 2.5 },
-  { name: "Sun", hours: 1.0 },
-];
-
-const monthlyData = [
-  { name: "Week 1", hours: 25 },
-  { name: "Week 2", hours: 32 },
-  { name: "Week 3", hours: 28 },
-  { name: "Week 4", hours: 35 },
-];
-
-const yearlyData = [
-  { name: "Jan", hours: 120 },
-  { name: "Feb", hours: 135 },
-  { name: "Mar", hours: 140 },
-  { name: "Apr", hours: 0 },
-  { name: "May", hours: 0 },
-  { name: "Jun", hours: 0 },
-  { name: "Jul", hours: 0 },
-  { name: "Aug", hours: 0 },
-  { name: "Sep", hours: 0 },
-  { name: "Oct", hours: 0 },
-  { name: "Nov", hours: 0 },
-  { name: "Dec", hours: 0 },
-];
+import SetAlarmDialog from "@/components/tasks/set-alarm-dialog";
+import SegmentedControlButton from "@/components/analytics/segmentedControlButton";
+import CreateTimerDialog from "@/components/tasks/create-timer-dialog";
+import ResetTimerDialog from "@/components/tasks/reset-timer-dialog";
+import DateNavButtons from "@/components/analytics/dateNavButtons";
+import { useDateNavigator } from "@/hooks/useDateNavigation";
 
 export default function TimerPage() {
   const {
@@ -102,8 +60,9 @@ export default function TimerPage() {
   } = useTimer();
   const [viewMode, setViewMode] = useState<"timer" | "stats">("timer");
   const [timeRange, setTimeRange] = useState<"week" | "month" | "year">("week");
-  const [unit, setUnit] = useState<"hours" | "minutes">("hours");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [unit, setUnit] = useState<"hrs" | "mins">("hrs");
+  const { date, goPrev, goNext, goToday } = useDateNavigator(timeRange);
+
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [pendingPreset, setPendingPreset] = useState<{
     duration: number;
@@ -114,10 +73,10 @@ export default function TimerPage() {
 
   // Fetch Analytics Data
   const { data: analyticsData = [], isLoading: isLoadingAnalytics } = useQuery({
-    queryKey: ["analytics", timeRange],
+    queryKey: ["analytics", "timer", timeRange, date],
     queryFn: async () => {
       const res = await axios.get(
-        `/api/analytics?range=${timeRange}&type=timer`,
+        `/api/analytics?range=${timeRange}&type=timer&startDate=${date}`,
       );
       return res.data.data;
     },
@@ -172,7 +131,7 @@ export default function TimerPage() {
   const rawData = fillData(analyticsData, timeRange);
   const currentData = rawData.map((d: any) => ({
     ...d,
-    value: unit === "minutes" ? Number((d.hours * 60).toFixed(0)) : d.hours,
+    value: unit === "mins" ? Number((d.hours * 60).toFixed(0)) : d.hours,
   }));
 
   // Calculate Stats
@@ -231,94 +190,11 @@ export default function TimerPage() {
         </div>
 
         {/* Start of Alarm Settings Dialog */}
-        <div className="flex items-center gap-2">
-          <Dialog>
-            <DialogTrigger asChild>
-              <button className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors bg-zinc-900/50 p-2 rounded-full border border-white/5">
-                <Settings2 className="size-4" />
-              </button>
-            </DialogTrigger>
-            <DialogContent className="bg-zinc-950 border-zinc-800 text-white w-full max-w-sm">
-              <DialogHeader>
-                <DialogTitle>Timer Settings</DialogTitle>
-              </DialogHeader>
-              <div className="pt-4 space-y-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium text-zinc-400">
-                      Alarm Sound
-                    </label>
-                    <button
-                      onClick={playPreview}
-                      className="text-xs text-blue-400 hover:text-blue-300 font-medium"
-                    >
-                      Test Sound
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-1 gap-2">
-                    {[
-                      {
-                        id: "digital",
-                        name: "Digital",
-                        icon: Smartphone,
-                        desc: "Sharp electronic beep",
-                      },
-                      {
-                        id: "chime",
-                        name: "Zen Chime",
-                        icon: Music2,
-                        desc: "Soft harmonic tones",
-                      },
-                      {
-                        id: "bell",
-                        name: "Bell",
-                        icon: Bell,
-                        desc: "Ring with decay",
-                      },
-                    ].map((sound) => (
-                      <button
-                        key={sound.id}
-                        onClick={() =>
-                          setAlarmSound(sound.id as AlarmSoundType)
-                        }
-                        className={cn(
-                          "flex items-center justify-between p-3 rounded-xl border transition-all",
-                          alarmSound === sound.id
-                            ? "bg-zinc-900 border-blue-500/50 text-white"
-                            : "bg-transparent border-zinc-800 text-zinc-400 hover:bg-zinc-900/50",
-                        )}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={cn(
-                              "p-2 rounded-lg",
-                              alarmSound === sound.id
-                                ? "bg-blue-500/10 text-blue-400"
-                                : "bg-zinc-800 text-zinc-500",
-                            )}
-                          >
-                            <sound.icon className="size-4" />
-                          </div>
-                          <div className="text-left">
-                            <div className="text-sm font-medium">
-                              {sound.name}
-                            </div>
-                            <div className="text-[10px] text-zinc-500">
-                              {sound.desc}
-                            </div>
-                          </div>
-                        </div>
-                        {alarmSound === sound.id && (
-                          <Check className="size-4 text-blue-500" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
+        <SetAlarmDialog
+          playPreview={playPreview}
+          alarmSound={alarmSound}
+          setAlarmSound={setAlarmSound}
+        />
       </header>
 
       <main className="relative z-10 flex flex-col items-center justify-center flex-1 w-full max-w-4xl mx-auto">
@@ -441,164 +317,25 @@ export default function TimerPage() {
                       </button>
                     ))}
 
-                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                  <DialogTrigger asChild>
-                    <button className="flex flex-col items-center justify-center p-4 rounded-xl border border-dashed border-zinc-800 bg-transparent hover:bg-zinc-900/30 hover:border-zinc-700 transition-all text-zinc-500 hover:text-zinc-300 h-[88px]">
-                      <Plus className="size-6 mb-2 opacity-50" />
-                      <span className="text-xs font-medium">Add Custom</span>
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent className="bg-zinc-950 border-zinc-800 text-white">
-                    <DialogHeader>
-                      <DialogTitle>Create Custom Timer</DialogTitle>
-                    </DialogHeader>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        const formData = new FormData(e.currentTarget);
-                        const promise = addPreset({
-                          name: formData.get("name") as string,
-                          duration:
-                            parseInt(formData.get("duration") as string) * 60,
-                          type: formData.get("type") as string,
-                          color: formData.get("color") as string,
-                        });
+                <CreateTimerDialog addPreset={addPreset} />
 
-                        toast.promise(promise, {
-                          loading: "Creating timer...",
-                          success: () => {
-                            setIsDialogOpen(false);
-                            return "Timer created";
-                          },
-                          error: "Failed to create timer",
-                        });
-                      }}
-                      className="space-y-4 pt-4"
-                    >
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-zinc-400">
-                          Name
-                        </label>
-                        <Input
-                          name="name"
-                          placeholder="e.g. Deep Work Session"
-                          className="bg-zinc-900 border-zinc-800"
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-zinc-400">
-                          Duration (minutes)
-                        </label>
-                        <Input
-                          name="duration"
-                          type="number"
-                          placeholder="25"
-                          className="bg-zinc-900 border-zinc-800"
-                          required
-                          min="1"
-                          max="180"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-zinc-400">
-                          Type
-                        </label>
-                        <select
-                          name="type"
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded-md p-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-white/20"
-                        >
-                          <option value="DEEP WORK">Deep Work</option>
-                          <option value="FLOW">Flow</option>
-                          <option value="CODING">Coding</option>
-                          <option value="LEARNING">Learning</option>
-                          <option value="WRITING">Writing</option>
-                          <option value="CUSTOM">Custom</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-xs font-medium text-zinc-400">
-                          Color
-                        </label>
-                        <div className="flex gap-2">
-                          {[
-                            "bg-blue-500",
-                            "bg-purple-500",
-                            "bg-emerald-500",
-                            "bg-amber-500",
-                            "bg-pink-500",
-                            "bg-rose-500",
-                            "bg-cyan-500",
-                          ].map((color) => (
-                            <label
-                              key={color}
-                              className="relative cursor-pointer group"
-                            >
-                              <input
-                                type="radio"
-                                name="color"
-                                value={color}
-                                className="peer sr-only"
-                                defaultChecked={color === "bg-blue-500"}
-                              />
-                              <div
-                                className={`w-6 h-6 rounded-full ${color} opacity-50 peer-checked:opacity-100 peer-checked:ring-2 peer-checked:ring-white peer-checked:ring-offset-2 peer-checked:ring-offset-zinc-950 transition-all hover:opacity-80`}
-                              ></div>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                      <Button
-                        type="submit"
-                        className="w-full bg-white text-black hover:bg-zinc-200"
-                      >
-                        Create Preset
-                      </Button>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-
-                <Dialog
+                <ResetTimerDialog
                   open={showResetConfirm}
                   onOpenChange={setShowResetConfirm}
-                >
-                  <DialogContent className="bg-zinc-950 border-zinc-800 text-white">
-                    <DialogHeader>
-                      <DialogTitle>Reset Timer?</DialogTitle>
-                      <DialogDescription className="text-zinc-400">
-                        A timer is currently running. Switching presets will
-                        reset the current session.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter className="flex gap-2 mt-4">
-                      <Button
-                        variant="ghost"
-                        onClick={() => setShowResetConfirm(false)}
-                        className="bg-transparent hover:bg-zinc-900 text-zinc-400 hover:text-white"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          if (pendingPreset) {
-                            setSession(
-                              pendingPreset.duration,
-                              pendingPreset.type as SessionType,
-                              pendingPreset.name,
-                              pendingPreset.id,
-                            );
-                            reset();
-                            setShowResetConfirm(false);
-                            setPendingPreset(null);
-                          }
-                        }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
-                      >
-                        Switch & Reset
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                  onConfirm={() => {
+                    if (pendingPreset) {
+                      setSession(
+                        pendingPreset.duration,
+                        pendingPreset.type as SessionType,
+                        pendingPreset.name,
+                        pendingPreset.id,
+                      );
+                      reset();
+                      setShowResetConfirm(false);
+                      setPendingPreset(null);
+                    }
+                  }}
+                />
               </div>
             </motion.div>
           ) : (
@@ -654,103 +391,89 @@ export default function TimerPage() {
               </div>
 
               {/* Chart */}
-              <div className="h-[400px] w-full p-6 rounded-2xl bg-zinc-900/30 border border-white/5">
+              <div className="h-[400px] w-full p-6 rounded-2xl bg-zinc-900/30 border border-white/5 flex flex-col">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">
                     Focus Distribution
                   </h3>
                   <div className="flex gap-4">
                     {/* Unit Toggle */}
-                    <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
-                      {(["hours", "minutes"] as const).map((u) => (
-                        <button
-                          key={u}
-                          onClick={() => setUnit(u)}
-                          className={cn(
-                            "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
-                            unit === u
-                              ? "bg-white text-black"
-                              : "text-zinc-500 hover:text-zinc-300",
-                          )}
-                        >
-                          {u === "hours" ? "HR" : "MIN"}
-                        </button>
-                      ))}
-                    </div>
+                    <SegmentedControlButton
+                      options={["hrs", "mins"]}
+                      value={unit}
+                      onChange={setUnit}
+                    />
 
                     {/* Time Range Toggle */}
-                    <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
-                      {(["week", "month", "year"] as const).map((r) => (
-                        <button
-                          key={r}
-                          onClick={() => setTimeRange(r)}
-                          className={cn(
-                            "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
-                            timeRange === r
-                              ? "bg-white text-black"
-                              : "text-zinc-500 hover:text-zinc-300",
-                          )}
-                        >
-                          {r}
-                        </button>
-                      ))}
-                    </div>
+                    <SegmentedControlButton
+                      options={["month", "week", "year"]}
+                      value={timeRange}
+                      onChange={setTimeRange}
+                    />
                   </div>
                 </div>
-                {isLoadingAnalytics ? (
-                  <div className="w-full h-full flex items-end justify-between gap-2 p-4 animate-pulse">
-                    {Array(7)
-                      .fill(0)
-                      .map((_, i) => (
-                        <div
-                          key={i}
-                          className="w-full bg-zinc-800 rounded-t-lg"
-                          style={{ height: `${20 + Math.random() * 60}%` }}
+                <DateNavButtons
+                  handleDateChangeLeft={goPrev}
+                  handleDateChangeRight={goNext}
+                  handleToday={goToday}
+                />
+                <div className="flex-1 w-full min-h-0">
+                  {isLoadingAnalytics ? (
+                    <div className="w-full h-full flex items-end justify-between gap-2 p-4 animate-pulse">
+                      {Array(7)
+                        .fill(0)
+                        .map((_, i) => (
+                          <div
+                            key={i}
+                            className="w-full bg-zinc-800 rounded-t-lg"
+                            style={{ height: `${20 + Math.random() * 60}%` }}
+                          />
+                        ))}
+                    </div>
+                  ) : (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={currentData}>
+                        <CartesianGrid
+                          strokeDasharray="3 3"
+                          stroke="#27272a"
+                          vertical={false}
                         />
-                      ))}
-                  </div>
-                ) : (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={currentData}>
-                      <CartesianGrid
-                        strokeDasharray="3 3"
-                        stroke="#27272a"
-                        vertical={false}
-                      />
-                      <XAxis
-                        dataKey="name"
-                        stroke="#52525b"
-                        fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
-                        dy={10}
-                      />
-                      <YAxis
-                        stroke="#52525b"
-                        fontSize={12}
-                        tickLine={false}
-                        axisLine={false}
-                        tickFormatter={(value) =>
-                          `${value}${unit === "hours" ? "h" : "m"}`
-                        }
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "#18181b",
-                          border: "1px solid #27272a",
-                          borderRadius: "8px",
-                        }}
-                        cursor={{ fill: "#27272a" }}
-                      />
-                      <Bar
-                        dataKey="value"
-                        radius={[4, 4, 0, 0]}
-                        fill="#3b82f6"
-                        minPointSize={2}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                )}
+                        <XAxis
+                          dataKey="name"
+                          stroke="#52525b"
+                          fontSize={12}
+                          tickLine={false}
+                          axisLine={false}
+                          dy={10}
+                        />
+                        <YAxis
+                          stroke="#52525b"
+                          fontSize={12}
+                          tickLine={false}
+                          axisLine={false}
+                          tickFormatter={(value) =>
+                            `${value}${unit === "hrs" ? "h" : "m"}`
+                          }
+                        />
+                        <Tooltip
+                          contentStyle={{
+                            backgroundColor: "#18181b",
+                            border: "1px solid #27272a",
+                            borderRadius: "8px",
+                          }}
+                          cursor={{ fill: "#27272a" }}
+                        />
+                        <Bar
+                          name={unit === "hrs" ? "Hrs" : "Mins"}
+                          dataKey="value"
+                          radius={[4, 4, 0, 0]}
+                          fill="#3b82f6"
+                          minPointSize={2}
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}

@@ -25,24 +25,28 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const range = searchParams.get("range") || "week";
     const type = searchParams.get("type") || "focus"; // focus, logs, tasks, xp
-
-    const now = new Date();
+    const startDate = searchParams.get("startDate");
+    const now = startDate ? new Date(startDate) : new Date();
     let data: any[] = [];
     let queryStartDate = new Date();
+    let queryEndDate = new Date();
 
     // Helper to setup date range
     if (range === "week") {
         queryStartDate = getStartOfWeek(now);
+        queryEndDate = new Date(queryStartDate);
+        queryEndDate.setDate(queryEndDate.getDate() + 7);
     } else if (range === "month") {
-         // Last 30 days or start of month? 
-         // "Monthly" usually means view of the month. Let's do start of current month for now, or last 4-5 weeks.
-         // Existing logic was start of current month.
          queryStartDate = new Date(now.getFullYear(), now.getMonth(), 1);
+         queryEndDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
     } else if (range === "year") {
         queryStartDate = new Date(now.getFullYear(), 0, 1);
+        queryEndDate = new Date(now.getFullYear() + 1, 0, 1);
     } else if (range === "heatmap") {
          queryStartDate = new Date();
          queryStartDate.setDate(queryStartDate.getDate() - 365);
+         queryEndDate = new Date(); // Heatmap usually goes up to today
+         queryEndDate.setDate(queryEndDate.getDate() + 1);
     }
 
     if (type === "logs") {
@@ -50,11 +54,11 @@ export async function GET(request: NextRequest) {
         const logs = await prisma.dailyLog.findMany({
             where: {
                 userId,
-                date: { gte: queryStartDate }
+                date: { gte: queryStartDate, lt: queryEndDate }
             },
             select: { date: true }
         });
-        
+
         if (range === "week") {
              const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
              const map = new Map(days.map(d => [d, 0]));
@@ -96,23 +100,15 @@ export async function GET(request: NextRequest) {
         }
 
     } else if (type === "tasks") {
-        // Tasks Analytics (Created vs Completed)
-        // We need created date (createdAt) and completion date (updatedAt if completed?)
-        // Schema: Task has createdAt. Completed tasks rely on isCompleted=true. 
-        // NOTE: We don't track 'completedAt' explicitly in the schema provided earlier, 
-        // but user prompt says "another line how much was completed".
-        // Use 'updatedAt' for completed items if status is COMPLETED? OR Just count based on creation for both?
-        // Ideally we need 'completedAt'. Schema has 'updatedAt'. We will use 'updatedAt' for completion time approx.
-        
         const tasks = await prisma.task.findMany({
             where: {
                 userId,
                 OR: [
-                    { createdAt: { gte: queryStartDate } },
+                    { createdAt: { gte: queryStartDate, lt: queryEndDate } },
                     { 
                         AND: [
                             { isCompleted: true }, 
-                            { updatedAt: { gte: queryStartDate } } 
+                            { updatedAt: { gte: queryStartDate, lt: queryEndDate } } 
                         ]
                     }
                 ]
@@ -123,14 +119,14 @@ export async function GET(request: NextRequest) {
         const processTasks = (periodMap: Map<string, { created: number, completed: number }>, getPeriod: (d: Date) => string) => {
             tasks.forEach(task => {
                 // Count Created
-                if (task.createdAt >= queryStartDate) {
+                if (task.createdAt >= queryStartDate && task.createdAt < queryEndDate) {
                     const p = getPeriod(new Date(task.createdAt));
                     if (periodMap.has(p)) {
                         periodMap.get(p)!.created++;
                     }
                 }
                 // Count Completed
-                if (task.isCompleted && task.updatedAt >= queryStartDate) {
+                if (task.isCompleted && task.updatedAt >= queryStartDate && task.updatedAt < queryEndDate) {
                     const p = getPeriod(new Date(task.updatedAt));
                     if (periodMap.has(p)) {
                         periodMap.get(p)!.completed++;
@@ -280,7 +276,7 @@ export async function GET(request: NextRequest) {
              const logs = await prisma.xpLog.findMany({
                 where: {
                     userId,
-                    createdAt: { gte: queryStartDate }
+                    createdAt: { gte: queryStartDate, lt: queryEndDate }
                 },
                 orderBy: { createdAt: 'asc' }
             });
@@ -328,7 +324,7 @@ export async function GET(request: NextRequest) {
         const sessions = await prisma.focusSession.findMany({
             where: {
                 userId,
-                endTime: { gte: queryStartDate },
+                endTime: { gte: queryStartDate, lt: queryEndDate },
                 status: "COMPLETED"
             }
         });
@@ -376,8 +372,6 @@ export async function GET(request: NextRequest) {
              });
              data = Array.from(map).map(([name, hours]) => ({ name, hours: parseFloat(hours.toFixed(1)) }));
         }
-      
-      
     }
 
     return NextResponse.json({ data });

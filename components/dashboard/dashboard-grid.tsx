@@ -37,11 +37,6 @@ export function DashboardGrid() {
     },
   });
 
-  const totalFocusHours = analyticsData.reduce(
-    (acc: any, curr: any) => acc + curr.hours,
-    0
-  );
-
   return (
     <div className="w-full grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-4 p-4 lg:gap-6 min-h-screen">
       {/* ROW 1: Identity (4) + Daily Wisdom (4) + Focus Timer (4) */}
@@ -179,19 +174,7 @@ export function DashboardGrid() {
           </div>
         }
       >
-        <div className="flex flex-col h-full justify-between min-h-[200px]">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-3xl font-bold text-white mt-1">
-                {totalFocusHours.toFixed(1)}h
-              </p>
-              <p className="text-xs text-zinc-500">Focus time this week</p>
-            </div>
-          </div>
-          <div className="flex-1 -mb-2">
-            <ActivityChart />
-          </div>
-        </div>
+        <ActivityChart />
       </BentoCard>
 
       <BentoCard

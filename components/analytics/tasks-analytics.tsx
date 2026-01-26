@@ -12,45 +12,42 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
-import { cn } from "@/lib/utils";
-
+import DateNavButtons from "./dateNavButtons";
+import { useDateNavigator } from "@/hooks/useDateNavigation";
+import SegmentedControlButton from "./segmentedControlButton";
 export function TasksAnalytics() {
   const [range, setRange] = useState<"week" | "month" | "year">("week");
-
+  const { date, goPrev, goNext, goToday } = useDateNavigator(range);
   const { data: tasksData = [], isLoading } = useQuery({
-    queryKey: ["analytics", "tasks", range],
+    queryKey: ["analytics", "tasks", range, date],
     queryFn: async () => {
-      const res = await axios.get(`/api/analytics?type=tasks&range=${range}`);
+      const res = await axios.get(
+        `/api/analytics?type=tasks&range=${range}&startDate=${date}`,
+      );
       return res.data.data;
     },
   });
 
   return (
-    <div className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="w-full bg-zinc-950/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+      <div className="flex items-center justify-between mb-2">
         <div>
           <h3 className="text-lg font-bold text-white">Task Velocity</h3>
           <p className="text-xs text-zinc-500 uppercase tracking-widest">
             Execution Rate
           </p>
         </div>
-        <div className="flex items-center gap-1 bg-zinc-900 border border-white/5 rounded-lg p-0.5">
-          {(["week", "month", "year"] as const).map((r) => (
-            <button
-              key={r}
-              onClick={() => setRange(r)}
-              className={cn(
-                "px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider transition-all",
-                range === r
-                  ? "bg-white text-black"
-                  : "text-zinc-500 hover:text-zinc-300"
-              )}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
+        <SegmentedControlButton
+          options={["week", "month", "year"]}
+          value={range}
+          onChange={setRange}
+        />
       </div>
+      <DateNavButtons
+        handleDateChangeLeft={goPrev}
+        handleDateChangeRight={goNext}
+        handleToday={goToday}
+      />
 
       <div className="h-[250px] w-full">
         {isLoading ? (
@@ -78,6 +75,7 @@ export function TasksAnalytics() {
                   backgroundColor: "#18181b",
                   border: "1px solid #27272a",
                   borderRadius: "8px",
+                  color: "#fff",
                 }}
               />
               <Legend wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }} />
