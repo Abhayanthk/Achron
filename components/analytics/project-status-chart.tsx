@@ -17,17 +17,18 @@ export function ProjectStatusChart() {
   const { data: projectData, isLoading } = useQuery({
     queryKey: ["projects", "status-distribution"],
     queryFn: async () => {
-      const res = await axios.get("/api/projects/stats"); // We might need to ensure this endpoint exists
-      return res.data;
+      const res = await axios.get("/api/projects/stats");
+      // Transform object { active, completed, paused } to array for Recharts
+      const stats = res.data;
+      return [
+        { name: "Active", value: stats.active || 0, color: "#3b82f6" },
+        { name: "Completed", value: stats.completed || 0, color: "#10b981" },
+        { name: "Paused", value: stats.paused || 0, color: "#f59e0b" },
+      ];
     },
   });
 
-  // Mock data fallback
-  const data = projectData || [
-    { name: "Completed", value: 12, color: "#10b981" }, // Emerald
-    { name: "Active", value: 5, color: "#3b82f6" }, // Blue
-    { name: "Paused", value: 3, color: "#f59e0b" }, // Amber
-  ];
+  const data = projectData || [];
 
   if (isLoading) {
     return (
