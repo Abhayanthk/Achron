@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import SegmentedControlButton from "../analytics/segmentedControlButton";
 import DateNavButtons from "../analytics/dateNavButtons";
@@ -20,31 +20,33 @@ import { useDateNavigator } from "@/hooks/useDateNavigation";
 export function ActivityChart() {
   const [unit, setUnit] = useState<"hrs" | "mins">("hrs");
   const { date, goPrev, goNext, goToday } = useDateNavigator("week");
-  const { data: filledData = [], isPending } = useQuery({
+  const { data: rawData = [], isPending } = useQuery({
     queryKey: ["analytics", "week", date],
     queryFn: async () => {
       const res = await axios.get(
         `/api/analytics?range=week&type=timer&startDate=${date}`,
       );
-      // Ensure we have data for all 7 days
-      const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-      const analyticsData = res.data.data;
-      const filledData = weekDays.map((day) => {
-        const found = analyticsData.find((d: any) => d.name === day);
-        const hours = found ? found.hours : 0;
-        return {
-          name: day,
-          value: unit === "mins" ? Number((hours * 60).toFixed(0)) : hours,
-          hours: hours, // keep raw for reference if needed
-          goal: unit === "mins" ? 6 * 60 : 6,
-        };
-      });
-      return filledData;
+      return res.data.data;
     },
   });
 
-  const totalFocusHours = filledData.reduce(
-    (acc: any, curr: any) => acc + curr.hours,
+  const chartData = useMemo(() => {
+    const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    return weekDays.map((day) => {
+      const found = rawData.find((d: any) => d.name === day);
+      const hours = found ? found.hours : 0;
+      return {
+        name: day,
+        value: unit === "mins" ? Number((hours * 60).toFixed(0)) : hours,
+        hours: hours,
+        goal: unit === "mins" ? 6 * 60 : 6,
+      };
+    });
+  }, [rawData, unit]);
+
+  const totalFocus = chartData.reduce(
+    (acc: any, curr: any) =>
+      acc + (unit === "mins" ? curr.hours * 60 : curr.hours),
     0,
   );
 
@@ -63,13 +65,13 @@ export function ActivityChart() {
       </div>
     );
   }
-  console.log("filledData", filledData, date, isPending);
   return (
     <div className="flex flex-col h-full justify-between min-h-[200px] ">
       <div className="flex items-end justify-between">
         <div>
           <p className="text-3xl font-bold text-white mt-1">
-            {totalFocusHours.toFixed(1)}h
+            {totalFocus.toFixed(unit === "hrs" ? 1 : 0)}
+            {unit === "hrs" ? "h" : "m"}
           </p>
           <p className="text-xs text-zinc-500">Focus time this week</p>
         </div>
@@ -91,7 +93,8 @@ export function ActivityChart() {
       <div className="flex-1 -mb-2 mt-4 min-h-[200px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={filledData}
+            key={unit}
+            data={chartData}
             margin={{ top: 20, right: 0, left: -20, bottom: 24 }}
           >
             <XAxis
