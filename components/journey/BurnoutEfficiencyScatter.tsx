@@ -28,6 +28,16 @@ interface BurnoutEfficiencyScatterProps {
 export function BurnoutEfficiencyScatter({
   data,
 }: BurnoutEfficiencyScatterProps) {
+  const formattedData = useMemo(() => {
+    return data.map((d) => ({
+      ...d,
+      dateFormatted: new Date(d.date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
+    }));
+  }, [data]);
+
   if (!data || data.length === 0) {
     return (
       <div className="flex items-center justify-center h-64 border border-white/10 rounded-xl bg-zinc-950/30">
@@ -46,14 +56,14 @@ export function BurnoutEfficiencyScatter({
         <h3 className="text-xl font-bold text-white flex items-center gap-2">
           Burnout Efficiency Curve
         </h3>
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-zinc-300">
           Focus Hours vs. Output Quality (XP/Hr). Diminishing returns = Burnout.
         </p>
       </div>
 
       <div className="h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+          <ScatterChart margin={{ top: 20, right: 20, bottom: 0, left: -20 }}>
             <CartesianGrid
               strokeDasharray="3 3"
               stroke="rgba(255,255,255,0.05)"
@@ -75,27 +85,42 @@ export function BurnoutEfficiencyScatter({
             />
             <Tooltip
               cursor={{ strokeDasharray: "3 3" }}
-              contentStyle={{
-                backgroundColor: "#09090b",
-                borderColor: "rgba(255,255,255,0.1)",
-                borderRadius: "8px",
-                color: "#fff",
-              }}
-              itemStyle={{ fontSize: "12px" }}
-              formatter={(value: number, name: string) => {
-                if (name === "Focus Hours")
-                  return [`${value.toFixed(1)}h`, name];
-                if (name === "XP/Hour") return [value.toFixed(0), name];
-                return [value, name];
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0].payload;
+                  return (
+                    <div className="bg-zinc-950 border border-white/10 rounded-lg p-3 shadow-xl min-w-[120px]">
+                      <p className="text-white font-medium mb-2 text-xs border-b border-white/10 pb-1">
+                        {data.dateFormatted}
+                      </p>
+                      {payload.map((p: any) => (
+                        <div
+                          key={p.name}
+                          className="text-xs text-zinc-400 flex justify-between gap-4 mb-1"
+                        >
+                          <span>
+                            {p.name === "Focus Hours"
+                              ? `${Number(p.value).toFixed(1)}h`
+                              : p.name === "XP/Hour"
+                                ? Number(p.value).toFixed(0)
+                                : p.value}
+                          </span>
+                          <span className="text-zinc-500">{p.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                return null;
               }}
             />
-            <Scatter name="Performance" data={data} fill="#f43f5e" />
+            <Scatter name="Performance" data={formattedData} fill="#f43f5e" />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
 
       <div className="mt-4 text-center">
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-zinc-200">
           Ideally, more focus hours should maintain or increase XP/Hour. A drop
           at high hours signals burnout.
         </p>

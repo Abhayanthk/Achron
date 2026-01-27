@@ -10,6 +10,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
+  ReferenceArea,
   Cell,
 } from "recharts";
 import { motion } from "framer-motion";
@@ -34,6 +35,10 @@ export function IdentityAlignmentScatter({
   const formattedData = useMemo(() => {
     return data.map((d) => ({
       ...d,
+      dateFormatted: new Date(d.date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
       fillColor:
         d.status === "Aligned"
           ? "#22c55e" // green-500
@@ -44,6 +49,8 @@ export function IdentityAlignmentScatter({
               : "#ef4444", // red-500
     }));
   }, [data]);
+
+  console.log(formattedData);
 
   if (!data || data.length === 0) {
     return (
@@ -69,23 +76,8 @@ export function IdentityAlignmentScatter({
       </div>
 
       <div className="h-[300px] w-full relative">
-        <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 pointer-events-none opacity-20">
-          <div className="border-r border-b border-white flex justify-center items-center text-xs text-zinc-500">
-            Drifting (Low S / Low E)
-          </div>
-          <div className="border-b border-white flex justify-center items-center text-xs text-zinc-500">
-            Delusional (High S / Low E)
-          </div>
-          <div className="border-r border-white flex justify-center items-center text-xs text-zinc-500">
-            Stoic (Low S / High E)
-          </div>
-          <div className="flex justify-center items-center text-xs text-zinc-500">
-            Aligned (High S / High E)
-          </div>
-        </div>
-
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+          <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: -20 }}>
             <CartesianGrid
               strokeDasharray="3 3"
               stroke="rgba(255,255,255,0.05)"
@@ -106,24 +98,97 @@ export function IdentityAlignmentScatter({
               tick={{ fill: "#71717a", fontSize: 10 }}
               stroke="#52525b"
             />
+
+            {/* Quadrant Guidelines */}
+            <ReferenceLine x={0} stroke="rgba(255,255,255,0.2)" />
+            <ReferenceLine y={0.5} stroke="rgba(255,255,255,0.2)" />
+
+            {/* Quadrant Labels */}
+            <ReferenceArea
+              x1={-1}
+              x2={0}
+              y1={0.5}
+              y2={1}
+              fillOpacity={0}
+              label={{
+                value: "Stoic (Low S / High E)",
+                position: "center",
+                fill: "#fff",
+                fontSize: 10,
+              }}
+            />
+            <ReferenceArea
+              x1={0}
+              x2={1}
+              y1={0.5}
+              y2={1}
+              fillOpacity={0}
+              label={{
+                value: "Aligned (High S / High E)",
+                position: "center",
+                fill: "#fff",
+                fontSize: 10,
+              }}
+            />
+            <ReferenceArea
+              x1={-1}
+              x2={0}
+              y1={0}
+              y2={0.5}
+              fillOpacity={0}
+              label={{
+                value: "Drifting (Low S / Low E)",
+                position: "center",
+                fill: "#fff",
+                fontSize: 10,
+              }}
+            />
+            <ReferenceArea
+              x1={0}
+              x2={1}
+              y1={0}
+              y2={0.5}
+              fillOpacity={0}
+              label={{
+                value: "Delusional (High S / Low E)",
+                position: "center",
+                fill: "#fff",
+                fontSize: 10,
+              }}
+            />
+
             <Tooltip
               cursor={{ strokeDasharray: "3 3" }}
-              contentStyle={{
-                backgroundColor: "#09090b",
-                borderColor: "rgba(255,255,255,0.1)",
-                borderRadius: "8px",
-                color: "#fff",
+              content={({ active, payload }) => {
+                if (active && payload && payload.length) {
+                  const data = payload[0].payload;
+                  return (
+                    <div className="bg-zinc-950 border border-white/10 rounded-lg p-3 shadow-xl min-w-[120px]">
+                      <p className="text-white font-medium mb-2 text-xs border-b border-white/10 pb-1">
+                        {data.dateFormatted}
+                      </p>
+                      {payload.map((p: any) => (
+                        <div
+                          key={p.name}
+                          className="text-xs text-zinc-400 flex justify-between gap-4 mb-1"
+                        >
+                          <span className="text-white">
+                            {p.name === "Sentiment"
+                              ? Number(p.value).toFixed(2)
+                              : p.name === "Execution"
+                                ? `${(Number(p.value) * 100).toFixed(0)}%`
+                                : p.value}
+                          </span>
+                          <span className="text-zinc-500">{p.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                return null;
               }}
-              itemStyle={{ fontSize: "12px" }}
-              formatter={(value: number, name: string, props: any) => {
-                if (name === "Sentiment") return [value.toFixed(2), name];
-                if (name === "Execution")
-                  return [`${(value * 100).toFixed(0)}%`, name];
-                return [value, name];
-              }}
-              labelFormatter={() => ""}
             />
-            <Scatter name="Days" data={formattedData} fill="#8884d8">
+            <Scatter name="Days" data={formattedData} fill="#fff">
               {formattedData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.fillColor} />
               ))}

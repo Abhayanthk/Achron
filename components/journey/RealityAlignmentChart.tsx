@@ -92,7 +92,7 @@ export function RealityAlignmentChart({ data }: RealityAlignmentChartProps) {
                 borderRadius: "8px",
                 color: "#fff",
               }}
-              itemStyle={{ fontSize: "12px" }}
+              itemStyle={{ fontSize: "12px", color: "#fff" }}
               formatter={(value: number, name: string, props: any) => {
                 const rawKey =
                   name === "Execution"

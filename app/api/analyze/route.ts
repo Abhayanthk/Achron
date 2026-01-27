@@ -64,9 +64,22 @@ export async function GET(req: NextRequest){
             xpLogs,
             accountCreatedDate
       })
- 
+      const rawData = analysisResponse.data
 
-      return NextResponse.json(analysisResponse.data)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      const finalAnalysis = Object.keys(rawData).reduce((acc: any, key) => {
+            const value = rawData[key];
+            if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object' && 'date' in value[0]) {
+                  acc[key] = value.filter((item: any) => new Date(item.date) >= thirtyDaysAgo);
+            } else {
+                  acc[key] = value;
+            }
+            return acc;
+      }, {});
+
+      return NextResponse.json(finalAnalysis)
       } catch (error: any) {
             console.error("Error analyzing day:", error)
             return NextResponse.json({error: error?.code || error?.message}, {status: 500})
