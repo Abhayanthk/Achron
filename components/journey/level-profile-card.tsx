@@ -14,8 +14,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 export function LevelProfileCard() {
-  const { data: xpData = [] } = useQuery({
+  const { data: xpData = [], isLoading } = useQuery({
     queryKey: ["analytics", "xp", "all"],
     queryFn: async () => {
       const res = await axios.get("/api/analytics?type=xp&range=all");
@@ -23,9 +25,36 @@ export function LevelProfileCard() {
     },
   });
 
+  if (isLoading) {
+    return (
+      <div className="w-full bg-zinc-900/50 border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 md:gap-12">
+          <div className="flex flex-col md:flex-row items-center gap-8 w-full md:w-auto text-center md:text-left">
+            <Skeleton className="h-28 w-28 rounded-3xl bg-zinc-800" />
+            <div className="space-y-4">
+              <Skeleton className="h-10 w-48 bg-zinc-800" />
+              <Skeleton className="h-4 w-64 bg-zinc-800" />
+            </div>
+          </div>
+          <div className="w-full md:min-w-[400px] flex-1 bg-zinc-900/30 p-5 rounded-xl border border-white/5 space-y-4">
+            <div className="flex justify-between">
+              <Skeleton className="h-4 w-24 bg-zinc-800" />
+              <Skeleton className="h-4 w-24 bg-zinc-800" />
+            </div>
+            <Skeleton className="h-3 w-full bg-zinc-800 rounded-full" />
+            <div className="flex justify-between">
+              <Skeleton className="h-4 w-32 bg-zinc-800" />
+              <Skeleton className="h-4 w-12 bg-zinc-800" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const totalXp = xpData.reduce(
     (acc: number, curr: any) => acc + curr.amount,
-    0
+    0,
   );
   const { level, currentXp, nextLevelXp, progress, title } =
     calculateLevelFromXp(totalXp);
@@ -47,14 +76,14 @@ export function LevelProfileCard() {
           <div className="relative group/icon">
             <div
               className={cn(
-                "h-28 w-28 rounded-3xl border border-white/10 flex items-center justify-center shadow-2xl relative z-10 overflow-hidden bg-zinc-950"
+                "h-28 w-28 rounded-3xl border border-white/10 flex items-center justify-center shadow-2xl relative z-10 overflow-hidden bg-zinc-950",
               )}
             >
               {/* Inner Glow */}
               <div
                 className={cn(
                   "absolute inset-0 opacity-20 bg-gradient-to-br",
-                  title.bgGradient
+                  title.bgGradient,
                 )}
               />
 
@@ -62,7 +91,7 @@ export function LevelProfileCard() {
               <title.icon
                 className={cn(
                   "size-12 drop-shadow-lg relative z-10 transition-transform duration-500 group-hover/icon:scale-110",
-                  title.color
+                  title.color,
                 )}
                 strokeWidth={1.5}
               />
@@ -72,7 +101,7 @@ export function LevelProfileCard() {
             <div
               className={cn(
                 "absolute -bottom-3 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:-right-3 text-white text-xs font-bold px-3 py-1 rounded-full border-4 border-black z-20 shadow-lg whitespace-nowrap bg-gradient-to-r",
-                title.bgGradient
+                title.bgGradient,
               )}
             >
               Lvl {level}
@@ -84,7 +113,7 @@ export function LevelProfileCard() {
               <h2
                 className={cn(
                   "text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r",
-                  title.bgGradient
+                  title.bgGradient,
                 )}
               >
                 {title.name}
@@ -109,7 +138,7 @@ export function LevelProfileCard() {
                           "p-4 rounded-2xl border flex flex-col gap-4 transition-all relative overflow-hidden group/card",
                           level >= t.minLevel && level <= t.maxLevel
                             ? "bg-zinc-900 border-zinc-700 ring-1 ring-zinc-600"
-                            : "bg-zinc-950/50 border-zinc-800 hover:border-zinc-700"
+                            : "bg-zinc-950/50 border-zinc-800 hover:border-zinc-700",
                         )}
                       >
                         {/* Card Background Glow */}
@@ -122,7 +151,7 @@ export function LevelProfileCard() {
                           <div
                             className={cn(
                               "p-2 rounded-lg bg-zinc-900/50 border border-white/5",
-                              t.color
+                              t.color,
                             )}
                           >
                             <t.icon className="size-6" strokeWidth={1.5} />
@@ -147,13 +176,13 @@ export function LevelProfileCard() {
                               <span
                                 className={cn(
                                   "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
-                                  t.color.replace("text-", "bg-")
+                                  t.color.replace("text-", "bg-"),
                                 )}
                               ></span>
                               <span
                                 className={cn(
                                   "relative inline-flex rounded-full h-2 w-2",
-                                  t.color.replace("text-", "bg-")
+                                  t.color.replace("text-", "bg-"),
                                 )}
                               ></span>
                             </span>
@@ -189,7 +218,7 @@ export function LevelProfileCard() {
               transition={{ duration: 1.5, ease: "circOut" }}
               className={cn(
                 "h-full shadow-lg relative",
-                title.bgGradient.replace("text-", "bg-")
+                title.bgGradient.replace("text-", "bg-"),
               )}
             >
               <div

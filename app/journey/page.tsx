@@ -18,8 +18,16 @@ import { XpHistoryGraph } from "@/components/analytics/xp-line-graph";
 import { ProjectStatusChart } from "@/components/analytics/project-status-chart";
 import { ConfidenceMountain } from "@/components/non-negotiable/confidence-mountain";
 
+import { Skeleton } from "@/components/ui/skeleton";
+import { AlertCircle } from "lucide-react";
+
 export default function JourneyPage() {
-  const { data: analysis, isLoading: isAnalysisLoading } = useQuery({
+  const {
+    data: analysis,
+    isLoading: isAnalysisLoading,
+    isPending: isAnalysisPending,
+    isError,
+  } = useQuery({
     queryKey: ["analyze-day"],
     queryFn: async () => {
       const res = await axios.get("/api/analyze");
@@ -35,13 +43,15 @@ export default function JourneyPage() {
     },
   });
 
-  if (isAnalysisLoading) {
-    return (
-      <div className="w-full min-h-screen bg-black flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-white animate-spin" />
-      </div>
-    );
-  }
+  const ErrorComponent = () => (
+    <div className="w-full h-full min-h-[200px] flex flex-col items-center justify-center text-center p-6 border border-white/5 bg-zinc-950/30 rounded-xl">
+      <AlertCircle className="w-10 h-10 text-red-500/50 mb-3" />
+      <h3 className="text-lg font-medium text-zinc-300">Data Unavailable</h3>
+      <p className="text-sm text-zinc-500 max-w-[250px]">
+        We couldn't load this section right now.
+      </p>
+    </div>
+  );
 
   // Extract latest metrics for KPI cards
   const dailyMetrics = analysis?.daily_metrics || [];
@@ -70,42 +80,93 @@ export default function JourneyPage() {
 
         {/* KPI Cards Row */}
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <KpiCard
-            title="Execution Rate"
-            value={`${(latestMetric.execution_rate * 100 || 0).toFixed(0)}%`}
-            sub="Tasks Completed / Planned"
-            icon={<Target className="w-4 h-4 text-blue-400" />}
-          />
-          <KpiCard
-            title="Focus Ratio"
-            value={`${latestMetric.focus_to_output_ratio || 0}`}
-            sub="Mins Focus per Task"
-            icon={<Zap className="w-4 h-4 text-amber-400" />}
-          />
-          <KpiCard
-            title="XP Efficiency"
-            value={`${latestMetric.xp_per_hour || 0}`}
-            sub="XP per Focus Hour"
-            icon={<TrendingUp className="w-4 h-4 text-emerald-400" />}
-          />
-          <KpiCard
-            title="Avoidance Days"
-            value={`${avoidanceDaysCount}`}
-            sub="High Friction Days"
-            icon={<AlertOctagon className="w-4 h-4 text-red-400" />}
-            highlight={avoidanceDaysCount > 0}
-          />
+          {isAnalysisPending ? (
+            <>
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="p-4 rounded-xl border border-white/10 bg-zinc-950/50 h-[100px] flex flex-col justify-between"
+                >
+                  <div className="flex justify-between items-start">
+                    <Skeleton className="h-4 w-24 bg-zinc-800" />
+                    <Skeleton className="h-4 w-4 bg-zinc-800 rounded-full" />
+                  </div>
+                  <Skeleton className="h-8 w-16 bg-zinc-800" />
+                  <Skeleton className="h-3 w-32 bg-zinc-800" />
+                </div>
+              ))}
+            </>
+          ) : isError ? (
+            <div className="col-span-full">
+              <ErrorComponent />
+            </div>
+          ) : (
+            <>
+              <KpiCard
+                title="Execution Rate"
+                value={`${(latestMetric.execution_rate * 100 || 0).toFixed(0)}%`}
+                sub="Tasks Completed / Planned"
+                icon={<Target className="w-4 h-4 text-blue-400" />}
+              />
+              <KpiCard
+                title="Focus Ratio"
+                value={`${latestMetric.focus_to_output_ratio || 0}`}
+                sub="Mins Focus per Task"
+                icon={<Zap className="w-4 h-4 text-amber-400" />}
+              />
+              <KpiCard
+                title="XP Efficiency"
+                value={`${latestMetric.xp_per_hour || 0}`}
+                sub="XP per Focus Hour"
+                icon={<TrendingUp className="w-4 h-4 text-emerald-400" />}
+              />
+              <KpiCard
+                title="Avoidance Days"
+                value={`${avoidanceDaysCount}`}
+                sub="High Friction Days"
+                icon={<AlertOctagon className="w-4 h-4 text-red-400" />}
+                highlight={avoidanceDaysCount > 0}
+              />
+            </>
+          )}
         </section>
 
         {/* Reality Alignment Section - Primary Visual */}
         <section className="space-y-6">
-          <RealityAlignmentChart data={analysis?.reality_timeline || []} />
+          {isAnalysisPending ? (
+            <div className="w-full h-[400px] rounded-xl border border-white/10 bg-zinc-950/50 p-6">
+              <Skeleton className="h-full w-full bg-zinc-800 rounded-lg" />
+            </div>
+          ) : isError ? (
+            <ErrorComponent />
+          ) : (
+            <RealityAlignmentChart data={analysis?.reality_timeline || []} />
+          )}
         </section>
 
         {/* Secondary Alignment Charts */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <IdentityAlignmentScatter data={analysis?.identity_scatter || []} />
-          <BurnoutEfficiencyScatter data={analysis?.burnout_curve || []} />
+          {isAnalysisPending ? (
+            <>
+              <div className="h-[300px] rounded-xl border border-white/10 bg-zinc-950/50 p-6">
+                <Skeleton className="h-full w-full bg-zinc-800 rounded-lg" />
+              </div>
+              <div className="h-[300px] rounded-xl border border-white/10 bg-zinc-950/50 p-6">
+                <Skeleton className="h-full w-full bg-zinc-800 rounded-lg" />
+              </div>
+            </>
+          ) : isError ? (
+            <div className="col-span-full">
+              <ErrorComponent />
+            </div>
+          ) : (
+            <>
+              <IdentityAlignmentScatter
+                data={analysis?.identity_scatter || []}
+              />
+              <BurnoutEfficiencyScatter data={analysis?.burnout_curve || []} />
+            </>
+          )}
         </section>
 
         <div className="w-full h-px bg-white/10 my-8" />
