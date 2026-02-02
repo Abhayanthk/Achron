@@ -75,9 +75,11 @@ export default function RootLayout({
             <TimerProvider>
               <SidebarProvider defaultOpen={false}>
                 <AppSidebar />
-                <main className="flex-1 min-w-0">
+                <main className="flex-1 min-w-0 relative">
                   {/* <main className="w-full"> */}
-                  <SidebarTrigger className="relative z-10" />
+                  {/* <div className="absolute top-2 left-2 z-50">
+                    <SidebarTrigger />
+                  </div> */}
                   {children}
                 </main>
                 <MiniTimer />

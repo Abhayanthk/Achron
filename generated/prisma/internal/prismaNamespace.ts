@@ -398,7 +398,8 @@ export const ModelName = {
   DailyLog: 'DailyLog',
   Reminder: 'Reminder',
   NonNegotiable: 'NonNegotiable',
-  CalendarEvent: 'CalendarEvent'
+  CalendarEvent: 'CalendarEvent',
+  Brainstorm: 'Brainstorm'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "project" | "section" | "category" | "habit" | "xpLog" | "dailyLog" | "reminder" | "nonNegotiable" | "calendarEvent"
+    modelProps: "user" | "timer" | "alarmSound" | "focusSession" | "workLog" | "task" | "project" | "section" | "category" | "habit" | "xpLog" | "dailyLog" | "reminder" | "nonNegotiable" | "calendarEvent" | "brainstorm"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1528,6 +1529,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Brainstorm: {
+      payload: Prisma.$BrainstormPayload<ExtArgs>
+      fields: Prisma.BrainstormFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BrainstormFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BrainstormFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>
+        }
+        findFirst: {
+          args: Prisma.BrainstormFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BrainstormFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>
+        }
+        findMany: {
+          args: Prisma.BrainstormFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>[]
+        }
+        create: {
+          args: Prisma.BrainstormCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>
+        }
+        createMany: {
+          args: Prisma.BrainstormCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BrainstormCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>[]
+        }
+        delete: {
+          args: Prisma.BrainstormDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>
+        }
+        update: {
+          args: Prisma.BrainstormUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>
+        }
+        deleteMany: {
+          args: Prisma.BrainstormDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BrainstormUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BrainstormUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>[]
+        }
+        upsert: {
+          args: Prisma.BrainstormUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BrainstormPayload>
+        }
+        aggregate: {
+          args: Prisma.BrainstormAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBrainstorm>
+        }
+        groupBy: {
+          args: Prisma.BrainstormGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BrainstormGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BrainstormCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BrainstormCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1774,12 +1849,33 @@ export const CalendarEventScalarFieldEnum = {
 export type CalendarEventScalarFieldEnum = (typeof CalendarEventScalarFieldEnum)[keyof typeof CalendarEventScalarFieldEnum]
 
 
+export const BrainstormScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  projectId: 'projectId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  calendarEventId: 'calendarEventId'
+} as const
+
+export type BrainstormScalarFieldEnum = (typeof BrainstormScalarFieldEnum)[keyof typeof BrainstormScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1796,6 +1892,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1864,6 +1969,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -1976,6 +2095,7 @@ export type GlobalOmitConfig = {
   reminder?: Prisma.ReminderOmit
   nonNegotiable?: Prisma.NonNegotiableOmit
   calendarEvent?: Prisma.CalendarEventOmit
+  brainstorm?: Prisma.BrainstormOmit
 }
 
 /* Types for Logging */

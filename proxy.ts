@@ -3,9 +3,10 @@ import { NextRequest } from 'next/server'
 import { auth } from '@clerk/nextjs/server'
 const isPublicRoute = createRouteMatcher([
   '/',
-  '/sign-in(.*)', 
-  '/sign-up(.*)', 
-  '/api/inngest(.*)'
+  '/sign-in(.*)',
+  '/sign-up(.*)',
+  '/api/inngest(.*)',
+  '/api/task-proposal(.*)'
 ])
 // const isApiRoute = createRouteMatcher([
 //   '/api(.*)'
