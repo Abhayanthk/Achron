@@ -92,3 +92,8 @@ export type NonNegotiable = Prisma.NonNegotiableModel
  * 
  */
 export type CalendarEvent = Prisma.CalendarEventModel
+/**
+ * Model Brainstorm
+ * 
+ */
+export type Brainstorm = Prisma.BrainstormModel

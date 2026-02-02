@@ -21,6 +21,11 @@ export async function GET(
         userId,
       },
       include: {
+        brainstorms: {
+          orderBy: {
+            createdAt: "desc"
+          }
+        },
         sections: {
           orderBy: [
             { order: 'asc' },

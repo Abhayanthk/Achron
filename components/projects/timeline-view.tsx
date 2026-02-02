@@ -52,7 +52,7 @@ export function TimelineView({
 
   // View State
   const [viewStartDate, setViewStartDate] = useState(() =>
-    projectStartDate ? new Date(projectStartDate) : addDays(new Date(), -2)
+    projectStartDate ? new Date(projectStartDate) : addDays(new Date(), -2),
   );
 
   const [editingSection, setEditingSection] = useState<Section | null>(null);
@@ -164,7 +164,7 @@ export function TimelineView({
       />
 
       {/* Header & Controls */}
-      <div className="flex-none h-14 border-b border-white/5 bg-zinc-900/50 backdrop-blur-sm z-30 flex items-center justify-between pl-4 pr-1">
+      <div className="flex-none h-14 border-b border-white/5 bg-zinc-900/50 backdrop-blur-sm z-30 flex items-center pl-4 pr-1">
         <div className="flex items-center gap-1">
           <button
             onClick={() => shiftView(-7)}
@@ -204,7 +204,7 @@ export function TimelineView({
                 "flex-none flex flex-col items-center justify-center border-r border-white/5 text-[10px] uppercase font-medium",
                 isSameDay(day, new Date())
                   ? "text-emerald-400 bg-emerald-500/5"
-                  : "text-zinc-500"
+                  : "text-zinc-500",
               )}
             >
               <span>{format(day, "d")}</span>
@@ -228,7 +228,7 @@ export function TimelineView({
                 style={{ width: DAY_WIDTH }}
                 className={cn(
                   "border-r border-white/5 h-full flex-none",
-                  isSameDay(day, new Date()) && "bg-emerald-500/5"
+                  isSameDay(day, new Date()) && "bg-emerald-500/5",
                 )}
               />
             ))}

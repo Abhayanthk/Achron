@@ -9,11 +9,18 @@ import { ProjectSidebar } from "@/components/projects/project-sidebar";
 import { TimelineView } from "@/components/projects/timeline-view";
 import { toast } from "sonner";
 import { addDays } from "date-fns";
+import { useState } from "react";
+import { BrainstormList } from "@/components/projects/brainstorm-list";
+import { Calendar as CalendarIcon, BrainCircuit } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function ProjectDetailsPage() {
   const { id } = useParams();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [viewMode, setViewMode] = useState<"calendar" | "brainstorm">(
+    "calendar",
+  );
 
   // Fetch Project Data
   const { data: project, isLoading } = useQuery({
@@ -165,6 +172,32 @@ export default function ProjectDetailsPage() {
         </div>
 
         <div className="flex items-center gap-2">
+          <div className="flex bg-zinc-900 p-1 rounded-lg border border-white/5">
+            <button
+              onClick={() => setViewMode("calendar")}
+              className={cn(
+                "px-3 py-1.5 text-xs font-medium rounded-md flex items-center gap-2 transition-all",
+                viewMode === "calendar"
+                  ? "bg-zinc-800 text-white shadow-sm"
+                  : "text-zinc-500 hover:text-zinc-300",
+              )}
+            >
+              <CalendarIcon className="h-3.5 w-3.5" />
+              Calendar
+            </button>
+            <button
+              onClick={() => setViewMode("brainstorm")}
+              className={cn(
+                "px-3 py-1.5 text-xs font-medium rounded-md flex items-center gap-2 transition-all",
+                viewMode === "brainstorm"
+                  ? "bg-indigo-500/20 text-indigo-300 shadow-sm border border-indigo-500/20"
+                  : "text-zinc-500 hover:text-zinc-300",
+              )}
+            >
+              <BrainCircuit className="h-3.5 w-3.5" />
+              Brainstorm
+            </button>
+          </div>
           <button className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-md transition-colors">
             <Settings className="h-4 w-4" />
           </button>
@@ -196,12 +229,19 @@ export default function ProjectDetailsPage() {
         />
 
         <div className="flex-1 relative">
-          <TimelineView
-            sections={project.sections || []}
-            projectStartDate={project.startDate}
-            projectEndDate={project.endDate}
-            projectColor={project.color}
-          />
+          {viewMode === "calendar" ? (
+            <TimelineView
+              sections={project.sections || []}
+              projectStartDate={project.startDate}
+              projectEndDate={project.endDate}
+              projectColor={project.color}
+            />
+          ) : (
+            <BrainstormList
+              projectId={id as string}
+              brainstorms={project.brainstorms || []}
+            />
+          )}
         </div>
       </div>
     </div>
