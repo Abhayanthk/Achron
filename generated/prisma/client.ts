@@ -119,3 +119,8 @@ export type CalendarEvent = Prisma.CalendarEventModel
  * 
  */
 export type Brainstorm = Prisma.BrainstormModel
+/**
+ * Model Note
+ * 
+ */
+export type Note = Prisma.NoteModel

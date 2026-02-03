@@ -114,8 +114,8 @@ const navMain = [
     icon: BookOpenText,
   },
   {
-    title: "Graph View",
-    url: "/graph",
+    title: "Notes",
+    url: "/notes",
     icon: Network,
   },
   {

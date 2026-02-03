@@ -66,7 +66,8 @@ export const ModelName = {
   Reminder: 'Reminder',
   NonNegotiable: 'NonNegotiable',
   CalendarEvent: 'CalendarEvent',
-  Brainstorm: 'Brainstorm'
+  Brainstorm: 'Brainstorm',
+  Note: 'Note'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -303,6 +304,20 @@ export const BrainstormScalarFieldEnum = {
 } as const
 
 export type BrainstormScalarFieldEnum = (typeof BrainstormScalarFieldEnum)[keyof typeof BrainstormScalarFieldEnum]
+
+
+export const NoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  type: 'type',
+  content: 'content',
+  parentId: 'parentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -69,3 +69,32 @@ export async function PUT(
         return new NextResponse("Internal Error", { status: 500 });
     }
 }
+
+export async function DELETE(
+    req: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        const { id } = await params;
+
+        // Verify ownership via project relation before deleting
+        const brainstorm = await prisma.brainstorm.delete({
+            where: {
+                id: id,
+                project: {
+                    userId: userId
+                }
+            }
+        });
+
+        return NextResponse.json(brainstorm);
+    } catch (error) {
+        console.error("[BRAINSTORM_DELETE]", error);
+        return new NextResponse("Internal Error", { status: 500 });
+    }
+}
