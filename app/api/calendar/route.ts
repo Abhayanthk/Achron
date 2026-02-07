@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { addWeeks, addMonths, isBefore, startOfDay } from "date-fns";
+import axios from "axios";
 
 // Helper to expand recurring events
 const expandRecurringEvents = (events: any[], startDate: Date, endDate: Date) => {
@@ -68,7 +69,7 @@ export const GET = async (request: NextRequest) => {
   const endDate = new Date(endDateParam);
 
 
-  const events = await prisma.calendarEvent.findMany({
+  let events = await prisma.calendarEvent.findMany({
     where: {
       userId,
       OR: [
@@ -85,6 +86,29 @@ export const GET = async (request: NextRequest) => {
       ],
     },
   });
+  const cfContestList = await axios.get("https://codeforces.com/api/contest.list");
+  if(cfContestList.data.status === "OK") {
+    const contests = cfContestList.data.result;
+    const cfEvents = contests
+      .filter((contest: any) => contest.phase === "BEFORE" || contest.phase === "CODING")
+      .map((contest: any) => {
+        const startTime = contest.startTimeSeconds * 1000;
+        const endTime = startTime + (contest.durationSeconds * 1000);
+        
+        return {
+          id: `cf-${contest.id}`,
+          title: contest.name,
+          start: new Date(startTime),
+          end: new Date(endTime),
+          color: "#f6523b",
+          allDay: false,
+          recurrence: "NONE",
+          isCompleted: false,
+        };
+    });
+    // Use type assertion or spread into a new array typed as any[] to avoid conflicts
+    events = [...events, ...cfEvents] as any[];
+  }
 
   const expanded = expandRecurringEvents(events, startDate, endDate);
 

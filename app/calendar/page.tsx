@@ -224,11 +224,7 @@ export default function CalendarPage() {
       const idToUpdate = selectedEvent.originalId || selectedEvent.id;
       updateEvent({ ...eventData, id: idToUpdate });
     } else {
-      createEvent({
-        ...eventData,
-        startTime: selectedSlot?.start || eventData.startTime, // Fallback
-        endTime: selectedSlot?.end || eventData.endTime,
-      });
+      createEvent(eventData);
     }
   };
 
