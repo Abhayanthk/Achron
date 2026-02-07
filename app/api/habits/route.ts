@@ -54,7 +54,11 @@ export async function GET(req: Request) {
         if (needsUpdate) {
             await prisma.habit.update({
                 where: { id: habit.id },
-                data: { streak: newStreak }
+                data: { streak: newStreak,
+                  completedDates: {
+                        push: new Date()
+                  }
+                 }
             });
             return { ...habit, streak: newStreak };
         }

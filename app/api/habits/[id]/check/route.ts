@@ -74,22 +74,8 @@ export async function POST(
         return NextResponse.json({ ...habit, completedDates: newDates, streak: newStreak });
 
     } else {
-        let currentStreak = habit.streak;
-        const sortedDates = completedDates.sort((a, b) => b.getTime() - a.getTime());
-        const lastCompletedDate = sortedDates[0];
-
-        if (lastCompletedDate) {
-             const daysSinceLast = differenceInCalendarDays(checkDate, lastCompletedDate);
-             if (daysSinceLast > 1) {
-                 const missedDays = daysSinceLast - 1;
-                 const penalty = Math.pow(2, missedDays - 1);
-                 currentStreak = Math.max(0, currentStreak - penalty);
-             }
-        }
-
-        // 2. Add today
         const newDates = [...completedDates, checkDate];
-        const newStreak = currentStreak + 1;
+        const newStreak = habit.streak + 1;
 
         await prisma.$transaction([
              prisma.habit.update({
