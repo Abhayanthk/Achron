@@ -20,6 +20,9 @@ export default async function NotePage({
       id: noteId,
       userId: userId,
     },
+    include: {
+      parent: true,
+    },
   });
 
   if (!note) {
@@ -49,5 +52,26 @@ export default async function NotePage({
     initialData = note.content as any;
   }
 
-  return <NoteExcalidrawWrapper initialData={initialData} noteId={noteId} />;
+  // Determine breadcrumbs
+  const breadcrumbs: { label: string; href?: string }[] = [
+    { label: "Home", href: "/dashboard" },
+    { label: "Notes", href: "/notes" },
+  ];
+
+  if (note.parent) {
+    breadcrumbs.push({
+      label: note.parent.title,
+      href: `/notes?folderId=${note.parent.id}`,
+    });
+  }
+
+  breadcrumbs.push({ label: note.title });
+
+  return (
+    <NoteExcalidrawWrapper
+      initialData={initialData}
+      noteId={noteId}
+      breadcrumbs={breadcrumbs}
+    />
+  );
 }

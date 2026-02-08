@@ -26,6 +26,9 @@ export default async function BrainstormPage({
         userId: userId,
       },
     },
+    include: {
+      project: true,
+    },
   });
 
   if (!brainstorm) {
@@ -47,6 +50,18 @@ export default async function BrainstormPage({
   }
 
   return (
-    <ExcalidrawWrapper initialData={initialData} brainstormId={brainstormId} />
+    <ExcalidrawWrapper
+      initialData={initialData}
+      brainstormId={brainstormId}
+      breadcrumbs={[
+        { label: "Home", href: "/dashboard" },
+        { label: "Projects", href: "/projects" },
+        {
+          label: brainstorm.project.title,
+          href: `/projects/${brainstorm.project.id}`,
+        },
+        { label: "Brainstorm" },
+      ]}
+    />
   );
 }
