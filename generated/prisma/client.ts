@@ -124,3 +124,23 @@ export type Brainstorm = Prisma.BrainstormModel
  * 
  */
 export type Note = Prisma.NoteModel
+/**
+ * Model ProblemLog
+ * 
+ */
+export type ProblemLog = Prisma.ProblemLogModel
+/**
+ * Model Tag
+ * 
+ */
+export type Tag = Prisma.TagModel
+/**
+ * Model Pattern
+ * 
+ */
+export type Pattern = Prisma.PatternModel
+/**
+ * Model KeyLearning
+ * 
+ */
+export type KeyLearning = Prisma.KeyLearningModel

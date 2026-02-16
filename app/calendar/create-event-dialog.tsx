@@ -81,6 +81,7 @@ export function CreateEventDialog({
       } else {
         setTitle("");
         // Default start to nearest hour or initialDate
+
         const baseDate = initialDate || new Date();
         const startDate = new Date(baseDate);
         startDate.setMinutes(0, 0, 0); // Reset minutes/seconds

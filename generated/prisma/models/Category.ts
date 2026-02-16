@@ -186,6 +186,10 @@ export type CategoryWhereInput = {
   tasks?: Prisma.TaskListRelationFilter
   dailyLogs?: Prisma.DailyLogListRelationFilter
   calendarEvents?: Prisma.CalendarEventListRelationFilter
+  problemLogs?: Prisma.ProblemLogListRelationFilter
+  tags?: Prisma.TagListRelationFilter
+  patterns?: Prisma.PatternListRelationFilter
+  keyLearnings?: Prisma.KeyLearningListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -198,6 +202,10 @@ export type CategoryOrderByWithRelationInput = {
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   dailyLogs?: Prisma.DailyLogOrderByRelationAggregateInput
   calendarEvents?: Prisma.CalendarEventOrderByRelationAggregateInput
+  problemLogs?: Prisma.ProblemLogOrderByRelationAggregateInput
+  tags?: Prisma.TagOrderByRelationAggregateInput
+  patterns?: Prisma.PatternOrderByRelationAggregateInput
+  keyLearnings?: Prisma.KeyLearningOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -213,6 +221,10 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   tasks?: Prisma.TaskListRelationFilter
   dailyLogs?: Prisma.DailyLogListRelationFilter
   calendarEvents?: Prisma.CalendarEventListRelationFilter
+  problemLogs?: Prisma.ProblemLogListRelationFilter
+  tags?: Prisma.TagListRelationFilter
+  patterns?: Prisma.PatternListRelationFilter
+  keyLearnings?: Prisma.KeyLearningListRelationFilter
 }, "id">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -246,6 +258,10 @@ export type CategoryCreateInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -257,6 +273,10 @@ export type CategoryUncheckedCreateInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
@@ -268,6 +288,10 @@ export type CategoryUpdateInput = {
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -279,6 +303,10 @@ export type CategoryUncheckedUpdateInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -433,6 +461,70 @@ export type CategoryUpdateOneWithoutCalendarEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutCalendarEventsInput, Prisma.CategoryUpdateWithoutCalendarEventsInput>, Prisma.CategoryUncheckedUpdateWithoutCalendarEventsInput>
 }
 
+export type CategoryCreateNestedOneWithoutProblemLogsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutProblemLogsInput, Prisma.CategoryUncheckedCreateWithoutProblemLogsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutProblemLogsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutProblemLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutProblemLogsInput, Prisma.CategoryUncheckedCreateWithoutProblemLogsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutProblemLogsInput
+  upsert?: Prisma.CategoryUpsertWithoutProblemLogsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutProblemLogsInput, Prisma.CategoryUpdateWithoutProblemLogsInput>, Prisma.CategoryUncheckedUpdateWithoutProblemLogsInput>
+}
+
+export type CategoryCreateNestedOneWithoutTagsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutTagsInput, Prisma.CategoryUncheckedCreateWithoutTagsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutTagsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutTagsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutTagsInput, Prisma.CategoryUncheckedCreateWithoutTagsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutTagsInput
+  upsert?: Prisma.CategoryUpsertWithoutTagsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutTagsInput, Prisma.CategoryUpdateWithoutTagsInput>, Prisma.CategoryUncheckedUpdateWithoutTagsInput>
+}
+
+export type CategoryCreateNestedOneWithoutPatternsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutPatternsInput, Prisma.CategoryUncheckedCreateWithoutPatternsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutPatternsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutPatternsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutPatternsInput, Prisma.CategoryUncheckedCreateWithoutPatternsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutPatternsInput
+  upsert?: Prisma.CategoryUpsertWithoutPatternsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutPatternsInput, Prisma.CategoryUpdateWithoutPatternsInput>, Prisma.CategoryUncheckedUpdateWithoutPatternsInput>
+}
+
+export type CategoryCreateNestedOneWithoutKeyLearningsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutKeyLearningsInput, Prisma.CategoryUncheckedCreateWithoutKeyLearningsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutKeyLearningsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneWithoutKeyLearningsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutKeyLearningsInput, Prisma.CategoryUncheckedCreateWithoutKeyLearningsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutKeyLearningsInput
+  upsert?: Prisma.CategoryUpsertWithoutKeyLearningsInput
+  disconnect?: Prisma.CategoryWhereInput | boolean
+  delete?: Prisma.CategoryWhereInput | boolean
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutKeyLearningsInput, Prisma.CategoryUpdateWithoutKeyLearningsInput>, Prisma.CategoryUncheckedUpdateWithoutKeyLearningsInput>
+}
+
 export type CategoryCreateWithoutUserInput = {
   id?: string
   name: string
@@ -441,6 +533,10 @@ export type CategoryCreateWithoutUserInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutUserInput = {
@@ -451,6 +547,10 @@ export type CategoryUncheckedCreateWithoutUserInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutUserInput = {
@@ -498,6 +598,10 @@ export type CategoryCreateWithoutTasksInput = {
   user: Prisma.UserCreateNestedOneWithoutCategoriesInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutTasksInput = {
@@ -508,6 +612,10 @@ export type CategoryUncheckedCreateWithoutTasksInput = {
   createdAt?: Date | string
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutTasksInput = {
@@ -534,6 +642,10 @@ export type CategoryUpdateWithoutTasksInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutTasksInput = {
@@ -544,6 +656,10 @@ export type CategoryUncheckedUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutDailyLogsInput = {
@@ -554,6 +670,10 @@ export type CategoryCreateWithoutDailyLogsInput = {
   user: Prisma.UserCreateNestedOneWithoutCategoriesInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutDailyLogsInput = {
@@ -564,6 +684,10 @@ export type CategoryUncheckedCreateWithoutDailyLogsInput = {
   createdAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
   calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutDailyLogsInput = {
@@ -590,6 +714,10 @@ export type CategoryUpdateWithoutDailyLogsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutDailyLogsInput = {
@@ -600,6 +728,10 @@ export type CategoryUncheckedUpdateWithoutDailyLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutCalendarEventsInput = {
@@ -610,6 +742,10 @@ export type CategoryCreateWithoutCalendarEventsInput = {
   user: Prisma.UserCreateNestedOneWithoutCategoriesInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutCalendarEventsInput = {
@@ -620,6 +756,10 @@ export type CategoryUncheckedCreateWithoutCalendarEventsInput = {
   createdAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
   dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutCalendarEventsInput = {
@@ -646,6 +786,10 @@ export type CategoryUpdateWithoutCalendarEventsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutCalendarEventsInput = {
@@ -656,6 +800,298 @@ export type CategoryUncheckedUpdateWithoutCalendarEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutProblemLogsInput = {
+  id?: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCategoriesInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutProblemLogsInput = {
+  id?: string
+  userId: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutProblemLogsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutProblemLogsInput, Prisma.CategoryUncheckedCreateWithoutProblemLogsInput>
+}
+
+export type CategoryUpsertWithoutProblemLogsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutProblemLogsInput, Prisma.CategoryUncheckedUpdateWithoutProblemLogsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutProblemLogsInput, Prisma.CategoryUncheckedCreateWithoutProblemLogsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutProblemLogsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutProblemLogsInput, Prisma.CategoryUncheckedUpdateWithoutProblemLogsInput>
+}
+
+export type CategoryUpdateWithoutProblemLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutProblemLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutTagsInput = {
+  id?: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCategoriesInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutTagsInput = {
+  id?: string
+  userId: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutTagsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutTagsInput, Prisma.CategoryUncheckedCreateWithoutTagsInput>
+}
+
+export type CategoryUpsertWithoutTagsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutTagsInput, Prisma.CategoryUncheckedUpdateWithoutTagsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutTagsInput, Prisma.CategoryUncheckedCreateWithoutTagsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutTagsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutTagsInput, Prisma.CategoryUncheckedUpdateWithoutTagsInput>
+}
+
+export type CategoryUpdateWithoutTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutPatternsInput = {
+  id?: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCategoriesInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutPatternsInput = {
+  id?: string
+  userId: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutPatternsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutPatternsInput, Prisma.CategoryUncheckedCreateWithoutPatternsInput>
+}
+
+export type CategoryUpsertWithoutPatternsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutPatternsInput, Prisma.CategoryUncheckedUpdateWithoutPatternsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutPatternsInput, Prisma.CategoryUncheckedCreateWithoutPatternsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutPatternsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutPatternsInput, Prisma.CategoryUncheckedUpdateWithoutPatternsInput>
+}
+
+export type CategoryUpdateWithoutPatternsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutPatternsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryCreateWithoutKeyLearningsInput = {
+  id?: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutCategoriesInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutKeyLearningsInput = {
+  id?: string
+  userId: string
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCategoryInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutCategoryInput
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutCategoryInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutCategoryInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCategoryInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutKeyLearningsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutKeyLearningsInput, Prisma.CategoryUncheckedCreateWithoutKeyLearningsInput>
+}
+
+export type CategoryUpsertWithoutKeyLearningsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutKeyLearningsInput, Prisma.CategoryUncheckedUpdateWithoutKeyLearningsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutKeyLearningsInput, Prisma.CategoryUncheckedCreateWithoutKeyLearningsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutKeyLearningsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutKeyLearningsInput, Prisma.CategoryUncheckedUpdateWithoutKeyLearningsInput>
+}
+
+export type CategoryUpdateWithoutKeyLearningsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutCategoriesNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutKeyLearningsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyUserInput = {
@@ -673,6 +1109,10 @@ export type CategoryUpdateWithoutUserInput = {
   tasks?: Prisma.TaskUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutUserInput = {
@@ -683,6 +1123,10 @@ export type CategoryUncheckedUpdateWithoutUserInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCategoryNestedInput
   dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutCategoryNestedInput
   calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutCategoryNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutCategoryNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCategoryNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutCategoryNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutUserInput = {
@@ -701,12 +1145,20 @@ export type CategoryCountOutputType = {
   tasks: number
   dailyLogs: number
   calendarEvents: number
+  problemLogs: number
+  tags: number
+  patterns: number
+  keyLearnings: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | CategoryCountOutputTypeCountTasksArgs
   dailyLogs?: boolean | CategoryCountOutputTypeCountDailyLogsArgs
   calendarEvents?: boolean | CategoryCountOutputTypeCountCalendarEventsArgs
+  problemLogs?: boolean | CategoryCountOutputTypeCountProblemLogsArgs
+  tags?: boolean | CategoryCountOutputTypeCountTagsArgs
+  patterns?: boolean | CategoryCountOutputTypeCountPatternsArgs
+  keyLearnings?: boolean | CategoryCountOutputTypeCountKeyLearningsArgs
 }
 
 /**
@@ -740,6 +1192,34 @@ export type CategoryCountOutputTypeCountCalendarEventsArgs<ExtArgs extends runti
   where?: Prisma.CalendarEventWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountProblemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProblemLogWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TagWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountPatternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PatternWhereInput
+}
+
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountKeyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KeyLearningWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -751,6 +1231,10 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   tasks?: boolean | Prisma.Category$tasksArgs<ExtArgs>
   dailyLogs?: boolean | Prisma.Category$dailyLogsArgs<ExtArgs>
   calendarEvents?: boolean | Prisma.Category$calendarEventsArgs<ExtArgs>
+  problemLogs?: boolean | Prisma.Category$problemLogsArgs<ExtArgs>
+  tags?: boolean | Prisma.Category$tagsArgs<ExtArgs>
+  patterns?: boolean | Prisma.Category$patternsArgs<ExtArgs>
+  keyLearnings?: boolean | Prisma.Category$keyLearningsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -786,6 +1270,10 @@ export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   tasks?: boolean | Prisma.Category$tasksArgs<ExtArgs>
   dailyLogs?: boolean | Prisma.Category$dailyLogsArgs<ExtArgs>
   calendarEvents?: boolean | Prisma.Category$calendarEventsArgs<ExtArgs>
+  problemLogs?: boolean | Prisma.Category$problemLogsArgs<ExtArgs>
+  tags?: boolean | Prisma.Category$tagsArgs<ExtArgs>
+  patterns?: boolean | Prisma.Category$patternsArgs<ExtArgs>
+  keyLearnings?: boolean | Prisma.Category$keyLearningsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -802,6 +1290,10 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     dailyLogs: Prisma.$DailyLogPayload<ExtArgs>[]
     calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
+    problemLogs: Prisma.$ProblemLogPayload<ExtArgs>[]
+    tags: Prisma.$TagPayload<ExtArgs>[]
+    patterns: Prisma.$PatternPayload<ExtArgs>[]
+    keyLearnings: Prisma.$KeyLearningPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1207,6 +1699,10 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   tasks<T extends Prisma.Category$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dailyLogs<T extends Prisma.Category$dailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$dailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   calendarEvents<T extends Prisma.Category$calendarEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  problemLogs<T extends Prisma.Category$problemLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$problemLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tags<T extends Prisma.Category$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  patterns<T extends Prisma.Category$patternsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$patternsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatternPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  keyLearnings<T extends Prisma.Category$keyLearningsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$keyLearningsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KeyLearningPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1706,6 +2202,102 @@ export type Category$calendarEventsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.CalendarEventScalarFieldEnum | Prisma.CalendarEventScalarFieldEnum[]
+}
+
+/**
+ * Category.problemLogs
+ */
+export type Category$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProblemLog
+   */
+  select?: Prisma.ProblemLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProblemLog
+   */
+  omit?: Prisma.ProblemLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProblemLogInclude<ExtArgs> | null
+  where?: Prisma.ProblemLogWhereInput
+  orderBy?: Prisma.ProblemLogOrderByWithRelationInput | Prisma.ProblemLogOrderByWithRelationInput[]
+  cursor?: Prisma.ProblemLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProblemLogScalarFieldEnum | Prisma.ProblemLogScalarFieldEnum[]
+}
+
+/**
+ * Category.tags
+ */
+export type Category$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tag
+   */
+  select?: Prisma.TagSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tag
+   */
+  omit?: Prisma.TagOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TagInclude<ExtArgs> | null
+  where?: Prisma.TagWhereInput
+  orderBy?: Prisma.TagOrderByWithRelationInput | Prisma.TagOrderByWithRelationInput[]
+  cursor?: Prisma.TagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TagScalarFieldEnum | Prisma.TagScalarFieldEnum[]
+}
+
+/**
+ * Category.patterns
+ */
+export type Category$patternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Pattern
+   */
+  select?: Prisma.PatternSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Pattern
+   */
+  omit?: Prisma.PatternOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PatternInclude<ExtArgs> | null
+  where?: Prisma.PatternWhereInput
+  orderBy?: Prisma.PatternOrderByWithRelationInput | Prisma.PatternOrderByWithRelationInput[]
+  cursor?: Prisma.PatternWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PatternScalarFieldEnum | Prisma.PatternScalarFieldEnum[]
+}
+
+/**
+ * Category.keyLearnings
+ */
+export type Category$keyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KeyLearning
+   */
+  select?: Prisma.KeyLearningSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KeyLearning
+   */
+  omit?: Prisma.KeyLearningOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KeyLearningInclude<ExtArgs> | null
+  where?: Prisma.KeyLearningWhereInput
+  orderBy?: Prisma.KeyLearningOrderByWithRelationInput | Prisma.KeyLearningOrderByWithRelationInput[]
+  cursor?: Prisma.KeyLearningWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KeyLearningScalarFieldEnum | Prisma.KeyLearningScalarFieldEnum[]
 }
 
 /**

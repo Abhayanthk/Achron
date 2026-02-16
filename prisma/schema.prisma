@@ -31,6 +31,10 @@ model User {
       projects       Project[]
       notes          Note[]
       calendarEvents CalendarEvent[]
+      problemLogs    ProblemLog[]
+      tags           Tag[]
+      patterns       Pattern[]
+      keyLearnings   KeyLearning[]
 }
 
 model Timer {
@@ -141,6 +145,10 @@ model Category {
       tasks          Task[]
       dailyLogs      DailyLog[]
       calendarEvents CalendarEvent[]
+      problemLogs    ProblemLog[]
+      tags           Tag[]
+      patterns       Pattern[]
+      keyLearnings   KeyLearning[]
 }
 
 model Habit {
@@ -242,4 +250,109 @@ model Note {
       createdAt DateTime @default(now())
       updatedAt DateTime @updatedAt
       user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ProblemLog {
+      id String @id @default(cuid())
+
+      // Core Identity
+      problem_name String
+      problem_link String
+      platform     String // 'CF' | 'AtCoder' | 'LC' | 'CodeChef' | 'Other'
+      contest_id   String?
+      rating       Int
+
+      tags Tag[]
+
+      patternId       String?
+      pattern         Pattern? @relation(fields: [patternId], references: [id])
+      pattern_subtype String?
+
+      // Solve Classification
+      solve_status_type String // 'Solved Clean' | 'Solved with Hint' | 'Solved after Editorial' | 'Partial' | 'Failed'
+      idea_source       String // 'Self' | 'Small Hint' | 'Major Hint' | 'Editorial'
+      attempt_count     Int
+
+      // Time Metrics
+      time_to_first_idea_minutes  Int
+      implementation_time_minutes Int
+      debug_time_minutes          Int
+      total_time_minutes          Int // Computed sum
+
+      // Difficulty & Psychology
+      perceived_difficulty_before Int // 1-5
+      perceived_difficulty_after  Int // 1-5
+      mental_load_score           Int // 1-5 (Cognitive strain)
+      stress_level_during         Int // 1-10
+
+      // Failure System
+      failure_categories String[]
+
+      // Diagnostic Notes
+      mistakes_text             String @db.Text
+      why_first_approach_failed String @db.Text
+      key_observations          String @db.Text
+      edge_cases_found          String @db.Text
+      invariant_or_key_property String @db.Text
+
+      // Submission Discipline (REMOVED)
+      final_verdict String? // 'AC' | 'WA' | 'TLE' | 'MLE' | 'RE'
+
+      // Technique Library
+      core_tricks_used String[]
+      template_used    Boolean
+      template_name    String?
+
+      // Retention
+      created_at        DateTime  @default(now())
+      last_revised_date DateTime?
+      must_revisit      Boolean
+      re_solve_result   String? // 'Under 10min' | 'Under 30min' | 'Struggled' | 'Failed Again'
+
+      // Learning
+      keyLearnings                KeyLearning[]
+      pattern_generalization_note String        @db.Text
+      similar_problems_links      String[]
+      code_snippets               Json?
+
+      userId     String
+      user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+      category   Category? @relation(fields: [categoryId], references: [id])
+      categoryId String?
+}
+
+model Tag {
+      id          String       @id @default(cuid())
+      name        String
+      userId      String
+      user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+      problemLogs ProblemLog[]
+      category    Category?    @relation(fields: [categoryId], references: [id])
+      categoryId  String?
+
+      @@unique([userId, name])
+}
+
+model Pattern {
+      id          String       @id @default(cuid())
+      name        String
+      userId      String
+      user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+      problemLogs ProblemLog[]
+      category    Category?    @relation(fields: [categoryId], references: [id])
+      categoryId  String?
+
+      @@unique([userId, name])
+}
+
+model KeyLearning {
+      id          String       @id @default(cuid())
+      point       String
+      userId      String
+      user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+      problemLogs ProblemLog[]
+      category    Category?    @relation(fields: [categoryId], references: [id])
+      categoryId  String?
+
+      @@unique([userId, point])
 }

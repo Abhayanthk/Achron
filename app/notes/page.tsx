@@ -83,11 +83,6 @@ export default function GraphPage() {
   const graphData = useMemo(() => {
     const graphNodes: GraphNode[] = [];
     const links: GraphLink[] = [];
-
-    // Add Root Node - REMOVED based on user request ("I don't want a brain")
-    // If we need to keep things tethered, we can rely on standard d3 forces or add an invisible center point if needed.
-    // For now, we'll let multiple trees exist if they are disconnected.
-
     if (notes) {
       notes.forEach((note) => {
         graphNodes.push({
@@ -131,7 +126,6 @@ export default function GraphPage() {
 
   const handleNodeClick = (node: GraphNode) => {
     // NOTE: We don't want to fly to the node if it's just a folder, maybe we do nothing or expand?
-    // User requested minimal animation.
     if (node.type === "CANVAS") {
       router.push(`/notes/${node.id}`);
     } else if (node.type === "FOLDER") {

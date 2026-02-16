@@ -67,7 +67,11 @@ export const ModelName = {
   NonNegotiable: 'NonNegotiable',
   CalendarEvent: 'CalendarEvent',
   Brainstorm: 'Brainstorm',
-  Note: 'Note'
+  Note: 'Note',
+  ProblemLog: 'ProblemLog',
+  Tag: 'Tag',
+  Pattern: 'Pattern',
+  KeyLearning: 'KeyLearning'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -318,6 +322,80 @@ export const NoteScalarFieldEnum = {
 } as const
 
 export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
+
+
+export const ProblemLogScalarFieldEnum = {
+  id: 'id',
+  problem_name: 'problem_name',
+  problem_link: 'problem_link',
+  platform: 'platform',
+  contest_id: 'contest_id',
+  rating: 'rating',
+  patternId: 'patternId',
+  pattern_subtype: 'pattern_subtype',
+  solve_status_type: 'solve_status_type',
+  idea_source: 'idea_source',
+  attempt_count: 'attempt_count',
+  time_to_first_idea_minutes: 'time_to_first_idea_minutes',
+  implementation_time_minutes: 'implementation_time_minutes',
+  debug_time_minutes: 'debug_time_minutes',
+  total_time_minutes: 'total_time_minutes',
+  perceived_difficulty_before: 'perceived_difficulty_before',
+  perceived_difficulty_after: 'perceived_difficulty_after',
+  mental_load_score: 'mental_load_score',
+  stress_level_during: 'stress_level_during',
+  failure_categories: 'failure_categories',
+  mistakes_text: 'mistakes_text',
+  why_first_approach_failed: 'why_first_approach_failed',
+  key_observations: 'key_observations',
+  edge_cases_found: 'edge_cases_found',
+  invariant_or_key_property: 'invariant_or_key_property',
+  final_verdict: 'final_verdict',
+  core_tricks_used: 'core_tricks_used',
+  template_used: 'template_used',
+  template_name: 'template_name',
+  created_at: 'created_at',
+  last_revised_date: 'last_revised_date',
+  must_revisit: 'must_revisit',
+  re_solve_result: 're_solve_result',
+  pattern_generalization_note: 'pattern_generalization_note',
+  similar_problems_links: 'similar_problems_links',
+  code_snippets: 'code_snippets',
+  userId: 'userId',
+  categoryId: 'categoryId'
+} as const
+
+export type ProblemLogScalarFieldEnum = (typeof ProblemLogScalarFieldEnum)[keyof typeof ProblemLogScalarFieldEnum]
+
+
+export const TagScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  categoryId: 'categoryId'
+} as const
+
+export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+export const PatternScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  categoryId: 'categoryId'
+} as const
+
+export type PatternScalarFieldEnum = (typeof PatternScalarFieldEnum)[keyof typeof PatternScalarFieldEnum]
+
+
+export const KeyLearningScalarFieldEnum = {
+  id: 'id',
+  point: 'point',
+  userId: 'userId',
+  categoryId: 'categoryId'
+} as const
+
+export type KeyLearningScalarFieldEnum = (typeof KeyLearningScalarFieldEnum)[keyof typeof KeyLearningScalarFieldEnum]
 
 
 export const SortOrder = {

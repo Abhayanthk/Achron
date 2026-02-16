@@ -15,7 +15,32 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const Excalidraw = dynamic(
-  async () => (await import("@excalidraw/excalidraw")).Excalidraw,
+  async () => {
+    const mod = await import("@excalidraw/excalidraw");
+    const {
+      Excalidraw: ExcalidrawComponent,
+      MainMenu,
+      WelcomeScreen,
+      DefaultSidebar,
+    } = mod;
+    return (props: any) => (
+      <ExcalidrawComponent {...props}>
+        <WelcomeScreen />
+        <MainMenu>
+          <MainMenu.DefaultItems.LoadScene />
+          <MainMenu.DefaultItems.SaveToActiveFile />
+          <MainMenu.DefaultItems.Export />
+          <MainMenu.DefaultItems.SaveAsImage />
+          <MainMenu.DefaultItems.Help />
+          <MainMenu.DefaultItems.ClearCanvas />
+          <MainMenu.Separator />
+          <MainMenu.DefaultItems.ToggleTheme />
+          <MainMenu.DefaultItems.ChangeCanvasBackground />
+        </MainMenu>
+        <DefaultSidebar />
+      </ExcalidrawComponent>
+    );
+  },
   {
     ssr: false,
   },
