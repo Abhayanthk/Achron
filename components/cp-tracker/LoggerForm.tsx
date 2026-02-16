@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+// import Editor from "@monaco-editor/react"; // Moved to CodeEditor.tsx
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -27,6 +28,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
+import { CodeEditor } from "./CodeEditor";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -59,6 +61,9 @@ const problemLogSchema = z.object({
       z.object({
         name: z.string().min(1, "Name required (e.g. Iterative, Recursive)"),
         code: z.string().optional(),
+        language: z
+          .enum(["cpp", "python", "java", "javascript"])
+          .default("cpp"),
         tries: z.coerce.number().min(1).default(1),
       }),
     )
@@ -182,7 +187,11 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
     pattern_type: initialData?.pattern?.name || "",
     pattern_subtype: initialData?.pattern_subtype || "",
 
-    code_snippets: initialData?.code_snippets || [],
+    code_snippets:
+      initialData?.code_snippets?.map((s: any) => ({
+        ...s,
+        language: s.language || "cpp",
+      })) || [],
 
     solve_status_type: (initialData?.solve_status_type as any) || undefined,
     idea_source: (initialData?.idea_source as any) || undefined,
@@ -293,161 +302,14 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-32">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* --- LEFT COLUMN: Code Snippets & Strategy (4 cols) --- */}
-          <div className="lg:col-span-4 space-y-6 flex flex-col h-full">
-            <div
-              className={cn(
-                "bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-4 flex flex-col",
-                mode === "view"
-                  ? "lg:h-[calc(100vh-140px)] lg:sticky lg:top-6"
-                  : "",
-              )}
-            >
-              <div className="flex items-center justify-between shrink-0">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Code2 className="h-5 w-5 text-indigo-400" /> Code Snippets
-                </h3>
-                {mode !== "view" && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={() =>
-                      appendSnippet({ name: "Attempt 1", tries: 1, code: "" })
-                    }
-                    className="text-xs text-indigo-400 hover:text-indigo-300"
-                  >
-                    <Plus className="h-4 w-4 mr-1" /> Add
-                  </Button>
-                )}
-              </div>
-
-              {/* VIEW MODE: Dropdown + Full Height Code */}
-              {mode === "view" ? (
-                <div className="flex-1 flex flex-col gap-4 min-h-0">
-                  {snippetFields.length > 0 ? (
-                    <>
-                      <Select
-                        value={activeSnippetIndex.toString()}
-                        onValueChange={(val) =>
-                          setActiveSnippetIndex(parseInt(val))
-                        }
-                      >
-                        <SelectTrigger className="bg-zinc-800 border-white/10 text-white">
-                          <SelectValue placeholder="Select Attempt" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-zinc-900 border-white/10 text-white">
-                          {snippetFields.map((field, idx) => (
-                            <SelectItem key={field.id} value={idx.toString()}>
-                              {field.name} (Tries: {field.tries})
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-
-                      <div className="flex-1 bg-zinc-950 border border-white/10 rounded-md p-4 overflow-auto font-mono text-xs text-zinc-300 relative">
-                        <div className="absolute top-2 right-2 flex gap-2">
-                          <Badge
-                            variant="outline"
-                            className="text-zinc-500 border-zinc-700"
-                          >
-                            {snippetFields[activeSnippetIndex]?.tries} Tries
-                          </Badge>
-                        </div>
-                        <pre className="whitespace-pre-wrap">
-                          {snippetFields[activeSnippetIndex]?.code ||
-                            "// No code"}
-                        </pre>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="flex-1 flex items-center justify-center text-zinc-500">
-                      No code snippets logged.
-                    </div>
-                  )}
-                </div>
-              ) : (
-                /* EDIT/CREATE MODE: List */
-                <div className="space-y-4">
-                  {snippetFields.map((field, index) => (
-                    <div
-                      key={field.id}
-                      className="p-4 rounded-lg bg-black/20 border border-white/5 space-y-3 relative group"
-                    >
-                      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => removeSnippet(index)}
-                          className="h-6 w-6 text-red-400 hover:text-red-300 hover:bg-red-400/10"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <div className="flex-1">
-                          <Label className="text-xs text-zinc-500 mb-1.5 block">
-                            Name / Strategy
-                          </Label>
-                          <Input
-                            {...form.register(
-                              `code_snippets.${index}.name` as const,
-                            )}
-                            placeholder="e.g. Brute Force"
-                            className="bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50 h-8 text-sm"
-                          />
-                        </div>
-                        <div className="w-20">
-                          <Label className="text-xs text-zinc-500 mb-1.5 block">
-                            Tries
-                          </Label>
-                          <Input
-                            type="number"
-                            {...form.register(
-                              `code_snippets.${index}.tries` as const,
-                            )}
-                            className="bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50 h-8 text-sm"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <Label className="text-xs text-zinc-500 mb-1.5 block">
-                          Code
-                        </Label>
-                        <Textarea
-                          {...form.register(
-                            `code_snippets.${index}.code` as const,
-                          )}
-                          placeholder="// Paste code here..."
-                          className="bg-zinc-950 border-white/10 text-zinc-300 font-mono text-xs min-h-[150px] resize-y focus:border-indigo-500/50"
-                        />
-                      </div>
-                    </div>
-                  ))}
-
-                  {snippetFields.length === 0 && (
-                    <div className="text-center p-8 border border-dashed border-white/10 rounded-lg">
-                      <p className="text-zinc-500 text-sm">
-                        No code snippets added.
-                      </p>
-                      <Button
-                        type="button"
-                        variant="link"
-                        onClick={() =>
-                          appendSnippet({ name: "Start", tries: 1, code: "" })
-                        }
-                        className="text-indigo-400 mt-2"
-                      >
-                        Add your first attempt
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+          {/* --- LEFT COLUMN: Code Snippets & Strategy (6 cols - 50%) --- */}
+          <div className="lg:col-span-6 flex flex-col h-full lg:h-[calc(100vh-100px)] lg:sticky lg:top-6">
+            <CodeEditor
+              control={form.control}
+              register={form.register}
+              watch={form.watch}
+              disabled={mode === "view"}
+            />
 
             {/* Sticky submit button for mobile/easy access */}
             <div className="hidden lg:block sticky top-6">
@@ -455,8 +317,8 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
             </div>
           </div>
 
-          {/* --- RIGHT COLUMN: Details Form (8 cols) --- */}
-          <div className="lg:col-span-8 space-y-8">
+          {/* --- RIGHT COLUMN: Details Form (6 cols - 50%) --- */}
+          <div className="lg:col-span-6 space-y-8">
             {/* 1. Identity & Classification (Fixed in View Mode) */}
             <section className="bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-6">
               <div className="flex items-center gap-2 mb-2">

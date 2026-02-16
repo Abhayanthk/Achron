@@ -1,49 +1,38 @@
-import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import { LoggerForm } from "@/components/cp-tracker/LoggerForm";
+import { LogDetails } from "@/components/cp-tracker/LogDetails";
 
-export default async function ProblemLogPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+// Force dynamic behavior since we use auth() and params
+export const dynamic = "force-dynamic";
+
+interface DetailsPageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export default async function ProblemDetailsPage(props: DetailsPageProps) {
+  const params = await props.params;
   const { userId } = await auth();
+  if (!userId) {
+    redirect("/sign-in");
+  }
 
-  if (!userId) return redirect("/sign-in");
-
-  const log = await prisma.problemLog.findFirst({
+  const log = await prisma.problemLog.findUnique({
     where: {
-      id,
-      userId,
+      id: params.id,
+      userId: userId, // Ensure ownership
     },
     include: {
-      tags: true,
       pattern: true,
       keyLearnings: true,
     },
   });
 
   if (!log) {
-    return (
-      <div className="p-8 text-center text-zinc-500">
-        Log not found or access denied.
-      </div>
-    );
+    redirect("/cp-tracker");
   }
 
-  return (
-    <div className="min-h-screen bg-black text-white p-6 md:p-8 font-sans selection:bg-indigo-500/30">
-      <div className="max-w-[1600px] mx-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60 mb-2">
-            Problem Analysis
-          </h1>
-          <p className="text-zinc-500">View and refine your thoughts.</p>
-        </div>
-        <LoggerForm mode="view" initialData={log} />
-      </div>
-    </div>
-  );
+  return <LogDetails log={log} />;
 }
