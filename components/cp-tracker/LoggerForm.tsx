@@ -53,7 +53,7 @@ const problemLogSchema = z.object({
   contest_id: z.string().optional(),
   rating: z.coerce.number().min(0, "Rating must be positive").default(0),
   tags: z.array(z.string()).default([]),
-  pattern_type: z.string().min(1, "Pattern type is required"),
+  pattern_types: z.array(z.string()).min(1, "At least one pattern is required"),
   pattern_subtype: z.string().optional(),
 
   code_snippets: z
@@ -94,8 +94,7 @@ const problemLogSchema = z.object({
   failure_categories: z.array(z.string()).default([]),
 
   mistakes_text: z.string().optional(),
-  why_first_approach_failed: z.string().optional(),
-  key_observations: z.string().optional(),
+  learning_from_failure: z.string().optional(),
   edge_cases_found: z.string().optional(),
   invariant_or_key_property: z.string().optional(),
 
@@ -165,9 +164,31 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
     const fetchMetadata = async () => {
       try {
         const res = await axios.get("/api/cp-tracker/metadata");
-        setAvailableTags(res.data.tags || []);
-        setAvailablePatterns(res.data.patterns || []);
-        setAvailableKeyLearnings(res.data.keyLearnings || []);
+        console.log("Raw Metadata:", res.data); // Debugging
+
+        // Merge all sources into availableTags for the first dropdown
+        const databaseTags = res.data.tags || [];
+        const databasePatterns = res.data.patterns || [];
+        const databaseLearnings = res.data.keyLearnings || [];
+
+        // Debugging logs
+        console.log("DB Tags:", databaseTags);
+        console.log("DB Patterns:", databasePatterns);
+
+        const mergedTags = [
+          ...databaseTags,
+          ...databasePatterns,
+          ...databaseLearnings,
+        ];
+
+        // Deduplicate by value
+        const uniqueTags = Array.from(
+          new Map(mergedTags.map((item) => [item.value, item])).values(),
+        );
+
+        setAvailableTags(uniqueTags);
+        setAvailablePatterns(databasePatterns);
+        setAvailableKeyLearnings(databaseLearnings);
       } catch (err) {
         console.error("Failed to fetch metadata", err);
       }
@@ -184,7 +205,7 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
     rating: initialData?.rating || 0,
     // Map relations back to form shape
     tags: initialData?.tags?.map((t: any) => t.name) || [],
-    pattern_type: initialData?.pattern?.name || "",
+    pattern_types: initialData?.patterns?.map((p: any) => p.name) || [],
     pattern_subtype: initialData?.pattern_subtype || "",
 
     code_snippets:
@@ -210,8 +231,7 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
     failure_categories: initialData?.failure_categories || [],
 
     mistakes_text: initialData?.mistakes_text || "",
-    why_first_approach_failed: initialData?.why_first_approach_failed || "",
-    key_observations: initialData?.key_observations || "",
+    learning_from_failure: initialData?.learning_from_failure || "",
     edge_cases_found: initialData?.edge_cases_found || "",
     invariant_or_key_property: initialData?.invariant_or_key_property || "",
 
@@ -478,26 +498,30 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
-                    name="pattern_type"
+                    name="pattern_types"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Pattern Type</FormLabel>
                         <FormControl>
                           <CreatableSelect
                             options={availablePatterns}
-                            value={field.value}
+                            value={field.value as string[]}
                             onChange={field.onChange}
                             onCreate={(val: string) => {
                               const newValue = val.trim();
                               if (!newValue) return;
-                              field.onChange(newValue);
+                              const current = (field.value as string[]) || [];
+                              if (!current.includes(newValue)) {
+                                field.onChange([...current, newValue]);
+                              }
                               // Optimistic update
                               setAvailablePatterns((prev) => [
                                 ...prev,
                                 { label: newValue, value: newValue },
                               ]);
                             }}
-                            placeholder="Select or create pattern..."
+                            placeholder="Select or create patterns..."
+                            isMulti
                           />
                         </FormControl>
                         <FormMessage />
@@ -525,77 +549,6 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
                 </div>
               </div>
             </section>
-
-            {/* 2. Timer Block */}
-            <div className="bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-indigo-400" /> Time Metrics
-                </h3>
-                <Badge
-                  variant="outline"
-                  className="text-indigo-300 border-indigo-500/30 bg-indigo-500/10"
-                >
-                  Total: {totalTime} min
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <FormField
-                  name="time_to_first_idea_minutes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-zinc-400">
-                        Idea Time (m)
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          className="bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="implementation_time_minutes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-zinc-400">
-                        Impl Time (m)
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          className="bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  name="debug_time_minutes"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-zinc-400">
-                        Debug Time (m)
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          {...field}
-                          className="bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
 
             {/* 3. Classification & Psychology */}
             <div className="bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-4">
@@ -826,40 +779,23 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
             )}
 
             {/* 5. Diagnostic Notes */}
-            <div className="bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-4">
-              <h3 className="text-lg font-semibold text-white">
-                Diagnostic Notes
-              </h3>
-              <FormField
-                name="mistakes_text"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-zinc-400">
-                      Mistakes & Analysis
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        placeholder="What went wrong? Be specific."
-                        className="h-24 bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {watchedStatus !== "Solved Clean" && (
+              <div className="bg-zinc-900/50 p-6 rounded-xl border border-white/5 space-y-4">
+                <h3 className="text-lg font-semibold text-white">
+                  Diagnostic Notes
+                </h3>
                 <FormField
-                  name="why_first_approach_failed"
+                  name="mistakes_text"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-zinc-400">
-                        Why First Approach Failed
+                        Mistakes & Analysis
                       </FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          className="h-20 bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
+                          placeholder="What went wrong? Be specific."
+                          className="h-24 bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
                         />
                       </FormControl>
                       <FormMessage />
@@ -867,16 +803,17 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
                   )}
                 />
                 <FormField
-                  name="key_observations"
+                  name="learning_from_failure"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-zinc-400">
-                        Key Observation
+                        Learning from Failure
                       </FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          className="h-20 bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
+                          placeholder="What is the key takeaway? How to avoid this next time?"
+                          className="h-24 bg-zinc-800/50 border-white/10 text-white placeholder:text-zinc-600 focus:border-indigo-500/50"
                         />
                       </FormControl>
                       <FormMessage />
@@ -884,7 +821,7 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
                   )}
                 />
               </div>
-            </div>
+            )}
 
             {/* 7. Learning & Generalization */}
             <div className="bg-indigo-950/20 p-6 rounded-xl border border-indigo-500/20 space-y-4">

@@ -59,7 +59,6 @@ export type ProblemLogMinAggregateOutputType = {
   platform: string | null
   contest_id: string | null
   rating: number | null
-  patternId: string | null
   pattern_subtype: string | null
   solve_status_type: string | null
   idea_source: string | null
@@ -73,8 +72,6 @@ export type ProblemLogMinAggregateOutputType = {
   mental_load_score: number | null
   stress_level_during: number | null
   mistakes_text: string | null
-  why_first_approach_failed: string | null
-  key_observations: string | null
   edge_cases_found: string | null
   invariant_or_key_property: string | null
   final_verdict: string | null
@@ -87,6 +84,7 @@ export type ProblemLogMinAggregateOutputType = {
   pattern_generalization_note: string | null
   userId: string | null
   categoryId: string | null
+  learning_from_failure: string | null
 }
 
 export type ProblemLogMaxAggregateOutputType = {
@@ -96,7 +94,6 @@ export type ProblemLogMaxAggregateOutputType = {
   platform: string | null
   contest_id: string | null
   rating: number | null
-  patternId: string | null
   pattern_subtype: string | null
   solve_status_type: string | null
   idea_source: string | null
@@ -110,8 +107,6 @@ export type ProblemLogMaxAggregateOutputType = {
   mental_load_score: number | null
   stress_level_during: number | null
   mistakes_text: string | null
-  why_first_approach_failed: string | null
-  key_observations: string | null
   edge_cases_found: string | null
   invariant_or_key_property: string | null
   final_verdict: string | null
@@ -124,6 +119,7 @@ export type ProblemLogMaxAggregateOutputType = {
   pattern_generalization_note: string | null
   userId: string | null
   categoryId: string | null
+  learning_from_failure: string | null
 }
 
 export type ProblemLogCountAggregateOutputType = {
@@ -133,7 +129,6 @@ export type ProblemLogCountAggregateOutputType = {
   platform: number
   contest_id: number
   rating: number
-  patternId: number
   pattern_subtype: number
   solve_status_type: number
   idea_source: number
@@ -148,8 +143,6 @@ export type ProblemLogCountAggregateOutputType = {
   stress_level_during: number
   failure_categories: number
   mistakes_text: number
-  why_first_approach_failed: number
-  key_observations: number
   edge_cases_found: number
   invariant_or_key_property: number
   final_verdict: number
@@ -162,9 +155,10 @@ export type ProblemLogCountAggregateOutputType = {
   re_solve_result: number
   pattern_generalization_note: number
   similar_problems_links: number
-  code_snippets: number
   userId: number
   categoryId: number
+  code_snippets: number
+  learning_from_failure: number
   _all: number
 }
 
@@ -202,7 +196,6 @@ export type ProblemLogMinAggregateInputType = {
   platform?: true
   contest_id?: true
   rating?: true
-  patternId?: true
   pattern_subtype?: true
   solve_status_type?: true
   idea_source?: true
@@ -216,8 +209,6 @@ export type ProblemLogMinAggregateInputType = {
   mental_load_score?: true
   stress_level_during?: true
   mistakes_text?: true
-  why_first_approach_failed?: true
-  key_observations?: true
   edge_cases_found?: true
   invariant_or_key_property?: true
   final_verdict?: true
@@ -230,6 +221,7 @@ export type ProblemLogMinAggregateInputType = {
   pattern_generalization_note?: true
   userId?: true
   categoryId?: true
+  learning_from_failure?: true
 }
 
 export type ProblemLogMaxAggregateInputType = {
@@ -239,7 +231,6 @@ export type ProblemLogMaxAggregateInputType = {
   platform?: true
   contest_id?: true
   rating?: true
-  patternId?: true
   pattern_subtype?: true
   solve_status_type?: true
   idea_source?: true
@@ -253,8 +244,6 @@ export type ProblemLogMaxAggregateInputType = {
   mental_load_score?: true
   stress_level_during?: true
   mistakes_text?: true
-  why_first_approach_failed?: true
-  key_observations?: true
   edge_cases_found?: true
   invariant_or_key_property?: true
   final_verdict?: true
@@ -267,6 +256,7 @@ export type ProblemLogMaxAggregateInputType = {
   pattern_generalization_note?: true
   userId?: true
   categoryId?: true
+  learning_from_failure?: true
 }
 
 export type ProblemLogCountAggregateInputType = {
@@ -276,7 +266,6 @@ export type ProblemLogCountAggregateInputType = {
   platform?: true
   contest_id?: true
   rating?: true
-  patternId?: true
   pattern_subtype?: true
   solve_status_type?: true
   idea_source?: true
@@ -291,8 +280,6 @@ export type ProblemLogCountAggregateInputType = {
   stress_level_during?: true
   failure_categories?: true
   mistakes_text?: true
-  why_first_approach_failed?: true
-  key_observations?: true
   edge_cases_found?: true
   invariant_or_key_property?: true
   final_verdict?: true
@@ -305,9 +292,10 @@ export type ProblemLogCountAggregateInputType = {
   re_solve_result?: true
   pattern_generalization_note?: true
   similar_problems_links?: true
-  code_snippets?: true
   userId?: true
   categoryId?: true
+  code_snippets?: true
+  learning_from_failure?: true
   _all?: true
 }
 
@@ -404,7 +392,6 @@ export type ProblemLogGroupByOutputType = {
   platform: string
   contest_id: string | null
   rating: number
-  patternId: string | null
   pattern_subtype: string | null
   solve_status_type: string
   idea_source: string
@@ -419,11 +406,9 @@ export type ProblemLogGroupByOutputType = {
   stress_level_during: number
   failure_categories: string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found: string | null
+  invariant_or_key_property: string | null
+  final_verdict: string | null
   core_tricks_used: string[]
   template_used: boolean
   template_name: string | null
@@ -433,9 +418,10 @@ export type ProblemLogGroupByOutputType = {
   re_solve_result: string | null
   pattern_generalization_note: string
   similar_problems_links: string[]
-  code_snippets: runtime.JsonValue | null
   userId: string
   categoryId: string | null
+  code_snippets: runtime.JsonValue | null
+  learning_from_failure: string | null
   _count: ProblemLogCountAggregateOutputType | null
   _avg: ProblemLogAvgAggregateOutputType | null
   _sum: ProblemLogSumAggregateOutputType | null
@@ -468,7 +454,6 @@ export type ProblemLogWhereInput = {
   platform?: Prisma.StringFilter<"ProblemLog"> | string
   contest_id?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   rating?: Prisma.IntFilter<"ProblemLog"> | number
-  patternId?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   pattern_subtype?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   solve_status_type?: Prisma.StringFilter<"ProblemLog"> | string
   idea_source?: Prisma.StringFilter<"ProblemLog"> | string
@@ -483,11 +468,9 @@ export type ProblemLogWhereInput = {
   stress_level_during?: Prisma.IntFilter<"ProblemLog"> | number
   failure_categories?: Prisma.StringNullableListFilter<"ProblemLog">
   mistakes_text?: Prisma.StringFilter<"ProblemLog"> | string
-  why_first_approach_failed?: Prisma.StringFilter<"ProblemLog"> | string
-  key_observations?: Prisma.StringFilter<"ProblemLog"> | string
-  edge_cases_found?: Prisma.StringFilter<"ProblemLog"> | string
-  invariant_or_key_property?: Prisma.StringFilter<"ProblemLog"> | string
-  final_verdict?: Prisma.StringFilter<"ProblemLog"> | string
+  edge_cases_found?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  invariant_or_key_property?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  final_verdict?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   core_tricks_used?: Prisma.StringNullableListFilter<"ProblemLog">
   template_used?: Prisma.BoolFilter<"ProblemLog"> | boolean
   template_name?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
@@ -497,14 +480,15 @@ export type ProblemLogWhereInput = {
   re_solve_result?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   pattern_generalization_note?: Prisma.StringFilter<"ProblemLog"> | string
   similar_problems_links?: Prisma.StringNullableListFilter<"ProblemLog">
-  code_snippets?: Prisma.JsonNullableFilter<"ProblemLog">
   userId?: Prisma.StringFilter<"ProblemLog"> | string
   categoryId?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
-  tags?: Prisma.TagListRelationFilter
-  pattern?: Prisma.XOR<Prisma.PatternNullableScalarRelationFilter, Prisma.PatternWhereInput> | null
-  keyLearnings?: Prisma.KeyLearningListRelationFilter
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  code_snippets?: Prisma.JsonNullableFilter<"ProblemLog">
+  learning_from_failure?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  keyLearnings?: Prisma.KeyLearningListRelationFilter
+  tags?: Prisma.TagListRelationFilter
+  patterns?: Prisma.PatternListRelationFilter
 }
 
 export type ProblemLogOrderByWithRelationInput = {
@@ -514,7 +498,6 @@ export type ProblemLogOrderByWithRelationInput = {
   platform?: Prisma.SortOrder
   contest_id?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrder
-  patternId?: Prisma.SortOrderInput | Prisma.SortOrder
   pattern_subtype?: Prisma.SortOrderInput | Prisma.SortOrder
   solve_status_type?: Prisma.SortOrder
   idea_source?: Prisma.SortOrder
@@ -529,11 +512,9 @@ export type ProblemLogOrderByWithRelationInput = {
   stress_level_during?: Prisma.SortOrder
   failure_categories?: Prisma.SortOrder
   mistakes_text?: Prisma.SortOrder
-  why_first_approach_failed?: Prisma.SortOrder
-  key_observations?: Prisma.SortOrder
-  edge_cases_found?: Prisma.SortOrder
-  invariant_or_key_property?: Prisma.SortOrder
-  final_verdict?: Prisma.SortOrder
+  edge_cases_found?: Prisma.SortOrderInput | Prisma.SortOrder
+  invariant_or_key_property?: Prisma.SortOrderInput | Prisma.SortOrder
+  final_verdict?: Prisma.SortOrderInput | Prisma.SortOrder
   core_tricks_used?: Prisma.SortOrder
   template_used?: Prisma.SortOrder
   template_name?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -543,14 +524,15 @@ export type ProblemLogOrderByWithRelationInput = {
   re_solve_result?: Prisma.SortOrderInput | Prisma.SortOrder
   pattern_generalization_note?: Prisma.SortOrder
   similar_problems_links?: Prisma.SortOrder
-  code_snippets?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  tags?: Prisma.TagOrderByRelationAggregateInput
-  pattern?: Prisma.PatternOrderByWithRelationInput
-  keyLearnings?: Prisma.KeyLearningOrderByRelationAggregateInput
-  user?: Prisma.UserOrderByWithRelationInput
+  code_snippets?: Prisma.SortOrderInput | Prisma.SortOrder
+  learning_from_failure?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
+  keyLearnings?: Prisma.KeyLearningOrderByRelationAggregateInput
+  tags?: Prisma.TagOrderByRelationAggregateInput
+  patterns?: Prisma.PatternOrderByRelationAggregateInput
 }
 
 export type ProblemLogWhereUniqueInput = Prisma.AtLeast<{
@@ -563,7 +545,6 @@ export type ProblemLogWhereUniqueInput = Prisma.AtLeast<{
   platform?: Prisma.StringFilter<"ProblemLog"> | string
   contest_id?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   rating?: Prisma.IntFilter<"ProblemLog"> | number
-  patternId?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   pattern_subtype?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   solve_status_type?: Prisma.StringFilter<"ProblemLog"> | string
   idea_source?: Prisma.StringFilter<"ProblemLog"> | string
@@ -578,11 +559,9 @@ export type ProblemLogWhereUniqueInput = Prisma.AtLeast<{
   stress_level_during?: Prisma.IntFilter<"ProblemLog"> | number
   failure_categories?: Prisma.StringNullableListFilter<"ProblemLog">
   mistakes_text?: Prisma.StringFilter<"ProblemLog"> | string
-  why_first_approach_failed?: Prisma.StringFilter<"ProblemLog"> | string
-  key_observations?: Prisma.StringFilter<"ProblemLog"> | string
-  edge_cases_found?: Prisma.StringFilter<"ProblemLog"> | string
-  invariant_or_key_property?: Prisma.StringFilter<"ProblemLog"> | string
-  final_verdict?: Prisma.StringFilter<"ProblemLog"> | string
+  edge_cases_found?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  invariant_or_key_property?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  final_verdict?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   core_tricks_used?: Prisma.StringNullableListFilter<"ProblemLog">
   template_used?: Prisma.BoolFilter<"ProblemLog"> | boolean
   template_name?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
@@ -592,14 +571,15 @@ export type ProblemLogWhereUniqueInput = Prisma.AtLeast<{
   re_solve_result?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   pattern_generalization_note?: Prisma.StringFilter<"ProblemLog"> | string
   similar_problems_links?: Prisma.StringNullableListFilter<"ProblemLog">
-  code_snippets?: Prisma.JsonNullableFilter<"ProblemLog">
   userId?: Prisma.StringFilter<"ProblemLog"> | string
   categoryId?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
-  tags?: Prisma.TagListRelationFilter
-  pattern?: Prisma.XOR<Prisma.PatternNullableScalarRelationFilter, Prisma.PatternWhereInput> | null
-  keyLearnings?: Prisma.KeyLearningListRelationFilter
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  code_snippets?: Prisma.JsonNullableFilter<"ProblemLog">
+  learning_from_failure?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  keyLearnings?: Prisma.KeyLearningListRelationFilter
+  tags?: Prisma.TagListRelationFilter
+  patterns?: Prisma.PatternListRelationFilter
 }, "id">
 
 export type ProblemLogOrderByWithAggregationInput = {
@@ -609,7 +589,6 @@ export type ProblemLogOrderByWithAggregationInput = {
   platform?: Prisma.SortOrder
   contest_id?: Prisma.SortOrderInput | Prisma.SortOrder
   rating?: Prisma.SortOrder
-  patternId?: Prisma.SortOrderInput | Prisma.SortOrder
   pattern_subtype?: Prisma.SortOrderInput | Prisma.SortOrder
   solve_status_type?: Prisma.SortOrder
   idea_source?: Prisma.SortOrder
@@ -624,11 +603,9 @@ export type ProblemLogOrderByWithAggregationInput = {
   stress_level_during?: Prisma.SortOrder
   failure_categories?: Prisma.SortOrder
   mistakes_text?: Prisma.SortOrder
-  why_first_approach_failed?: Prisma.SortOrder
-  key_observations?: Prisma.SortOrder
-  edge_cases_found?: Prisma.SortOrder
-  invariant_or_key_property?: Prisma.SortOrder
-  final_verdict?: Prisma.SortOrder
+  edge_cases_found?: Prisma.SortOrderInput | Prisma.SortOrder
+  invariant_or_key_property?: Prisma.SortOrderInput | Prisma.SortOrder
+  final_verdict?: Prisma.SortOrderInput | Prisma.SortOrder
   core_tricks_used?: Prisma.SortOrder
   template_used?: Prisma.SortOrder
   template_name?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -638,9 +615,10 @@ export type ProblemLogOrderByWithAggregationInput = {
   re_solve_result?: Prisma.SortOrderInput | Prisma.SortOrder
   pattern_generalization_note?: Prisma.SortOrder
   similar_problems_links?: Prisma.SortOrder
-  code_snippets?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  code_snippets?: Prisma.SortOrderInput | Prisma.SortOrder
+  learning_from_failure?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProblemLogCountOrderByAggregateInput
   _avg?: Prisma.ProblemLogAvgOrderByAggregateInput
   _max?: Prisma.ProblemLogMaxOrderByAggregateInput
@@ -658,7 +636,6 @@ export type ProblemLogScalarWhereWithAggregatesInput = {
   platform?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
   contest_id?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
   rating?: Prisma.IntWithAggregatesFilter<"ProblemLog"> | number
-  patternId?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
   pattern_subtype?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
   solve_status_type?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
   idea_source?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
@@ -673,11 +650,9 @@ export type ProblemLogScalarWhereWithAggregatesInput = {
   stress_level_during?: Prisma.IntWithAggregatesFilter<"ProblemLog"> | number
   failure_categories?: Prisma.StringNullableListFilter<"ProblemLog">
   mistakes_text?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
-  why_first_approach_failed?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
-  key_observations?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
-  edge_cases_found?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
-  invariant_or_key_property?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
-  final_verdict?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
+  edge_cases_found?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
+  invariant_or_key_property?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
+  final_verdict?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
   core_tricks_used?: Prisma.StringNullableListFilter<"ProblemLog">
   template_used?: Prisma.BoolWithAggregatesFilter<"ProblemLog"> | boolean
   template_name?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
@@ -687,9 +662,10 @@ export type ProblemLogScalarWhereWithAggregatesInput = {
   re_solve_result?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
   pattern_generalization_note?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
   similar_problems_links?: Prisma.StringNullableListFilter<"ProblemLog">
-  code_snippets?: Prisma.JsonNullableWithAggregatesFilter<"ProblemLog">
   userId?: Prisma.StringWithAggregatesFilter<"ProblemLog"> | string
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
+  code_snippets?: Prisma.JsonNullableWithAggregatesFilter<"ProblemLog">
+  learning_from_failure?: Prisma.StringNullableWithAggregatesFilter<"ProblemLog"> | string | null
 }
 
 export type ProblemLogCreateInput = {
@@ -713,11 +689,9 @@ export type ProblemLogCreateInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -728,11 +702,12 @@ export type ProblemLogCreateInput = {
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
-  pattern?: Prisma.PatternCreateNestedOneWithoutProblemLogsInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
-  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  learning_from_failure?: string | null
   category?: Prisma.CategoryCreateNestedOneWithoutProblemLogsInput
+  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogUncheckedCreateInput = {
@@ -742,7 +717,6 @@ export type ProblemLogUncheckedCreateInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -757,11 +731,9 @@ export type ProblemLogUncheckedCreateInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -771,11 +743,13 @@ export type ProblemLogUncheckedCreateInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
   categoryId?: string | null
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
   keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogUpdateInput = {
@@ -799,11 +773,9 @@ export type ProblemLogUpdateInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -814,11 +786,12 @@ export type ProblemLogUpdateInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
-  pattern?: Prisma.PatternUpdateOneWithoutProblemLogsNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.CategoryUpdateOneWithoutProblemLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateInput = {
@@ -828,7 +801,6 @@ export type ProblemLogUncheckedUpdateInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -843,11 +815,9 @@ export type ProblemLogUncheckedUpdateInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -857,11 +827,13 @@ export type ProblemLogUncheckedUpdateInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogCreateManyInput = {
@@ -871,7 +843,6 @@ export type ProblemLogCreateManyInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -886,11 +857,9 @@ export type ProblemLogCreateManyInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -900,9 +869,10 @@ export type ProblemLogCreateManyInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
   categoryId?: string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
 }
 
 export type ProblemLogUpdateManyMutationInput = {
@@ -926,11 +896,9 @@ export type ProblemLogUpdateManyMutationInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -941,6 +909,7 @@ export type ProblemLogUpdateManyMutationInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProblemLogUncheckedUpdateManyInput = {
@@ -950,7 +919,6 @@ export type ProblemLogUncheckedUpdateManyInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -965,11 +933,9 @@ export type ProblemLogUncheckedUpdateManyInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -979,9 +945,10 @@ export type ProblemLogUncheckedUpdateManyInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProblemLogListRelationFilter = {
@@ -1009,7 +976,6 @@ export type ProblemLogCountOrderByAggregateInput = {
   platform?: Prisma.SortOrder
   contest_id?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  patternId?: Prisma.SortOrder
   pattern_subtype?: Prisma.SortOrder
   solve_status_type?: Prisma.SortOrder
   idea_source?: Prisma.SortOrder
@@ -1024,8 +990,6 @@ export type ProblemLogCountOrderByAggregateInput = {
   stress_level_during?: Prisma.SortOrder
   failure_categories?: Prisma.SortOrder
   mistakes_text?: Prisma.SortOrder
-  why_first_approach_failed?: Prisma.SortOrder
-  key_observations?: Prisma.SortOrder
   edge_cases_found?: Prisma.SortOrder
   invariant_or_key_property?: Prisma.SortOrder
   final_verdict?: Prisma.SortOrder
@@ -1038,9 +1002,10 @@ export type ProblemLogCountOrderByAggregateInput = {
   re_solve_result?: Prisma.SortOrder
   pattern_generalization_note?: Prisma.SortOrder
   similar_problems_links?: Prisma.SortOrder
-  code_snippets?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  code_snippets?: Prisma.SortOrder
+  learning_from_failure?: Prisma.SortOrder
 }
 
 export type ProblemLogAvgOrderByAggregateInput = {
@@ -1063,7 +1028,6 @@ export type ProblemLogMaxOrderByAggregateInput = {
   platform?: Prisma.SortOrder
   contest_id?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  patternId?: Prisma.SortOrder
   pattern_subtype?: Prisma.SortOrder
   solve_status_type?: Prisma.SortOrder
   idea_source?: Prisma.SortOrder
@@ -1077,8 +1041,6 @@ export type ProblemLogMaxOrderByAggregateInput = {
   mental_load_score?: Prisma.SortOrder
   stress_level_during?: Prisma.SortOrder
   mistakes_text?: Prisma.SortOrder
-  why_first_approach_failed?: Prisma.SortOrder
-  key_observations?: Prisma.SortOrder
   edge_cases_found?: Prisma.SortOrder
   invariant_or_key_property?: Prisma.SortOrder
   final_verdict?: Prisma.SortOrder
@@ -1091,6 +1053,7 @@ export type ProblemLogMaxOrderByAggregateInput = {
   pattern_generalization_note?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  learning_from_failure?: Prisma.SortOrder
 }
 
 export type ProblemLogMinOrderByAggregateInput = {
@@ -1100,7 +1063,6 @@ export type ProblemLogMinOrderByAggregateInput = {
   platform?: Prisma.SortOrder
   contest_id?: Prisma.SortOrder
   rating?: Prisma.SortOrder
-  patternId?: Prisma.SortOrder
   pattern_subtype?: Prisma.SortOrder
   solve_status_type?: Prisma.SortOrder
   idea_source?: Prisma.SortOrder
@@ -1114,8 +1076,6 @@ export type ProblemLogMinOrderByAggregateInput = {
   mental_load_score?: Prisma.SortOrder
   stress_level_during?: Prisma.SortOrder
   mistakes_text?: Prisma.SortOrder
-  why_first_approach_failed?: Prisma.SortOrder
-  key_observations?: Prisma.SortOrder
   edge_cases_found?: Prisma.SortOrder
   invariant_or_key_property?: Prisma.SortOrder
   final_verdict?: Prisma.SortOrder
@@ -1128,6 +1088,7 @@ export type ProblemLogMinOrderByAggregateInput = {
   pattern_generalization_note?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  learning_from_failure?: Prisma.SortOrder
 }
 
 export type ProblemLogSumOrderByAggregateInput = {
@@ -1292,45 +1253,41 @@ export type ProblemLogUncheckedUpdateManyWithoutTagsNestedInput = {
   deleteMany?: Prisma.ProblemLogScalarWhereInput | Prisma.ProblemLogScalarWhereInput[]
 }
 
-export type ProblemLogCreateNestedManyWithoutPatternInput = {
-  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternInput, Prisma.ProblemLogUncheckedCreateWithoutPatternInput> | Prisma.ProblemLogCreateWithoutPatternInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternInput[]
-  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternInput | Prisma.ProblemLogCreateOrConnectWithoutPatternInput[]
-  createMany?: Prisma.ProblemLogCreateManyPatternInputEnvelope
+export type ProblemLogCreateNestedManyWithoutPatternsInput = {
+  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternsInput, Prisma.ProblemLogUncheckedCreateWithoutPatternsInput> | Prisma.ProblemLogCreateWithoutPatternsInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternsInput[]
+  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternsInput | Prisma.ProblemLogCreateOrConnectWithoutPatternsInput[]
   connect?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
 }
 
-export type ProblemLogUncheckedCreateNestedManyWithoutPatternInput = {
-  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternInput, Prisma.ProblemLogUncheckedCreateWithoutPatternInput> | Prisma.ProblemLogCreateWithoutPatternInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternInput[]
-  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternInput | Prisma.ProblemLogCreateOrConnectWithoutPatternInput[]
-  createMany?: Prisma.ProblemLogCreateManyPatternInputEnvelope
+export type ProblemLogUncheckedCreateNestedManyWithoutPatternsInput = {
+  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternsInput, Prisma.ProblemLogUncheckedCreateWithoutPatternsInput> | Prisma.ProblemLogCreateWithoutPatternsInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternsInput[]
+  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternsInput | Prisma.ProblemLogCreateOrConnectWithoutPatternsInput[]
   connect?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
 }
 
-export type ProblemLogUpdateManyWithoutPatternNestedInput = {
-  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternInput, Prisma.ProblemLogUncheckedCreateWithoutPatternInput> | Prisma.ProblemLogCreateWithoutPatternInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternInput[]
-  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternInput | Prisma.ProblemLogCreateOrConnectWithoutPatternInput[]
-  upsert?: Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternInput | Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternInput[]
-  createMany?: Prisma.ProblemLogCreateManyPatternInputEnvelope
+export type ProblemLogUpdateManyWithoutPatternsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternsInput, Prisma.ProblemLogUncheckedCreateWithoutPatternsInput> | Prisma.ProblemLogCreateWithoutPatternsInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternsInput[]
+  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternsInput | Prisma.ProblemLogCreateOrConnectWithoutPatternsInput[]
+  upsert?: Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternsInput | Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternsInput[]
   set?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
   disconnect?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
   delete?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
   connect?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
-  update?: Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternInput | Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternInput[]
-  updateMany?: Prisma.ProblemLogUpdateManyWithWhereWithoutPatternInput | Prisma.ProblemLogUpdateManyWithWhereWithoutPatternInput[]
+  update?: Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternsInput | Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternsInput[]
+  updateMany?: Prisma.ProblemLogUpdateManyWithWhereWithoutPatternsInput | Prisma.ProblemLogUpdateManyWithWhereWithoutPatternsInput[]
   deleteMany?: Prisma.ProblemLogScalarWhereInput | Prisma.ProblemLogScalarWhereInput[]
 }
 
-export type ProblemLogUncheckedUpdateManyWithoutPatternNestedInput = {
-  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternInput, Prisma.ProblemLogUncheckedCreateWithoutPatternInput> | Prisma.ProblemLogCreateWithoutPatternInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternInput[]
-  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternInput | Prisma.ProblemLogCreateOrConnectWithoutPatternInput[]
-  upsert?: Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternInput | Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternInput[]
-  createMany?: Prisma.ProblemLogCreateManyPatternInputEnvelope
+export type ProblemLogUncheckedUpdateManyWithoutPatternsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternsInput, Prisma.ProblemLogUncheckedCreateWithoutPatternsInput> | Prisma.ProblemLogCreateWithoutPatternsInput[] | Prisma.ProblemLogUncheckedCreateWithoutPatternsInput[]
+  connectOrCreate?: Prisma.ProblemLogCreateOrConnectWithoutPatternsInput | Prisma.ProblemLogCreateOrConnectWithoutPatternsInput[]
+  upsert?: Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternsInput | Prisma.ProblemLogUpsertWithWhereUniqueWithoutPatternsInput[]
   set?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
   disconnect?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
   delete?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
   connect?: Prisma.ProblemLogWhereUniqueInput | Prisma.ProblemLogWhereUniqueInput[]
-  update?: Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternInput | Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternInput[]
-  updateMany?: Prisma.ProblemLogUpdateManyWithWhereWithoutPatternInput | Prisma.ProblemLogUpdateManyWithWhereWithoutPatternInput[]
+  update?: Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternsInput | Prisma.ProblemLogUpdateWithWhereUniqueWithoutPatternsInput[]
+  updateMany?: Prisma.ProblemLogUpdateManyWithWhereWithoutPatternsInput | Prisma.ProblemLogUpdateManyWithWhereWithoutPatternsInput[]
   deleteMany?: Prisma.ProblemLogScalarWhereInput | Prisma.ProblemLogScalarWhereInput[]
 }
 
@@ -1393,11 +1350,9 @@ export type ProblemLogCreateWithoutUserInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1408,10 +1363,11 @@ export type ProblemLogCreateWithoutUserInput = {
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
-  pattern?: Prisma.PatternCreateNestedOneWithoutProblemLogsInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  learning_from_failure?: string | null
   category?: Prisma.CategoryCreateNestedOneWithoutProblemLogsInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogUncheckedCreateWithoutUserInput = {
@@ -1421,7 +1377,6 @@ export type ProblemLogUncheckedCreateWithoutUserInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -1436,11 +1391,9 @@ export type ProblemLogUncheckedCreateWithoutUserInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1450,10 +1403,12 @@ export type ProblemLogUncheckedCreateWithoutUserInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   categoryId?: string | null
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
   keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogCreateOrConnectWithoutUserInput = {
@@ -1492,7 +1447,6 @@ export type ProblemLogScalarWhereInput = {
   platform?: Prisma.StringFilter<"ProblemLog"> | string
   contest_id?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   rating?: Prisma.IntFilter<"ProblemLog"> | number
-  patternId?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   pattern_subtype?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   solve_status_type?: Prisma.StringFilter<"ProblemLog"> | string
   idea_source?: Prisma.StringFilter<"ProblemLog"> | string
@@ -1507,11 +1461,9 @@ export type ProblemLogScalarWhereInput = {
   stress_level_during?: Prisma.IntFilter<"ProblemLog"> | number
   failure_categories?: Prisma.StringNullableListFilter<"ProblemLog">
   mistakes_text?: Prisma.StringFilter<"ProblemLog"> | string
-  why_first_approach_failed?: Prisma.StringFilter<"ProblemLog"> | string
-  key_observations?: Prisma.StringFilter<"ProblemLog"> | string
-  edge_cases_found?: Prisma.StringFilter<"ProblemLog"> | string
-  invariant_or_key_property?: Prisma.StringFilter<"ProblemLog"> | string
-  final_verdict?: Prisma.StringFilter<"ProblemLog"> | string
+  edge_cases_found?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  invariant_or_key_property?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  final_verdict?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   core_tricks_used?: Prisma.StringNullableListFilter<"ProblemLog">
   template_used?: Prisma.BoolFilter<"ProblemLog"> | boolean
   template_name?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
@@ -1521,9 +1473,10 @@ export type ProblemLogScalarWhereInput = {
   re_solve_result?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
   pattern_generalization_note?: Prisma.StringFilter<"ProblemLog"> | string
   similar_problems_links?: Prisma.StringNullableListFilter<"ProblemLog">
-  code_snippets?: Prisma.JsonNullableFilter<"ProblemLog">
   userId?: Prisma.StringFilter<"ProblemLog"> | string
   categoryId?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
+  code_snippets?: Prisma.JsonNullableFilter<"ProblemLog">
+  learning_from_failure?: Prisma.StringNullableFilter<"ProblemLog"> | string | null
 }
 
 export type ProblemLogCreateWithoutCategoryInput = {
@@ -1547,11 +1500,9 @@ export type ProblemLogCreateWithoutCategoryInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1562,10 +1513,11 @@ export type ProblemLogCreateWithoutCategoryInput = {
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
-  pattern?: Prisma.PatternCreateNestedOneWithoutProblemLogsInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  learning_from_failure?: string | null
   user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogUncheckedCreateWithoutCategoryInput = {
@@ -1575,7 +1527,6 @@ export type ProblemLogUncheckedCreateWithoutCategoryInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -1590,11 +1541,9 @@ export type ProblemLogUncheckedCreateWithoutCategoryInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1604,10 +1553,12 @@ export type ProblemLogUncheckedCreateWithoutCategoryInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
   keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogCreateOrConnectWithoutCategoryInput = {
@@ -1657,11 +1608,9 @@ export type ProblemLogCreateWithoutTagsInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1672,10 +1621,11 @@ export type ProblemLogCreateWithoutTagsInput = {
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  pattern?: Prisma.PatternCreateNestedOneWithoutProblemLogsInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
-  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  learning_from_failure?: string | null
   category?: Prisma.CategoryCreateNestedOneWithoutProblemLogsInput
+  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogUncheckedCreateWithoutTagsInput = {
@@ -1685,7 +1635,6 @@ export type ProblemLogUncheckedCreateWithoutTagsInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -1700,11 +1649,9 @@ export type ProblemLogUncheckedCreateWithoutTagsInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1714,10 +1661,12 @@ export type ProblemLogUncheckedCreateWithoutTagsInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
   categoryId?: string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
   keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogCreateOrConnectWithoutTagsInput = {
@@ -1741,7 +1690,7 @@ export type ProblemLogUpdateManyWithWhereWithoutTagsInput = {
   data: Prisma.XOR<Prisma.ProblemLogUpdateManyMutationInput, Prisma.ProblemLogUncheckedUpdateManyWithoutTagsInput>
 }
 
-export type ProblemLogCreateWithoutPatternInput = {
+export type ProblemLogCreateWithoutPatternsInput = {
   id?: string
   problem_name: string
   problem_link: string
@@ -1762,11 +1711,9 @@ export type ProblemLogCreateWithoutPatternInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1777,13 +1724,14 @@ export type ProblemLogCreateWithoutPatternInput = {
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
-  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  learning_from_failure?: string | null
   category?: Prisma.CategoryCreateNestedOneWithoutProblemLogsInput
+  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
 }
 
-export type ProblemLogUncheckedCreateWithoutPatternInput = {
+export type ProblemLogUncheckedCreateWithoutPatternsInput = {
   id?: string
   problem_name: string
   problem_link: string
@@ -1804,11 +1752,9 @@ export type ProblemLogUncheckedCreateWithoutPatternInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1818,37 +1764,33 @@ export type ProblemLogUncheckedCreateWithoutPatternInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
   categoryId?: string | null
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
   keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutProblemLogsInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
 }
 
-export type ProblemLogCreateOrConnectWithoutPatternInput = {
+export type ProblemLogCreateOrConnectWithoutPatternsInput = {
   where: Prisma.ProblemLogWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternInput, Prisma.ProblemLogUncheckedCreateWithoutPatternInput>
+  create: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternsInput, Prisma.ProblemLogUncheckedCreateWithoutPatternsInput>
 }
 
-export type ProblemLogCreateManyPatternInputEnvelope = {
-  data: Prisma.ProblemLogCreateManyPatternInput | Prisma.ProblemLogCreateManyPatternInput[]
-  skipDuplicates?: boolean
-}
-
-export type ProblemLogUpsertWithWhereUniqueWithoutPatternInput = {
+export type ProblemLogUpsertWithWhereUniqueWithoutPatternsInput = {
   where: Prisma.ProblemLogWhereUniqueInput
-  update: Prisma.XOR<Prisma.ProblemLogUpdateWithoutPatternInput, Prisma.ProblemLogUncheckedUpdateWithoutPatternInput>
-  create: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternInput, Prisma.ProblemLogUncheckedCreateWithoutPatternInput>
+  update: Prisma.XOR<Prisma.ProblemLogUpdateWithoutPatternsInput, Prisma.ProblemLogUncheckedUpdateWithoutPatternsInput>
+  create: Prisma.XOR<Prisma.ProblemLogCreateWithoutPatternsInput, Prisma.ProblemLogUncheckedCreateWithoutPatternsInput>
 }
 
-export type ProblemLogUpdateWithWhereUniqueWithoutPatternInput = {
+export type ProblemLogUpdateWithWhereUniqueWithoutPatternsInput = {
   where: Prisma.ProblemLogWhereUniqueInput
-  data: Prisma.XOR<Prisma.ProblemLogUpdateWithoutPatternInput, Prisma.ProblemLogUncheckedUpdateWithoutPatternInput>
+  data: Prisma.XOR<Prisma.ProblemLogUpdateWithoutPatternsInput, Prisma.ProblemLogUncheckedUpdateWithoutPatternsInput>
 }
 
-export type ProblemLogUpdateManyWithWhereWithoutPatternInput = {
+export type ProblemLogUpdateManyWithWhereWithoutPatternsInput = {
   where: Prisma.ProblemLogScalarWhereInput
-  data: Prisma.XOR<Prisma.ProblemLogUpdateManyMutationInput, Prisma.ProblemLogUncheckedUpdateManyWithoutPatternInput>
+  data: Prisma.XOR<Prisma.ProblemLogUpdateManyMutationInput, Prisma.ProblemLogUncheckedUpdateManyWithoutPatternsInput>
 }
 
 export type ProblemLogCreateWithoutKeyLearningsInput = {
@@ -1872,11 +1814,9 @@ export type ProblemLogCreateWithoutKeyLearningsInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1887,10 +1827,11 @@ export type ProblemLogCreateWithoutKeyLearningsInput = {
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
-  pattern?: Prisma.PatternCreateNestedOneWithoutProblemLogsInput
-  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  learning_from_failure?: string | null
   category?: Prisma.CategoryCreateNestedOneWithoutProblemLogsInput
+  user: Prisma.UserCreateNestedOneWithoutProblemLogsInput
+  tags?: Prisma.TagCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogUncheckedCreateWithoutKeyLearningsInput = {
@@ -1900,7 +1841,6 @@ export type ProblemLogUncheckedCreateWithoutKeyLearningsInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -1915,11 +1855,9 @@ export type ProblemLogUncheckedCreateWithoutKeyLearningsInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1929,10 +1867,12 @@ export type ProblemLogUncheckedCreateWithoutKeyLearningsInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
   categoryId?: string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
   tags?: Prisma.TagUncheckedCreateNestedManyWithoutProblemLogsInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutProblemLogsInput
 }
 
 export type ProblemLogCreateOrConnectWithoutKeyLearningsInput = {
@@ -1963,7 +1903,6 @@ export type ProblemLogCreateManyUserInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -1978,11 +1917,9 @@ export type ProblemLogCreateManyUserInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -1992,8 +1929,9 @@ export type ProblemLogCreateManyUserInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   categoryId?: string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
 }
 
 export type ProblemLogUpdateWithoutUserInput = {
@@ -2017,11 +1955,9 @@ export type ProblemLogUpdateWithoutUserInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2032,10 +1968,11 @@ export type ProblemLogUpdateWithoutUserInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
-  pattern?: Prisma.PatternUpdateOneWithoutProblemLogsNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.CategoryUpdateOneWithoutProblemLogsNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateWithoutUserInput = {
@@ -2045,7 +1982,6 @@ export type ProblemLogUncheckedUpdateWithoutUserInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2060,11 +1996,9 @@ export type ProblemLogUncheckedUpdateWithoutUserInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2074,10 +2008,12 @@ export type ProblemLogUncheckedUpdateWithoutUserInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateManyWithoutUserInput = {
@@ -2087,7 +2023,6 @@ export type ProblemLogUncheckedUpdateManyWithoutUserInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2102,11 +2037,9 @@ export type ProblemLogUncheckedUpdateManyWithoutUserInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2116,8 +2049,9 @@ export type ProblemLogUncheckedUpdateManyWithoutUserInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProblemLogCreateManyCategoryInput = {
@@ -2127,7 +2061,6 @@ export type ProblemLogCreateManyCategoryInput = {
   platform: string
   contest_id?: string | null
   rating: number
-  patternId?: string | null
   pattern_subtype?: string | null
   solve_status_type: string
   idea_source: string
@@ -2142,11 +2075,9 @@ export type ProblemLogCreateManyCategoryInput = {
   stress_level_during: number
   failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
   mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
+  edge_cases_found?: string | null
+  invariant_or_key_property?: string | null
+  final_verdict?: string | null
   core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
   template_used: boolean
   template_name?: string | null
@@ -2156,8 +2087,9 @@ export type ProblemLogCreateManyCategoryInput = {
   re_solve_result?: string | null
   pattern_generalization_note: string
   similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: string
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: string | null
 }
 
 export type ProblemLogUpdateWithoutCategoryInput = {
@@ -2181,11 +2113,9 @@ export type ProblemLogUpdateWithoutCategoryInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2196,10 +2126,11 @@ export type ProblemLogUpdateWithoutCategoryInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
-  pattern?: Prisma.PatternUpdateOneWithoutProblemLogsNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateWithoutCategoryInput = {
@@ -2209,7 +2140,6 @@ export type ProblemLogUncheckedUpdateWithoutCategoryInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2224,11 +2154,9 @@ export type ProblemLogUncheckedUpdateWithoutCategoryInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2238,10 +2166,12 @@ export type ProblemLogUncheckedUpdateWithoutCategoryInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateManyWithoutCategoryInput = {
@@ -2251,7 +2181,6 @@ export type ProblemLogUncheckedUpdateManyWithoutCategoryInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2266,11 +2195,9 @@ export type ProblemLogUncheckedUpdateManyWithoutCategoryInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2280,8 +2207,9 @@ export type ProblemLogUncheckedUpdateManyWithoutCategoryInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProblemLogUpdateWithoutTagsInput = {
@@ -2305,11 +2233,9 @@ export type ProblemLogUpdateWithoutTagsInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2320,10 +2246,11 @@ export type ProblemLogUpdateWithoutTagsInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  pattern?: Prisma.PatternUpdateOneWithoutProblemLogsNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.CategoryUpdateOneWithoutProblemLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateWithoutTagsInput = {
@@ -2333,7 +2260,6 @@ export type ProblemLogUncheckedUpdateWithoutTagsInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2348,11 +2274,9 @@ export type ProblemLogUncheckedUpdateWithoutTagsInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2362,10 +2286,12 @@ export type ProblemLogUncheckedUpdateWithoutTagsInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateManyWithoutTagsInput = {
@@ -2375,7 +2301,6 @@ export type ProblemLogUncheckedUpdateManyWithoutTagsInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2390,11 +2315,9 @@ export type ProblemLogUncheckedUpdateManyWithoutTagsInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2404,52 +2327,13 @@ export type ProblemLogUncheckedUpdateManyWithoutTagsInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type ProblemLogCreateManyPatternInput = {
-  id?: string
-  problem_name: string
-  problem_link: string
-  platform: string
-  contest_id?: string | null
-  rating: number
-  pattern_subtype?: string | null
-  solve_status_type: string
-  idea_source: string
-  attempt_count: number
-  time_to_first_idea_minutes: number
-  implementation_time_minutes: number
-  debug_time_minutes: number
-  total_time_minutes: number
-  perceived_difficulty_before: number
-  perceived_difficulty_after: number
-  mental_load_score: number
-  stress_level_during: number
-  failure_categories?: Prisma.ProblemLogCreatefailure_categoriesInput | string[]
-  mistakes_text: string
-  why_first_approach_failed: string
-  key_observations: string
-  edge_cases_found: string
-  invariant_or_key_property: string
-  final_verdict: string
-  core_tricks_used?: Prisma.ProblemLogCreatecore_tricks_usedInput | string[]
-  template_used: boolean
-  template_name?: string | null
-  created_at?: Date | string
-  last_revised_date?: Date | string | null
-  must_revisit: boolean
-  re_solve_result?: string | null
-  pattern_generalization_note: string
-  similar_problems_links?: Prisma.ProblemLogCreatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  userId: string
-  categoryId?: string | null
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
-export type ProblemLogUpdateWithoutPatternInput = {
+export type ProblemLogUpdateWithoutPatternsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problem_name?: Prisma.StringFieldUpdateOperationsInput | string
   problem_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2470,11 +2354,9 @@ export type ProblemLogUpdateWithoutPatternInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2485,13 +2367,14 @@ export type ProblemLogUpdateWithoutPatternInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.CategoryUpdateOneWithoutProblemLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
 }
 
-export type ProblemLogUncheckedUpdateWithoutPatternInput = {
+export type ProblemLogUncheckedUpdateWithoutPatternsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problem_name?: Prisma.StringFieldUpdateOperationsInput | string
   problem_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2512,11 +2395,9 @@ export type ProblemLogUncheckedUpdateWithoutPatternInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2526,14 +2407,15 @@ export type ProblemLogUncheckedUpdateWithoutPatternInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
 }
 
-export type ProblemLogUncheckedUpdateManyWithoutPatternInput = {
+export type ProblemLogUncheckedUpdateManyWithoutPatternsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   problem_name?: Prisma.StringFieldUpdateOperationsInput | string
   problem_link?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2554,11 +2436,9 @@ export type ProblemLogUncheckedUpdateManyWithoutPatternInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2568,9 +2448,10 @@ export type ProblemLogUncheckedUpdateManyWithoutPatternInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ProblemLogUpdateWithoutKeyLearningsInput = {
@@ -2594,11 +2475,9 @@ export type ProblemLogUpdateWithoutKeyLearningsInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2609,10 +2488,11 @@ export type ProblemLogUpdateWithoutKeyLearningsInput = {
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
   code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
-  pattern?: Prisma.PatternUpdateOneWithoutProblemLogsNestedInput
-  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.CategoryUpdateOneWithoutProblemLogsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProblemLogsNestedInput
+  tags?: Prisma.TagUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateWithoutKeyLearningsInput = {
@@ -2622,7 +2502,6 @@ export type ProblemLogUncheckedUpdateWithoutKeyLearningsInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2637,11 +2516,9 @@ export type ProblemLogUncheckedUpdateWithoutKeyLearningsInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2651,10 +2528,12 @@ export type ProblemLogUncheckedUpdateWithoutKeyLearningsInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.TagUncheckedUpdateManyWithoutProblemLogsNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutProblemLogsNestedInput
 }
 
 export type ProblemLogUncheckedUpdateManyWithoutKeyLearningsInput = {
@@ -2664,7 +2543,6 @@ export type ProblemLogUncheckedUpdateManyWithoutKeyLearningsInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   contest_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rating?: Prisma.IntFieldUpdateOperationsInput | number
-  patternId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_subtype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   solve_status_type?: Prisma.StringFieldUpdateOperationsInput | string
   idea_source?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2679,11 +2557,9 @@ export type ProblemLogUncheckedUpdateManyWithoutKeyLearningsInput = {
   stress_level_during?: Prisma.IntFieldUpdateOperationsInput | number
   failure_categories?: Prisma.ProblemLogUpdatefailure_categoriesInput | string[]
   mistakes_text?: Prisma.StringFieldUpdateOperationsInput | string
-  why_first_approach_failed?: Prisma.StringFieldUpdateOperationsInput | string
-  key_observations?: Prisma.StringFieldUpdateOperationsInput | string
-  edge_cases_found?: Prisma.StringFieldUpdateOperationsInput | string
-  invariant_or_key_property?: Prisma.StringFieldUpdateOperationsInput | string
-  final_verdict?: Prisma.StringFieldUpdateOperationsInput | string
+  edge_cases_found?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invariant_or_key_property?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  final_verdict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   core_tricks_used?: Prisma.ProblemLogUpdatecore_tricks_usedInput | string[]
   template_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
   template_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2693,9 +2569,10 @@ export type ProblemLogUncheckedUpdateManyWithoutKeyLearningsInput = {
   re_solve_result?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   pattern_generalization_note?: Prisma.StringFieldUpdateOperationsInput | string
   similar_problems_links?: Prisma.ProblemLogUpdatesimilar_problems_linksInput | string[]
-  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  code_snippets?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  learning_from_failure?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -2704,13 +2581,15 @@ export type ProblemLogUncheckedUpdateManyWithoutKeyLearningsInput = {
  */
 
 export type ProblemLogCountOutputType = {
-  tags: number
   keyLearnings: number
+  tags: number
+  patterns: number
 }
 
 export type ProblemLogCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tags?: boolean | ProblemLogCountOutputTypeCountTagsArgs
   keyLearnings?: boolean | ProblemLogCountOutputTypeCountKeyLearningsArgs
+  tags?: boolean | ProblemLogCountOutputTypeCountTagsArgs
+  patterns?: boolean | ProblemLogCountOutputTypeCountPatternsArgs
 }
 
 /**
@@ -2726,6 +2605,13 @@ export type ProblemLogCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * ProblemLogCountOutputType without action
  */
+export type ProblemLogCountOutputTypeCountKeyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KeyLearningWhereInput
+}
+
+/**
+ * ProblemLogCountOutputType without action
+ */
 export type ProblemLogCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TagWhereInput
 }
@@ -2733,8 +2619,8 @@ export type ProblemLogCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types
 /**
  * ProblemLogCountOutputType without action
  */
-export type ProblemLogCountOutputTypeCountKeyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.KeyLearningWhereInput
+export type ProblemLogCountOutputTypeCountPatternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PatternWhereInput
 }
 
 
@@ -2745,7 +2631,6 @@ export type ProblemLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   platform?: boolean
   contest_id?: boolean
   rating?: boolean
-  patternId?: boolean
   pattern_subtype?: boolean
   solve_status_type?: boolean
   idea_source?: boolean
@@ -2760,8 +2645,6 @@ export type ProblemLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   stress_level_during?: boolean
   failure_categories?: boolean
   mistakes_text?: boolean
-  why_first_approach_failed?: boolean
-  key_observations?: boolean
   edge_cases_found?: boolean
   invariant_or_key_property?: boolean
   final_verdict?: boolean
@@ -2774,14 +2657,15 @@ export type ProblemLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   re_solve_result?: boolean
   pattern_generalization_note?: boolean
   similar_problems_links?: boolean
-  code_snippets?: boolean
   userId?: boolean
   categoryId?: boolean
-  tags?: boolean | Prisma.ProblemLog$tagsArgs<ExtArgs>
-  pattern?: boolean | Prisma.ProblemLog$patternArgs<ExtArgs>
-  keyLearnings?: boolean | Prisma.ProblemLog$keyLearningsArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  code_snippets?: boolean
+  learning_from_failure?: boolean
   category?: boolean | Prisma.ProblemLog$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  keyLearnings?: boolean | Prisma.ProblemLog$keyLearningsArgs<ExtArgs>
+  tags?: boolean | Prisma.ProblemLog$tagsArgs<ExtArgs>
+  patterns?: boolean | Prisma.ProblemLog$patternsArgs<ExtArgs>
   _count?: boolean | Prisma.ProblemLogCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["problemLog"]>
 
@@ -2792,7 +2676,6 @@ export type ProblemLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   platform?: boolean
   contest_id?: boolean
   rating?: boolean
-  patternId?: boolean
   pattern_subtype?: boolean
   solve_status_type?: boolean
   idea_source?: boolean
@@ -2807,8 +2690,6 @@ export type ProblemLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   stress_level_during?: boolean
   failure_categories?: boolean
   mistakes_text?: boolean
-  why_first_approach_failed?: boolean
-  key_observations?: boolean
   edge_cases_found?: boolean
   invariant_or_key_property?: boolean
   final_verdict?: boolean
@@ -2821,12 +2702,12 @@ export type ProblemLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   re_solve_result?: boolean
   pattern_generalization_note?: boolean
   similar_problems_links?: boolean
-  code_snippets?: boolean
   userId?: boolean
   categoryId?: boolean
-  pattern?: boolean | Prisma.ProblemLog$patternArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  code_snippets?: boolean
+  learning_from_failure?: boolean
   category?: boolean | Prisma.ProblemLog$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["problemLog"]>
 
 export type ProblemLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2836,7 +2717,6 @@ export type ProblemLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   platform?: boolean
   contest_id?: boolean
   rating?: boolean
-  patternId?: boolean
   pattern_subtype?: boolean
   solve_status_type?: boolean
   idea_source?: boolean
@@ -2851,8 +2731,6 @@ export type ProblemLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   stress_level_during?: boolean
   failure_categories?: boolean
   mistakes_text?: boolean
-  why_first_approach_failed?: boolean
-  key_observations?: boolean
   edge_cases_found?: boolean
   invariant_or_key_property?: boolean
   final_verdict?: boolean
@@ -2865,12 +2743,12 @@ export type ProblemLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   re_solve_result?: boolean
   pattern_generalization_note?: boolean
   similar_problems_links?: boolean
-  code_snippets?: boolean
   userId?: boolean
   categoryId?: boolean
-  pattern?: boolean | Prisma.ProblemLog$patternArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  code_snippets?: boolean
+  learning_from_failure?: boolean
   category?: boolean | Prisma.ProblemLog$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["problemLog"]>
 
 export type ProblemLogSelectScalar = {
@@ -2880,7 +2758,6 @@ export type ProblemLogSelectScalar = {
   platform?: boolean
   contest_id?: boolean
   rating?: boolean
-  patternId?: boolean
   pattern_subtype?: boolean
   solve_status_type?: boolean
   idea_source?: boolean
@@ -2895,8 +2772,6 @@ export type ProblemLogSelectScalar = {
   stress_level_during?: boolean
   failure_categories?: boolean
   mistakes_text?: boolean
-  why_first_approach_failed?: boolean
-  key_observations?: boolean
   edge_cases_found?: boolean
   invariant_or_key_property?: boolean
   final_verdict?: boolean
@@ -2909,39 +2784,38 @@ export type ProblemLogSelectScalar = {
   re_solve_result?: boolean
   pattern_generalization_note?: boolean
   similar_problems_links?: boolean
-  code_snippets?: boolean
   userId?: boolean
   categoryId?: boolean
+  code_snippets?: boolean
+  learning_from_failure?: boolean
 }
 
-export type ProblemLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "problem_name" | "problem_link" | "platform" | "contest_id" | "rating" | "patternId" | "pattern_subtype" | "solve_status_type" | "idea_source" | "attempt_count" | "time_to_first_idea_minutes" | "implementation_time_minutes" | "debug_time_minutes" | "total_time_minutes" | "perceived_difficulty_before" | "perceived_difficulty_after" | "mental_load_score" | "stress_level_during" | "failure_categories" | "mistakes_text" | "why_first_approach_failed" | "key_observations" | "edge_cases_found" | "invariant_or_key_property" | "final_verdict" | "core_tricks_used" | "template_used" | "template_name" | "created_at" | "last_revised_date" | "must_revisit" | "re_solve_result" | "pattern_generalization_note" | "similar_problems_links" | "code_snippets" | "userId" | "categoryId", ExtArgs["result"]["problemLog"]>
+export type ProblemLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "problem_name" | "problem_link" | "platform" | "contest_id" | "rating" | "pattern_subtype" | "solve_status_type" | "idea_source" | "attempt_count" | "time_to_first_idea_minutes" | "implementation_time_minutes" | "debug_time_minutes" | "total_time_minutes" | "perceived_difficulty_before" | "perceived_difficulty_after" | "mental_load_score" | "stress_level_during" | "failure_categories" | "mistakes_text" | "edge_cases_found" | "invariant_or_key_property" | "final_verdict" | "core_tricks_used" | "template_used" | "template_name" | "created_at" | "last_revised_date" | "must_revisit" | "re_solve_result" | "pattern_generalization_note" | "similar_problems_links" | "userId" | "categoryId" | "code_snippets" | "learning_from_failure", ExtArgs["result"]["problemLog"]>
 export type ProblemLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tags?: boolean | Prisma.ProblemLog$tagsArgs<ExtArgs>
-  pattern?: boolean | Prisma.ProblemLog$patternArgs<ExtArgs>
-  keyLearnings?: boolean | Prisma.ProblemLog$keyLearningsArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ProblemLog$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  keyLearnings?: boolean | Prisma.ProblemLog$keyLearningsArgs<ExtArgs>
+  tags?: boolean | Prisma.ProblemLog$tagsArgs<ExtArgs>
+  patterns?: boolean | Prisma.ProblemLog$patternsArgs<ExtArgs>
   _count?: boolean | Prisma.ProblemLogCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProblemLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pattern?: boolean | Prisma.ProblemLog$patternArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ProblemLog$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type ProblemLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  pattern?: boolean | Prisma.ProblemLog$patternArgs<ExtArgs>
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.ProblemLog$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ProblemLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProblemLog"
   objects: {
-    tags: Prisma.$TagPayload<ExtArgs>[]
-    pattern: Prisma.$PatternPayload<ExtArgs> | null
-    keyLearnings: Prisma.$KeyLearningPayload<ExtArgs>[]
-    user: Prisma.$UserPayload<ExtArgs>
     category: Prisma.$CategoryPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs>
+    keyLearnings: Prisma.$KeyLearningPayload<ExtArgs>[]
+    tags: Prisma.$TagPayload<ExtArgs>[]
+    patterns: Prisma.$PatternPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2950,7 +2824,6 @@ export type $ProblemLogPayload<ExtArgs extends runtime.Types.Extensions.Internal
     platform: string
     contest_id: string | null
     rating: number
-    patternId: string | null
     pattern_subtype: string | null
     solve_status_type: string
     idea_source: string
@@ -2965,11 +2838,9 @@ export type $ProblemLogPayload<ExtArgs extends runtime.Types.Extensions.Internal
     stress_level_during: number
     failure_categories: string[]
     mistakes_text: string
-    why_first_approach_failed: string
-    key_observations: string
-    edge_cases_found: string
-    invariant_or_key_property: string
-    final_verdict: string
+    edge_cases_found: string | null
+    invariant_or_key_property: string | null
+    final_verdict: string | null
     core_tricks_used: string[]
     template_used: boolean
     template_name: string | null
@@ -2979,9 +2850,10 @@ export type $ProblemLogPayload<ExtArgs extends runtime.Types.Extensions.Internal
     re_solve_result: string | null
     pattern_generalization_note: string
     similar_problems_links: string[]
-    code_snippets: runtime.JsonValue | null
     userId: string
     categoryId: string | null
+    code_snippets: runtime.JsonValue | null
+    learning_from_failure: string | null
   }, ExtArgs["result"]["problemLog"]>
   composites: {}
 }
@@ -3376,11 +3248,11 @@ readonly fields: ProblemLogFieldRefs;
  */
 export interface Prisma__ProblemLogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tags<T extends Prisma.ProblemLog$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  pattern<T extends Prisma.ProblemLog$patternArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$patternArgs<ExtArgs>>): Prisma.Prisma__PatternClient<runtime.Types.Result.GetResult<Prisma.$PatternPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  keyLearnings<T extends Prisma.ProblemLog$keyLearningsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$keyLearningsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KeyLearningPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.ProblemLog$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  keyLearnings<T extends Prisma.ProblemLog$keyLearningsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$keyLearningsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KeyLearningPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tags<T extends Prisma.ProblemLog$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  patterns<T extends Prisma.ProblemLog$patternsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProblemLog$patternsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatternPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3416,7 +3288,6 @@ export interface ProblemLogFieldRefs {
   readonly platform: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly contest_id: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly rating: Prisma.FieldRef<"ProblemLog", 'Int'>
-  readonly patternId: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly pattern_subtype: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly solve_status_type: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly idea_source: Prisma.FieldRef<"ProblemLog", 'String'>
@@ -3431,8 +3302,6 @@ export interface ProblemLogFieldRefs {
   readonly stress_level_during: Prisma.FieldRef<"ProblemLog", 'Int'>
   readonly failure_categories: Prisma.FieldRef<"ProblemLog", 'String[]'>
   readonly mistakes_text: Prisma.FieldRef<"ProblemLog", 'String'>
-  readonly why_first_approach_failed: Prisma.FieldRef<"ProblemLog", 'String'>
-  readonly key_observations: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly edge_cases_found: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly invariant_or_key_property: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly final_verdict: Prisma.FieldRef<"ProblemLog", 'String'>
@@ -3445,9 +3314,10 @@ export interface ProblemLogFieldRefs {
   readonly re_solve_result: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly pattern_generalization_note: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly similar_problems_links: Prisma.FieldRef<"ProblemLog", 'String[]'>
-  readonly code_snippets: Prisma.FieldRef<"ProblemLog", 'Json'>
   readonly userId: Prisma.FieldRef<"ProblemLog", 'String'>
   readonly categoryId: Prisma.FieldRef<"ProblemLog", 'String'>
+  readonly code_snippets: Prisma.FieldRef<"ProblemLog", 'Json'>
+  readonly learning_from_failure: Prisma.FieldRef<"ProblemLog", 'String'>
 }
     
 
@@ -3844,46 +3714,22 @@ export type ProblemLogDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * ProblemLog.tags
+ * ProblemLog.category
  */
-export type ProblemLog$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ProblemLog$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Tag
+   * Select specific fields to fetch from the Category
    */
-  select?: Prisma.TagSelect<ExtArgs> | null
+  select?: Prisma.CategorySelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Tag
+   * Omit specific fields from the Category
    */
-  omit?: Prisma.TagOmit<ExtArgs> | null
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TagInclude<ExtArgs> | null
-  where?: Prisma.TagWhereInput
-  orderBy?: Prisma.TagOrderByWithRelationInput | Prisma.TagOrderByWithRelationInput[]
-  cursor?: Prisma.TagWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TagScalarFieldEnum | Prisma.TagScalarFieldEnum[]
-}
-
-/**
- * ProblemLog.pattern
- */
-export type ProblemLog$patternArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Pattern
-   */
-  select?: Prisma.PatternSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Pattern
-   */
-  omit?: Prisma.PatternOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PatternInclude<ExtArgs> | null
-  where?: Prisma.PatternWhereInput
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
 }
 
 /**
@@ -3911,22 +3757,51 @@ export type ProblemLog$keyLearningsArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * ProblemLog.category
+ * ProblemLog.tags
  */
-export type ProblemLog$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ProblemLog$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Category
+   * Select specific fields to fetch from the Tag
    */
-  select?: Prisma.CategorySelect<ExtArgs> | null
+  select?: Prisma.TagSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Category
+   * Omit specific fields from the Tag
    */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  omit?: Prisma.TagOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
+  include?: Prisma.TagInclude<ExtArgs> | null
+  where?: Prisma.TagWhereInput
+  orderBy?: Prisma.TagOrderByWithRelationInput | Prisma.TagOrderByWithRelationInput[]
+  cursor?: Prisma.TagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TagScalarFieldEnum | Prisma.TagScalarFieldEnum[]
+}
+
+/**
+ * ProblemLog.patterns
+ */
+export type ProblemLog$patternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Pattern
+   */
+  select?: Prisma.PatternSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Pattern
+   */
+  omit?: Prisma.PatternOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PatternInclude<ExtArgs> | null
+  where?: Prisma.PatternWhereInput
+  orderBy?: Prisma.PatternOrderByWithRelationInput | Prisma.PatternOrderByWithRelationInput[]
+  cursor?: Prisma.PatternWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PatternScalarFieldEnum | Prisma.PatternScalarFieldEnum[]
 }
 
 /**

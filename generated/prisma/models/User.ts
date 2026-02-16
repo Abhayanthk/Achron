@@ -252,23 +252,23 @@ export type UserWhereInput = {
   level?: Prisma.IntFilter<"User"> | number
   fullName?: Prisma.StringNullableFilter<"User"> | string | null
   alarmSound?: Prisma.StringFilter<"User"> | string
+  calendarEvents?: Prisma.CalendarEventListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
+  dailyLogs?: Prisma.DailyLogListRelationFilter
   sessions?: Prisma.FocusSessionListRelationFilter
   habits?: Prisma.HabitListRelationFilter
+  keyLearnings?: Prisma.KeyLearningListRelationFilter
+  nonNegotiables?: Prisma.NonNegotiableListRelationFilter
+  notes?: Prisma.NoteListRelationFilter
+  patterns?: Prisma.PatternListRelationFilter
+  problemLogs?: Prisma.ProblemLogListRelationFilter
+  projects?: Prisma.ProjectListRelationFilter
+  reminders?: Prisma.ReminderListRelationFilter
+  tags?: Prisma.TagListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
   timers?: Prisma.TimerListRelationFilter
   workLogs?: Prisma.WorkLogListRelationFilter
   xpLogs?: Prisma.XpLogListRelationFilter
-  dailyLogs?: Prisma.DailyLogListRelationFilter
-  reminders?: Prisma.ReminderListRelationFilter
-  nonNegotiables?: Prisma.NonNegotiableListRelationFilter
-  projects?: Prisma.ProjectListRelationFilter
-  notes?: Prisma.NoteListRelationFilter
-  calendarEvents?: Prisma.CalendarEventListRelationFilter
-  problemLogs?: Prisma.ProblemLogListRelationFilter
-  tags?: Prisma.TagListRelationFilter
-  patterns?: Prisma.PatternListRelationFilter
-  keyLearnings?: Prisma.KeyLearningListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -281,23 +281,23 @@ export type UserOrderByWithRelationInput = {
   level?: Prisma.SortOrder
   fullName?: Prisma.SortOrderInput | Prisma.SortOrder
   alarmSound?: Prisma.SortOrder
+  calendarEvents?: Prisma.CalendarEventOrderByRelationAggregateInput
   categories?: Prisma.CategoryOrderByRelationAggregateInput
+  dailyLogs?: Prisma.DailyLogOrderByRelationAggregateInput
   sessions?: Prisma.FocusSessionOrderByRelationAggregateInput
   habits?: Prisma.HabitOrderByRelationAggregateInput
+  keyLearnings?: Prisma.KeyLearningOrderByRelationAggregateInput
+  nonNegotiables?: Prisma.NonNegotiableOrderByRelationAggregateInput
+  notes?: Prisma.NoteOrderByRelationAggregateInput
+  patterns?: Prisma.PatternOrderByRelationAggregateInput
+  problemLogs?: Prisma.ProblemLogOrderByRelationAggregateInput
+  projects?: Prisma.ProjectOrderByRelationAggregateInput
+  reminders?: Prisma.ReminderOrderByRelationAggregateInput
+  tags?: Prisma.TagOrderByRelationAggregateInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   timers?: Prisma.TimerOrderByRelationAggregateInput
   workLogs?: Prisma.WorkLogOrderByRelationAggregateInput
   xpLogs?: Prisma.XpLogOrderByRelationAggregateInput
-  dailyLogs?: Prisma.DailyLogOrderByRelationAggregateInput
-  reminders?: Prisma.ReminderOrderByRelationAggregateInput
-  nonNegotiables?: Prisma.NonNegotiableOrderByRelationAggregateInput
-  projects?: Prisma.ProjectOrderByRelationAggregateInput
-  notes?: Prisma.NoteOrderByRelationAggregateInput
-  calendarEvents?: Prisma.CalendarEventOrderByRelationAggregateInput
-  problemLogs?: Prisma.ProblemLogOrderByRelationAggregateInput
-  tags?: Prisma.TagOrderByRelationAggregateInput
-  patterns?: Prisma.PatternOrderByRelationAggregateInput
-  keyLearnings?: Prisma.KeyLearningOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -313,23 +313,23 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   level?: Prisma.IntFilter<"User"> | number
   fullName?: Prisma.StringNullableFilter<"User"> | string | null
   alarmSound?: Prisma.StringFilter<"User"> | string
+  calendarEvents?: Prisma.CalendarEventListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
+  dailyLogs?: Prisma.DailyLogListRelationFilter
   sessions?: Prisma.FocusSessionListRelationFilter
   habits?: Prisma.HabitListRelationFilter
+  keyLearnings?: Prisma.KeyLearningListRelationFilter
+  nonNegotiables?: Prisma.NonNegotiableListRelationFilter
+  notes?: Prisma.NoteListRelationFilter
+  patterns?: Prisma.PatternListRelationFilter
+  problemLogs?: Prisma.ProblemLogListRelationFilter
+  projects?: Prisma.ProjectListRelationFilter
+  reminders?: Prisma.ReminderListRelationFilter
+  tags?: Prisma.TagListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
   timers?: Prisma.TimerListRelationFilter
   workLogs?: Prisma.WorkLogListRelationFilter
   xpLogs?: Prisma.XpLogListRelationFilter
-  dailyLogs?: Prisma.DailyLogListRelationFilter
-  reminders?: Prisma.ReminderListRelationFilter
-  nonNegotiables?: Prisma.NonNegotiableListRelationFilter
-  projects?: Prisma.ProjectListRelationFilter
-  notes?: Prisma.NoteListRelationFilter
-  calendarEvents?: Prisma.CalendarEventListRelationFilter
-  problemLogs?: Prisma.ProblemLogListRelationFilter
-  tags?: Prisma.TagListRelationFilter
-  patterns?: Prisma.PatternListRelationFilter
-  keyLearnings?: Prisma.KeyLearningListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -374,23 +374,23 @@ export type UserCreateInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -403,23 +403,23 @@ export type UserUncheckedCreateInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -432,23 +432,23 @@ export type UserUpdateInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -461,23 +461,23 @@ export type UserUncheckedUpdateInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -835,22 +835,22 @@ export type UserCreateWithoutTimersInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTimersInput = {
@@ -863,22 +863,22 @@ export type UserUncheckedCreateWithoutTimersInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTimersInput = {
@@ -907,22 +907,22 @@ export type UserUpdateWithoutTimersInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTimersInput = {
@@ -935,22 +935,22 @@ export type UserUncheckedUpdateWithoutTimersInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -963,22 +963,22 @@ export type UserCreateWithoutSessionsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -991,22 +991,22 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1035,22 +1035,22 @@ export type UserUpdateWithoutSessionsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1063,22 +1063,22 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutWorkLogsInput = {
@@ -1091,22 +1091,22 @@ export type UserCreateWithoutWorkLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkLogsInput = {
@@ -1119,22 +1119,22 @@ export type UserUncheckedCreateWithoutWorkLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkLogsInput = {
@@ -1163,22 +1163,22 @@ export type UserUpdateWithoutWorkLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkLogsInput = {
@@ -1191,22 +1191,22 @@ export type UserUncheckedUpdateWithoutWorkLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTasksInput = {
@@ -1219,22 +1219,22 @@ export type UserCreateWithoutTasksInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTasksInput = {
@@ -1247,22 +1247,22 @@ export type UserUncheckedCreateWithoutTasksInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTasksInput = {
@@ -1291,22 +1291,22 @@ export type UserUpdateWithoutTasksInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksInput = {
@@ -1319,22 +1319,22 @@ export type UserUncheckedUpdateWithoutTasksInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProjectsInput = {
@@ -1347,22 +1347,22 @@ export type UserCreateWithoutProjectsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
@@ -1375,22 +1375,22 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectsInput = {
@@ -1419,22 +1419,22 @@ export type UserUpdateWithoutProjectsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -1447,22 +1447,22 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoriesInput = {
@@ -1475,22 +1475,22 @@ export type UserCreateWithoutCategoriesInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -1503,22 +1503,22 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -1547,22 +1547,22 @@ export type UserUpdateWithoutCategoriesInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -1575,22 +1575,22 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutHabitsInput = {
@@ -1603,22 +1603,22 @@ export type UserCreateWithoutHabitsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutHabitsInput = {
@@ -1631,22 +1631,22 @@ export type UserUncheckedCreateWithoutHabitsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutHabitsInput = {
@@ -1675,22 +1675,22 @@ export type UserUpdateWithoutHabitsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHabitsInput = {
@@ -1703,22 +1703,22 @@ export type UserUncheckedUpdateWithoutHabitsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutXpLogsInput = {
@@ -1731,22 +1731,22 @@ export type UserCreateWithoutXpLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutXpLogsInput = {
@@ -1759,22 +1759,22 @@ export type UserUncheckedCreateWithoutXpLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutXpLogsInput = {
@@ -1803,22 +1803,22 @@ export type UserUpdateWithoutXpLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutXpLogsInput = {
@@ -1831,22 +1831,22 @@ export type UserUncheckedUpdateWithoutXpLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDailyLogsInput = {
@@ -1859,22 +1859,22 @@ export type UserCreateWithoutDailyLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDailyLogsInput = {
@@ -1887,22 +1887,22 @@ export type UserUncheckedCreateWithoutDailyLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDailyLogsInput = {
@@ -1931,22 +1931,22 @@ export type UserUpdateWithoutDailyLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDailyLogsInput = {
@@ -1959,22 +1959,22 @@ export type UserUncheckedUpdateWithoutDailyLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRemindersInput = {
@@ -1987,22 +1987,22 @@ export type UserCreateWithoutRemindersInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRemindersInput = {
@@ -2015,22 +2015,22 @@ export type UserUncheckedCreateWithoutRemindersInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRemindersInput = {
@@ -2059,22 +2059,22 @@ export type UserUpdateWithoutRemindersInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRemindersInput = {
@@ -2087,22 +2087,22 @@ export type UserUncheckedUpdateWithoutRemindersInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNonNegotiablesInput = {
@@ -2115,22 +2115,22 @@ export type UserCreateWithoutNonNegotiablesInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNonNegotiablesInput = {
@@ -2143,22 +2143,22 @@ export type UserUncheckedCreateWithoutNonNegotiablesInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNonNegotiablesInput = {
@@ -2187,22 +2187,22 @@ export type UserUpdateWithoutNonNegotiablesInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNonNegotiablesInput = {
@@ -2215,22 +2215,22 @@ export type UserUncheckedUpdateWithoutNonNegotiablesInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCalendarEventsInput = {
@@ -2244,21 +2244,21 @@ export type UserCreateWithoutCalendarEventsInput = {
   fullName?: string | null
   alarmSound?: string
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -2272,21 +2272,21 @@ export type UserUncheckedCreateWithoutCalendarEventsInput = {
   fullName?: string | null
   alarmSound?: string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -2316,21 +2316,21 @@ export type UserUpdateWithoutCalendarEventsInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -2344,21 +2344,21 @@ export type UserUncheckedUpdateWithoutCalendarEventsInput = {
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotesInput = {
@@ -2371,22 +2371,22 @@ export type UserCreateWithoutNotesInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotesInput = {
@@ -2399,22 +2399,22 @@ export type UserUncheckedCreateWithoutNotesInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotesInput = {
@@ -2443,22 +2443,22 @@ export type UserUpdateWithoutNotesInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotesInput = {
@@ -2471,22 +2471,22 @@ export type UserUncheckedUpdateWithoutNotesInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProblemLogsInput = {
@@ -2499,22 +2499,22 @@ export type UserCreateWithoutProblemLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProblemLogsInput = {
@@ -2527,22 +2527,22 @@ export type UserUncheckedCreateWithoutProblemLogsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProblemLogsInput = {
@@ -2571,22 +2571,22 @@ export type UserUpdateWithoutProblemLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProblemLogsInput = {
@@ -2599,22 +2599,22 @@ export type UserUncheckedUpdateWithoutProblemLogsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTagsInput = {
@@ -2627,22 +2627,22 @@ export type UserCreateWithoutTagsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTagsInput = {
@@ -2655,22 +2655,22 @@ export type UserUncheckedCreateWithoutTagsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTagsInput = {
@@ -2699,22 +2699,22 @@ export type UserUpdateWithoutTagsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTagsInput = {
@@ -2727,22 +2727,22 @@ export type UserUncheckedUpdateWithoutTagsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPatternsInput = {
@@ -2755,22 +2755,22 @@ export type UserCreateWithoutPatternsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPatternsInput = {
@@ -2783,22 +2783,22 @@ export type UserUncheckedCreateWithoutPatternsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  keyLearnings?: Prisma.KeyLearningUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPatternsInput = {
@@ -2827,22 +2827,22 @@ export type UserUpdateWithoutPatternsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPatternsInput = {
@@ -2855,22 +2855,22 @@ export type UserUncheckedUpdateWithoutPatternsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  keyLearnings?: Prisma.KeyLearningUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutKeyLearningsInput = {
@@ -2883,22 +2883,22 @@ export type UserCreateWithoutKeyLearningsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutKeyLearningsInput = {
@@ -2911,22 +2911,22 @@ export type UserUncheckedCreateWithoutKeyLearningsInput = {
   level?: number
   fullName?: string | null
   alarmSound?: string
+  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
+  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   habits?: Prisma.HabitUncheckedCreateNestedManyWithoutUserInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
+  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
+  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   timers?: Prisma.TimerUncheckedCreateNestedManyWithoutUserInput
   workLogs?: Prisma.WorkLogUncheckedCreateNestedManyWithoutUserInput
   xpLogs?: Prisma.XpLogUncheckedCreateNestedManyWithoutUserInput
-  dailyLogs?: Prisma.DailyLogUncheckedCreateNestedManyWithoutUserInput
-  reminders?: Prisma.ReminderUncheckedCreateNestedManyWithoutUserInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedCreateNestedManyWithoutUserInput
-  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
-  notes?: Prisma.NoteUncheckedCreateNestedManyWithoutUserInput
-  calendarEvents?: Prisma.CalendarEventUncheckedCreateNestedManyWithoutUserInput
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutUserInput
-  tags?: Prisma.TagUncheckedCreateNestedManyWithoutUserInput
-  patterns?: Prisma.PatternUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutKeyLearningsInput = {
@@ -2955,22 +2955,22 @@ export type UserUpdateWithoutKeyLearningsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutKeyLearningsInput = {
@@ -2983,22 +2983,22 @@ export type UserUncheckedUpdateWithoutKeyLearningsInput = {
   level?: Prisma.IntFieldUpdateOperationsInput | number
   fullName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alarmSound?: Prisma.StringFieldUpdateOperationsInput | string
+  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
+  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   habits?: Prisma.HabitUncheckedUpdateManyWithoutUserNestedInput
+  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
+  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
+  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   timers?: Prisma.TimerUncheckedUpdateManyWithoutUserNestedInput
   workLogs?: Prisma.WorkLogUncheckedUpdateManyWithoutUserNestedInput
   xpLogs?: Prisma.XpLogUncheckedUpdateManyWithoutUserNestedInput
-  dailyLogs?: Prisma.DailyLogUncheckedUpdateManyWithoutUserNestedInput
-  reminders?: Prisma.ReminderUncheckedUpdateManyWithoutUserNestedInput
-  nonNegotiables?: Prisma.NonNegotiableUncheckedUpdateManyWithoutUserNestedInput
-  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
-  notes?: Prisma.NoteUncheckedUpdateManyWithoutUserNestedInput
-  calendarEvents?: Prisma.CalendarEventUncheckedUpdateManyWithoutUserNestedInput
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutUserNestedInput
-  tags?: Prisma.TagUncheckedUpdateManyWithoutUserNestedInput
-  patterns?: Prisma.PatternUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -3007,43 +3007,43 @@ export type UserUncheckedUpdateWithoutKeyLearningsInput = {
  */
 
 export type UserCountOutputType = {
+  calendarEvents: number
   categories: number
+  dailyLogs: number
   sessions: number
   habits: number
+  keyLearnings: number
+  nonNegotiables: number
+  notes: number
+  patterns: number
+  problemLogs: number
+  projects: number
+  reminders: number
+  tags: number
   tasks: number
   timers: number
   workLogs: number
   xpLogs: number
-  dailyLogs: number
-  reminders: number
-  nonNegotiables: number
-  projects: number
-  notes: number
-  calendarEvents: number
-  problemLogs: number
-  tags: number
-  patterns: number
-  keyLearnings: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  calendarEvents?: boolean | UserCountOutputTypeCountCalendarEventsArgs
   categories?: boolean | UserCountOutputTypeCountCategoriesArgs
+  dailyLogs?: boolean | UserCountOutputTypeCountDailyLogsArgs
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   habits?: boolean | UserCountOutputTypeCountHabitsArgs
+  keyLearnings?: boolean | UserCountOutputTypeCountKeyLearningsArgs
+  nonNegotiables?: boolean | UserCountOutputTypeCountNonNegotiablesArgs
+  notes?: boolean | UserCountOutputTypeCountNotesArgs
+  patterns?: boolean | UserCountOutputTypeCountPatternsArgs
+  problemLogs?: boolean | UserCountOutputTypeCountProblemLogsArgs
+  projects?: boolean | UserCountOutputTypeCountProjectsArgs
+  reminders?: boolean | UserCountOutputTypeCountRemindersArgs
+  tags?: boolean | UserCountOutputTypeCountTagsArgs
   tasks?: boolean | UserCountOutputTypeCountTasksArgs
   timers?: boolean | UserCountOutputTypeCountTimersArgs
   workLogs?: boolean | UserCountOutputTypeCountWorkLogsArgs
   xpLogs?: boolean | UserCountOutputTypeCountXpLogsArgs
-  dailyLogs?: boolean | UserCountOutputTypeCountDailyLogsArgs
-  reminders?: boolean | UserCountOutputTypeCountRemindersArgs
-  nonNegotiables?: boolean | UserCountOutputTypeCountNonNegotiablesArgs
-  projects?: boolean | UserCountOutputTypeCountProjectsArgs
-  notes?: boolean | UserCountOutputTypeCountNotesArgs
-  calendarEvents?: boolean | UserCountOutputTypeCountCalendarEventsArgs
-  problemLogs?: boolean | UserCountOutputTypeCountProblemLogsArgs
-  tags?: boolean | UserCountOutputTypeCountTagsArgs
-  patterns?: boolean | UserCountOutputTypeCountPatternsArgs
-  keyLearnings?: boolean | UserCountOutputTypeCountKeyLearningsArgs
 }
 
 /**
@@ -3059,8 +3059,22 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCalendarEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CalendarEventWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CategoryWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DailyLogWhereInput
 }
 
 /**
@@ -3075,6 +3089,62 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
  */
 export type UserCountOutputTypeCountHabitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.HabitWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountKeyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.KeyLearningWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNonNegotiablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NonNegotiableWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NoteWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPatternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PatternWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProblemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProblemLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRemindersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReminderWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TagWhereInput
 }
 
 /**
@@ -3105,76 +3175,6 @@ export type UserCountOutputTypeCountXpLogsArgs<ExtArgs extends runtime.Types.Ext
   where?: Prisma.XpLogWhereInput
 }
 
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountDailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DailyLogWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountRemindersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ReminderWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountNonNegotiablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NonNegotiableWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProjectWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NoteWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCalendarEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CalendarEventWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountProblemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProblemLogWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TagWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountPatternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PatternWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountKeyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.KeyLearningWhereInput
-}
-
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3186,23 +3186,23 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   level?: boolean
   fullName?: boolean
   alarmSound?: boolean
+  calendarEvents?: boolean | Prisma.User$calendarEventsArgs<ExtArgs>
   categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
+  dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
+  keyLearnings?: boolean | Prisma.User$keyLearningsArgs<ExtArgs>
+  nonNegotiables?: boolean | Prisma.User$nonNegotiablesArgs<ExtArgs>
+  notes?: boolean | Prisma.User$notesArgs<ExtArgs>
+  patterns?: boolean | Prisma.User$patternsArgs<ExtArgs>
+  problemLogs?: boolean | Prisma.User$problemLogsArgs<ExtArgs>
+  projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
+  reminders?: boolean | Prisma.User$remindersArgs<ExtArgs>
+  tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   timers?: boolean | Prisma.User$timersArgs<ExtArgs>
   workLogs?: boolean | Prisma.User$workLogsArgs<ExtArgs>
   xpLogs?: boolean | Prisma.User$xpLogsArgs<ExtArgs>
-  dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
-  reminders?: boolean | Prisma.User$remindersArgs<ExtArgs>
-  nonNegotiables?: boolean | Prisma.User$nonNegotiablesArgs<ExtArgs>
-  projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
-  notes?: boolean | Prisma.User$notesArgs<ExtArgs>
-  calendarEvents?: boolean | Prisma.User$calendarEventsArgs<ExtArgs>
-  problemLogs?: boolean | Prisma.User$problemLogsArgs<ExtArgs>
-  tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
-  patterns?: boolean | Prisma.User$patternsArgs<ExtArgs>
-  keyLearnings?: boolean | Prisma.User$keyLearningsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3244,23 +3244,23 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "updatedAt" | "xp" | "level" | "fullName" | "alarmSound", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  calendarEvents?: boolean | Prisma.User$calendarEventsArgs<ExtArgs>
   categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
+  dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   habits?: boolean | Prisma.User$habitsArgs<ExtArgs>
+  keyLearnings?: boolean | Prisma.User$keyLearningsArgs<ExtArgs>
+  nonNegotiables?: boolean | Prisma.User$nonNegotiablesArgs<ExtArgs>
+  notes?: boolean | Prisma.User$notesArgs<ExtArgs>
+  patterns?: boolean | Prisma.User$patternsArgs<ExtArgs>
+  problemLogs?: boolean | Prisma.User$problemLogsArgs<ExtArgs>
+  projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
+  reminders?: boolean | Prisma.User$remindersArgs<ExtArgs>
+  tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   timers?: boolean | Prisma.User$timersArgs<ExtArgs>
   workLogs?: boolean | Prisma.User$workLogsArgs<ExtArgs>
   xpLogs?: boolean | Prisma.User$xpLogsArgs<ExtArgs>
-  dailyLogs?: boolean | Prisma.User$dailyLogsArgs<ExtArgs>
-  reminders?: boolean | Prisma.User$remindersArgs<ExtArgs>
-  nonNegotiables?: boolean | Prisma.User$nonNegotiablesArgs<ExtArgs>
-  projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
-  notes?: boolean | Prisma.User$notesArgs<ExtArgs>
-  calendarEvents?: boolean | Prisma.User$calendarEventsArgs<ExtArgs>
-  problemLogs?: boolean | Prisma.User$problemLogsArgs<ExtArgs>
-  tags?: boolean | Prisma.User$tagsArgs<ExtArgs>
-  patterns?: boolean | Prisma.User$patternsArgs<ExtArgs>
-  keyLearnings?: boolean | Prisma.User$keyLearningsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3269,23 +3269,23 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
     categories: Prisma.$CategoryPayload<ExtArgs>[]
+    dailyLogs: Prisma.$DailyLogPayload<ExtArgs>[]
     sessions: Prisma.$FocusSessionPayload<ExtArgs>[]
     habits: Prisma.$HabitPayload<ExtArgs>[]
+    keyLearnings: Prisma.$KeyLearningPayload<ExtArgs>[]
+    nonNegotiables: Prisma.$NonNegotiablePayload<ExtArgs>[]
+    notes: Prisma.$NotePayload<ExtArgs>[]
+    patterns: Prisma.$PatternPayload<ExtArgs>[]
+    problemLogs: Prisma.$ProblemLogPayload<ExtArgs>[]
+    projects: Prisma.$ProjectPayload<ExtArgs>[]
+    reminders: Prisma.$ReminderPayload<ExtArgs>[]
+    tags: Prisma.$TagPayload<ExtArgs>[]
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     timers: Prisma.$TimerPayload<ExtArgs>[]
     workLogs: Prisma.$WorkLogPayload<ExtArgs>[]
     xpLogs: Prisma.$XpLogPayload<ExtArgs>[]
-    dailyLogs: Prisma.$DailyLogPayload<ExtArgs>[]
-    reminders: Prisma.$ReminderPayload<ExtArgs>[]
-    nonNegotiables: Prisma.$NonNegotiablePayload<ExtArgs>[]
-    projects: Prisma.$ProjectPayload<ExtArgs>[]
-    notes: Prisma.$NotePayload<ExtArgs>[]
-    calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
-    problemLogs: Prisma.$ProblemLogPayload<ExtArgs>[]
-    tags: Prisma.$TagPayload<ExtArgs>[]
-    patterns: Prisma.$PatternPayload<ExtArgs>[]
-    keyLearnings: Prisma.$KeyLearningPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3691,23 +3691,23 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  calendarEvents<T extends Prisma.User$calendarEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   categories<T extends Prisma.User$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dailyLogs<T extends Prisma.User$dailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   habits<T extends Prisma.User$habitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$habitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HabitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  keyLearnings<T extends Prisma.User$keyLearningsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$keyLearningsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KeyLearningPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  nonNegotiables<T extends Prisma.User$nonNegotiablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$nonNegotiablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NonNegotiablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notes<T extends Prisma.User$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  patterns<T extends Prisma.User$patternsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$patternsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatternPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  problemLogs<T extends Prisma.User$problemLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$problemLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reminders<T extends Prisma.User$remindersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tags<T extends Prisma.User$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   timers<T extends Prisma.User$timersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$timersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TimerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workLogs<T extends Prisma.User$workLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   xpLogs<T extends Prisma.User$xpLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$xpLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$XpLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  dailyLogs<T extends Prisma.User$dailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  reminders<T extends Prisma.User$remindersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  nonNegotiables<T extends Prisma.User$nonNegotiablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$nonNegotiablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NonNegotiablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  notes<T extends Prisma.User$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  calendarEvents<T extends Prisma.User$calendarEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  problemLogs<T extends Prisma.User$problemLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$problemLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tags<T extends Prisma.User$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  patterns<T extends Prisma.User$patternsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$patternsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PatternPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  keyLearnings<T extends Prisma.User$keyLearningsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$keyLearningsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KeyLearningPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4134,6 +4134,30 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.calendarEvents
+ */
+export type User$calendarEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CalendarEvent
+   */
+  select?: Prisma.CalendarEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CalendarEvent
+   */
+  omit?: Prisma.CalendarEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CalendarEventInclude<ExtArgs> | null
+  where?: Prisma.CalendarEventWhereInput
+  orderBy?: Prisma.CalendarEventOrderByWithRelationInput | Prisma.CalendarEventOrderByWithRelationInput[]
+  cursor?: Prisma.CalendarEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CalendarEventScalarFieldEnum | Prisma.CalendarEventScalarFieldEnum[]
+}
+
+/**
  * User.categories
  */
 export type User$categoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4155,6 +4179,30 @@ export type User$categoriesArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
+}
+
+/**
+ * User.dailyLogs
+ */
+export type User$dailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DailyLog
+   */
+  select?: Prisma.DailyLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DailyLog
+   */
+  omit?: Prisma.DailyLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DailyLogInclude<ExtArgs> | null
+  where?: Prisma.DailyLogWhereInput
+  orderBy?: Prisma.DailyLogOrderByWithRelationInput | Prisma.DailyLogOrderByWithRelationInput[]
+  cursor?: Prisma.DailyLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DailyLogScalarFieldEnum | Prisma.DailyLogScalarFieldEnum[]
 }
 
 /**
@@ -4203,6 +4251,198 @@ export type User$habitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.HabitScalarFieldEnum | Prisma.HabitScalarFieldEnum[]
+}
+
+/**
+ * User.keyLearnings
+ */
+export type User$keyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the KeyLearning
+   */
+  select?: Prisma.KeyLearningSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the KeyLearning
+   */
+  omit?: Prisma.KeyLearningOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.KeyLearningInclude<ExtArgs> | null
+  where?: Prisma.KeyLearningWhereInput
+  orderBy?: Prisma.KeyLearningOrderByWithRelationInput | Prisma.KeyLearningOrderByWithRelationInput[]
+  cursor?: Prisma.KeyLearningWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.KeyLearningScalarFieldEnum | Prisma.KeyLearningScalarFieldEnum[]
+}
+
+/**
+ * User.nonNegotiables
+ */
+export type User$nonNegotiablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NonNegotiable
+   */
+  select?: Prisma.NonNegotiableSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NonNegotiable
+   */
+  omit?: Prisma.NonNegotiableOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NonNegotiableInclude<ExtArgs> | null
+  where?: Prisma.NonNegotiableWhereInput
+  orderBy?: Prisma.NonNegotiableOrderByWithRelationInput | Prisma.NonNegotiableOrderByWithRelationInput[]
+  cursor?: Prisma.NonNegotiableWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NonNegotiableScalarFieldEnum | Prisma.NonNegotiableScalarFieldEnum[]
+}
+
+/**
+ * User.notes
+ */
+export type User$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Note
+   */
+  select?: Prisma.NoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Note
+   */
+  omit?: Prisma.NoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NoteInclude<ExtArgs> | null
+  where?: Prisma.NoteWhereInput
+  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
+  cursor?: Prisma.NoteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
+}
+
+/**
+ * User.patterns
+ */
+export type User$patternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Pattern
+   */
+  select?: Prisma.PatternSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Pattern
+   */
+  omit?: Prisma.PatternOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PatternInclude<ExtArgs> | null
+  where?: Prisma.PatternWhereInput
+  orderBy?: Prisma.PatternOrderByWithRelationInput | Prisma.PatternOrderByWithRelationInput[]
+  cursor?: Prisma.PatternWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PatternScalarFieldEnum | Prisma.PatternScalarFieldEnum[]
+}
+
+/**
+ * User.problemLogs
+ */
+export type User$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProblemLog
+   */
+  select?: Prisma.ProblemLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProblemLog
+   */
+  omit?: Prisma.ProblemLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProblemLogInclude<ExtArgs> | null
+  where?: Prisma.ProblemLogWhereInput
+  orderBy?: Prisma.ProblemLogOrderByWithRelationInput | Prisma.ProblemLogOrderByWithRelationInput[]
+  cursor?: Prisma.ProblemLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProblemLogScalarFieldEnum | Prisma.ProblemLogScalarFieldEnum[]
+}
+
+/**
+ * User.projects
+ */
+export type User$projectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Project
+   */
+  select?: Prisma.ProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Project
+   */
+  omit?: Prisma.ProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectInclude<ExtArgs> | null
+  where?: Prisma.ProjectWhereInput
+  orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
+}
+
+/**
+ * User.reminders
+ */
+export type User$remindersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Reminder
+   */
+  select?: Prisma.ReminderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Reminder
+   */
+  omit?: Prisma.ReminderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReminderInclude<ExtArgs> | null
+  where?: Prisma.ReminderWhereInput
+  orderBy?: Prisma.ReminderOrderByWithRelationInput | Prisma.ReminderOrderByWithRelationInput[]
+  cursor?: Prisma.ReminderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReminderScalarFieldEnum | Prisma.ReminderScalarFieldEnum[]
+}
+
+/**
+ * User.tags
+ */
+export type User$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tag
+   */
+  select?: Prisma.TagSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tag
+   */
+  omit?: Prisma.TagOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TagInclude<ExtArgs> | null
+  where?: Prisma.TagWhereInput
+  orderBy?: Prisma.TagOrderByWithRelationInput | Prisma.TagOrderByWithRelationInput[]
+  cursor?: Prisma.TagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TagScalarFieldEnum | Prisma.TagScalarFieldEnum[]
 }
 
 /**
@@ -4299,246 +4539,6 @@ export type User$xpLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   distinct?: Prisma.XpLogScalarFieldEnum | Prisma.XpLogScalarFieldEnum[]
-}
-
-/**
- * User.dailyLogs
- */
-export type User$dailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the DailyLog
-   */
-  select?: Prisma.DailyLogSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the DailyLog
-   */
-  omit?: Prisma.DailyLogOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.DailyLogInclude<ExtArgs> | null
-  where?: Prisma.DailyLogWhereInput
-  orderBy?: Prisma.DailyLogOrderByWithRelationInput | Prisma.DailyLogOrderByWithRelationInput[]
-  cursor?: Prisma.DailyLogWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.DailyLogScalarFieldEnum | Prisma.DailyLogScalarFieldEnum[]
-}
-
-/**
- * User.reminders
- */
-export type User$remindersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Reminder
-   */
-  select?: Prisma.ReminderSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Reminder
-   */
-  omit?: Prisma.ReminderOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ReminderInclude<ExtArgs> | null
-  where?: Prisma.ReminderWhereInput
-  orderBy?: Prisma.ReminderOrderByWithRelationInput | Prisma.ReminderOrderByWithRelationInput[]
-  cursor?: Prisma.ReminderWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ReminderScalarFieldEnum | Prisma.ReminderScalarFieldEnum[]
-}
-
-/**
- * User.nonNegotiables
- */
-export type User$nonNegotiablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the NonNegotiable
-   */
-  select?: Prisma.NonNegotiableSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the NonNegotiable
-   */
-  omit?: Prisma.NonNegotiableOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.NonNegotiableInclude<ExtArgs> | null
-  where?: Prisma.NonNegotiableWhereInput
-  orderBy?: Prisma.NonNegotiableOrderByWithRelationInput | Prisma.NonNegotiableOrderByWithRelationInput[]
-  cursor?: Prisma.NonNegotiableWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NonNegotiableScalarFieldEnum | Prisma.NonNegotiableScalarFieldEnum[]
-}
-
-/**
- * User.projects
- */
-export type User$projectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Project
-   */
-  select?: Prisma.ProjectSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Project
-   */
-  omit?: Prisma.ProjectOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProjectInclude<ExtArgs> | null
-  where?: Prisma.ProjectWhereInput
-  orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[]
-  cursor?: Prisma.ProjectWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
-}
-
-/**
- * User.notes
- */
-export type User$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Note
-   */
-  select?: Prisma.NoteSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Note
-   */
-  omit?: Prisma.NoteOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.NoteInclude<ExtArgs> | null
-  where?: Prisma.NoteWhereInput
-  orderBy?: Prisma.NoteOrderByWithRelationInput | Prisma.NoteOrderByWithRelationInput[]
-  cursor?: Prisma.NoteWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NoteScalarFieldEnum | Prisma.NoteScalarFieldEnum[]
-}
-
-/**
- * User.calendarEvents
- */
-export type User$calendarEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CalendarEvent
-   */
-  select?: Prisma.CalendarEventSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CalendarEvent
-   */
-  omit?: Prisma.CalendarEventOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CalendarEventInclude<ExtArgs> | null
-  where?: Prisma.CalendarEventWhereInput
-  orderBy?: Prisma.CalendarEventOrderByWithRelationInput | Prisma.CalendarEventOrderByWithRelationInput[]
-  cursor?: Prisma.CalendarEventWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CalendarEventScalarFieldEnum | Prisma.CalendarEventScalarFieldEnum[]
-}
-
-/**
- * User.problemLogs
- */
-export type User$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProblemLog
-   */
-  select?: Prisma.ProblemLogSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProblemLog
-   */
-  omit?: Prisma.ProblemLogOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProblemLogInclude<ExtArgs> | null
-  where?: Prisma.ProblemLogWhereInput
-  orderBy?: Prisma.ProblemLogOrderByWithRelationInput | Prisma.ProblemLogOrderByWithRelationInput[]
-  cursor?: Prisma.ProblemLogWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProblemLogScalarFieldEnum | Prisma.ProblemLogScalarFieldEnum[]
-}
-
-/**
- * User.tags
- */
-export type User$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Tag
-   */
-  select?: Prisma.TagSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Tag
-   */
-  omit?: Prisma.TagOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TagInclude<ExtArgs> | null
-  where?: Prisma.TagWhereInput
-  orderBy?: Prisma.TagOrderByWithRelationInput | Prisma.TagOrderByWithRelationInput[]
-  cursor?: Prisma.TagWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TagScalarFieldEnum | Prisma.TagScalarFieldEnum[]
-}
-
-/**
- * User.patterns
- */
-export type User$patternsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Pattern
-   */
-  select?: Prisma.PatternSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Pattern
-   */
-  omit?: Prisma.PatternOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PatternInclude<ExtArgs> | null
-  where?: Prisma.PatternWhereInput
-  orderBy?: Prisma.PatternOrderByWithRelationInput | Prisma.PatternOrderByWithRelationInput[]
-  cursor?: Prisma.PatternWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PatternScalarFieldEnum | Prisma.PatternScalarFieldEnum[]
-}
-
-/**
- * User.keyLearnings
- */
-export type User$keyLearningsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the KeyLearning
-   */
-  select?: Prisma.KeyLearningSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the KeyLearning
-   */
-  omit?: Prisma.KeyLearningOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.KeyLearningInclude<ExtArgs> | null
-  where?: Prisma.KeyLearningWhereInput
-  orderBy?: Prisma.KeyLearningOrderByWithRelationInput | Prisma.KeyLearningOrderByWithRelationInput[]
-  cursor?: Prisma.KeyLearningWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.KeyLearningScalarFieldEnum | Prisma.KeyLearningScalarFieldEnum[]
 }
 
 /**

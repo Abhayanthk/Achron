@@ -222,9 +222,9 @@ export type ProjectWhereInput = {
   color?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  brainstorms?: Prisma.BrainstormListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   sections?: Prisma.SectionListRelationFilter
-  brainstorms?: Prisma.BrainstormListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -238,9 +238,9 @@ export type ProjectOrderByWithRelationInput = {
   color?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  brainstorms?: Prisma.BrainstormOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   sections?: Prisma.SectionOrderByRelationAggregateInput
-  brainstorms?: Prisma.BrainstormOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -257,9 +257,9 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   color?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  brainstorms?: Prisma.BrainstormListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   sections?: Prisma.SectionListRelationFilter
-  brainstorms?: Prisma.BrainstormListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -304,9 +304,9 @@ export type ProjectCreateInput = {
   color?: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  brainstorms?: Prisma.BrainstormCreateNestedManyWithoutProjectInput
   user: Prisma.UserCreateNestedOneWithoutProjectsInput
   sections?: Prisma.SectionCreateNestedManyWithoutProjectInput
-  brainstorms?: Prisma.BrainstormCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -320,8 +320,8 @@ export type ProjectUncheckedCreateInput = {
   color?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutProjectInput
   brainstorms?: Prisma.BrainstormUncheckedCreateNestedManyWithoutProjectInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
@@ -334,9 +334,9 @@ export type ProjectUpdateInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  brainstorms?: Prisma.BrainstormUpdateManyWithoutProjectNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   sections?: Prisma.SectionUpdateManyWithoutProjectNestedInput
-  brainstorms?: Prisma.BrainstormUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -350,8 +350,8 @@ export type ProjectUncheckedUpdateInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sections?: Prisma.SectionUncheckedUpdateManyWithoutProjectNestedInput
   brainstorms?: Prisma.BrainstormUncheckedUpdateManyWithoutProjectNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -526,8 +526,8 @@ export type ProjectCreateWithoutUserInput = {
   color?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sections?: Prisma.SectionCreateNestedManyWithoutProjectInput
   brainstorms?: Prisma.BrainstormCreateNestedManyWithoutProjectInput
+  sections?: Prisma.SectionCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutUserInput = {
@@ -540,8 +540,8 @@ export type ProjectUncheckedCreateWithoutUserInput = {
   color?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutProjectInput
   brainstorms?: Prisma.BrainstormUncheckedCreateNestedManyWithoutProjectInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutUserInput = {
@@ -596,8 +596,8 @@ export type ProjectCreateWithoutSectionsInput = {
   color?: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutProjectsInput
   brainstorms?: Prisma.BrainstormCreateNestedManyWithoutProjectInput
+  user: Prisma.UserCreateNestedOneWithoutProjectsInput
 }
 
 export type ProjectUncheckedCreateWithoutSectionsInput = {
@@ -640,8 +640,8 @@ export type ProjectUpdateWithoutSectionsInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
   brainstorms?: Prisma.BrainstormUpdateManyWithoutProjectNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutSectionsInput = {
@@ -752,8 +752,8 @@ export type ProjectUpdateWithoutUserInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sections?: Prisma.SectionUpdateManyWithoutProjectNestedInput
   brainstorms?: Prisma.BrainstormUpdateManyWithoutProjectNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutUserInput = {
@@ -766,8 +766,8 @@ export type ProjectUncheckedUpdateWithoutUserInput = {
   color?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sections?: Prisma.SectionUncheckedUpdateManyWithoutProjectNestedInput
   brainstorms?: Prisma.BrainstormUncheckedUpdateManyWithoutProjectNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutUserInput = {
@@ -788,13 +788,13 @@ export type ProjectUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type ProjectCountOutputType = {
-  sections: number
   brainstorms: number
+  sections: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sections?: boolean | ProjectCountOutputTypeCountSectionsArgs
   brainstorms?: boolean | ProjectCountOutputTypeCountBrainstormsArgs
+  sections?: boolean | ProjectCountOutputTypeCountSectionsArgs
 }
 
 /**
@@ -810,15 +810,15 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * ProjectCountOutputType without action
  */
-export type ProjectCountOutputTypeCountSectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SectionWhereInput
+export type ProjectCountOutputTypeCountBrainstormsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BrainstormWhereInput
 }
 
 /**
  * ProjectCountOutputType without action
  */
-export type ProjectCountOutputTypeCountBrainstormsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.BrainstormWhereInput
+export type ProjectCountOutputTypeCountSectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SectionWhereInput
 }
 
 
@@ -833,9 +833,9 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   color?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  brainstorms?: boolean | Prisma.Project$brainstormsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   sections?: boolean | Prisma.Project$sectionsArgs<ExtArgs>
-  brainstorms?: boolean | Prisma.Project$brainstormsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -882,9 +882,9 @@ export type ProjectSelectScalar = {
 
 export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "description" | "status" | "startDate" | "endDate" | "color" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  brainstorms?: boolean | Prisma.Project$brainstormsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   sections?: boolean | Prisma.Project$sectionsArgs<ExtArgs>
-  brainstorms?: boolean | Prisma.Project$brainstormsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -897,9 +897,9 @@ export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
+    brainstorms: Prisma.$BrainstormPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
     sections: Prisma.$SectionPayload<ExtArgs>[]
-    brainstorms: Prisma.$BrainstormPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1306,9 +1306,9 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  brainstorms<T extends Prisma.Project$brainstormsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$brainstormsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrainstormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sections<T extends Prisma.Project$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  brainstorms<T extends Prisma.Project$brainstormsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$brainstormsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrainstormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1744,30 +1744,6 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Project.sections
- */
-export type Project$sectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Section
-   */
-  select?: Prisma.SectionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Section
-   */
-  omit?: Prisma.SectionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SectionInclude<ExtArgs> | null
-  where?: Prisma.SectionWhereInput
-  orderBy?: Prisma.SectionOrderByWithRelationInput | Prisma.SectionOrderByWithRelationInput[]
-  cursor?: Prisma.SectionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SectionScalarFieldEnum | Prisma.SectionScalarFieldEnum[]
-}
-
-/**
  * Project.brainstorms
  */
 export type Project$brainstormsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1789,6 +1765,30 @@ export type Project$brainstormsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.BrainstormScalarFieldEnum | Prisma.BrainstormScalarFieldEnum[]
+}
+
+/**
+ * Project.sections
+ */
+export type Project$sectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Section
+   */
+  select?: Prisma.SectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Section
+   */
+  omit?: Prisma.SectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SectionInclude<ExtArgs> | null
+  where?: Prisma.SectionWhereInput
+  orderBy?: Prisma.SectionOrderByWithRelationInput | Prisma.SectionOrderByWithRelationInput[]
+  cursor?: Prisma.SectionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SectionScalarFieldEnum | Prisma.SectionScalarFieldEnum[]
 }
 
 /**

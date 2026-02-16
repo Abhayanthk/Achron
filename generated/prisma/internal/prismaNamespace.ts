@@ -2151,9 +2151,9 @@ export const HabitScalarFieldEnum = {
   name: 'name',
   streak: 'streak',
   completedDates: 'completedDates',
-  targetDays: 'targetDays',
-  startDate: 'startDate',
   archived: 'archived',
+  startDate: 'startDate',
+  targetDays: 'targetDays',
   updatedAt: 'updatedAt'
 } as const
 
@@ -2217,8 +2217,8 @@ export const CalendarEventScalarFieldEnum = {
   allDay: 'allDay',
   color: 'color',
   categoryId: 'categoryId',
-  recurrence: 'recurrence',
-  isCompleted: 'isCompleted'
+  isCompleted: 'isCompleted',
+  recurrence: 'recurrence'
 } as const
 
 export type CalendarEventScalarFieldEnum = (typeof CalendarEventScalarFieldEnum)[keyof typeof CalendarEventScalarFieldEnum]
@@ -2258,7 +2258,6 @@ export const ProblemLogScalarFieldEnum = {
   platform: 'platform',
   contest_id: 'contest_id',
   rating: 'rating',
-  patternId: 'patternId',
   pattern_subtype: 'pattern_subtype',
   solve_status_type: 'solve_status_type',
   idea_source: 'idea_source',
@@ -2273,8 +2272,6 @@ export const ProblemLogScalarFieldEnum = {
   stress_level_during: 'stress_level_during',
   failure_categories: 'failure_categories',
   mistakes_text: 'mistakes_text',
-  why_first_approach_failed: 'why_first_approach_failed',
-  key_observations: 'key_observations',
   edge_cases_found: 'edge_cases_found',
   invariant_or_key_property: 'invariant_or_key_property',
   final_verdict: 'final_verdict',
@@ -2287,9 +2284,10 @@ export const ProblemLogScalarFieldEnum = {
   re_solve_result: 're_solve_result',
   pattern_generalization_note: 'pattern_generalization_note',
   similar_problems_links: 'similar_problems_links',
-  code_snippets: 'code_snippets',
   userId: 'userId',
-  categoryId: 'categoryId'
+  categoryId: 'categoryId',
+  code_snippets: 'code_snippets',
+  learning_from_failure: 'learning_from_failure'
 } as const
 
 export type ProblemLogScalarFieldEnum = (typeof ProblemLogScalarFieldEnum)[keyof typeof ProblemLogScalarFieldEnum]

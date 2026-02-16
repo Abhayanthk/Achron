@@ -25,7 +25,7 @@ export default async function ProblemDetailsPage(props: DetailsPageProps) {
       userId: userId, // Ensure ownership
     },
     include: {
-      pattern: true,
+      patterns: true,
       keyLearnings: true,
     },
   });

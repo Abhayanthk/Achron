@@ -37,6 +37,10 @@ export default async function LibraryPage(props: {
     orderBy: {
       created_at: "desc",
     },
+    include: {
+      patterns: true,
+      tags: true,
+    },
   });
 
   return (

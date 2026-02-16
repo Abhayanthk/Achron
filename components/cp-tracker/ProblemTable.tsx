@@ -19,10 +19,11 @@ interface ProblemLog {
   problem_name: string;
   platform: string;
   rating: number;
-  pattern_type: string;
+  patterns: { name: string }[];
   solve_status_type: string;
   total_time_minutes: number;
   created_at: string;
+  tags: { name: string }[];
 }
 
 interface ProblemTableProps {
@@ -57,6 +58,7 @@ export function ProblemTable({ data }: ProblemTableProps) {
             <TableHead className="text-zinc-400">Problem Name</TableHead>
             <TableHead className="text-zinc-400 w-[100px]">Platform</TableHead>
             <TableHead className="text-zinc-400 w-[80px]">Rating</TableHead>
+            <TableHead className="text-zinc-400">Tags</TableHead>
             <TableHead className="text-zinc-400">Pattern</TableHead>
             <TableHead className="text-zinc-400">Status</TableHead>
             <TableHead className="text-zinc-400 text-right w-[100px]">
@@ -81,8 +83,41 @@ export function ProblemTable({ data }: ProblemTableProps) {
                 {problem.platform}
               </TableCell>
               <TableCell className="text-zinc-400">{problem.rating}</TableCell>
+              <TableCell>
+                <div className="flex flex-wrap gap-1">
+                  {problem.tags?.slice(0, 3).map((tag) => (
+                    <Badge
+                      key={tag.name}
+                      variant="outline"
+                      className="border-white/10 text-zinc-500 text-[10px] px-1.5 py-0 h-5"
+                    >
+                      {tag.name}
+                    </Badge>
+                  ))}
+                  {problem.tags?.length > 3 && (
+                    <span className="text-[10px] text-zinc-600">
+                      +{problem.tags.length - 3}
+                    </span>
+                  )}
+                </div>
+              </TableCell>
               <TableCell className="text-zinc-400">
-                {problem.pattern_type}
+                <div className="flex flex-wrap gap-1">
+                  {problem.patterns?.slice(0, 2).map((p) => (
+                    <Badge
+                      key={p.name}
+                      variant="secondary"
+                      className="bg-indigo-500/10 text-indigo-400 border-indigo-500/20 text-[10px] px-1.5 py-0 h-5"
+                    >
+                      {p.name}
+                    </Badge>
+                  ))}
+                  {problem.patterns?.length > 2 && (
+                    <span className="text-[10px] text-zinc-600">
+                      +{problem.patterns.length - 2}
+                    </span>
+                  )}
+                </div>
               </TableCell>
               <TableCell>
                 <Badge

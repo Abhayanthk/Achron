@@ -23,7 +23,15 @@ import {
   Share2,
   Calendar,
   Trophy,
+  MoreVertical,
+  Trash2,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import axios from "axios";
 import { cn } from "@/lib/utils";
@@ -67,6 +75,17 @@ export function LogDetails({ log }: LogDetailsProps) {
 
   const isSolvedClean = log.solve_status_type === "Solved Clean";
 
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this log?")) return;
+    try {
+      await axios.delete(`/api/cp-tracker/${log.id}`);
+      toast.success("Log deleted");
+      router.push("/cp-tracker");
+    } catch (error) {
+      toast.error("Failed to delete log");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white p-6 lg:p-10 font-sans">
       {/* Header / Nav */}
@@ -86,12 +105,34 @@ export function LogDetails({ log }: LogDetailsProps) {
           >
             <Share2 className="h-4 w-4 mr-2" /> Share
           </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="border-white/10 bg-white/5 hover:bg-white/10 text-zinc-300"
+              >
+                <MoreVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="bg-zinc-900 border-white/10"
+            >
+              <DropdownMenuItem
+                onClick={handleDelete}
+                className="text-red-400 focus:text-red-300 focus:bg-red-900/20 cursor-pointer"
+              >
+                <Trash2 className="h-4 w-4 mr-2" /> Delete Log
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
       <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative">
         {/* --- LEFT COLUMN: Sticky Code Editor --- */}
-        <div className="lg:col-span-6 lg:h-[calc(100vh-120px)] lg:sticky lg:top-8 flex flex-col">
+        <div className="lg:col-span-6 lg:h-[calc(100vh-40px)] lg:sticky lg:top-5 flex flex-col">
           <div className="flex-1 shadow-2xl rounded-xl overflow-hidden border border-white/10 bg-[#1e1e1e]">
             <CodeEditor
               control={form.control}
@@ -139,11 +180,23 @@ export function LogDetails({ log }: LogDetailsProps) {
 
             <div className="flex flex-wrap gap-2 pt-2">
               {/* Pattern Badge */}
-              {log.pattern && (
-                <Badge className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/30 px-3 py-1.5 text-sm">
-                  <Target className="h-3.5 w-3.5 mr-2" />
-                  {log.pattern.name}{" "}
-                  {log.pattern_subtype ? `— ${log.pattern_subtype}` : ""}
+              {/* Patterns Badge */}
+              {log.patterns &&
+                log.patterns.map((pattern: any) => (
+                  <Badge
+                    key={pattern.id}
+                    className="bg-indigo-500/20 text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/30 px-3 py-1.5 text-sm"
+                  >
+                    <Target className="h-3.5 w-3.5 mr-2" />
+                    {pattern.name}
+                  </Badge>
+                ))}
+              {log.pattern_subtype && (
+                <Badge
+                  variant="outline"
+                  className="border-indigo-500/20 text-indigo-400 px-3 py-1.5 text-sm"
+                >
+                  Sub: {log.pattern_subtype}
                 </Badge>
               )}
               {/* Tags */}
@@ -157,6 +210,17 @@ export function LogDetails({ log }: LogDetailsProps) {
                     #{tag}
                   </Badge>
                 ))}
+              {/* Key Learnings */}
+              {log.keyLearnings &&
+                log.keyLearnings.map((kl: any) => (
+                  <Badge
+                    key={kl.id}
+                    className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20 px-3 py-1.5 text-sm"
+                  >
+                    <Zap className="h-3.5 w-3.5 mr-2" />
+                    {kl.point}
+                  </Badge>
+                ))}
             </div>
           </div>
 
@@ -165,39 +229,46 @@ export function LogDetails({ log }: LogDetailsProps) {
           {/* 2. Key Metrics Grid */}
           <section>
             <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
-              <Clock className="h-5 w-5 text-zinc-400" /> Performance Metrics
+              <Clock className="h-5 w-5 text-zinc-400" /> Qualitative Analysis
             </h3>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl">
-                <div className="text-zinc-500 text-xs mb-1">Idea Time</div>
-                <div className="text-2xl font-mono text-white">
-                  {log.time_to_first_idea_minutes}m
-                </div>
+
+            {/* Status & Source Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex items-center justify-between">
+                <span className="text-sm text-zinc-400">Status</span>
+                <Badge
+                  variant={isSolvedClean ? "default" : "secondary"}
+                  className={cn(
+                    "text-sm",
+                    isSolvedClean
+                      ? "bg-green-500/20 text-green-300 hover:bg-green-500/20"
+                      : "bg-white/10 text-zinc-300",
+                  )}
+                >
+                  {log.solve_status_type}
+                </Badge>
               </div>
-              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl">
-                <div className="text-zinc-500 text-xs mb-1">Impl Time</div>
-                <div className="text-2xl font-mono text-white">
-                  {log.implementation_time_minutes}m
-                </div>
-              </div>
-              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl">
-                <div className="text-zinc-500 text-xs mb-1">Debug Time</div>
-                <div className="text-2xl font-mono text-white">
-                  {log.debug_time_minutes}m
-                </div>
+              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex items-center justify-between">
+                <span className="text-sm text-zinc-400">Idea Source</span>
+                <span className="font-medium text-white">
+                  {log.idea_source}
+                </span>
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Stress & Load Visuals could go here (Progress bars or unique visuals) */}
-              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex items-center justify-between">
-                <span className="text-sm text-zinc-400">Stress Level</span>
+            {/* Stress, Load, Difficulty Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Stress */}
+              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex flex-col gap-2">
+                <span className="text-xs text-zinc-500 uppercase tracking-wider">
+                  Stress Level
+                </span>
                 <div className="flex items-center gap-1">
                   {Array.from({ length: 10 }).map((_, i) => (
                     <div
                       key={i}
                       className={cn(
-                        "h-2 w-2 rounded-full",
+                        "h-1.5 w-full rounded-full transition-all",
                         i < (log.stress_level_during || 0)
                           ? "bg-red-500"
                           : "bg-zinc-800",
@@ -206,14 +277,38 @@ export function LogDetails({ log }: LogDetailsProps) {
                   ))}
                 </div>
               </div>
-              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex items-center justify-between">
-                <span className="text-sm text-zinc-400">Difficulty</span>
+
+              {/* Mental Load */}
+              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex flex-col gap-2">
+                <span className="text-xs text-zinc-500 uppercase tracking-wider">
+                  Mental Load
+                </span>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className={cn(
+                        "h-1.5 w-full rounded-full transition-all",
+                        i < (log.mental_load_score || 0)
+                          ? "bg-purple-500"
+                          : "bg-zinc-800",
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Difficulty */}
+              <div className="bg-zinc-900/40 border border-white/5 p-4 rounded-xl flex flex-col gap-2">
+                <span className="text-xs text-zinc-500 uppercase tracking-wider">
+                  Difficulty
+                </span>
                 <div className="flex items-center gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <div
                       key={i}
                       className={cn(
-                        "h-2 w-4 rounded-sm",
+                        "h-1.5 w-full rounded-sm transition-all",
                         i < (log.perceived_difficulty_after || 0)
                           ? "bg-orange-500"
                           : "bg-zinc-800",
@@ -250,6 +345,17 @@ export function LogDetails({ log }: LogDetailsProps) {
                   </div>
                   <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">
                     {log.mistakes_text}
+                  </p>
+                </div>
+              )}
+
+              {log.learning_from_failure && (
+                <div className="mt-4 p-4 bg-indigo-950/20 rounded-lg border border-indigo-500/10">
+                  <div className="text-xs text-indigo-400/70 uppercase tracking-wider mb-2 font-semibold">
+                    Learning from Failure
+                  </div>
+                  <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">
+                    {log.learning_from_failure}
                   </p>
                 </div>
               )}

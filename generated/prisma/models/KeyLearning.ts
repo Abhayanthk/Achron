@@ -174,9 +174,9 @@ export type KeyLearningWhereInput = {
   point?: Prisma.StringFilter<"KeyLearning"> | string
   userId?: Prisma.StringFilter<"KeyLearning"> | string
   categoryId?: Prisma.StringNullableFilter<"KeyLearning"> | string | null
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problemLogs?: Prisma.ProblemLogListRelationFilter
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }
 
 export type KeyLearningOrderByWithRelationInput = {
@@ -184,9 +184,9 @@ export type KeyLearningOrderByWithRelationInput = {
   point?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.CategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   problemLogs?: Prisma.ProblemLogOrderByRelationAggregateInput
-  category?: Prisma.CategoryOrderByWithRelationInput
 }
 
 export type KeyLearningWhereUniqueInput = Prisma.AtLeast<{
@@ -198,9 +198,9 @@ export type KeyLearningWhereUniqueInput = Prisma.AtLeast<{
   point?: Prisma.StringFilter<"KeyLearning"> | string
   userId?: Prisma.StringFilter<"KeyLearning"> | string
   categoryId?: Prisma.StringNullableFilter<"KeyLearning"> | string | null
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problemLogs?: Prisma.ProblemLogListRelationFilter
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }, "id" | "userId_point">
 
 export type KeyLearningOrderByWithAggregationInput = {
@@ -226,9 +226,9 @@ export type KeyLearningScalarWhereWithAggregatesInput = {
 export type KeyLearningCreateInput = {
   id?: string
   point: string
+  category?: Prisma.CategoryCreateNestedOneWithoutKeyLearningsInput
   user: Prisma.UserCreateNestedOneWithoutKeyLearningsInput
   problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutKeyLearningsInput
-  category?: Prisma.CategoryCreateNestedOneWithoutKeyLearningsInput
 }
 
 export type KeyLearningUncheckedCreateInput = {
@@ -242,9 +242,9 @@ export type KeyLearningUncheckedCreateInput = {
 export type KeyLearningUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   point?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.CategoryUpdateOneWithoutKeyLearningsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutKeyLearningsNestedInput
   problemLogs?: Prisma.ProblemLogUpdateManyWithoutKeyLearningsNestedInput
-  category?: Prisma.CategoryUpdateOneWithoutKeyLearningsNestedInput
 }
 
 export type KeyLearningUncheckedUpdateInput = {
@@ -435,8 +435,8 @@ export type KeyLearningUncheckedUpdateManyWithoutProblemLogsNestedInput = {
 export type KeyLearningCreateWithoutUserInput = {
   id?: string
   point: string
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutKeyLearningsInput
   category?: Prisma.CategoryCreateNestedOneWithoutKeyLearningsInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutKeyLearningsInput
 }
 
 export type KeyLearningUncheckedCreateWithoutUserInput = {
@@ -525,8 +525,8 @@ export type KeyLearningUpdateManyWithWhereWithoutCategoryInput = {
 export type KeyLearningCreateWithoutProblemLogsInput = {
   id?: string
   point: string
-  user: Prisma.UserCreateNestedOneWithoutKeyLearningsInput
   category?: Prisma.CategoryCreateNestedOneWithoutKeyLearningsInput
+  user: Prisma.UserCreateNestedOneWithoutKeyLearningsInput
 }
 
 export type KeyLearningUncheckedCreateWithoutProblemLogsInput = {
@@ -566,8 +566,8 @@ export type KeyLearningCreateManyUserInput = {
 export type KeyLearningUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   point?: Prisma.StringFieldUpdateOperationsInput | string
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutKeyLearningsNestedInput
   category?: Prisma.CategoryUpdateOneWithoutKeyLearningsNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutKeyLearningsNestedInput
 }
 
 export type KeyLearningUncheckedUpdateWithoutUserInput = {
@@ -612,8 +612,8 @@ export type KeyLearningUncheckedUpdateManyWithoutCategoryInput = {
 export type KeyLearningUpdateWithoutProblemLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   point?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutKeyLearningsNestedInput
   category?: Prisma.CategoryUpdateOneWithoutKeyLearningsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutKeyLearningsNestedInput
 }
 
 export type KeyLearningUncheckedUpdateWithoutProblemLogsInput = {
@@ -666,9 +666,9 @@ export type KeyLearningSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   point?: boolean
   userId?: boolean
   categoryId?: boolean
+  category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problemLogs?: boolean | Prisma.KeyLearning$problemLogsArgs<ExtArgs>
-  category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
   _count?: boolean | Prisma.KeyLearningCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["keyLearning"]>
 
@@ -677,8 +677,8 @@ export type KeyLearningSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   point?: boolean
   userId?: boolean
   categoryId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["keyLearning"]>
 
 export type KeyLearningSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -686,8 +686,8 @@ export type KeyLearningSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   point?: boolean
   userId?: boolean
   categoryId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["keyLearning"]>
 
 export type KeyLearningSelectScalar = {
@@ -699,26 +699,26 @@ export type KeyLearningSelectScalar = {
 
 export type KeyLearningOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "point" | "userId" | "categoryId", ExtArgs["result"]["keyLearning"]>
 export type KeyLearningInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problemLogs?: boolean | Prisma.KeyLearning$problemLogsArgs<ExtArgs>
-  category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
   _count?: boolean | Prisma.KeyLearningCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type KeyLearningIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type KeyLearningIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.KeyLearning$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $KeyLearningPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KeyLearning"
   objects: {
+    category: Prisma.$CategoryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
     problemLogs: Prisma.$ProblemLogPayload<ExtArgs>[]
-    category: Prisma.$CategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1119,9 +1119,9 @@ readonly fields: KeyLearningFieldRefs;
  */
 export interface Prisma__KeyLearningClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  category<T extends Prisma.KeyLearning$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KeyLearning$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   problemLogs<T extends Prisma.KeyLearning$problemLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KeyLearning$problemLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  category<T extends Prisma.KeyLearning$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.KeyLearning$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1551,6 +1551,25 @@ export type KeyLearningDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * KeyLearning.category
+ */
+export type KeyLearning$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
+}
+
+/**
  * KeyLearning.problemLogs
  */
 export type KeyLearning$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1572,25 +1591,6 @@ export type KeyLearning$problemLogsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.ProblemLogScalarFieldEnum | Prisma.ProblemLogScalarFieldEnum[]
-}
-
-/**
- * KeyLearning.category
- */
-export type KeyLearning$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Category
-   */
-  select?: Prisma.CategorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Category
-   */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
 }
 
 /**

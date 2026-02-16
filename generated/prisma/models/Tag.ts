@@ -174,9 +174,9 @@ export type TagWhereInput = {
   name?: Prisma.StringFilter<"Tag"> | string
   userId?: Prisma.StringFilter<"Tag"> | string
   categoryId?: Prisma.StringNullableFilter<"Tag"> | string | null
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problemLogs?: Prisma.ProblemLogListRelationFilter
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }
 
 export type TagOrderByWithRelationInput = {
@@ -184,9 +184,9 @@ export type TagOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.CategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   problemLogs?: Prisma.ProblemLogOrderByRelationAggregateInput
-  category?: Prisma.CategoryOrderByWithRelationInput
 }
 
 export type TagWhereUniqueInput = Prisma.AtLeast<{
@@ -198,9 +198,9 @@ export type TagWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Tag"> | string
   userId?: Prisma.StringFilter<"Tag"> | string
   categoryId?: Prisma.StringNullableFilter<"Tag"> | string | null
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problemLogs?: Prisma.ProblemLogListRelationFilter
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }, "id" | "userId_name">
 
 export type TagOrderByWithAggregationInput = {
@@ -226,9 +226,9 @@ export type TagScalarWhereWithAggregatesInput = {
 export type TagCreateInput = {
   id?: string
   name: string
+  category?: Prisma.CategoryCreateNestedOneWithoutTagsInput
   user: Prisma.UserCreateNestedOneWithoutTagsInput
   problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutTagsInput
-  category?: Prisma.CategoryCreateNestedOneWithoutTagsInput
 }
 
 export type TagUncheckedCreateInput = {
@@ -242,9 +242,9 @@ export type TagUncheckedCreateInput = {
 export type TagUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.CategoryUpdateOneWithoutTagsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutTagsNestedInput
   problemLogs?: Prisma.ProblemLogUpdateManyWithoutTagsNestedInput
-  category?: Prisma.CategoryUpdateOneWithoutTagsNestedInput
 }
 
 export type TagUncheckedUpdateInput = {
@@ -435,8 +435,8 @@ export type TagUncheckedUpdateManyWithoutProblemLogsNestedInput = {
 export type TagCreateWithoutUserInput = {
   id?: string
   name: string
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutTagsInput
   category?: Prisma.CategoryCreateNestedOneWithoutTagsInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutTagsInput
 }
 
 export type TagUncheckedCreateWithoutUserInput = {
@@ -525,8 +525,8 @@ export type TagUpdateManyWithWhereWithoutCategoryInput = {
 export type TagCreateWithoutProblemLogsInput = {
   id?: string
   name: string
-  user: Prisma.UserCreateNestedOneWithoutTagsInput
   category?: Prisma.CategoryCreateNestedOneWithoutTagsInput
+  user: Prisma.UserCreateNestedOneWithoutTagsInput
 }
 
 export type TagUncheckedCreateWithoutProblemLogsInput = {
@@ -566,8 +566,8 @@ export type TagCreateManyUserInput = {
 export type TagUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutTagsNestedInput
   category?: Prisma.CategoryUpdateOneWithoutTagsNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutTagsNestedInput
 }
 
 export type TagUncheckedUpdateWithoutUserInput = {
@@ -612,8 +612,8 @@ export type TagUncheckedUpdateManyWithoutCategoryInput = {
 export type TagUpdateWithoutProblemLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTagsNestedInput
   category?: Prisma.CategoryUpdateOneWithoutTagsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutTagsNestedInput
 }
 
 export type TagUncheckedUpdateWithoutProblemLogsInput = {
@@ -666,9 +666,9 @@ export type TagSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   name?: boolean
   userId?: boolean
   categoryId?: boolean
+  category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problemLogs?: boolean | Prisma.Tag$problemLogsArgs<ExtArgs>
-  category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
   _count?: boolean | Prisma.TagCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tag"]>
 
@@ -677,8 +677,8 @@ export type TagSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   name?: boolean
   userId?: boolean
   categoryId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tag"]>
 
 export type TagSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -686,8 +686,8 @@ export type TagSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   name?: boolean
   userId?: boolean
   categoryId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tag"]>
 
 export type TagSelectScalar = {
@@ -699,26 +699,26 @@ export type TagSelectScalar = {
 
 export type TagOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "categoryId", ExtArgs["result"]["tag"]>
 export type TagInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problemLogs?: boolean | Prisma.Tag$problemLogsArgs<ExtArgs>
-  category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
   _count?: boolean | Prisma.TagCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TagIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TagIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Tag$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TagPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Tag"
   objects: {
+    category: Prisma.$CategoryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
     problemLogs: Prisma.$ProblemLogPayload<ExtArgs>[]
-    category: Prisma.$CategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1119,9 +1119,9 @@ readonly fields: TagFieldRefs;
  */
 export interface Prisma__TagClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  category<T extends Prisma.Tag$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tag$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   problemLogs<T extends Prisma.Tag$problemLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tag$problemLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  category<T extends Prisma.Tag$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tag$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1551,6 +1551,25 @@ export type TagDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
+ * Tag.category
+ */
+export type Tag$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
+}
+
+/**
  * Tag.problemLogs
  */
 export type Tag$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1572,25 +1591,6 @@ export type Tag$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ProblemLogScalarFieldEnum | Prisma.ProblemLogScalarFieldEnum[]
-}
-
-/**
- * Tag.category
- */
-export type Tag$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Category
-   */
-  select?: Prisma.CategorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Category
-   */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
 }
 
 /**

@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     // Extract array/relation fields to handle them separately or via nested writes
     const {
       tags, // array of strings from form
-      pattern_type, // string
+      pattern_types, // array of strings (replacing single pattern_type)
       key_learning_points, // array of strings
       time_breakdown_type, // Explicitly extract to exclude from rest
       constraints_checked,
@@ -65,44 +65,41 @@ export async function POST(req: NextRequest) {
       dry_run_done,
 
       mistakes_text = "",
-      why_first_approach_failed = "",
-      key_observations = "",
+      learning_from_failure = "",
       edge_cases_found = "",
       invariant_or_key_property = "",
       pattern_generalization_note = "",
       ...rest
     } = body;
 
-    let patternId = undefined;
-    if (pattern_type) {
-      const pattern = await prisma.pattern.upsert({
-        where: {
-          userId_name: {
-            userId,
-            name: pattern_type,
-          },
-        },
-        update: {},
-        create: {
-          name: pattern_type,
-          userId,
-        },
-      });
-      patternId = pattern.id;
-    }
+    // No single pattern upsert needed anymore, handled in create below
 
     const log = await prisma.problemLog.create({
-      data: {
+        data: {
         ...rest,
         mistakes_text,
-        why_first_approach_failed,
-        key_observations,
+        learning_from_failure,
         edge_cases_found,
         invariant_or_key_property,
         pattern_generalization_note,
         userId,
         // Handle Pattern via ID
-        patternId,
+        // patterns: relation handled below
+        // Handle Patterns (Find or Create each)
+        patterns: {
+          connectOrCreate: (pattern_types || []).map((pt: string) => ({
+            where: {
+              userId_name: {
+                userId,
+                name: pt,
+              },
+            },
+            create: {
+              name: pt,
+              userId,
+            },
+          })),
+        },
         // Handle Tags (Find or Create each)
         tags: {
           connectOrCreate: tags.map((tag: string) => ({

@@ -33,8 +33,8 @@ export type CalendarEventMinAggregateOutputType = {
   allDay: boolean | null
   color: string | null
   categoryId: string | null
-  recurrence: string | null
   isCompleted: boolean | null
+  recurrence: string | null
 }
 
 export type CalendarEventMaxAggregateOutputType = {
@@ -46,8 +46,8 @@ export type CalendarEventMaxAggregateOutputType = {
   allDay: boolean | null
   color: string | null
   categoryId: string | null
-  recurrence: string | null
   isCompleted: boolean | null
+  recurrence: string | null
 }
 
 export type CalendarEventCountAggregateOutputType = {
@@ -59,8 +59,8 @@ export type CalendarEventCountAggregateOutputType = {
   allDay: number
   color: number
   categoryId: number
-  recurrence: number
   isCompleted: number
+  recurrence: number
   _all: number
 }
 
@@ -74,8 +74,8 @@ export type CalendarEventMinAggregateInputType = {
   allDay?: true
   color?: true
   categoryId?: true
-  recurrence?: true
   isCompleted?: true
+  recurrence?: true
 }
 
 export type CalendarEventMaxAggregateInputType = {
@@ -87,8 +87,8 @@ export type CalendarEventMaxAggregateInputType = {
   allDay?: true
   color?: true
   categoryId?: true
-  recurrence?: true
   isCompleted?: true
+  recurrence?: true
 }
 
 export type CalendarEventCountAggregateInputType = {
@@ -100,8 +100,8 @@ export type CalendarEventCountAggregateInputType = {
   allDay?: true
   color?: true
   categoryId?: true
-  recurrence?: true
   isCompleted?: true
+  recurrence?: true
   _all?: true
 }
 
@@ -186,8 +186,8 @@ export type CalendarEventGroupByOutputType = {
   allDay: boolean
   color: string
   categoryId: string | null
-  recurrence: string
   isCompleted: boolean
+  recurrence: string
   _count: CalendarEventCountAggregateOutputType | null
   _min: CalendarEventMinAggregateOutputType | null
   _max: CalendarEventMaxAggregateOutputType | null
@@ -220,11 +220,11 @@ export type CalendarEventWhereInput = {
   allDay?: Prisma.BoolFilter<"CalendarEvent"> | boolean
   color?: Prisma.StringFilter<"CalendarEvent"> | string
   categoryId?: Prisma.StringNullableFilter<"CalendarEvent"> | string | null
-  recurrence?: Prisma.StringFilter<"CalendarEvent"> | string
   isCompleted?: Prisma.BoolFilter<"CalendarEvent"> | boolean
+  recurrence?: Prisma.StringFilter<"CalendarEvent"> | string
+  brainstorms?: Prisma.BrainstormListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  brainstorms?: Prisma.BrainstormListRelationFilter
 }
 
 export type CalendarEventOrderByWithRelationInput = {
@@ -236,11 +236,11 @@ export type CalendarEventOrderByWithRelationInput = {
   allDay?: Prisma.SortOrder
   color?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  recurrence?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
+  recurrence?: Prisma.SortOrder
+  brainstorms?: Prisma.BrainstormOrderByRelationAggregateInput
   category?: Prisma.CategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
-  brainstorms?: Prisma.BrainstormOrderByRelationAggregateInput
 }
 
 export type CalendarEventWhereUniqueInput = Prisma.AtLeast<{
@@ -255,11 +255,11 @@ export type CalendarEventWhereUniqueInput = Prisma.AtLeast<{
   allDay?: Prisma.BoolFilter<"CalendarEvent"> | boolean
   color?: Prisma.StringFilter<"CalendarEvent"> | string
   categoryId?: Prisma.StringNullableFilter<"CalendarEvent"> | string | null
-  recurrence?: Prisma.StringFilter<"CalendarEvent"> | string
   isCompleted?: Prisma.BoolFilter<"CalendarEvent"> | boolean
+  recurrence?: Prisma.StringFilter<"CalendarEvent"> | string
+  brainstorms?: Prisma.BrainstormListRelationFilter
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  brainstorms?: Prisma.BrainstormListRelationFilter
 }, "id">
 
 export type CalendarEventOrderByWithAggregationInput = {
@@ -271,8 +271,8 @@ export type CalendarEventOrderByWithAggregationInput = {
   allDay?: Prisma.SortOrder
   color?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
-  recurrence?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
+  recurrence?: Prisma.SortOrder
   _count?: Prisma.CalendarEventCountOrderByAggregateInput
   _max?: Prisma.CalendarEventMaxOrderByAggregateInput
   _min?: Prisma.CalendarEventMinOrderByAggregateInput
@@ -290,8 +290,8 @@ export type CalendarEventScalarWhereWithAggregatesInput = {
   allDay?: Prisma.BoolWithAggregatesFilter<"CalendarEvent"> | boolean
   color?: Prisma.StringWithAggregatesFilter<"CalendarEvent"> | string
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"CalendarEvent"> | string | null
-  recurrence?: Prisma.StringWithAggregatesFilter<"CalendarEvent"> | string
   isCompleted?: Prisma.BoolWithAggregatesFilter<"CalendarEvent"> | boolean
+  recurrence?: Prisma.StringWithAggregatesFilter<"CalendarEvent"> | string
 }
 
 export type CalendarEventCreateInput = {
@@ -301,11 +301,11 @@ export type CalendarEventCreateInput = {
   end: Date | string
   allDay: boolean
   color: string
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
+  brainstorms?: Prisma.BrainstormCreateNestedManyWithoutCalendarEventInput
   category?: Prisma.CategoryCreateNestedOneWithoutCalendarEventsInput
   user: Prisma.UserCreateNestedOneWithoutCalendarEventsInput
-  brainstorms?: Prisma.BrainstormCreateNestedManyWithoutCalendarEventInput
 }
 
 export type CalendarEventUncheckedCreateInput = {
@@ -317,8 +317,8 @@ export type CalendarEventUncheckedCreateInput = {
   allDay: boolean
   color: string
   categoryId?: string | null
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
   brainstorms?: Prisma.BrainstormUncheckedCreateNestedManyWithoutCalendarEventInput
 }
 
@@ -329,11 +329,11 @@ export type CalendarEventUpdateInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
+  brainstorms?: Prisma.BrainstormUpdateManyWithoutCalendarEventNestedInput
   category?: Prisma.CategoryUpdateOneWithoutCalendarEventsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCalendarEventsNestedInput
-  brainstorms?: Prisma.BrainstormUpdateManyWithoutCalendarEventNestedInput
 }
 
 export type CalendarEventUncheckedUpdateInput = {
@@ -345,8 +345,8 @@ export type CalendarEventUncheckedUpdateInput = {
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   brainstorms?: Prisma.BrainstormUncheckedUpdateManyWithoutCalendarEventNestedInput
 }
 
@@ -359,8 +359,8 @@ export type CalendarEventCreateManyInput = {
   allDay: boolean
   color: string
   categoryId?: string | null
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
 }
 
 export type CalendarEventUpdateManyMutationInput = {
@@ -370,8 +370,8 @@ export type CalendarEventUpdateManyMutationInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CalendarEventUncheckedUpdateManyInput = {
@@ -383,8 +383,8 @@ export type CalendarEventUncheckedUpdateManyInput = {
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CalendarEventListRelationFilter = {
@@ -406,8 +406,8 @@ export type CalendarEventCountOrderByAggregateInput = {
   allDay?: Prisma.SortOrder
   color?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
-  recurrence?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
+  recurrence?: Prisma.SortOrder
 }
 
 export type CalendarEventMaxOrderByAggregateInput = {
@@ -419,8 +419,8 @@ export type CalendarEventMaxOrderByAggregateInput = {
   allDay?: Prisma.SortOrder
   color?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
-  recurrence?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
+  recurrence?: Prisma.SortOrder
 }
 
 export type CalendarEventMinOrderByAggregateInput = {
@@ -432,8 +432,8 @@ export type CalendarEventMinOrderByAggregateInput = {
   allDay?: Prisma.SortOrder
   color?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
-  recurrence?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
+  recurrence?: Prisma.SortOrder
 }
 
 export type CalendarEventNullableScalarRelationFilter = {
@@ -548,10 +548,10 @@ export type CalendarEventCreateWithoutUserInput = {
   end: Date | string
   allDay: boolean
   color: string
-  recurrence?: string
   isCompleted?: boolean
-  category?: Prisma.CategoryCreateNestedOneWithoutCalendarEventsInput
+  recurrence?: string
   brainstorms?: Prisma.BrainstormCreateNestedManyWithoutCalendarEventInput
+  category?: Prisma.CategoryCreateNestedOneWithoutCalendarEventsInput
 }
 
 export type CalendarEventUncheckedCreateWithoutUserInput = {
@@ -562,8 +562,8 @@ export type CalendarEventUncheckedCreateWithoutUserInput = {
   allDay: boolean
   color: string
   categoryId?: string | null
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
   brainstorms?: Prisma.BrainstormUncheckedCreateNestedManyWithoutCalendarEventInput
 }
 
@@ -605,8 +605,8 @@ export type CalendarEventScalarWhereInput = {
   allDay?: Prisma.BoolFilter<"CalendarEvent"> | boolean
   color?: Prisma.StringFilter<"CalendarEvent"> | string
   categoryId?: Prisma.StringNullableFilter<"CalendarEvent"> | string | null
-  recurrence?: Prisma.StringFilter<"CalendarEvent"> | string
   isCompleted?: Prisma.BoolFilter<"CalendarEvent"> | boolean
+  recurrence?: Prisma.StringFilter<"CalendarEvent"> | string
 }
 
 export type CalendarEventCreateWithoutCategoryInput = {
@@ -616,10 +616,10 @@ export type CalendarEventCreateWithoutCategoryInput = {
   end: Date | string
   allDay: boolean
   color: string
-  recurrence?: string
   isCompleted?: boolean
-  user: Prisma.UserCreateNestedOneWithoutCalendarEventsInput
+  recurrence?: string
   brainstorms?: Prisma.BrainstormCreateNestedManyWithoutCalendarEventInput
+  user: Prisma.UserCreateNestedOneWithoutCalendarEventsInput
 }
 
 export type CalendarEventUncheckedCreateWithoutCategoryInput = {
@@ -630,8 +630,8 @@ export type CalendarEventUncheckedCreateWithoutCategoryInput = {
   end: Date | string
   allDay: boolean
   color: string
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
   brainstorms?: Prisma.BrainstormUncheckedCreateNestedManyWithoutCalendarEventInput
 }
 
@@ -668,8 +668,8 @@ export type CalendarEventCreateWithoutBrainstormsInput = {
   end: Date | string
   allDay: boolean
   color: string
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
   category?: Prisma.CategoryCreateNestedOneWithoutCalendarEventsInput
   user: Prisma.UserCreateNestedOneWithoutCalendarEventsInput
 }
@@ -683,8 +683,8 @@ export type CalendarEventUncheckedCreateWithoutBrainstormsInput = {
   allDay: boolean
   color: string
   categoryId?: string | null
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
 }
 
 export type CalendarEventCreateOrConnectWithoutBrainstormsInput = {
@@ -710,8 +710,8 @@ export type CalendarEventUpdateWithoutBrainstormsInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.CategoryUpdateOneWithoutCalendarEventsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutCalendarEventsNestedInput
 }
@@ -725,8 +725,8 @@ export type CalendarEventUncheckedUpdateWithoutBrainstormsInput = {
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CalendarEventCreateManyUserInput = {
@@ -737,8 +737,8 @@ export type CalendarEventCreateManyUserInput = {
   allDay: boolean
   color: string
   categoryId?: string | null
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
 }
 
 export type CalendarEventUpdateWithoutUserInput = {
@@ -748,10 +748,10 @@ export type CalendarEventUpdateWithoutUserInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  category?: Prisma.CategoryUpdateOneWithoutCalendarEventsNestedInput
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   brainstorms?: Prisma.BrainstormUpdateManyWithoutCalendarEventNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutCalendarEventsNestedInput
 }
 
 export type CalendarEventUncheckedUpdateWithoutUserInput = {
@@ -762,8 +762,8 @@ export type CalendarEventUncheckedUpdateWithoutUserInput = {
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   brainstorms?: Prisma.BrainstormUncheckedUpdateManyWithoutCalendarEventNestedInput
 }
 
@@ -775,8 +775,8 @@ export type CalendarEventUncheckedUpdateManyWithoutUserInput = {
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type CalendarEventCreateManyCategoryInput = {
@@ -787,8 +787,8 @@ export type CalendarEventCreateManyCategoryInput = {
   end: Date | string
   allDay: boolean
   color: string
-  recurrence?: string
   isCompleted?: boolean
+  recurrence?: string
 }
 
 export type CalendarEventUpdateWithoutCategoryInput = {
@@ -798,10 +798,10 @@ export type CalendarEventUpdateWithoutCategoryInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  user?: Prisma.UserUpdateOneRequiredWithoutCalendarEventsNestedInput
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   brainstorms?: Prisma.BrainstormUpdateManyWithoutCalendarEventNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutCalendarEventsNestedInput
 }
 
 export type CalendarEventUncheckedUpdateWithoutCategoryInput = {
@@ -812,8 +812,8 @@ export type CalendarEventUncheckedUpdateWithoutCategoryInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   brainstorms?: Prisma.BrainstormUncheckedUpdateManyWithoutCalendarEventNestedInput
 }
 
@@ -825,8 +825,8 @@ export type CalendarEventUncheckedUpdateManyWithoutCategoryInput = {
   end?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   allDay?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recurrence?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -869,11 +869,11 @@ export type CalendarEventSelect<ExtArgs extends runtime.Types.Extensions.Interna
   allDay?: boolean
   color?: boolean
   categoryId?: boolean
-  recurrence?: boolean
   isCompleted?: boolean
+  recurrence?: boolean
+  brainstorms?: boolean | Prisma.CalendarEvent$brainstormsArgs<ExtArgs>
   category?: boolean | Prisma.CalendarEvent$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  brainstorms?: boolean | Prisma.CalendarEvent$brainstormsArgs<ExtArgs>
   _count?: boolean | Prisma.CalendarEventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["calendarEvent"]>
 
@@ -886,8 +886,8 @@ export type CalendarEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   allDay?: boolean
   color?: boolean
   categoryId?: boolean
-  recurrence?: boolean
   isCompleted?: boolean
+  recurrence?: boolean
   category?: boolean | Prisma.CalendarEvent$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["calendarEvent"]>
@@ -901,8 +901,8 @@ export type CalendarEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   allDay?: boolean
   color?: boolean
   categoryId?: boolean
-  recurrence?: boolean
   isCompleted?: boolean
+  recurrence?: boolean
   category?: boolean | Prisma.CalendarEvent$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["calendarEvent"]>
@@ -916,15 +916,15 @@ export type CalendarEventSelectScalar = {
   allDay?: boolean
   color?: boolean
   categoryId?: boolean
-  recurrence?: boolean
   isCompleted?: boolean
+  recurrence?: boolean
 }
 
-export type CalendarEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "start" | "end" | "allDay" | "color" | "categoryId" | "recurrence" | "isCompleted", ExtArgs["result"]["calendarEvent"]>
+export type CalendarEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "start" | "end" | "allDay" | "color" | "categoryId" | "isCompleted" | "recurrence", ExtArgs["result"]["calendarEvent"]>
 export type CalendarEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  brainstorms?: boolean | Prisma.CalendarEvent$brainstormsArgs<ExtArgs>
   category?: boolean | Prisma.CalendarEvent$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  brainstorms?: boolean | Prisma.CalendarEvent$brainstormsArgs<ExtArgs>
   _count?: boolean | Prisma.CalendarEventCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CalendarEventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -939,9 +939,9 @@ export type CalendarEventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type $CalendarEventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "CalendarEvent"
   objects: {
+    brainstorms: Prisma.$BrainstormPayload<ExtArgs>[]
     category: Prisma.$CategoryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
-    brainstorms: Prisma.$BrainstormPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -952,8 +952,8 @@ export type $CalendarEventPayload<ExtArgs extends runtime.Types.Extensions.Inter
     allDay: boolean
     color: string
     categoryId: string | null
-    recurrence: string
     isCompleted: boolean
+    recurrence: string
   }, ExtArgs["result"]["calendarEvent"]>
   composites: {}
 }
@@ -1348,9 +1348,9 @@ readonly fields: CalendarEventFieldRefs;
  */
 export interface Prisma__CalendarEventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  brainstorms<T extends Prisma.CalendarEvent$brainstormsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CalendarEvent$brainstormsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrainstormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   category<T extends Prisma.CalendarEvent$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CalendarEvent$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  brainstorms<T extends Prisma.CalendarEvent$brainstormsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CalendarEvent$brainstormsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BrainstormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1388,8 +1388,8 @@ export interface CalendarEventFieldRefs {
   readonly allDay: Prisma.FieldRef<"CalendarEvent", 'Boolean'>
   readonly color: Prisma.FieldRef<"CalendarEvent", 'String'>
   readonly categoryId: Prisma.FieldRef<"CalendarEvent", 'String'>
-  readonly recurrence: Prisma.FieldRef<"CalendarEvent", 'String'>
   readonly isCompleted: Prisma.FieldRef<"CalendarEvent", 'Boolean'>
+  readonly recurrence: Prisma.FieldRef<"CalendarEvent", 'String'>
 }
     
 
@@ -1786,25 +1786,6 @@ export type CalendarEventDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * CalendarEvent.category
- */
-export type CalendarEvent$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Category
-   */
-  select?: Prisma.CategorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Category
-   */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
-}
-
-/**
  * CalendarEvent.brainstorms
  */
 export type CalendarEvent$brainstormsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1826,6 +1807,25 @@ export type CalendarEvent$brainstormsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.BrainstormScalarFieldEnum | Prisma.BrainstormScalarFieldEnum[]
+}
+
+/**
+ * CalendarEvent.category
+ */
+export type CalendarEvent$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
 }
 
 /**

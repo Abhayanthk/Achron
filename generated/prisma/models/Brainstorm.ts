@@ -194,8 +194,8 @@ export type BrainstormWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Brainstorm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Brainstorm"> | Date | string
   calendarEventId?: Prisma.StringNullableFilter<"Brainstorm"> | string | null
-  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   calendarEvent?: Prisma.XOR<Prisma.CalendarEventNullableScalarRelationFilter, Prisma.CalendarEventWhereInput> | null
+  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }
 
 export type BrainstormOrderByWithRelationInput = {
@@ -206,8 +206,8 @@ export type BrainstormOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   calendarEventId?: Prisma.SortOrderInput | Prisma.SortOrder
-  project?: Prisma.ProjectOrderByWithRelationInput
   calendarEvent?: Prisma.CalendarEventOrderByWithRelationInput
+  project?: Prisma.ProjectOrderByWithRelationInput
 }
 
 export type BrainstormWhereUniqueInput = Prisma.AtLeast<{
@@ -221,8 +221,8 @@ export type BrainstormWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Brainstorm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Brainstorm"> | Date | string
   calendarEventId?: Prisma.StringNullableFilter<"Brainstorm"> | string | null
-  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
   calendarEvent?: Prisma.XOR<Prisma.CalendarEventNullableScalarRelationFilter, Prisma.CalendarEventWhereInput> | null
+  project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
 }, "id">
 
 export type BrainstormOrderByWithAggregationInput = {
@@ -257,8 +257,8 @@ export type BrainstormCreateInput = {
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
-  project: Prisma.ProjectCreateNestedOneWithoutBrainstormsInput
   calendarEvent?: Prisma.CalendarEventCreateNestedOneWithoutBrainstormsInput
+  project: Prisma.ProjectCreateNestedOneWithoutBrainstormsInput
 }
 
 export type BrainstormUncheckedCreateInput = {
@@ -277,8 +277,8 @@ export type BrainstormUpdateInput = {
   content?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  project?: Prisma.ProjectUpdateOneRequiredWithoutBrainstormsNestedInput
   calendarEvent?: Prisma.CalendarEventUpdateOneWithoutBrainstormsNestedInput
+  project?: Prisma.ProjectUpdateOneRequiredWithoutBrainstormsNestedInput
 }
 
 export type BrainstormUncheckedUpdateInput = {
@@ -624,8 +624,8 @@ export type BrainstormSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   calendarEventId?: boolean
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   calendarEvent?: boolean | Prisma.Brainstorm$calendarEventArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["brainstorm"]>
 
 export type BrainstormSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -636,8 +636,8 @@ export type BrainstormSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   createdAt?: boolean
   updatedAt?: boolean
   calendarEventId?: boolean
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   calendarEvent?: boolean | Prisma.Brainstorm$calendarEventArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["brainstorm"]>
 
 export type BrainstormSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -648,8 +648,8 @@ export type BrainstormSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   createdAt?: boolean
   updatedAt?: boolean
   calendarEventId?: boolean
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   calendarEvent?: boolean | Prisma.Brainstorm$calendarEventArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["brainstorm"]>
 
 export type BrainstormSelectScalar = {
@@ -664,23 +664,23 @@ export type BrainstormSelectScalar = {
 
 export type BrainstormOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "projectId" | "content" | "createdAt" | "updatedAt" | "calendarEventId", ExtArgs["result"]["brainstorm"]>
 export type BrainstormInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   calendarEvent?: boolean | Prisma.Brainstorm$calendarEventArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
 export type BrainstormIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   calendarEvent?: boolean | Prisma.Brainstorm$calendarEventArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
 export type BrainstormIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
   calendarEvent?: boolean | Prisma.Brainstorm$calendarEventArgs<ExtArgs>
+  project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
 
 export type $BrainstormPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Brainstorm"
   objects: {
-    project: Prisma.$ProjectPayload<ExtArgs>
     calendarEvent: Prisma.$CalendarEventPayload<ExtArgs> | null
+    project: Prisma.$ProjectPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1084,8 +1084,8 @@ readonly fields: BrainstormFieldRefs;
  */
 export interface Prisma__BrainstormClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   calendarEvent<T extends Prisma.Brainstorm$calendarEventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Brainstorm$calendarEventArgs<ExtArgs>>): Prisma.Prisma__CalendarEventClient<runtime.Types.Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  project<T extends Prisma.ProjectDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProjectDefaultArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

@@ -174,9 +174,9 @@ export type PatternWhereInput = {
   name?: Prisma.StringFilter<"Pattern"> | string
   userId?: Prisma.StringFilter<"Pattern"> | string
   categoryId?: Prisma.StringNullableFilter<"Pattern"> | string | null
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problemLogs?: Prisma.ProblemLogListRelationFilter
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }
 
 export type PatternOrderByWithRelationInput = {
@@ -184,9 +184,9 @@ export type PatternOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.CategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   problemLogs?: Prisma.ProblemLogOrderByRelationAggregateInput
-  category?: Prisma.CategoryOrderByWithRelationInput
 }
 
 export type PatternWhereUniqueInput = Prisma.AtLeast<{
@@ -198,9 +198,9 @@ export type PatternWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Pattern"> | string
   userId?: Prisma.StringFilter<"Pattern"> | string
   categoryId?: Prisma.StringNullableFilter<"Pattern"> | string | null
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   problemLogs?: Prisma.ProblemLogListRelationFilter
-  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
 }, "id" | "userId_name">
 
 export type PatternOrderByWithAggregationInput = {
@@ -226,9 +226,9 @@ export type PatternScalarWhereWithAggregatesInput = {
 export type PatternCreateInput = {
   id?: string
   name: string
-  user: Prisma.UserCreateNestedOneWithoutPatternsInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutPatternInput
   category?: Prisma.CategoryCreateNestedOneWithoutPatternsInput
+  user: Prisma.UserCreateNestedOneWithoutPatternsInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutPatternsInput
 }
 
 export type PatternUncheckedCreateInput = {
@@ -236,15 +236,15 @@ export type PatternUncheckedCreateInput = {
   name: string
   userId: string
   categoryId?: string | null
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutPatternInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutPatternsInput
 }
 
 export type PatternUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPatternsNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutPatternNestedInput
   category?: Prisma.CategoryUpdateOneWithoutPatternsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPatternsNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutPatternsNestedInput
 }
 
 export type PatternUncheckedUpdateInput = {
@@ -252,7 +252,7 @@ export type PatternUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutPatternNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutPatternsNestedInput
 }
 
 export type PatternCreateManyInput = {
@@ -282,11 +282,6 @@ export type PatternListRelationFilter = {
 
 export type PatternOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type PatternNullableScalarRelationFilter = {
-  is?: Prisma.PatternWhereInput | null
-  isNot?: Prisma.PatternWhereInput | null
 }
 
 export type PatternUserIdNameCompoundUniqueInput = {
@@ -399,34 +394,56 @@ export type PatternUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.PatternScalarWhereInput | Prisma.PatternScalarWhereInput[]
 }
 
-export type PatternCreateNestedOneWithoutProblemLogsInput = {
-  create?: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput>
-  connectOrCreate?: Prisma.PatternCreateOrConnectWithoutProblemLogsInput
-  connect?: Prisma.PatternWhereUniqueInput
+export type PatternCreateNestedManyWithoutProblemLogsInput = {
+  create?: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput> | Prisma.PatternCreateWithoutProblemLogsInput[] | Prisma.PatternUncheckedCreateWithoutProblemLogsInput[]
+  connectOrCreate?: Prisma.PatternCreateOrConnectWithoutProblemLogsInput | Prisma.PatternCreateOrConnectWithoutProblemLogsInput[]
+  connect?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
 }
 
-export type PatternUpdateOneWithoutProblemLogsNestedInput = {
-  create?: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput>
-  connectOrCreate?: Prisma.PatternCreateOrConnectWithoutProblemLogsInput
-  upsert?: Prisma.PatternUpsertWithoutProblemLogsInput
-  disconnect?: Prisma.PatternWhereInput | boolean
-  delete?: Prisma.PatternWhereInput | boolean
-  connect?: Prisma.PatternWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PatternUpdateToOneWithWhereWithoutProblemLogsInput, Prisma.PatternUpdateWithoutProblemLogsInput>, Prisma.PatternUncheckedUpdateWithoutProblemLogsInput>
+export type PatternUncheckedCreateNestedManyWithoutProblemLogsInput = {
+  create?: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput> | Prisma.PatternCreateWithoutProblemLogsInput[] | Prisma.PatternUncheckedCreateWithoutProblemLogsInput[]
+  connectOrCreate?: Prisma.PatternCreateOrConnectWithoutProblemLogsInput | Prisma.PatternCreateOrConnectWithoutProblemLogsInput[]
+  connect?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+}
+
+export type PatternUpdateManyWithoutProblemLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput> | Prisma.PatternCreateWithoutProblemLogsInput[] | Prisma.PatternUncheckedCreateWithoutProblemLogsInput[]
+  connectOrCreate?: Prisma.PatternCreateOrConnectWithoutProblemLogsInput | Prisma.PatternCreateOrConnectWithoutProblemLogsInput[]
+  upsert?: Prisma.PatternUpsertWithWhereUniqueWithoutProblemLogsInput | Prisma.PatternUpsertWithWhereUniqueWithoutProblemLogsInput[]
+  set?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  disconnect?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  delete?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  connect?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  update?: Prisma.PatternUpdateWithWhereUniqueWithoutProblemLogsInput | Prisma.PatternUpdateWithWhereUniqueWithoutProblemLogsInput[]
+  updateMany?: Prisma.PatternUpdateManyWithWhereWithoutProblemLogsInput | Prisma.PatternUpdateManyWithWhereWithoutProblemLogsInput[]
+  deleteMany?: Prisma.PatternScalarWhereInput | Prisma.PatternScalarWhereInput[]
+}
+
+export type PatternUncheckedUpdateManyWithoutProblemLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput> | Prisma.PatternCreateWithoutProblemLogsInput[] | Prisma.PatternUncheckedCreateWithoutProblemLogsInput[]
+  connectOrCreate?: Prisma.PatternCreateOrConnectWithoutProblemLogsInput | Prisma.PatternCreateOrConnectWithoutProblemLogsInput[]
+  upsert?: Prisma.PatternUpsertWithWhereUniqueWithoutProblemLogsInput | Prisma.PatternUpsertWithWhereUniqueWithoutProblemLogsInput[]
+  set?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  disconnect?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  delete?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  connect?: Prisma.PatternWhereUniqueInput | Prisma.PatternWhereUniqueInput[]
+  update?: Prisma.PatternUpdateWithWhereUniqueWithoutProblemLogsInput | Prisma.PatternUpdateWithWhereUniqueWithoutProblemLogsInput[]
+  updateMany?: Prisma.PatternUpdateManyWithWhereWithoutProblemLogsInput | Prisma.PatternUpdateManyWithWhereWithoutProblemLogsInput[]
+  deleteMany?: Prisma.PatternScalarWhereInput | Prisma.PatternScalarWhereInput[]
 }
 
 export type PatternCreateWithoutUserInput = {
   id?: string
   name: string
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutPatternInput
   category?: Prisma.CategoryCreateNestedOneWithoutPatternsInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutPatternsInput
 }
 
 export type PatternUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
   categoryId?: string | null
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutPatternInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutPatternsInput
 }
 
 export type PatternCreateOrConnectWithoutUserInput = {
@@ -469,14 +486,14 @@ export type PatternCreateWithoutCategoryInput = {
   id?: string
   name: string
   user: Prisma.UserCreateNestedOneWithoutPatternsInput
-  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutPatternInput
+  problemLogs?: Prisma.ProblemLogCreateNestedManyWithoutPatternsInput
 }
 
 export type PatternUncheckedCreateWithoutCategoryInput = {
   id?: string
   name: string
   userId: string
-  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutPatternInput
+  problemLogs?: Prisma.ProblemLogUncheckedCreateNestedManyWithoutPatternsInput
 }
 
 export type PatternCreateOrConnectWithoutCategoryInput = {
@@ -508,8 +525,8 @@ export type PatternUpdateManyWithWhereWithoutCategoryInput = {
 export type PatternCreateWithoutProblemLogsInput = {
   id?: string
   name: string
-  user: Prisma.UserCreateNestedOneWithoutPatternsInput
   category?: Prisma.CategoryCreateNestedOneWithoutPatternsInput
+  user: Prisma.UserCreateNestedOneWithoutPatternsInput
 }
 
 export type PatternUncheckedCreateWithoutProblemLogsInput = {
@@ -524,29 +541,20 @@ export type PatternCreateOrConnectWithoutProblemLogsInput = {
   create: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput>
 }
 
-export type PatternUpsertWithoutProblemLogsInput = {
+export type PatternUpsertWithWhereUniqueWithoutProblemLogsInput = {
+  where: Prisma.PatternWhereUniqueInput
   update: Prisma.XOR<Prisma.PatternUpdateWithoutProblemLogsInput, Prisma.PatternUncheckedUpdateWithoutProblemLogsInput>
   create: Prisma.XOR<Prisma.PatternCreateWithoutProblemLogsInput, Prisma.PatternUncheckedCreateWithoutProblemLogsInput>
-  where?: Prisma.PatternWhereInput
 }
 
-export type PatternUpdateToOneWithWhereWithoutProblemLogsInput = {
-  where?: Prisma.PatternWhereInput
+export type PatternUpdateWithWhereUniqueWithoutProblemLogsInput = {
+  where: Prisma.PatternWhereUniqueInput
   data: Prisma.XOR<Prisma.PatternUpdateWithoutProblemLogsInput, Prisma.PatternUncheckedUpdateWithoutProblemLogsInput>
 }
 
-export type PatternUpdateWithoutProblemLogsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPatternsNestedInput
-  category?: Prisma.CategoryUpdateOneWithoutPatternsNestedInput
-}
-
-export type PatternUncheckedUpdateWithoutProblemLogsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+export type PatternUpdateManyWithWhereWithoutProblemLogsInput = {
+  where: Prisma.PatternScalarWhereInput
+  data: Prisma.XOR<Prisma.PatternUpdateManyMutationInput, Prisma.PatternUncheckedUpdateManyWithoutProblemLogsInput>
 }
 
 export type PatternCreateManyUserInput = {
@@ -558,15 +566,15 @@ export type PatternCreateManyUserInput = {
 export type PatternUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutPatternNestedInput
   category?: Prisma.CategoryUpdateOneWithoutPatternsNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutPatternsNestedInput
 }
 
 export type PatternUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutPatternNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutPatternsNestedInput
 }
 
 export type PatternUncheckedUpdateManyWithoutUserInput = {
@@ -585,20 +593,41 @@ export type PatternUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneRequiredWithoutPatternsNestedInput
-  problemLogs?: Prisma.ProblemLogUpdateManyWithoutPatternNestedInput
+  problemLogs?: Prisma.ProblemLogUpdateManyWithoutPatternsNestedInput
 }
 
 export type PatternUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutPatternNestedInput
+  problemLogs?: Prisma.ProblemLogUncheckedUpdateManyWithoutPatternsNestedInput
 }
 
 export type PatternUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type PatternUpdateWithoutProblemLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.CategoryUpdateOneWithoutPatternsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPatternsNestedInput
+}
+
+export type PatternUncheckedUpdateWithoutProblemLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type PatternUncheckedUpdateManyWithoutProblemLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -637,9 +666,9 @@ export type PatternSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   userId?: boolean
   categoryId?: boolean
+  category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problemLogs?: boolean | Prisma.Pattern$problemLogsArgs<ExtArgs>
-  category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
   _count?: boolean | Prisma.PatternCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pattern"]>
 
@@ -648,8 +677,8 @@ export type PatternSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   userId?: boolean
   categoryId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pattern"]>
 
 export type PatternSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -657,8 +686,8 @@ export type PatternSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   userId?: boolean
   categoryId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pattern"]>
 
 export type PatternSelectScalar = {
@@ -670,26 +699,26 @@ export type PatternSelectScalar = {
 
 export type PatternOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "userId" | "categoryId", ExtArgs["result"]["pattern"]>
 export type PatternInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   problemLogs?: boolean | Prisma.Pattern$problemLogsArgs<ExtArgs>
-  category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
   _count?: boolean | Prisma.PatternCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PatternIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type PatternIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   category?: boolean | Prisma.Pattern$categoryArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $PatternPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Pattern"
   objects: {
+    category: Prisma.$CategoryPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs>
     problemLogs: Prisma.$ProblemLogPayload<ExtArgs>[]
-    category: Prisma.$CategoryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1090,9 +1119,9 @@ readonly fields: PatternFieldRefs;
  */
 export interface Prisma__PatternClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  category<T extends Prisma.Pattern$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pattern$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   problemLogs<T extends Prisma.Pattern$problemLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pattern$problemLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProblemLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  category<T extends Prisma.Pattern$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pattern$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1522,6 +1551,25 @@ export type PatternDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Pattern.category
+ */
+export type Pattern$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
+}
+
+/**
  * Pattern.problemLogs
  */
 export type Pattern$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1543,25 +1591,6 @@ export type Pattern$problemLogsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.ProblemLogScalarFieldEnum | Prisma.ProblemLogScalarFieldEnum[]
-}
-
-/**
- * Pattern.category
- */
-export type Pattern$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Category
-   */
-  select?: Prisma.CategorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Category
-   */
-  omit?: Prisma.CategoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CategoryInclude<ExtArgs> | null
-  where?: Prisma.CategoryWhereInput
 }
 
 /**

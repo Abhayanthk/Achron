@@ -18,7 +18,7 @@ export default async function CPTrackerPage() {
   // Fetch Data
   const logs = await prisma.problemLog.findMany({
     where: { userId },
-    include: { pattern: true },
+    include: { patterns: true, tags: true },
   });
 
   // 1. Weakness Heatmap Data
@@ -38,7 +38,7 @@ export default async function CPTrackerPage() {
   // 2. Time Analysis Data (Avg time by pattern)
   const patternTimes: Record<string, { total: number; count: number }> = {};
   logs.forEach((log) => {
-    const patternName = log.pattern?.name || "Unknown";
+    const patternName = log.patterns[0]?.name || "Unknown";
     if (!patternTimes[patternName]) {
       patternTimes[patternName] = { total: 0, count: 0 };
     }

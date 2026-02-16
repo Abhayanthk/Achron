@@ -41,9 +41,9 @@ export type HabitMinAggregateOutputType = {
   userId: string | null
   name: string | null
   streak: number | null
-  targetDays: number | null
-  startDate: Date | null
   archived: boolean | null
+  startDate: Date | null
+  targetDays: number | null
   updatedAt: Date | null
 }
 
@@ -52,9 +52,9 @@ export type HabitMaxAggregateOutputType = {
   userId: string | null
   name: string | null
   streak: number | null
-  targetDays: number | null
-  startDate: Date | null
   archived: boolean | null
+  startDate: Date | null
+  targetDays: number | null
   updatedAt: Date | null
 }
 
@@ -64,9 +64,9 @@ export type HabitCountAggregateOutputType = {
   name: number
   streak: number
   completedDates: number
-  targetDays: number
-  startDate: number
   archived: number
+  startDate: number
+  targetDays: number
   updatedAt: number
   _all: number
 }
@@ -87,9 +87,9 @@ export type HabitMinAggregateInputType = {
   userId?: true
   name?: true
   streak?: true
-  targetDays?: true
-  startDate?: true
   archived?: true
+  startDate?: true
+  targetDays?: true
   updatedAt?: true
 }
 
@@ -98,9 +98,9 @@ export type HabitMaxAggregateInputType = {
   userId?: true
   name?: true
   streak?: true
-  targetDays?: true
-  startDate?: true
   archived?: true
+  startDate?: true
+  targetDays?: true
   updatedAt?: true
 }
 
@@ -110,9 +110,9 @@ export type HabitCountAggregateInputType = {
   name?: true
   streak?: true
   completedDates?: true
-  targetDays?: true
-  startDate?: true
   archived?: true
+  startDate?: true
+  targetDays?: true
   updatedAt?: true
   _all?: true
 }
@@ -209,9 +209,9 @@ export type HabitGroupByOutputType = {
   name: string
   streak: number
   completedDates: Date[]
-  targetDays: number | null
-  startDate: Date
   archived: boolean
+  startDate: Date
+  targetDays: number | null
   updatedAt: Date
   _count: HabitCountAggregateOutputType | null
   _avg: HabitAvgAggregateOutputType | null
@@ -244,9 +244,9 @@ export type HabitWhereInput = {
   name?: Prisma.StringFilter<"Habit"> | string
   streak?: Prisma.IntFilter<"Habit"> | number
   completedDates?: Prisma.DateTimeNullableListFilter<"Habit">
-  targetDays?: Prisma.IntNullableFilter<"Habit"> | number | null
-  startDate?: Prisma.DateTimeFilter<"Habit"> | Date | string
   archived?: Prisma.BoolFilter<"Habit"> | boolean
+  startDate?: Prisma.DateTimeFilter<"Habit"> | Date | string
+  targetDays?: Prisma.IntNullableFilter<"Habit"> | number | null
   updatedAt?: Prisma.DateTimeFilter<"Habit"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -257,9 +257,9 @@ export type HabitOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   streak?: Prisma.SortOrder
   completedDates?: Prisma.SortOrder
-  targetDays?: Prisma.SortOrderInput | Prisma.SortOrder
-  startDate?: Prisma.SortOrder
   archived?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  targetDays?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -273,9 +273,9 @@ export type HabitWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Habit"> | string
   streak?: Prisma.IntFilter<"Habit"> | number
   completedDates?: Prisma.DateTimeNullableListFilter<"Habit">
-  targetDays?: Prisma.IntNullableFilter<"Habit"> | number | null
-  startDate?: Prisma.DateTimeFilter<"Habit"> | Date | string
   archived?: Prisma.BoolFilter<"Habit"> | boolean
+  startDate?: Prisma.DateTimeFilter<"Habit"> | Date | string
+  targetDays?: Prisma.IntNullableFilter<"Habit"> | number | null
   updatedAt?: Prisma.DateTimeFilter<"Habit"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -286,9 +286,9 @@ export type HabitOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   streak?: Prisma.SortOrder
   completedDates?: Prisma.SortOrder
-  targetDays?: Prisma.SortOrderInput | Prisma.SortOrder
-  startDate?: Prisma.SortOrder
   archived?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  targetDays?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.HabitCountOrderByAggregateInput
   _avg?: Prisma.HabitAvgOrderByAggregateInput
@@ -306,9 +306,9 @@ export type HabitScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Habit"> | string
   streak?: Prisma.IntWithAggregatesFilter<"Habit"> | number
   completedDates?: Prisma.DateTimeNullableListFilter<"Habit">
-  targetDays?: Prisma.IntNullableWithAggregatesFilter<"Habit"> | number | null
-  startDate?: Prisma.DateTimeWithAggregatesFilter<"Habit"> | Date | string
   archived?: Prisma.BoolWithAggregatesFilter<"Habit"> | boolean
+  startDate?: Prisma.DateTimeWithAggregatesFilter<"Habit"> | Date | string
+  targetDays?: Prisma.IntNullableWithAggregatesFilter<"Habit"> | number | null
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Habit"> | Date | string
 }
 
@@ -317,9 +317,9 @@ export type HabitCreateInput = {
   name: string
   streak?: number
   completedDates?: Prisma.HabitCreatecompletedDatesInput | Date[] | string[]
-  targetDays?: number | null
-  startDate?: Date | string
   archived?: boolean
+  startDate?: Date | string
+  targetDays?: number | null
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutHabitsInput
 }
@@ -330,9 +330,9 @@ export type HabitUncheckedCreateInput = {
   name: string
   streak?: number
   completedDates?: Prisma.HabitCreatecompletedDatesInput | Date[] | string[]
-  targetDays?: number | null
-  startDate?: Date | string
   archived?: boolean
+  startDate?: Date | string
+  targetDays?: number | null
   updatedAt?: Date | string
 }
 
@@ -341,9 +341,9 @@ export type HabitUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutHabitsNestedInput
 }
@@ -354,9 +354,9 @@ export type HabitUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -366,9 +366,9 @@ export type HabitCreateManyInput = {
   name: string
   streak?: number
   completedDates?: Prisma.HabitCreatecompletedDatesInput | Date[] | string[]
-  targetDays?: number | null
-  startDate?: Date | string
   archived?: boolean
+  startDate?: Date | string
+  targetDays?: number | null
   updatedAt?: Date | string
 }
 
@@ -377,9 +377,9 @@ export type HabitUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -389,9 +389,9 @@ export type HabitUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -419,9 +419,9 @@ export type HabitCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   streak?: Prisma.SortOrder
   completedDates?: Prisma.SortOrder
-  targetDays?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
   archived?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  targetDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -435,9 +435,9 @@ export type HabitMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   streak?: Prisma.SortOrder
-  targetDays?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
   archived?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  targetDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -446,9 +446,9 @@ export type HabitMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   streak?: Prisma.SortOrder
-  targetDays?: Prisma.SortOrder
-  startDate?: Prisma.SortOrder
   archived?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  targetDays?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
@@ -521,9 +521,9 @@ export type HabitCreateWithoutUserInput = {
   name: string
   streak?: number
   completedDates?: Prisma.HabitCreatecompletedDatesInput | Date[] | string[]
-  targetDays?: number | null
-  startDate?: Date | string
   archived?: boolean
+  startDate?: Date | string
+  targetDays?: number | null
   updatedAt?: Date | string
 }
 
@@ -532,9 +532,9 @@ export type HabitUncheckedCreateWithoutUserInput = {
   name: string
   streak?: number
   completedDates?: Prisma.HabitCreatecompletedDatesInput | Date[] | string[]
-  targetDays?: number | null
-  startDate?: Date | string
   archived?: boolean
+  startDate?: Date | string
+  targetDays?: number | null
   updatedAt?: Date | string
 }
 
@@ -573,9 +573,9 @@ export type HabitScalarWhereInput = {
   name?: Prisma.StringFilter<"Habit"> | string
   streak?: Prisma.IntFilter<"Habit"> | number
   completedDates?: Prisma.DateTimeNullableListFilter<"Habit">
-  targetDays?: Prisma.IntNullableFilter<"Habit"> | number | null
-  startDate?: Prisma.DateTimeFilter<"Habit"> | Date | string
   archived?: Prisma.BoolFilter<"Habit"> | boolean
+  startDate?: Prisma.DateTimeFilter<"Habit"> | Date | string
+  targetDays?: Prisma.IntNullableFilter<"Habit"> | number | null
   updatedAt?: Prisma.DateTimeFilter<"Habit"> | Date | string
 }
 
@@ -584,9 +584,9 @@ export type HabitCreateManyUserInput = {
   name: string
   streak?: number
   completedDates?: Prisma.HabitCreatecompletedDatesInput | Date[] | string[]
-  targetDays?: number | null
-  startDate?: Date | string
   archived?: boolean
+  startDate?: Date | string
+  targetDays?: number | null
   updatedAt?: Date | string
 }
 
@@ -595,9 +595,9 @@ export type HabitUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -606,9 +606,9 @@ export type HabitUncheckedUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -617,9 +617,9 @@ export type HabitUncheckedUpdateManyWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   streak?: Prisma.IntFieldUpdateOperationsInput | number
   completedDates?: Prisma.HabitUpdatecompletedDatesInput | Date[] | string[]
-  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  targetDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -631,9 +631,9 @@ export type HabitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   streak?: boolean
   completedDates?: boolean
-  targetDays?: boolean
-  startDate?: boolean
   archived?: boolean
+  startDate?: boolean
+  targetDays?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["habit"]>
@@ -644,9 +644,9 @@ export type HabitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   streak?: boolean
   completedDates?: boolean
-  targetDays?: boolean
-  startDate?: boolean
   archived?: boolean
+  startDate?: boolean
+  targetDays?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["habit"]>
@@ -657,9 +657,9 @@ export type HabitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   streak?: boolean
   completedDates?: boolean
-  targetDays?: boolean
-  startDate?: boolean
   archived?: boolean
+  startDate?: boolean
+  targetDays?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["habit"]>
@@ -670,13 +670,13 @@ export type HabitSelectScalar = {
   name?: boolean
   streak?: boolean
   completedDates?: boolean
-  targetDays?: boolean
-  startDate?: boolean
   archived?: boolean
+  startDate?: boolean
+  targetDays?: boolean
   updatedAt?: boolean
 }
 
-export type HabitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "streak" | "completedDates" | "targetDays" | "startDate" | "archived" | "updatedAt", ExtArgs["result"]["habit"]>
+export type HabitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "streak" | "completedDates" | "archived" | "startDate" | "targetDays" | "updatedAt", ExtArgs["result"]["habit"]>
 export type HabitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -698,9 +698,9 @@ export type $HabitPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     streak: number
     completedDates: Date[]
-    targetDays: number | null
-    startDate: Date
     archived: boolean
+    startDate: Date
+    targetDays: number | null
     updatedAt: Date
   }, ExtArgs["result"]["habit"]>
   composites: {}
@@ -1131,9 +1131,9 @@ export interface HabitFieldRefs {
   readonly name: Prisma.FieldRef<"Habit", 'String'>
   readonly streak: Prisma.FieldRef<"Habit", 'Int'>
   readonly completedDates: Prisma.FieldRef<"Habit", 'DateTime[]'>
-  readonly targetDays: Prisma.FieldRef<"Habit", 'Int'>
-  readonly startDate: Prisma.FieldRef<"Habit", 'DateTime'>
   readonly archived: Prisma.FieldRef<"Habit", 'Boolean'>
+  readonly startDate: Prisma.FieldRef<"Habit", 'DateTime'>
+  readonly targetDays: Prisma.FieldRef<"Habit", 'Int'>
   readonly updatedAt: Prisma.FieldRef<"Habit", 'DateTime'>
 }
     
