@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 import { ProblemTable } from "@/components/cp-tracker/ProblemTable";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter } from "lucide-react";
+import { Search, Filter, ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 export default async function LibraryPage(props: {
   searchParams: Promise<{ search?: string; platform?: string }>;
@@ -46,11 +47,24 @@ export default async function LibraryPage(props: {
   return (
     <div className="h-full flex flex-col p-6 space-y-6">
       {/* Header */}
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold text-white">Problem Library</h1>
-        <p className="text-zinc-400 text-sm">
-          A collection of all your solved problems and insights.
-        </p>
+      <div className="flex flex-col gap-4">
+        <div>
+          <Link href="/cp-tracker">
+            <Button
+              variant="ghost"
+              className="pl-0 text-zinc-400 hover:text-white hover:bg-transparent"
+            >
+              <ChevronLeft className="mr-2 h-4 w-4" />
+              Back to Dashboard
+            </Button>
+          </Link>
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold text-white">Problem Library</h1>
+          <p className="text-zinc-400 text-sm">
+            A collection of all your solved problems and insights.
+          </p>
+        </div>
       </div>
 
       {/* Controls */}

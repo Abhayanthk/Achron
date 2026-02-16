@@ -21,7 +21,7 @@ interface ProblemLog {
   rating: number;
   patterns: { name: string }[];
   solve_status_type: string;
-  total_time_minutes: number;
+  perceived_difficulty_after: number;
   created_at: string;
   tags: { name: string }[];
 }
@@ -55,14 +55,16 @@ export function ProblemTable({ data }: ProblemTableProps) {
       <Table>
         <TableHeader className="bg-zinc-900/50">
           <TableRow className="border-white/5 hover:bg-transparent">
-            <TableHead className="text-zinc-400">Problem Name</TableHead>
+            <TableHead className="text-zinc-400 w-[15%]">
+              Problem Name
+            </TableHead>
             <TableHead className="text-zinc-400 w-[100px]">Platform</TableHead>
             <TableHead className="text-zinc-400 w-[80px]">Rating</TableHead>
-            <TableHead className="text-zinc-400">Tags</TableHead>
-            <TableHead className="text-zinc-400">Pattern</TableHead>
-            <TableHead className="text-zinc-400">Status</TableHead>
-            <TableHead className="text-zinc-400 text-right w-[100px]">
-              Time
+            <TableHead className="text-zinc-400 w-[15%]">Tags</TableHead>
+            <TableHead className="text-zinc-400 w-[15%]">Pattern</TableHead>
+            <TableHead className="text-zinc-400 w-[120px]">Status</TableHead>
+            <TableHead className="text-zinc-400 w-[80px] text-center">
+              Diff
             </TableHead>
             <TableHead className="text-zinc-400 text-right w-[120px]">
               Date
@@ -131,8 +133,20 @@ export function ProblemTable({ data }: ProblemTableProps) {
                   {problem.solve_status_type}
                 </Badge>
               </TableCell>
-              <TableCell className="text-right text-zinc-400">
-                {problem.total_time_minutes}m
+              <TableCell className="text-center">
+                <div className="flex items-center gap-0.5 justify-center w-[80px]">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className={cn(
+                        "h-1 w-full rounded-full transition-all",
+                        i < (problem.perceived_difficulty_after || 0)
+                          ? "bg-orange-500"
+                          : "bg-zinc-800",
+                      )}
+                    />
+                  ))}
+                </div>
               </TableCell>
               <TableCell className="text-right text-zinc-400">
                 {format(new Date(problem.created_at), "MMM d, yyyy")}
