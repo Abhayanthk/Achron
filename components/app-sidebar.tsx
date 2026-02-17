@@ -123,6 +123,11 @@ const navMain = [
     url: "/calendar",
     icon: Calendar,
   },
+  {
+    title: "CP Tracker",
+    url: "/cp-tracker",
+    icon: SquareTerminal,
+  },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

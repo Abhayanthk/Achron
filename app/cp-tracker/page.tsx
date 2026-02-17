@@ -3,7 +3,8 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { WeaknessHeatmap } from "@/components/cp-tracker/WeaknessHeatmap";
-import { TimeAnalysisChart } from "@/components/cp-tracker/TimeAnalysisChart";
+import { StatusDistributionChart } from "@/components/cp-tracker/StatusDistributionChart";
+import { TagPerformanceChart } from "@/components/cp-tracker/TagPerformanceChart";
 import { AccuracyGauge } from "@/components/cp-tracker/AccuracyGauge";
 import { RevisionQueue } from "@/components/cp-tracker/RevisionQueue";
 import { Button } from "@/components/ui/button";
@@ -35,31 +36,37 @@ export default async function CPTrackerPage() {
     }),
   );
 
-  // 2. Time Analysis Data (Avg time by pattern)
-  const patternTimes: Record<string, { total: number; count: number }> = {};
+  // 2. Status Distribution Data
+  const statusCounts: Record<string, number> = {};
   logs.forEach((log) => {
-    const patternName = log.patterns[0]?.name || "Unknown";
-    if (!patternTimes[patternName]) {
-      patternTimes[patternName] = { total: 0, count: 0 };
-    }
-    patternTimes[patternName].total += log.total_time_minutes;
-    patternTimes[patternName].count += 1;
+    statusCounts[log.solve_status_type] =
+      (statusCounts[log.solve_status_type] || 0) + 1;
   });
-  const timeAnalysisData = Object.entries(patternTimes).map(
-    ([pattern, { total, count }]) => ({
-      pattern,
-      avgTime: Math.round(total / count),
-    }),
-  );
+  const statusData = Object.entries(statusCounts).map(([status, count]) => ({
+    status,
+    count,
+  }));
 
-  // 3. Accuracy Data (Self-Solved Rate)
+  // 3. Tag Performance Data (Frequency)
+  const tagCounts: Record<string, number> = {};
+  logs.forEach((log) => {
+    log.tags.forEach((tag) => {
+      tagCounts[tag.name] = (tagCounts[tag.name] || 0) + 1;
+    });
+  });
+  const tagData = Object.entries(tagCounts).map(([tag, count]) => ({
+    tag,
+    count,
+  }));
+
+  // 4. Accuracy Data (Self-Solved Rate)
   const selfSolvedCount = logs.filter(
     (log) => log.idea_source === "Self",
   ).length;
   const accuracyPercentage =
     logs.length > 0 ? (selfSolvedCount / logs.length) * 100 : 0;
 
-  // 4. Revision Queue (Must Revisit + Last Revised > 7 days ago OR Never)
+  // 5. Revision Queue (Must Revisit + Last Revised > 7 days ago OR Never)
   const sevenDaysAgo = subDays(new Date(), 7);
   const revisionItems = logs.filter((log) => {
     if (!log.must_revisit) return false;
@@ -104,9 +111,11 @@ export default async function CPTrackerPage() {
         {/* Row 1: Metrics */}
         <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left Col: Heatmap & Time */}
+            <StatusDistributionChart data={statusData} />
+            <TagPerformanceChart data={tagData} />
+          </div>
+          <div className="grid grid-cols-1">
             <WeaknessHeatmap data={weaknessData} />
-            <TimeAnalysisChart data={timeAnalysisData} />
           </div>
         </div>
 
