@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { REV_LEVEL_LABELS } from "@/lib/revision";
 
 interface ProblemLog {
   id: string;
@@ -24,6 +25,8 @@ interface ProblemLog {
   perceived_difficulty_after: number;
   created_at: string;
   tags: { name: string }[];
+  rev_level: number;
+  last_revised_date?: string | Date | null;
 }
 
 interface ProblemTableProps {
@@ -37,6 +40,16 @@ const statusColors: Record<string, string> = {
     "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
   Partial: "bg-orange-500/10 text-orange-500 border-orange-500/20",
   Failed: "bg-red-500/10 text-red-500 border-red-500/20",
+};
+
+const revLevelColors: Record<number, string> = {
+  0: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+  1: "bg-orange-500/10 text-orange-400 border-orange-500/20",
+  2: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  3: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  4: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+  5: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+  6: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
 };
 
 export function ProblemTable({ data }: ProblemTableProps) {
@@ -65,6 +78,9 @@ export function ProblemTable({ data }: ProblemTableProps) {
             <TableHead className="text-zinc-400 w-[120px]">Status</TableHead>
             <TableHead className="text-zinc-400 w-[80px] text-center">
               Diff
+            </TableHead>
+            <TableHead className="text-zinc-400 w-[80px] text-center">
+              Rev
             </TableHead>
             <TableHead className="text-zinc-400 text-right w-[120px]">
               Date
@@ -147,6 +163,17 @@ export function ProblemTable({ data }: ProblemTableProps) {
                     />
                   ))}
                 </div>
+              </TableCell>
+              <TableCell className="text-center">
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "text-[10px] px-1.5 py-0 h-5 whitespace-nowrap",
+                    revLevelColors[problem.rev_level] ?? revLevelColors[0],
+                  )}
+                >
+                  {REV_LEVEL_LABELS[problem.rev_level] ?? "Lv 0"}
+                </Badge>
               </TableCell>
               <TableCell className="text-right text-zinc-400">
                 {format(new Date(problem.created_at), "MMM d, yyyy")}

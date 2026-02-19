@@ -10,7 +10,7 @@ import { RevisionQueue } from "@/components/cp-tracker/RevisionQueue";
 import { Button } from "@/components/ui/button";
 import { Plus, List, Trophy } from "lucide-react";
 import Link from "next/link";
-import { subDays } from "date-fns";
+import { isRevisionDue } from "@/lib/revision";
 
 export default async function CPTrackerPage() {
   const { userId } = await auth();
@@ -66,12 +66,10 @@ export default async function CPTrackerPage() {
   const accuracyPercentage =
     logs.length > 0 ? (selfSolvedCount / logs.length) * 100 : 0;
 
-  // 5. Revision Queue (Must Revisit + Last Revised > 7 days ago OR Never)
-  const sevenDaysAgo = subDays(new Date(), 7);
+  // 5. Revision Queue — Spaced Repetition
   const revisionItems = logs.filter((log) => {
     if (!log.must_revisit) return false;
-    if (!log.last_revised_date) return true; // Never revised
-    return new Date(log.last_revised_date) < sevenDaysAgo;
+    return isRevisionDue(log.last_revised_date, log.rev_level, log.created_at);
   });
 
   return (

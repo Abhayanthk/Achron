@@ -43,3 +43,4 @@ next-env.d.ts
 # things to fix
 thingsToFix.txt
 
+generated/

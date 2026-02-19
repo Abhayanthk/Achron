@@ -16,15 +16,37 @@ export async function PATCH(
     const { id } = params;
     const body = await req.json();
 
-    // Whitelist fields that can be updated here if strictly needed, 
-    // or just allow updating the log generally.
-    // For this specific task, we are updating 'pattern_generalization_note'.
-    
-    // We can just pass the body to update.
+    // Handle revision completion action
+    if (body.action === "complete_revision") {
+      const existing = await prisma.problemLog.findUnique({
+        where: { id, userId },
+        select: { rev_level: true },
+      });
+
+      if (!existing) {
+        return new NextResponse("Not found", { status: 404 });
+      }
+
+      const newLevel = Math.min(existing.rev_level + 1, 6);
+
+      const updatedLog = await prisma.problemLog.update({
+        where: { id, userId },
+        data: {
+          rev_level: newLevel,
+          last_revised_date: new Date(),
+          // Once at permanent memory (level 6), no longer needs revisiting
+          ...(newLevel >= 6 ? { must_revisit: false } : {}),
+        },
+      });
+
+      return NextResponse.json(updatedLog);
+    }
+
+    // General update (existing behavior)
     const updatedLog = await prisma.problemLog.update({
       where: {
         id: id,
-        userId: userId, // Ensure ownership
+        userId: userId,
       },
       data: {
         ...body,

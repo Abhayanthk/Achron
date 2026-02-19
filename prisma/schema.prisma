@@ -274,6 +274,7 @@ model ProblemLog {
       created_at                  DateTime      @default(now())
       last_revised_date           DateTime?
       must_revisit                Boolean
+      rev_level                   Int           @default(0)
       re_solve_result             String?
       pattern_generalization_note String
       similar_problems_links      String[]
