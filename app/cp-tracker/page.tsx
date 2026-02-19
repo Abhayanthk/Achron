@@ -116,7 +116,6 @@ export default async function CPTrackerPage() {
             <WeaknessHeatmap data={weaknessData} />
           </div>
         </div>
-
         {/* Right Col: Accuracy & Queue */}
         <div className="col-span-12 lg:col-span-4 flex flex-col gap-6">
           <AccuracyGauge percentage={accuracyPercentage} />

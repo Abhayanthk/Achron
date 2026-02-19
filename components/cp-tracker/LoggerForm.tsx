@@ -277,13 +277,6 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
     (Number(watchedTimeFields[1]) || 0) +
     (Number(watchedTimeFields[2]) || 0);
 
-  // Auto-set must revisit
-  useEffect(() => {
-    if (watchedStatus === "Failed" || watchedDifficulty > 3) {
-      form.setValue("must_revisit", true);
-    }
-  }, [watchedStatus, watchedDifficulty, form]);
-
   async function onSubmit(data: ProblemLogFormValues) {
     try {
       // Auto-sum time
@@ -881,7 +874,35 @@ export function LoggerForm({ mode = "create", initialData }: LoggerFormProps) {
               />
             </div>
 
-            {/* 8. Submit */}
+            {/* 8. Revision Checkbox */}
+            <div className="bg-zinc-900/50 p-6 rounded-xl border border-white/5">
+              <FormField
+                control={form.control}
+                name="must_revisit"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        disabled={mode === "view"}
+                        className="border-indigo-500/50 data-[state=checked]:bg-indigo-500"
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel className="text-white cursor-pointer">
+                        Revision
+                      </FormLabel>
+                      <FormDescription className="text-zinc-500 text-xs">
+                        Mark this problem for spaced repetition review.
+                      </FormDescription>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* 9. Submit */}
             <div className="flex justify-end gap-4 pt-4">
               <Button
                 type="button"

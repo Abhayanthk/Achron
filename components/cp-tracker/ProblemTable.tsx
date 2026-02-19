@@ -27,6 +27,7 @@ interface ProblemLog {
   tags: { name: string }[];
   rev_level: number;
   last_revised_date?: string | Date | null;
+  must_revisit: boolean;
 }
 
 interface ProblemTableProps {
@@ -169,10 +170,15 @@ export function ProblemTable({ data }: ProblemTableProps) {
                   variant="outline"
                   className={cn(
                     "text-[10px] px-1.5 py-0 h-5 whitespace-nowrap",
-                    revLevelColors[problem.rev_level] ?? revLevelColors[0],
+                    !problem.must_revisit
+                      ? "bg-red-500/10 text-red-400 border-red-500/20"
+                      : (revLevelColors[problem.rev_level] ??
+                          revLevelColors[0]),
                   )}
                 >
-                  {REV_LEVEL_LABELS[problem.rev_level] ?? "Lv 0"}
+                  {!problem.must_revisit
+                    ? "NR"
+                    : (REV_LEVEL_LABELS[problem.rev_level] ?? "Lv 0")}
                 </Badge>
               </TableCell>
               <TableCell className="text-right text-zinc-400">

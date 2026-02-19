@@ -16,12 +16,12 @@ export const REVISION_SCHEDULE = [0, 2, 7, 21, 60, 120] as const;
 
 /** Human-readable label for each revision level */
 export const REV_LEVEL_LABELS = [
-  "Day 0",
-  "Day 2",
-  "Day 7",
-  "Day 21",
-  "Day 60",
-  "Day 120",
+  "lev 0",
+  "lev 1",
+  "lev 2",
+  "lev 3",
+  "lev 4",
+  "lev 5",
   "Permanent",
 ] as const;
 
