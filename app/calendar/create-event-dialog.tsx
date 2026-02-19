@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { format } from "date-fns";
-import { CalendarEvent, Category } from "@/generated/prisma/client";
+import { CalendarEvent, Category } from "@prisma/client";
 import axios from "axios";
 
 interface CreateEventDialogProps {
