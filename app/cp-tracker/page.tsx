@@ -7,16 +7,39 @@ import { StatusDistributionChart } from "@/components/cp-tracker/StatusDistribut
 import { TagPerformanceChart } from "@/components/cp-tracker/TagPerformanceChart";
 import { AccuracyGauge } from "@/components/cp-tracker/AccuracyGauge";
 import { RevisionQueue } from "@/components/cp-tracker/RevisionQueue";
+import { CodeforcesRatingChart } from "@/components/cp-tracker/CodeforcesRatingChart";
 import { Button } from "@/components/ui/button";
 import { Plus, List, Trophy } from "lucide-react";
 import Link from "next/link";
 import { isRevisionDue } from "@/lib/revision";
 
+// Codeforces API fetcher
+async function getCodeforcesRating(handle: string) {
+  try {
+    const res = await fetch(
+      `https://codeforces.com/api/user.rating?handle=${handle}`,
+      {
+        next: { revalidate: 3600 }, // Cache for 1 hour
+      },
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.status === "OK" ? data.result : [];
+  } catch (error) {
+    console.error("Failed to fetch Codeforces rating:", error);
+    return [];
+  }
+}
+
 export default async function CPTrackerPage() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  // Fetch Data
+  // Fetch CF Rating Data for 'harly24'
+  const cfHandle = "harly24";
+  const cfRatingHistory = await getCodeforcesRating(cfHandle);
+
+  // Fetch DB Data
   const logs = await prisma.problemLog.findMany({
     where: { userId },
     include: { patterns: true, tags: true },
@@ -108,6 +131,11 @@ export default async function CPTrackerPage() {
       <div className="grid grid-cols-12 gap-6">
         {/* Row 1: Metrics */}
         <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
+          {cfRatingHistory.length > 0 && (
+            <div className="grid grid-cols-1">
+              <CodeforcesRatingChart data={cfRatingHistory} handle={cfHandle} />
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <StatusDistributionChart data={statusData} />
             <TagPerformanceChart data={tagData} />

@@ -381,7 +381,12 @@ export function LogDetails({ log }: LogDetailsProps) {
                 </Label>
                 <Textarea
                   {...form.register("pattern_generalization_note")}
-                  className="bg-black/40 border-indigo-500/20 text-indigo-100 focus:border-indigo-500 transition-colors min-h-[120px] resize-y"
+                  className="bg-black/40 border-indigo-500/20 text-indigo-100 focus:border-indigo-500 transition-colors min-h-[120px] resize-none overflow-hidden"
+                  onInput={(e) => {
+                    const target = e.target as HTMLTextAreaElement;
+                    target.style.height = "auto";
+                    target.style.height = `${target.scrollHeight}px`;
+                  }}
                 />
               </div>
 
