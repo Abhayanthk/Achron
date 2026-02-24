@@ -178,8 +178,7 @@ export function RevisionQueue({ items }: RevisionQueueProps) {
                   variant="ghost"
                   size="icon"
                   onClick={() =>
-                    item.problem_link &&
-                    window.open(item.problem_link, "_blank")
+                    window.open(`/cp-tracker/log/${item.id}`, "_blank")
                   }
                   className="h-7 w-7 text-zinc-500 hover:text-white hover:bg-white/5 opacity-0 group-hover:opacity-100 transition-all"
                 >
