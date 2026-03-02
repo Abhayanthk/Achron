@@ -134,7 +134,7 @@ export function RevisionQueue({ items }: RevisionQueueProps) {
                     )}
                     title={REV_LEVEL_DESCRIPTIONS[item.rev_level]}
                   >
-                    Lv {item.rev_level} — {REV_LEVEL_LABELS[item.rev_level]}
+                    Lv {item.rev_level}
                   </span>
                   {/* Overdue indicator */}
                   {overdue > 0 && (
