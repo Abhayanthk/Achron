@@ -63,24 +63,28 @@ export default function ExcalidrawWrapper({
   brainstormId,
   breadcrumbs = [],
 }: ExcalidrawWrapperProps) {
-  const debouncedSave = useDebouncedCallback(async (elements, appState) => {
-    try {
-      await axios.put(`/api/brainstorm/${brainstormId}`, {
-        content: {
-          elements,
-          appState: {
-            ...appState,
-            collaborators: [],
+  const debouncedSave = useDebouncedCallback(
+    async (elements, appState, files) => {
+      try {
+        await axios.put(`/api/brainstorm/${brainstormId}`, {
+          content: {
+            elements,
+            appState: {
+              ...appState,
+              collaborators: [],
+            },
+            files,
           },
-        },
-      });
-    } catch (error) {
-      console.error("Failed to save:", error);
-    }
-  }, 1000);
+        });
+      } catch (error) {
+        console.error("Failed to save:", error);
+      }
+    },
+    1000,
+  );
 
   const onChange = (elements: any, appState: any, files: any) => {
-    debouncedSave(elements, appState);
+    debouncedSave(elements, appState, files);
   };
 
   return (
@@ -122,6 +126,7 @@ export default function ExcalidrawWrapper({
             viewBackgroundColor:
               initialData?.appState?.viewBackgroundColor || "#ffffff",
           },
+          files: initialData?.files || {},
         }}
         onChange={onChange}
       />

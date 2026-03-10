@@ -62,24 +62,28 @@ export default function NoteExcalidrawWrapper({
   noteId,
   breadcrumbs = [],
 }: NoteExcalidrawWrapperProps) {
-  const debouncedSave = useDebouncedCallback(async (elements, appState) => {
-    try {
-      await axios.patch(`/api/notes/${noteId}`, {
-        content: {
-          elements,
-          appState: {
-            ...appState,
-            collaborators: [], // clean up unused session data
+  const debouncedSave = useDebouncedCallback(
+    async (elements, appState, files) => {
+      try {
+        await axios.patch(`/api/notes/${noteId}`, {
+          content: {
+            elements,
+            appState: {
+              ...appState,
+              collaborators: [], // clean up unused session data
+            },
+            files,
           },
-        },
-      });
-    } catch (error) {
-      console.error("Failed to save note:", error);
-    }
-  }, 1000);
+        });
+      } catch (error) {
+        console.error("Failed to save note:", error);
+      }
+    },
+    1000,
+  );
 
   const onChange = (elements: any, appState: any, files: any) => {
-    debouncedSave(elements, appState);
+    debouncedSave(elements, appState, files);
   };
 
   return (
@@ -121,6 +125,7 @@ export default function NoteExcalidrawWrapper({
             viewBackgroundColor:
               initialData?.appState?.viewBackgroundColor || "#ffffff",
           },
+          files: initialData?.files || {},
         }}
         onChange={onChange}
       />
