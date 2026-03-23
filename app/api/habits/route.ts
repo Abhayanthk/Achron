@@ -52,6 +52,9 @@ export async function GET(req: Request) {
         }
 
         if (needsUpdate && lastCompletedDate) {
+            // Adding the missed days' dates (day after last completion through yesterday)
+            // This make sure that the penalty won't be fasly applied again
+            
             const missedDayDates: Date[] = [];
             const daysSinceLast = differenceInCalendarDays(today, lastCompletedDate);
             for (let i = 1; i < daysSinceLast; i++) {
