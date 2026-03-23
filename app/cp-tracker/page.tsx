@@ -8,6 +8,7 @@ import { TagPerformanceChart } from "@/components/cp-tracker/TagPerformanceChart
 import { AccuracyGauge } from "@/components/cp-tracker/AccuracyGauge";
 import { RevisionQueue } from "@/components/cp-tracker/RevisionQueue";
 import { CodeforcesRatingChart } from "@/components/cp-tracker/CodeforcesRatingChart";
+import { CodeforcesHandlePrompt } from "@/components/cp-tracker/CodeforcesHandlePrompt";
 import { Button } from "@/components/ui/button";
 import { Plus, List, Trophy } from "lucide-react";
 import Link from "next/link";
@@ -35,9 +36,16 @@ export default async function CPTrackerPage() {
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
 
-  // Fetch CF Rating Data for 'harly24'
-  const cfHandle = "harly24";
-  const cfRatingHistory = await getCodeforcesRating(cfHandle);
+  // Fetch user's saved CF handle from DB
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { codeforcesHandle: true },
+  });
+
+  const cfHandle = user?.codeforcesHandle || null;
+  const cfRatingHistory = cfHandle
+    ? await getCodeforcesRating(cfHandle)
+    : [];
 
   // Fetch DB Data
   const logs = await prisma.problemLog.findMany({
@@ -131,10 +139,15 @@ export default async function CPTrackerPage() {
       <div className="grid grid-cols-12 gap-6">
         {/* Row 1: Metrics */}
         <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
-          {cfRatingHistory.length > 0 && (
-            <div className="grid grid-cols-1">
-              <CodeforcesRatingChart data={cfRatingHistory} handle={cfHandle} />
-            </div>
+          {/* Codeforces Section: Show prompt if no handle, chart if handle exists */}
+          {cfHandle ? (
+            cfRatingHistory.length > 0 && (
+              <div className="grid grid-cols-1">
+                <CodeforcesRatingChart data={cfRatingHistory} handle={cfHandle} />
+              </div>
+            )
+          ) : (
+            <CodeforcesHandlePrompt currentHandle={null} />
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <StatusDistributionChart data={statusData} />

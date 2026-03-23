@@ -15,8 +15,9 @@ model User {
       xp             Int             @default(0)
       level          Int             @default(1)
       fullName       String?
-      alarmSound     String          @default("digital")
-      calendarEvents CalendarEvent[]
+      alarmSound       String          @default("digital")
+      codeforcesHandle String?
+      calendarEvents   CalendarEvent[]
       categories     Category[]
       dailyLogs      DailyLog[]
       sessions       FocusSession[]
