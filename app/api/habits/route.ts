@@ -51,12 +51,20 @@ export async function GET(req: Request) {
           }
         }
 
-        if (needsUpdate) {
+        if (needsUpdate && lastCompletedDate) {
+            const missedDayDates: Date[] = [];
+            const daysSinceLast = differenceInCalendarDays(today, lastCompletedDate);
+            for (let i = 1; i < daysSinceLast; i++) {
+              const missedDate = new Date(lastCompletedDate);
+              missedDate.setDate(missedDate.getDate() + i);
+              missedDayDates.push(missedDate);
+            }
+
             await prisma.habit.update({
                 where: { id: habit.id },
                 data: { streak: newStreak,
                   completedDates: {
-                        push: new Date()
+                        push: missedDayDates
                   }
                  }
             });
