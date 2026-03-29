@@ -9,14 +9,15 @@ import {
   Calendar,
   Plus,
   Trash2,
-  Bold,
-  Italic,
-  List,
-  CheckSquare,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import dynamic from "next/dynamic";
+const BlockEditor = dynamic(
+  () => import("@/components/ui/block-editor").then((mod) => mod.BlockEditor),
+  { ssr: false },
+);
+import { type BlockEditorHandle } from "@/components/ui/block-editor";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
@@ -41,7 +42,7 @@ function NewLogContent() {
   // Category Creation State
   const [newCategoryName, setNewCategoryName] = useState("");
   const [isCategoryPopoverOpen, setIsCategoryPopoverOpen] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const blockEditorRef = useRef<BlockEditorHandle>(null);
 
   // Fetch Categories
   const { data: categories } = useQuery({
@@ -124,25 +125,7 @@ function NewLogContent() {
     },
   });
 
-  // Toolbar Handlers
-  const insertText = (before: string, after: string = "") => {
-    const el = textareaRef.current;
-    if (!el) return;
-    const start = el.selectionStart;
-    const end = el.selectionEnd;
-    const text = el.value;
-    const newText =
-      text.substring(0, start) +
-      before +
-      text.substring(start, end) +
-      after +
-      text.substring(end);
-    setContent(newText);
-    setTimeout(() => {
-      el.focus();
-      el.setSelectionRange(start + before.length, end + before.length);
-    }, 0);
-  };
+  // Toolbar Handlers removed as BlockNote has its own
 
   return (
     <div className="min-h-screen bg-black text-white p-6 md:p-12 relative overflow-hidden">
@@ -265,53 +248,14 @@ function NewLogContent() {
             </div>
           </div>
 
-          {/* Toolbar */}
-          <div className="flex items-center gap-1 border-b border-white/10 pb-2 mb-2 sticky top-0 bg-black/80 backdrop-blur-md z-20 py-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => insertText("**", "**")}
-              title="Bold"
-            >
-              <Bold className="h-4 w-4 text-zinc-400" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => insertText("*", "*")}
-              title="Italic"
-            >
-              <Italic className="h-4 w-4 text-zinc-400" />
-            </Button>
-            <div className="w-px h-4 bg-white/10 mx-2" />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => insertText("- ")}
-              title="List"
-            >
-              <List className="h-4 w-4 text-zinc-400" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => insertText("- [ ] ")}
-              title="Checklist"
-            >
-              <CheckSquare className="h-4 w-4 text-zinc-400" />
-            </Button>
+          {/* Content Area (BlockNote) */}
+          <div className="min-h-[60vh] prose prose-invert max-w-none">
+            <BlockEditor
+              ref={blockEditorRef}
+              initialContent={existingLog?.content}
+              onChange={(blocks) => setContent(JSON.stringify(blocks))}
+            />
           </div>
-
-          {/* Content Area (No Box) */}
-          <Textarea
-            ref={textareaRef}
-            value={content}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setContent(e.target.value)
-            }
-            placeholder="Start writing..."
-            className="min-h-[60vh] bg-transparent border-none resize-none text-lg leading-relaxed text-zinc-200 p-4 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-zinc-700"
-          />
 
           <div className="fixed bottom-8 right-8 animate-in zoom-in duration-300">
             <Button

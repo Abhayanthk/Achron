@@ -31,6 +31,12 @@ import { CodeEditor } from "./CodeEditor";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Brain, AlertTriangle } from "lucide-react";
 import { CreatableSelect, Option } from "@/components/ui/creatable-select";
+import dynamic from "next/dynamic";
+const BlockEditor = dynamic(
+  () => import("@/components/ui/block-editor").then((mod) => mod.BlockEditor),
+  { ssr: false },
+);
+import { cn } from "@/lib/utils";
 
 // ─── Schema ──────────────────────────────────────────────────────────────────
 
@@ -216,18 +222,16 @@ function SliderField({
   );
 }
 
-function TextareaField({
+function BlockEditorField({
   form,
   name,
   label,
-  placeholder,
   labelClass,
   className,
 }: {
   form: any;
   name: string;
   label: string;
-  placeholder: string;
   labelClass?: string;
   className?: string;
 }) {
@@ -239,11 +243,17 @@ function TextareaField({
         <FormItem>
           <FormLabel className={labelClass}>{label}</FormLabel>
           <FormControl>
-            <Textarea
-              {...field}
-              placeholder={placeholder}
-              className={className || textareaClass}
-            />
+            <div
+              className={cn(
+                "rounded-md border border-white/10 bg-zinc-800/50 min-h-[120px] prose prose-invert max-w-none prose-sm p-1",
+                className,
+              )}
+            >
+              <BlockEditor
+                initialContent={field.value}
+                onChange={(blocks) => field.onChange(JSON.stringify(blocks))}
+              />
+            </div>
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -709,18 +719,16 @@ export function LoggerForm() {
                 <h3 className="text-lg font-semibold text-white">
                   Diagnostic Notes
                 </h3>
-                <TextareaField
+                <BlockEditorField
                   form={form}
                   name="mistakes_text"
                   label="Mistakes & Analysis"
-                  placeholder="What went wrong? Be specific."
                   labelClass="text-zinc-400"
                 />
-                <TextareaField
+                <BlockEditorField
                   form={form}
                   name="learning_from_failure"
                   label="Learning from Failure"
-                  placeholder="What is the key takeaway? How to avoid this next time?"
                   labelClass="text-zinc-400"
                 />
               </div>
@@ -731,13 +739,12 @@ export function LoggerForm() {
               <h3 className="text-lg font-semibold text-indigo-400">
                 Deep Learning
               </h3>
-              <TextareaField
+              <BlockEditorField
                 form={form}
                 name="pattern_generalization_note"
                 label="Pattern Generalization (When does this apply?)"
-                placeholder="This pattern applies when..."
                 labelClass="text-indigo-200"
-                className="h-24 bg-black/40 border-indigo-500/20 text-indigo-100 placeholder:text-indigo-500/50 focus:border-indigo-500"
+                className="bg-black/40 border-indigo-500/20"
               />
               <CreatableField
                 form={form}

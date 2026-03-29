@@ -4,10 +4,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
+import { useMutation } from "@tanstack/react-query";
 import { CodeEditor } from "./CodeEditor";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
+import dynamic from "next/dynamic";
+const BlockEditor = dynamic(
+  () => import("@/components/ui/block-editor").then((mod) => mod.BlockEditor),
+  { ssr: false },
+);
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -42,7 +47,6 @@ interface LogDetailsProps {
 
 export function LogDetails({ log }: LogDetailsProps) {
   const router = useRouter();
-  const [isSaving, setIsSaving] = useState(false);
 
   // Form for the "Deep Learning" section + Code Editor (Read Only)
   const form = useForm({
@@ -55,22 +59,25 @@ export function LogDetails({ log }: LogDetailsProps) {
     },
   });
 
-  const onSubmitDeepLearning = async (data: any) => {
-    setIsSaving(true);
-    try {
-      // Optimistic update or simple API call
-      await axios.patch(`/api/cp-tracker/${log.id}`, {
-        pattern_generalization_note: data.pattern_generalization_note,
-        code_snippets: data.code_snippets, // Save code changes too
-        // map Update logic for key_learning_points if needed
-      });
+  const { mutate: updateDeepLearning, isPending: isUpdating } = useMutation({
+    mutationFn: async (data: any) => {
+      const res = await axios.patch(`/api/cp-tracker/${log.id}`, data);
+      return res.data;
+    },
+    onSuccess: () => {
       toast.success("Changes saved successfully");
       router.refresh();
-    } catch (error) {
+    },
+    onError: () => {
       toast.error("Failed to save changes");
-    } finally {
-      setIsSaving(false);
-    }
+    },
+  });
+
+  const onSubmitDeepLearning = (data: any) => {
+    updateDeepLearning({
+      pattern_generalization_note: data.pattern_generalization_note,
+      code_snippets: data.code_snippets,
+    });
   };
 
   const isSolvedClean = log.solve_status_type === "Solved Clean";
@@ -339,24 +346,26 @@ export function LogDetails({ log }: LogDetailsProps) {
               </div>
 
               {log.mistakes_text && (
-                <div className="mt-4 p-4 bg-black/20 rounded-lg border border-red-500/10">
+                <div className="mt-4 p-4 bg-black/20 rounded-lg border border-red-500/10 prose prose-invert prose-sm max-w-none">
                   <div className="text-xs text-red-400/70 uppercase tracking-wider mb-2 font-semibold">
                     Diagnosis
                   </div>
-                  <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">
-                    {log.mistakes_text}
-                  </p>
+                  <BlockEditor
+                    initialContent={log.mistakes_text}
+                    editable={false}
+                  />
                 </div>
               )}
 
               {log.learning_from_failure && (
-                <div className="mt-4 p-4 bg-indigo-950/20 rounded-lg border border-indigo-500/10">
+                <div className="mt-4 p-4 bg-indigo-950/20 rounded-lg border border-indigo-500/10 prose prose-invert prose-sm max-w-none">
                   <div className="text-xs text-indigo-400/70 uppercase tracking-wider mb-2 font-semibold">
                     Learning from Failure
                   </div>
-                  <p className="text-zinc-300 leading-relaxed text-sm whitespace-pre-wrap">
-                    {log.learning_from_failure}
-                  </p>
+                  <BlockEditor
+                    initialContent={log.learning_from_failure}
+                    editable={false}
+                  />
                 </div>
               )}
             </section>
@@ -379,24 +388,27 @@ export function LogDetails({ log }: LogDetailsProps) {
                 <Label className="text-indigo-200/70 text-sm">
                   Generalization Note
                 </Label>
-                <Textarea
-                  {...form.register("pattern_generalization_note")}
-                  className="bg-black/40 border-indigo-500/20 text-indigo-100 focus:border-indigo-500 transition-colors min-h-[120px] resize-none overflow-hidden"
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = "auto";
-                    target.style.height = `${target.scrollHeight}px`;
-                  }}
-                />
+                <div className="prose prose-invert max-w-none prose-sm">
+                  <BlockEditor
+                    initialContent={log.pattern_generalization_note}
+                    onChange={(blocks) =>
+                      form.setValue(
+                        "pattern_generalization_note",
+                        JSON.stringify(blocks),
+                      )
+                    }
+                    className="bg-black/40 border-indigo-500/20 text-indigo-100 min-h-[120px] rounded-md overflow-hidden"
+                  />
+                </div>
               </div>
 
               <div className="flex justify-end">
                 <Button
                   onClick={form.handleSubmit(onSubmitDeepLearning)}
-                  disabled={isSaving}
+                  disabled={isUpdating}
                   className="bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
                 >
-                  {isSaving ? (
+                  {isUpdating ? (
                     "Saving..."
                   ) : (
                     <>

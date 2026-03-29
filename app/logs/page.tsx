@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { extractPlainText } from "@/lib/block-utils";
 
 interface DailyLog {
   id: string;
@@ -186,7 +187,7 @@ export default function LogsPage() {
                       </span>
                     </div>
                     <p className="text-zinc-500 line-clamp-2 text-sm leading-relaxed">
-                      {log.content}
+                      {extractPlainText(log.content)}
                     </p>
                   </div>
 
