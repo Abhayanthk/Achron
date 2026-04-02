@@ -27,6 +27,35 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function LogSkeleton() {
+  return (
+    <div className="space-y-8 animate-pulse">
+      <div className="space-y-4">
+        {/* Title Skeleton */}
+        <Skeleton className="h-14 w-3/4 bg-white/5" />
+        {/* Meta Skeleton */}
+        <div className="flex gap-4">
+          <Skeleton className="h-8 w-32 rounded-full bg-white/5" />
+          <Skeleton className="h-8 w-24 rounded-full bg-white/5" />
+          <Skeleton className="h-8 w-24 rounded-full bg-white/5" />
+        </div>
+      </div>
+      {/* Content Skeleton blocks */}
+      <div className="space-y-4 pt-4">
+        <Skeleton className="h-4 w-full bg-white/5" />
+        <Skeleton className="h-4 w-5/6 bg-white/5" />
+        <Skeleton className="h-4 w-full bg-white/5" />
+        <Skeleton className="h-4 w-2/3 bg-white/5" />
+        <div className="pt-4 space-y-4">
+          <Skeleton className="h-4 w-full bg-white/5" />
+          <Skeleton className="h-4 w-4/5 bg-white/5" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function NewLogContent() {
   const router = useRouter();
@@ -54,7 +83,7 @@ function NewLogContent() {
   });
 
   // Fetch Log for Edit
-  const { data: existingLog } = useQuery({
+  const { data: existingLog, isLoading: isLoadingLog } = useQuery({
     queryKey: ["log", editId],
     queryFn: async () => {
       if (!editId) return null;
@@ -63,6 +92,8 @@ function NewLogContent() {
     },
     enabled: !!editId,
   });
+
+  const isLoading = (!!editId && isLoadingLog) || false;
 
   useEffect(() => {
     if (existingLog) {
@@ -156,123 +187,128 @@ function NewLogContent() {
         </div>
 
         {/* Editor Area */}
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <div className="space-y-4">
-            {/* Title Input (No Box) */}
-            <Input
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Title your entry..."
-              className="text-5xl font-bold bg-transparent border-none placeholder:text-zinc-700 p-0 h-auto focus-visible:ring-0 focus-visible:ring-offset-0 tracking-tight"
-            />
+        {isLoading ? (
+          <LogSkeleton />
+        ) : (
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="space-y-4">
+              {/* Title Input (No Box) */}
+              <Input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Title your entry..."
+                className="text-5xl font-bold bg-transparent border-none placeholder:text-zinc-700 p-0 h-auto focus-visible:ring-0 focus-visible:ring-offset-0 tracking-tight"
+              />
 
-            {/* Meta Controls */}
-            <div className="flex flex-wrap items-center gap-4 text-zinc-500">
-              {/* Date Picker (Only active in Create mode logic effectively, but UI visible) */}
-              <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 hover:bg-white/10 transition-colors">
-                <Calendar className="size-4" />
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  disabled={!!editId} // Disable date in edit mode
-                  className="bg-transparent border-none text-sm text-zinc-300 focus:outline-none [&::-webkit-calendar-picker-indicator]:invert disabled:opacity-50"
-                />
-              </div>
+              {/* Meta Controls */}
+              <div className="flex flex-wrap items-center gap-4 text-zinc-500">
+                {/* Date Picker */}
+                <div className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5 hover:bg-white/10 transition-colors">
+                  <Calendar className="size-4" />
+                  <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    disabled={!!editId}
+                    className="bg-transparent border-none text-sm text-zinc-300 focus:outline-none [&::-webkit-calendar-picker-indicator]:invert disabled:opacity-50"
+                  />
+                </div>
 
-              {/* Category Picker */}
-              <div className="flex gap-2 flex-wrap items-center">
-                {categories?.map((cat: any) => (
-                  <div
-                    key={cat.id}
-                    className={`group flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm cursor-pointer transition-all ${categoryId === cat.id ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/50" : "bg-transparent border-white/10 hover:bg-white/5 text-zinc-400"}`}
-                    onClick={() =>
-                      setCategoryId(cat.id === categoryId ? null : cat.id)
-                    }
-                  >
-                    <span>{cat.name}</span>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteCategory(cat.id);
-                      }}
-                      className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-red-500/20 hover:text-red-500 rounded-full transition-all"
+                {/* Category Picker */}
+                <div className="flex gap-2 flex-wrap items-center">
+                  {categories?.map((cat: any) => (
+                    <div
+                      key={cat.id}
+                      className={`group flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm cursor-pointer transition-all ${categoryId === cat.id ? "bg-indigo-500/20 text-indigo-300 border-indigo-500/50" : "bg-transparent border-white/10 hover:bg-white/5 text-zinc-400"}`}
+                      onClick={() =>
+                        setCategoryId(cat.id === categoryId ? null : cat.id)
+                      }
                     >
-                      <Trash2 className="h-3 w-3" />
-                    </button>
-                  </div>
-                ))}
-                <Popover
-                  open={isCategoryPopoverOpen}
-                  onOpenChange={setIsCategoryPopoverOpen}
-                >
-                  <PopoverTrigger asChild>
-                    <button
-                      type="button"
-                      className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dashed border-white/20 text-sm text-zinc-500 hover:text-white hover:border-white/40 transition-colors"
-                    >
-                      <Plus className="h-3 w-3" />
-                      Category
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="w-64 p-3 border-white/10 bg-zinc-900"
-                    align="start"
-                  >
-                    <div className="flex gap-2">
-                      <Input
-                        value={newCategoryName}
-                        onChange={(e) => setNewCategoryName(e.target.value)}
-                        placeholder="Category name"
-                        className="h-8 text-sm bg-zinc-800 border-zinc-700 scheme-dark text-white"
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            createCategory();
-                          }
+                      <span>{cat.name}</span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteCategory(cat.id);
                         }}
-                      />
-                      <Button
-                        size="sm"
-                        className="h-8"
-                        onClick={() => createCategory()}
-                        disabled={!newCategoryName || isCreatingCategory}
+                        className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-red-500/20 hover:text-red-500 rounded-full transition-all"
                       >
-                        Add
-                      </Button>
+                        <Trash2 className="h-3 w-3" />
+                      </button>
                     </div>
-                  </PopoverContent>
-                </Popover>
+                  ))}
+                  <Popover
+                    open={isCategoryPopoverOpen}
+                    onOpenChange={setIsCategoryPopoverOpen}
+                  >
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-dashed border-white/20 text-sm text-zinc-500 hover:text-white hover:border-white/40 transition-colors"
+                      >
+                        <Plus className="h-3 w-3" />
+                        Category
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-64 p-3 border-white/10 bg-zinc-900"
+                      align="start"
+                    >
+                      <div className="flex gap-2">
+                        <Input
+                          value={newCategoryName}
+                          onChange={(e) => setNewCategoryName(e.target.value)}
+                          placeholder="Category name"
+                          className="h-8 text-sm bg-zinc-800 border-zinc-700 scheme-dark text-white"
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              createCategory();
+                            }
+                          }}
+                        />
+                        <Button
+                          size="sm"
+                          className="h-8"
+                          onClick={() => createCategory()}
+                          disabled={!newCategoryName || isCreatingCategory}
+                        >
+                          Add
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Content Area (BlockNote) */}
-          <div className="min-h-[60vh] prose prose-invert max-w-none">
-            <BlockEditor
-              ref={blockEditorRef}
-              initialContent={existingLog?.content}
-              onChange={(blocks) => setContent(JSON.stringify(blocks))}
-            />
-          </div>
+            {/* Content Area (BlockNote) */}
+            <div className="min-h-[60vh] prose prose-invert max-w-none">
+              <BlockEditor
+                key={editId ? `edit-${editId}` : "new"}
+                ref={blockEditorRef}
+                initialContent={existingLog?.content}
+                onChange={(blocks) => setContent(JSON.stringify(blocks))}
+              />
+            </div>
 
-          <div className="fixed bottom-8 right-8 animate-in zoom-in duration-300">
-            <Button
-              size="lg"
-              onClick={() => saveLog()}
-              disabled={!title || !content || isPending}
-              className="bg-white text-black hover:bg-zinc-200 shadow-xl rounded-full px-8 h-14"
-            >
-              {isPending ? (
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              ) : (
-                <Save className="mr-2 h-5 w-5" />
-              )}
-              {editId ? "Update" : "Save"}
-            </Button>
+            <div className="fixed bottom-8 right-8 animate-in zoom-in duration-300">
+              <Button
+                size="lg"
+                onClick={() => saveLog()}
+                disabled={!title || isPending}
+                className="bg-white text-black hover:bg-zinc-200 shadow-xl rounded-full px-8 h-14"
+              >
+                {isPending ? (
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-5 w-5" />
+                )}
+                {editId ? "Update" : "Save"}
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
