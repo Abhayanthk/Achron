@@ -18,7 +18,7 @@
   </p>
   <br>
   <p>
-    <b>Live Link:</b> <a href="https://achron.vercel.app/logs">https://achron.vercel.app/logs</a>
+    <b>Live Link:</b> <a href="https://achron.vercel.app">https://achron.vercel.app/logs</a>
   </p>
   <br>
   <a href="#-project-overview">Project Overview</a> ✦
