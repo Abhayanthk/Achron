@@ -145,17 +145,30 @@ function NodeRenderer({ node, style, dragHandle, tree }: NodeRendererProps<TreeN
         {!node.isEditing && (
           <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-100 shrink-0 ml-auto pl-1">
             {isFolder && (
-              <button
-                className="p-1 rounded hover:bg-white/10 text-zinc-600 hover:text-zinc-200 transition-colors"
-                title="New Note"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  node.open();
-                  tree.create({ type: "leaf", parentId: node.id });
-                }}
-              >
-                <FilePlus className="h-3 w-3" />
-              </button>
+              <>
+                <button
+                  className="p-1 rounded hover:bg-white/10 text-zinc-600 hover:text-zinc-200 transition-colors"
+                  title="New Folder"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    node.open();
+                    tree.create({ type: "internal", parentId: node.id });
+                  }}
+                >
+                  <FolderPlus className="h-3 w-3" />
+                </button>
+                <button
+                  className="p-1 rounded hover:bg-white/10 text-zinc-600 hover:text-zinc-200 transition-colors"
+                  title="New Note"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    node.open();
+                    tree.create({ type: "leaf", parentId: node.id });
+                  }}
+                >
+                  <FilePlus className="h-3 w-3" />
+                </button>
+              </>
             )}
             <button
               className="p-1 rounded hover:bg-white/10 text-zinc-600 hover:text-zinc-200 transition-colors"
