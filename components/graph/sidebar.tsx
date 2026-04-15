@@ -1,38 +1,33 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useRef, useState, useEffect, useCallback } from "react";
+import {
+  Tree,
+  NodeApi,
+  NodeRendererProps,
+  CreateHandler,
+  RenameHandler,
+  MoveHandler,
+  DeleteHandler,
+  TreeApi,
+} from "react-arborist";
 import {
   Folder,
-  File,
-  ChevronRight,
-  ChevronDown,
-  Plus,
-  MoreHorizontal,
+  FolderOpen,
+  FileText,
   FolderPlus,
-  Trash,
   FilePlus,
-  Edit2,
+  ChevronRight,
+  Trash2,
+  PenLine,
+  NotebookText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 interface Note {
   id: string;
@@ -42,122 +37,251 @@ interface Note {
   updatedAt: string;
 }
 
+interface TreeNode {
+  id: string;
+  name: string;
+  type: "FOLDER" | "CANVAS";
+  children?: TreeNode[];
+}
+
 interface SidebarProps {
   data: Note[];
   isLoading: boolean;
 }
 
-interface TreeNode {
-  item: Note;
-  children: TreeNode[];
+// ─── Node Renderer ────────────────────────────────────────────────────────────
+
+function NodeRenderer({ node, style, dragHandle, tree }: NodeRendererProps<TreeNode>) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const isActive = pathname === `/notes/${node.id}`;
+  const isFolder = node.data.type === "FOLDER";
+
+  return (
+    <div style={style} className="px-1.5">
+      <div
+        ref={dragHandle}
+        className={cn(
+          "group relative flex items-center gap-1.5 h-[30px] rounded-lg px-2 cursor-pointer select-none transition-all duration-100",
+          isActive
+            ? "bg-indigo-500/10 text-white shadow-[inset_0_0_0_1px_rgba(99,102,241,0.15)]"
+            : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200",
+          node.state.isDragging && "opacity-30 scale-95",
+        )}
+        onClick={() => {
+          if (node.isEditing) return;
+          if (isFolder) node.toggle();
+          else router.push(`/notes/${node.id}`);
+        }}
+      >
+        {/* Active left bar */}
+        {isActive && (
+          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-indigo-400 rounded-full" />
+        )}
+
+        {/* Chevron */}
+        <span className="shrink-0 w-3">
+          {isFolder && (
+            <ChevronRight
+              className={cn(
+                "h-3 w-3 transition-transform duration-150",
+                node.isOpen ? "rotate-90 text-zinc-400" : "text-zinc-600",
+              )}
+            />
+          )}
+        </span>
+
+        {/* Icon */}
+        {isFolder ? (
+          node.isOpen ? (
+            <FolderOpen
+              className={cn(
+                "h-3.5 w-3.5 shrink-0 transition-colors",
+                isActive ? "text-indigo-400" : "text-indigo-500/60 group-hover:text-indigo-400/80",
+              )}
+            />
+          ) : (
+            <Folder
+              className={cn(
+                "h-3.5 w-3.5 shrink-0 transition-colors",
+                isActive ? "text-indigo-400" : "text-indigo-500/60 group-hover:text-indigo-400/80",
+              )}
+            />
+          )
+        ) : (
+          <FileText
+            className={cn(
+              "h-3.5 w-3.5 shrink-0 transition-colors",
+              isActive ? "text-rose-400" : "text-rose-500/50 group-hover:text-rose-400/70",
+            )}
+          />
+        )}
+
+        {/* Name / Edit input */}
+        {node.isEditing ? (
+          <input
+            autoFocus
+            defaultValue={node.data.name}
+            className="flex-1 bg-transparent text-[13px] text-white outline-none border-b border-indigo-400/50 min-w-0 pb-px caret-indigo-400"
+            onBlur={(e) => node.submit(e.currentTarget.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") node.submit(e.currentTarget.value);
+              if (e.key === "Escape") node.reset();
+            }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        ) : (
+          <span
+            className={cn(
+              "text-[13px] truncate flex-1 leading-none",
+              isActive && "text-white font-medium",
+            )}
+          >
+            {node.data.name}
+          </span>
+        )}
+
+        {/* Hover actions */}
+        {!node.isEditing && (
+          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-100 shrink-0 ml-auto pl-1">
+            {isFolder && (
+              <button
+                className="p-1 rounded hover:bg-white/10 text-zinc-600 hover:text-zinc-200 transition-colors"
+                title="New Note"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  node.open();
+                  tree.create({ type: "leaf", parentId: node.id });
+                }}
+              >
+                <FilePlus className="h-3 w-3" />
+              </button>
+            )}
+            <button
+              className="p-1 rounded hover:bg-white/10 text-zinc-600 hover:text-zinc-200 transition-colors"
+              title="Rename"
+              onClick={(e) => {
+                e.stopPropagation();
+                node.edit();
+              }}
+            >
+              <PenLine className="h-3 w-3" />
+            </button>
+            <button
+              className="p-1 rounded hover:bg-red-500/10 text-zinc-600 hover:text-red-400 transition-colors"
+              title="Delete"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (confirm("Delete this item? This cannot be undone.")) {
+                  tree.delete(node);
+                }
+              }}
+            >
+              <Trash2 className="h-3 w-3" />
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
-export function GraphSidebar({ data, isLoading }: SidebarProps) {
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({
-    root: true,
-  });
+// ─── Loading Skeleton ─────────────────────────────────────────────────────────
 
-  // State for creating new items
-  const [createType, setCreateType] = useState<"FOLDER" | "CANVAS" | null>(
-    null,
+function LoadingSkeleton() {
+  const rows = [
+    { depth: 0, width: "55%" },
+    { depth: 1, width: "70%" },
+    { depth: 1, width: "45%" },
+    { depth: 0, width: "65%" },
+    { depth: 1, width: "80%" },
+    { depth: 2, width: "50%" },
+    { depth: 0, width: "40%" },
+  ];
+  return (
+    <div className="px-2 py-2 flex flex-col gap-0.5 animate-pulse">
+      {rows.map((r, i) => (
+        <div
+          key={i}
+          className="flex items-center gap-2 h-[30px] px-2 rounded-lg"
+          style={{ paddingLeft: `${r.depth * 16 + 8}px` }}
+        >
+          <div className="h-3 w-3 rounded bg-zinc-800/80 shrink-0" />
+          <div className="h-2 rounded-full bg-zinc-800/80" style={{ width: r.width }} />
+        </div>
+      ))}
+    </div>
   );
-  const [targetParentId, setTargetParentId] = useState<string | null>(null);
-  const [newName, setNewName] = useState("");
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
+}
 
-  const toggleExpand = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+// ─── Empty State ──────────────────────────────────────────────────────────────
 
-  const createNoteMutation = useMutation({
-    mutationFn: async ({
-      title,
-      type,
-      parentId,
-    }: {
-      title: string;
-      type: "FOLDER" | "CANVAS";
-      parentId?: string | null;
-    }) => {
-      return axios.post("/api/notes", { title, type, parentId });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["graph-data"] });
-      setIsCreateOpen(false);
-      setNewName("");
-      toast.success(
-        createType === "FOLDER" ? "Folder created" : "Note created",
-      );
-    },
-    onError: () => {
-      toast.error("Failed to create item");
-    },
-  });
+function EmptyState({ onNewFolder, onNewNote }: { onNewFolder: () => void; onNewNote: () => void }) {
+  return (
+    <div className="flex flex-col items-center justify-center h-full gap-4 px-6 text-center">
+      <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/[0.06] flex items-center justify-center">
+        <NotebookText className="h-5 w-5 text-zinc-600" />
+      </div>
+      <div>
+        <p className="text-sm text-zinc-400 font-medium mb-1">No notes yet</p>
+        <p className="text-xs text-zinc-600 leading-relaxed">
+          Start by creating a folder or note
+        </p>
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={onNewFolder}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/[0.06] text-xs text-zinc-400 hover:text-zinc-200 hover:border-white/10 transition-all"
+        >
+          <FolderPlus className="h-3.5 w-3.5" />
+          New Folder
+        </button>
+        <button
+          onClick={onNewNote}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-300 hover:bg-indigo-500/20 transition-all"
+        >
+          <FilePlus className="h-3.5 w-3.5" />
+          New Note
+        </button>
+      </div>
+    </div>
+  );
+}
 
-  const deleteNoteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      return axios.delete(`/api/notes/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["graph-data"] });
-      toast.success("Item deleted");
-    },
-    onError: () => {
-      toast.error("Failed to delete item");
-    },
-  });
+// ─── GraphSidebar ─────────────────────────────────────────────────────────────
 
-  const handleCreateMetadata = (
-    type: "FOLDER" | "CANVAS",
-    parentId: string | null,
-  ) => {
-    setCreateType(type);
-    setTargetParentId(parentId);
-    setNewName("");
-    setIsCreateOpen(true);
-  };
+export function GraphSidebar({ data, isLoading }: SidebarProps) {
+  const queryClient = useQueryClient();
+  const treeRef = useRef<TreeApi<TreeNode>>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [treeHeight, setTreeHeight] = useState(500);
 
-  const handleCreateSubmit = () => {
-    if (!newName.trim() || !createType) return;
-    createNoteMutation.mutate({
-      title: newName,
-      type: createType,
-      parentId: targetParentId,
-    });
-  };
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(([entry]) => setTreeHeight(entry.contentRect.height));
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
 
-  const handleDelete = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (confirm("Are you sure? This action cannot be undone.")) {
-      deleteNoteMutation.mutate(id);
-    }
-  };
-
-  const navigateToNote = (id: string) => {
-    router.push(`/notes/${id}`);
-  };
-
-  // Build Tree
-  const tree = useMemo(() => {
+  const treeData = useMemo((): TreeNode[] => {
     if (!data) return [];
 
-    const nodeMap = new Map<string, TreeNode>();
+    const map = new Map<string, TreeNode>();
     const roots: TreeNode[] = [];
 
-    // First pass: create nodes
-    data.forEach((item) => {
-      nodeMap.set(item.id, { item, children: [] });
+    data.forEach((note) => {
+      map.set(note.id, {
+        id: note.id,
+        name: note.title,
+        type: note.type,
+        ...(note.type === "FOLDER" ? { children: [] } : {}),
+      });
     });
 
-    // Second pass: attach children
-    data.forEach((item) => {
-      const node = nodeMap.get(item.id)!;
-      if (item.parentId && nodeMap.has(item.parentId)) {
-        const parent = nodeMap.get(item.parentId)!;
-        parent.children.push(node);
+    data.forEach((note) => {
+      const node = map.get(note.id)!;
+      if (note.parentId && map.has(note.parentId)) {
+        map.get(note.parentId)!.children?.push(node);
       } else {
         roots.push(node);
       }
@@ -166,209 +290,127 @@ export function GraphSidebar({ data, isLoading }: SidebarProps) {
     return roots;
   }, [data]);
 
-  const renderNode = (node: TreeNode, depth: number = 0) => {
-    const isFolder = node.item.type === "FOLDER";
-    const isExpanded = expanded[node.item.id];
-    const hasChildren = node.children.length > 0;
+  const onCreate: CreateHandler<TreeNode> = useCallback(
+    async ({ parentId, type }) => {
+      const noteType = type === "internal" ? "FOLDER" : "CANVAS";
+      try {
+        const res = await axios.post("/api/notes", {
+          title: noteType === "FOLDER" ? "New Folder" : "Untitled",
+          type: noteType,
+          parentId: parentId ?? null,
+        });
+        queryClient.invalidateQueries({ queryKey: ["graph-data"] });
+        return {
+          id: res.data.id,
+          name: res.data.title,
+          type: noteType,
+          ...(noteType === "FOLDER" ? { children: [] } : {}),
+        };
+      } catch {
+        toast.error("Failed to create");
+        return null;
+      }
+    },
+    [queryClient],
+  );
 
-    return (
-      <div key={node.item.id} className="flex flex-col">
-        <div
-          className={cn(
-            "group flex items-center justify-between px-2 py-1.5 rounded-md hover:bg-white/5 cursor-pointer select-none transition-colors",
-            isFolder
-              ? "text-zinc-400 hover:text-zinc-200"
-              : "text-zinc-500 hover:text-zinc-300",
-          )}
-          style={{ paddingLeft: `${depth * 12 + 8}px` }}
-          onClick={(e) => {
-            if (isFolder) {
-              toggleExpand(node.item.id, e);
-            } else {
-              navigateToNote(node.item.id);
-            }
-          }}
-        >
-          <div className="flex items-center gap-2 overflow-hidden flex-1">
-            {isFolder && (
-              <div className="text-zinc-600">
-                {isExpanded ? (
-                  <ChevronDown className="h-3.5 w-3.5" />
-                ) : (
-                  <ChevronRight className="h-3.5 w-3.5" />
-                )}
-              </div>
-            )}
-            {isFolder ? (
-              <Folder className="h-3.5 w-3.5 text-blue-500/80 shrink-0" />
-            ) : (
-              <File className="h-3.5 w-3.5 shrink-0" />
-            )}
-            <span className="text-sm truncate">{node.item.title}</span>
-          </div>
+  const onRename: RenameHandler<TreeNode> = useCallback(
+    ({ id, name }) => {
+      if (!name.trim()) return;
+      axios
+        .patch(`/api/notes/${id}`, { title: name.trim() })
+        .then(() => queryClient.invalidateQueries({ queryKey: ["graph-data"] }))
+        .catch(() => toast.error("Failed to rename"));
+    },
+    [queryClient],
+  );
 
-          <div className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
-            {isFolder && (
-              <>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6 hover:bg-white/10 text-zinc-500 hover:text-zinc-200"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCreateMetadata("CANVAS", node.item.id);
-                  }}
-                  title="New Note"
-                >
-                  <Plus className="h-3 w-3" />
-                </Button>
-              </>
-            )}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6 hover:bg-white/10 text-zinc-500 hover:text-zinc-200"
-                >
-                  <MoreHorizontal className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="w-40 bg-zinc-900 border-zinc-800 text-zinc-300"
-              >
-                {isFolder && (
-                  <DropdownMenuItem
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCreateMetadata("FOLDER", node.item.id);
-                    }}
-                    className="cursor-pointer"
-                  >
-                    <FolderPlus className="mr-2 h-3.5 w-3.5" />
-                    New Folder
-                  </DropdownMenuItem>
-                )}
-                <DropdownMenuItem
-                  onClick={(e) => handleDelete(node.item.id, e)}
-                  className="text-red-400 focus:text-red-300 focus:bg-red-900/20 cursor-pointer"
-                >
-                  <Trash className="mr-2 h-3.5 w-3.5" />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
+  const onMove: MoveHandler<TreeNode> = useCallback(
+    ({ dragIds, parentId }) => {
+      dragIds.forEach((id) => {
+        axios
+          .patch(`/api/notes/${id}`, { parentId: parentId ?? null })
+          .then(() => queryClient.invalidateQueries({ queryKey: ["graph-data"] }))
+          .catch(() => toast.error("Failed to move"));
+      });
+    },
+    [queryClient],
+  );
 
-        {isFolder && isExpanded && (
-          <div className="flex flex-col gap-0.5">
-            {node.children.length > 0 ? (
-              node.children.map((child) => renderNode(child, depth + 1))
-            ) : (
-              <div
-                className="py-1 text-xs text-zinc-600 italic select-none"
-                style={{ paddingLeft: `${(depth + 1) * 12 + 28}px` }}
-              >
-                Empty
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  };
+  const onDelete: DeleteHandler<TreeNode> = useCallback(
+    ({ ids }) => {
+      ids.forEach((id) => {
+        axios
+          .delete(`/api/notes/${id}`)
+          .then(() => queryClient.invalidateQueries({ queryKey: ["graph-data"] }))
+          .catch(() => toast.error("Failed to delete"));
+      });
+    },
+    [queryClient],
+  );
+
+  const handleNewFolder = useCallback(() => treeRef.current?.createInternal(), []);
+  const handleNewNote = useCallback(() => treeRef.current?.createLeaf(), []);
+
+  const isEmpty = !isLoading && treeData.length === 0;
 
   return (
-    <div className="w-[300px] h-full flex flex-col border-r border-white/10 bg-zinc-950/50 backdrop-blur-xl">
+    <div className="w-[280px] h-full flex flex-col border-r border-white/[0.06] bg-zinc-950">
       {/* Header */}
-      <div className="p-4 border-b border-white/5 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-zinc-100 font-semibold">
-          <Folder className="w-5 h-5 text-indigo-400" />
-          <span>Notes</span>
-        </div>
-        <div className="flex gap-1">
+      <div className="px-4 h-14 flex items-center justify-between border-b border-white/[0.06] shrink-0">
+        <span className="text-[10px] font-semibold tracking-[0.14em] text-zinc-500 uppercase">
+          Notes
+        </span>
+        <div className="flex gap-0.5">
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 hover:bg-white/10 text-zinc-400 hover:text-white"
-            onClick={() => handleCreateMetadata("FOLDER", null)}
-            title="New Root Folder"
+            className="h-7 w-7 hover:bg-white/[0.06] text-zinc-600 hover:text-zinc-300 rounded-md transition-all"
+            onClick={handleNewFolder}
+            title="New Folder"
           >
-            <FolderPlus className="h-4 w-4" />
+            <FolderPlus className="h-3.5 w-3.5" />
           </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 hover:bg-white/10 text-zinc-400 hover:text-white"
-            onClick={() => handleCreateMetadata("CANVAS", null)}
-            title="New Root Note"
+            className="h-7 w-7 hover:bg-white/[0.06] text-zinc-600 hover:text-zinc-300 rounded-md transition-all"
+            onClick={handleNewNote}
+            title="New Note"
           >
-            <FilePlus className="h-4 w-4" />
+            <FilePlus className="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>
 
-      {/* File Tree */}
-      <div className="flex-1 overflow-y-auto p-2">
+      {/* Body */}
+      <div ref={containerRef} className="flex-1 overflow-hidden">
         {isLoading ? (
-          <div className="p-4 text-xs text-zinc-500 animate-pulse">
-            Loading files...
-          </div>
+          <LoadingSkeleton />
+        ) : isEmpty ? (
+          <EmptyState onNewFolder={handleNewFolder} onNewNote={handleNewNote} />
         ) : (
-          <div className="flex flex-col gap-0.5">
-            {tree.length > 0 ? (
-              tree.map((rootNode) => renderNode(rootNode))
-            ) : (
-              <div className="p-4 text-sm text-zinc-500 italic text-center">
-                No notes found. Create one to get started.
-              </div>
-            )}
-          </div>
+          <Tree
+            ref={treeRef}
+            data={treeData}
+            onCreate={onCreate}
+            onRename={onRename}
+            onMove={onMove}
+            onDelete={onDelete}
+            width="100%"
+            height={treeHeight}
+            rowHeight={34}
+            indent={14}
+            paddingTop={8}
+            paddingBottom={8}
+            disableDrop={({ parentNode }) =>
+              !!(parentNode && parentNode.data.type === "CANVAS")
+            }
+          >
+            {NodeRenderer}
+          </Tree>
         )}
       </div>
-
-      {/* Create Dialog */}
-      <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-        <DialogContent className="bg-zinc-950 border-zinc-800 text-zinc-100">
-          <DialogHeader>
-            <DialogTitle>
-              Create {createType === "FOLDER" ? "Folder" : "Note"}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="py-4">
-            <Input
-              placeholder={
-                createType === "FOLDER" ? "Folder Name" : "Note Name"
-              }
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              className="bg-zinc-900 border-zinc-800 text-zinc-100"
-              autoFocus
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleCreateSubmit();
-              }}
-            />
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsCreateOpen(false)}
-              className="border-zinc-800 hover:bg-zinc-900 text-zinc-300"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleCreateSubmit}
-              disabled={createNoteMutation.isPending}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
-            >
-              {createNoteMutation.isPending ? "Creating..." : "Create"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

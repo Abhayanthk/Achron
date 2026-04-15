@@ -47,20 +47,21 @@ export async function PATCH(
         const { userId } = await auth();
         const { noteId } = await params;
         const body = await req.json();
-        const { title, content } = body;
-    
+        const { title, content, parentId } = body;
+
         if (!userId) {
           return new NextResponse("Unauthorized", { status: 401 });
         }
-    
+
         const note = await prisma.note.update({
           where: {
             id: noteId,
             userId,
           },
           data: {
-            title,
-            content
+            ...(title !== undefined && { title }),
+            ...(content !== undefined && { content }),
+            ...(parentId !== undefined && { parentId: parentId ?? null }),
           },
         });
     
