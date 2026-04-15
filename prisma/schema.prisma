@@ -34,6 +34,7 @@ model User {
       timers         Timer[]
       workLogs       WorkLog[]
       xpLogs         XpLog[]
+      recoverySessions RecoverySession[]
 }
 
 model Timer {
@@ -323,6 +324,18 @@ model KeyLearning {
       problemLogs ProblemLog[] @relation("KeyLearningToProblemLog")
 
       @@unique([userId, point])
+}
+
+model RecoverySession {
+      id             String    @id @default(cuid())
+      userId         String
+      triggerType    String
+      severity       Int
+      actionAssigned String
+      status         String    @default("STARTED")
+      completedAt    DateTime?
+      createdAt      DateTime  @default(now())
+      user           User      @relation(fields: [userId], references: [id])
 }
 
 enum NoteType {

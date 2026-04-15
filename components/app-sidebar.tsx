@@ -41,6 +41,7 @@ import {
   BookOpenText,
   Calendar,
   Network,
+  HeartPulse,
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
@@ -102,6 +103,11 @@ const navMain = [
     title: "Habits",
     url: "/habits",
     icon: CalendarSync,
+  },
+  {
+    title: "Recovery",
+    url: "/recovery",
+    icon: HeartPulse,
   },
   {
     title: "Projects",
@@ -245,7 +251,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       size="lg"
                       className="data-[state=open]:bg-white/5 data-[state=open]:text-white hover:bg-white/5 hover:text-white transition-all"
                     >
-                      <div className="h-8 w-8 rounded-lg bg-gradient-to-tr from-zinc-800 to-zinc-600 border border-white/10 flex items-center justify-center overflow-hidden">
+                      <div className="h-8 w-8 rounded-lg bg-linear-to-tr from-zinc-800 to-zinc-600 border border-white/10 flex items-center justify-center overflow-hidden">
                         {user?.imageUrl ? (
                           <img
                             src={user.imageUrl}

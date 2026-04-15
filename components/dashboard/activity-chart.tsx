@@ -53,15 +53,13 @@ export function ActivityChart() {
   if (isPending) {
     return (
       <div className="h-[200px] w-full mt-4 flex items-end justify-between gap-2 p-2 animate-pulse">
-        {Array(7)
-          .fill(0)
-          .map((_, i) => (
-            <div
-              key={i}
-              className="w-full bg-zinc-800 rounded-t-sm"
-              style={{ height: `${20 + Math.random() * 60}%` }}
-            />
-          ))}
+        {[40, 60, 35, 70, 50, 65, 45].map((height, i) => (
+          <div
+            key={i}
+            className="w-full bg-zinc-800 rounded-t-sm"
+            style={{ height: `${height}%` }}
+          />
+        ))}
       </div>
     );
   }

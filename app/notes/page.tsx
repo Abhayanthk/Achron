@@ -39,6 +39,8 @@ interface GraphNode {
   y?: number;
   vx?: number;
   vy?: number;
+  fx?: number;
+  fy?: number;
   index?: number;
 }
 
@@ -83,28 +85,41 @@ export default function GraphPage() {
   const graphData = useMemo(() => {
     const graphNodes: GraphNode[] = [];
     const links: GraphLink[] = [];
-    if (notes) {
+
+    if (notes && notes.length > 0) {
+      // Virtual root pinned at canvas center — acts as a gravity anchor
+      // so all disconnected trees stay in one symmetric group
+      graphNodes.push({
+        id: "virtual-root",
+        name: "",
+        type: "root",
+        val: 1,
+        color: "transparent",
+        parentId: null,
+        fx: 0,
+        fy: 0,
+      });
+
       notes.forEach((note) => {
         graphNodes.push({
           id: note.id,
           name: note.title,
           type: note.type,
           val: note.type === "FOLDER" ? 20 : 10,
-          color: note.type === "FOLDER" ? "#6366f1" : "#f472b6", // Blue for folders, Pink for canvas
+          color: note.type === "FOLDER" ? "#6366f1" : "#f472b6",
           parentId: note.parentId,
         });
 
-        // Link to parent
-        if (note.parentId) {
-          links.push({
-            source: note.parentId,
-            target: note.id,
-            color:
-              note.type === "FOLDER"
-                ? "rgba(99, 102, 241, 0.2)"
-                : "rgba(244, 114, 182, 0.2)",
-          });
-        }
+        // Top-level nodes link to virtual root; children link to their parent
+        const parentId = note.parentId ?? "virtual-root";
+        links.push({
+          source: parentId,
+          target: note.id,
+          color:
+            note.type === "FOLDER"
+              ? "rgba(99, 102, 241, 0.2)"
+              : "rgba(244, 114, 182, 0.2)",
+        });
       });
     }
 
@@ -117,19 +132,20 @@ export default function GraphPage() {
   // Apply custom forces
   useEffect(() => {
     if (graphRef.current) {
-      // Use distanceMax to limit repulsion to local nodes only, allowing clusters to float closer
-      graphRef.current.d3Force("charge").strength(-200).distanceMax(250);
-      graphRef.current.d3Force("link").distance(50);
-      graphRef.current.d3Force("center").strength(0.8);
+      // Moderate repulsion — nodes within a cluster stay readable but not crammed
+      graphRef.current.d3Force("charge").strength(-120).distanceMax(180);
+      // Consistent link length keeps the spoke arms evenly spaced → symmetry
+      graphRef.current.d3Force("link").distance(60).strength(1);
+      // Weak center pull — virtual root is pinned at (0,0) so this just tidies edges
+      graphRef.current.d3Force("center").strength(0.05);
     }
   }, [graphData]);
 
   const handleNodeClick = (node: GraphNode) => {
-    // NOTE: We don't want to fly to the node if it's just a folder, maybe we do nothing or expand?
+    if (node.id === "virtual-root") return;
     if (node.type === "CANVAS") {
       router.push(`/notes/${node.id}`);
     } else if (node.type === "FOLDER") {
-      // Optional: Focus or expand. For now, just centering gently.
       graphRef.current?.centerAt(node.x, node.y, 1000);
       graphRef.current?.zoom(4, 1000);
     }
@@ -137,6 +153,8 @@ export default function GraphPage() {
 
   const isNodeRelated = (node: GraphNode, hover: GraphNode | null) => {
     if (!hover) return true;
+    if (node.id === "virtual-root") return false; // never highlight virtual root
+    if (hover.id === "virtual-root") return true;
     if (node.id === hover.id) return true;
     if (node.parentId === hover.id) return true;
     if (hover.parentId === node.id) return true;
@@ -201,14 +219,18 @@ export default function GraphPage() {
             graphData={graphData}
             nodeLabel="name"
             backgroundColor="#09090b"
-            linkColor={(link: any) =>
-              isLinkRelated(link, hoverNode)
-                ? link.color
-                : "rgba(255,255,255,0.02)"
-            }
-            linkWidth={(link: any) =>
-              isLinkRelated(link, hoverNode) ? 2 : 0.5
-            }
+            linkColor={(link: any) => {
+              const src = typeof link.source === "object" ? link.source.id : link.source;
+              const tgt = typeof link.target === "object" ? link.target.id : link.target;
+              if (src === "virtual-root" || tgt === "virtual-root") return "transparent";
+              return isLinkRelated(link, hoverNode) ? link.color : "rgba(255,255,255,0.02)";
+            }}
+            linkWidth={(link: any) => {
+              const src = typeof link.source === "object" ? link.source.id : link.source;
+              const tgt = typeof link.target === "object" ? link.target.id : link.target;
+              if (src === "virtual-root" || tgt === "virtual-root") return 0;
+              return isLinkRelated(link, hoverNode) ? 2 : 0.5;
+            }}
             nodeRelSize={6}
             onNodeClick={(node: any) => handleNodeClick(node)}
             onNodeHover={(node: any) => setHoverNode(node || null)}
@@ -218,8 +240,15 @@ export default function GraphPage() {
             linkDirectionalParticles={2}
             linkDirectionalParticleSpeed={0.005}
             linkDirectionalParticleWidth={2}
-            onEngineStop={() => graphRef.current?.zoomToFit(400, 100)}
+            onEngineStop={() => {
+              graphRef.current?.zoomToFit(400, 100);
+              setTimeout(() => {
+                const currentZoom = graphRef.current?.zoom();
+                if (currentZoom > 2) graphRef.current?.zoom(2, 400);
+              }, 450);
+            }}
             nodeCanvasObject={(node: any, ctx, globalScale) => {
+              if (node.id === "virtual-root") return; // invisible anchor
               if (!Number.isFinite(node.x) || !Number.isFinite(node.y)) return;
 
               const isDimmed = !isNodeRelated(node, hoverNode);
