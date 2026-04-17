@@ -40,16 +40,18 @@ export function usePipWindow() {
 
     // @ts-ignore — Document Picture-in-Picture API not in standard DOM lib types
     const pip: Window = await window.documentPictureInPicture.requestWindow({
-      width: 320,
-      height: 220,
+      width: 180,
+      height: 72,
       disallowReturnToOpener: false,
     });
 
     copyStyles(pip);
 
     pip.document.body.style.margin = "0";
-    pip.document.body.style.backgroundColor = "#09090b";
+    pip.document.body.style.padding = "0";
+    pip.document.body.style.backgroundColor = "#000000";
     pip.document.body.style.overflow = "hidden";
+    pip.document.title = "Timer";
 
     pip.addEventListener("pagehide", () => {
       setPipWindow(null);
