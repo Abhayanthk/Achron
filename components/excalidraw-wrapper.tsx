@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useDebouncedCallback } from "use-debounce";
 import axios from "axios";
-import { toast } from "sonner";
 import "@excalidraw/excalidraw/index.css";
 import {
   Breadcrumb,
@@ -21,7 +20,6 @@ const Excalidraw = dynamic(
       Excalidraw: ExcalidrawComponent,
       MainMenu,
       WelcomeScreen,
-      DefaultSidebar,
     } = mod;
     return (props: any) => (
       <ExcalidrawComponent {...props}>
@@ -37,13 +35,10 @@ const Excalidraw = dynamic(
           <MainMenu.DefaultItems.ToggleTheme />
           <MainMenu.DefaultItems.ChangeCanvasBackground />
         </MainMenu>
-        <DefaultSidebar />
       </ExcalidrawComponent>
     );
   },
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 interface BreadcrumbItem {
@@ -58,21 +53,30 @@ interface ExcalidrawWrapperProps {
   breadcrumbs?: BreadcrumbItem[];
 }
 
+function getStoredLibrary(): any[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = localStorage.getItem("excalidraw-library");
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function ExcalidrawWrapper({
   initialData,
   brainstormId,
   breadcrumbs = [],
 }: ExcalidrawWrapperProps) {
+  const [libraryItems] = useState<any[]>(getStoredLibrary);
+
   const debouncedSave = useDebouncedCallback(
     async (elements, appState, files) => {
       try {
         await axios.put(`/api/brainstorm/${brainstormId}`, {
           content: {
             elements,
-            appState: {
-              ...appState,
-              collaborators: [],
-            },
+            appState: { ...appState, collaborators: [] },
             files,
           },
         });
@@ -87,8 +91,24 @@ export default function ExcalidrawWrapper({
     debouncedSave(elements, appState, files);
   };
 
+  const handleLibraryChange = useCallback((items: any[]) => {
+    try {
+      localStorage.setItem("excalidraw-library", JSON.stringify(items));
+    } catch {}
+  }, []);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest(".excalidraw-container")) {
+      e.stopPropagation();
+    }
+  }, []);
+
   return (
-    <div style={{ height: "100vh", width: "100%", position: "relative" }}>
+    <div
+      style={{ height: "100vh", width: "100%", position: "relative" }}
+      onPointerDownCapture={handlePointerDown}
+    >
       {breadcrumbs.length > 0 && (
         <div className="absolute top-4 left-16 z-50 bg-zinc-950/80 backdrop-blur-sm px-3 py-1.5 rounded-md border border-white/10">
           <Breadcrumb>
@@ -119,15 +139,22 @@ export default function ExcalidrawWrapper({
         </div>
       )}
       <Excalidraw
+        theme="dark"
         initialData={{
           elements: initialData?.elements || [],
           appState: {
             ...initialData?.appState,
+            theme: "dark",
             viewBackgroundColor:
-              initialData?.appState?.viewBackgroundColor || "#ffffff",
+              initialData?.appState?.viewBackgroundColor || "#09090b",
           },
           files: initialData?.files || {},
+          libraryItems,
         }}
+        libraryReturnUrl={
+          typeof window !== "undefined" ? window.location.href : ""
+        }
+        onLibraryChange={handleLibraryChange}
         onChange={onChange}
       />
     </div>

@@ -21,6 +21,7 @@ import {
   Trash2,
   PenLine,
   NotebookText,
+  Upload,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
@@ -28,6 +29,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { PdfUpload } from "@/components/archon-notes/pdf-upload";
 
 interface Note {
   id: string;
@@ -268,6 +270,7 @@ export function GraphSidebar({ data, isLoading }: SidebarProps) {
   const treeRef = useRef<TreeApi<TreeNode>>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [treeHeight, setTreeHeight] = useState(500);
+  const [activeTab, setActiveTab] = useState<"notes" | "upload">("notes");
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -369,59 +372,96 @@ export function GraphSidebar({ data, isLoading }: SidebarProps) {
 
   return (
     <div className="w-[280px] h-full flex flex-col border-r border-white/[0.06] bg-zinc-950">
-      {/* Header */}
-      <div className="px-4 h-14 flex items-center justify-between border-b border-white/[0.06] shrink-0">
-        <span className="text-[10px] font-semibold tracking-[0.14em] text-zinc-500 uppercase">
-          Notes
-        </span>
-        <div className="flex gap-0.5">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 hover:bg-white/[0.06] text-zinc-600 hover:text-zinc-300 rounded-md transition-all"
-            onClick={handleNewFolder}
-            title="New Folder"
-          >
-            <FolderPlus className="h-3.5 w-3.5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 hover:bg-white/[0.06] text-zinc-600 hover:text-zinc-300 rounded-md transition-all"
-            onClick={handleNewNote}
-            title="New Note"
-          >
-            <FilePlus className="h-3.5 w-3.5" />
-          </Button>
+      {/* Header with Tabs */}
+      <div className="border-b border-white/[0.06] shrink-0">
+        <div className="px-4 h-14 flex items-center justify-between">
+          <div className="flex gap-2 flex-1">
+            <button
+              onClick={() => setActiveTab("notes")}
+              className={cn(
+                "text-[10px] font-semibold tracking-[0.14em] uppercase px-2 py-1.5 rounded-md transition-colors",
+                activeTab === "notes"
+                  ? "text-indigo-300 bg-indigo-500/10"
+                  : "text-zinc-600 hover:text-zinc-400"
+              )}
+            >
+              Notes
+            </button>
+            <button
+              onClick={() => setActiveTab("upload")}
+              className={cn(
+                "text-[10px] font-semibold tracking-[0.14em] uppercase px-2 py-1.5 rounded-md transition-colors flex items-center gap-1",
+                activeTab === "upload"
+                  ? "text-indigo-300 bg-indigo-500/10"
+                  : "text-zinc-600 hover:text-zinc-400"
+              )}
+            >
+              <Upload className="h-3 w-3" />
+              Upload
+            </button>
+          </div>
+          {activeTab === "notes" && (
+            <div className="flex gap-0.5">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 hover:bg-white/[0.06] text-zinc-600 hover:text-zinc-300 rounded-md transition-all"
+                onClick={handleNewFolder}
+                title="New Folder"
+              >
+                <FolderPlus className="h-3.5 w-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 hover:bg-white/[0.06] text-zinc-600 hover:text-zinc-300 rounded-md transition-all"
+                onClick={handleNewNote}
+                title="New Note"
+              >
+                <FilePlus className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Body */}
-      <div ref={containerRef} className="flex-1 overflow-hidden">
-        {isLoading ? (
-          <LoadingSkeleton />
-        ) : isEmpty ? (
-          <EmptyState onNewFolder={handleNewFolder} onNewNote={handleNewNote} />
+      <div ref={containerRef} className="flex-1 overflow-hidden flex flex-col">
+        {activeTab === "notes" ? (
+          isLoading ? (
+            <LoadingSkeleton />
+          ) : isEmpty ? (
+            <EmptyState onNewFolder={handleNewFolder} onNewNote={handleNewNote} />
+          ) : (
+            <Tree
+              ref={treeRef}
+              data={treeData}
+              onCreate={onCreate}
+              onRename={onRename}
+              onMove={onMove}
+              onDelete={onDelete}
+              width="100%"
+              height={treeHeight}
+              rowHeight={34}
+              indent={14}
+              paddingTop={8}
+              paddingBottom={8}
+              disableDrop={({ parentNode }) =>
+                !!(parentNode && parentNode.data.type === "CANVAS")
+              }
+            >
+              {NodeRenderer}
+            </Tree>
+          )
         ) : (
-          <Tree
-            ref={treeRef}
-            data={treeData}
-            onCreate={onCreate}
-            onRename={onRename}
-            onMove={onMove}
-            onDelete={onDelete}
-            width="100%"
-            height={treeHeight}
-            rowHeight={34}
-            indent={14}
-            paddingTop={8}
-            paddingBottom={8}
-            disableDrop={({ parentNode }) =>
-              !!(parentNode && parentNode.data.type === "CANVAS")
-            }
-          >
-            {NodeRenderer}
-          </Tree>
+          <div className="flex-1 overflow-auto p-4">
+            <PdfUpload
+              onUploadSuccess={() => {
+                // Future: handle successful upload
+                // Maybe create a note node or update graph
+              }}
+            />
+          </div>
         )}
       </div>
     </div>

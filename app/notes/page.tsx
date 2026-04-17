@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2, ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 import { useTheme } from "next-themes";
+import { toast } from "sonner";
 import { GraphSidebar } from "@/components/graph/sidebar";
 
 // Import ForceGraph2D dynamically as it relies on window/canvas
@@ -72,6 +73,22 @@ export default function GraphPage() {
     resizeObserver.observe(containerRef.current);
 
     return () => resizeObserver.disconnect();
+  }, []);
+
+  // Handle the case where excalidraw.com redirects back to /notes?addLibrary=...
+  // (happens when libraryReturnUrl resolves to the graph page instead of a note).
+  // We store the URL as a pending import so the next canvas note that opens picks it up.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const addLibraryUrl = params.get("addLibrary");
+    if (!addLibraryUrl) return;
+
+    try {
+      localStorage.setItem("excalidraw-pending-library", addLibraryUrl);
+    } catch {}
+
+    window.history.replaceState({}, "", "/notes");
+    toast.info("Library ready — open a note canvas to apply it");
   }, []);
 
   const { data: notes, isLoading } = useQuery({
