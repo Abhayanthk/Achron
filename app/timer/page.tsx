@@ -9,17 +9,18 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Play,
-  Pause,
-  RefreshCw,
   ChevronLeft,
-  BarChart3,
   Clock,
   Zap,
   Target,
+  PictureInPicture2,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { usePipWindow } from "@/hooks/usePipWindow";
+import { PipPortal } from "@/components/timer/PipPortal";
+import { TimerDisplay } from "@/components/timer/TimerDisplay";
 import {
   BarChart,
   Bar,
@@ -45,9 +46,6 @@ export default function TimerPage() {
   const {
     isActive,
     timeLeft,
-    duration,
-    sessionType,
-    toggle,
     reset,
     formatTime,
     setSession,
@@ -63,6 +61,7 @@ export default function TimerPage() {
   const [unit, setUnit] = useState<"hrs" | "mins">("hrs");
   const { date, goPrev, goNext, goToday } = useDateNavigator(timeRange);
 
+  const { pipWindow, openPip, closePip, isSupported } = usePipWindow();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [pendingPreset, setPendingPreset] = useState<{
     duration: number;
@@ -207,65 +206,41 @@ export default function TimerPage() {
               exit={{ opacity: 0, y: -20 }}
               className="w-full flex flex-col items-center"
             >
-              {/* Session Tag */}
-              <div className="flex items-center gap-2 mb-8">
-                <span className="flex h-3 w-3 relative">
-                  <span
-                    className={cn(
-                      "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
-                      isActive ? "bg-blue-400" : "hidden",
-                    )}
-                  ></span>
-                  <span
-                    className={cn(
-                      "relative inline-flex rounded-full h-3 w-3",
-                      isActive ? "bg-blue-500" : "bg-zinc-700",
-                    )}
-                  ></span>
-                </span>
-                <span className="text-sm font-bold tracking-widest text-zinc-400 uppercase">
-                  {sessionType}
-                </span>
-              </div>
-
-              {/* Main Timer */}
-              <div
-                className="relative mb-12 group cursor-pointer"
-                onClick={toggle}
-              >
-                <div className="text-[120px] md:text-[200px] leading-none font-bold font-mono tracking-tighter tabular-nums select-none bg-gradient-to-b from-white to-zinc-500 bg-clip-text text-transparent transition-all group-hover:scale-105 duration-300">
-                  {formatTime(timeLeft)}
+              {pipWindow ? (
+                <div className="flex flex-col items-center gap-4 mb-16">
+                  <div className="text-4xl font-mono font-bold tabular-nums text-zinc-600">
+                    {formatTime(timeLeft)}
+                  </div>
+                  <p className="text-sm text-zinc-500">
+                    Timer is in pop-out window
+                  </p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-zinc-800 bg-black/50 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-400 hover:text-white"
+                    onClick={closePip}
+                  >
+                    <X className="size-4 mr-2" />
+                    Close pop-out
+                  </Button>
                 </div>
-                {/* Progress Ring/Bar could go here, keeping it minimal for now */}
-              </div>
-
-              {/* Controls */}
-              <div className="flex items-center gap-6 mb-16">
-                <Button
-                  size="lg"
-                  className={cn(
-                    "h-20 w-20 rounded-full text-xl transition-all shadow-[0_0_40px_rgba(0,0,0,0.5)]",
-                    isActive
-                      ? "bg-zinc-900 border border-zinc-800 text-zinc-400 hover:bg-zinc-800 hover:text-white hover:border-red-500/50"
-                      : "bg-white text-black hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.2)]",
-                  )}
-                  onClick={toggle}
-                >
-                  {isActive ? (
-                    <Pause className="fill-current size-8" />
-                  ) : (
-                    <Play className="fill-current size-8 ml-1" />
-                  )}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="h-14 w-14 rounded-full border-zinc-800 bg-black/50 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-500 hover:text-white transition-all"
-                  onClick={reset}
-                >
-                  <RefreshCw className="size-5" />
-                </Button>
-              </div>
+              ) : (
+                <TimerDisplay
+                  actions={
+                    isSupported ? (
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-14 w-14 rounded-full border-zinc-800 bg-black/50 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-500 hover:text-white transition-all"
+                        onClick={openPip}
+                        title="Pop out timer"
+                      >
+                        <PictureInPicture2 className="size-5" />
+                      </Button>
+                    ) : undefined
+                  }
+                />
+              )}
 
               {/* Presets Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
@@ -479,6 +454,10 @@ export default function TimerPage() {
           )}
         </AnimatePresence>
       </main>
+
+      <PipPortal pipWindow={pipWindow}>
+        <TimerDisplay compact />
+      </PipPortal>
     </div>
   );
 }
