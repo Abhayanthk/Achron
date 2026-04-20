@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <h1>A R C H O N</h1>
+  <h1>A C H R O N</h1>
   <p>
     <b>Gamified Productivity & Identity Tracker</b>
   </p>
