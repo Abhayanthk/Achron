@@ -406,7 +406,7 @@ export default function TimerPage() {
                         ))}
                     </div>
                   ) : (
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                       <BarChart data={currentData}>
                         <CartesianGrid
                           strokeDasharray="3 3"
