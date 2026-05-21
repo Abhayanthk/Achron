@@ -2,12 +2,14 @@ import { inngest } from "./client";
 import { prisma } from "@/lib/prisma";
 
 export const syncUser = inngest.createFunction(
-  { id: "sync-user-from-clerk" },
-  [
-    { event: "clerk/user.created" },
-    { event: "clerk/user.updated" },
-    { event: "clerk/user.deleted" },
-  ],
+  {
+    id: "sync-user-from-clerk",
+    triggers: [
+      { event: "clerk/user.created" },
+      { event: "clerk/user.updated" },
+      { event: "clerk/user.deleted" },
+    ],
+  },
   async ({ event, step }) => {
     // Handle delete event
     if (event.name === "clerk/user.deleted") {
