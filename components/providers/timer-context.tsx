@@ -64,6 +64,8 @@ interface TimerContextType extends TimerState {
   formatTime: (seconds: number) => string;
   presets: TimerPreset[];
   addPreset: (preset: Omit<TimerPreset, "id">) => Promise<any>;
+  updatePreset: (id: string, data: Partial<Omit<TimerPreset, "id">>) => Promise<any>;
+  deletePreset: (id: string) => Promise<any>;
   isLoadingPresets: boolean;
   alarmSound: AlarmSoundType;
   setAlarmSound: (sound: AlarmSoundType) => void;
@@ -170,6 +172,32 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   });
   const addPreset = async (preset: Omit<TimerPreset, "id">) => {
     return await addTimerMutation.mutateAsync(preset);
+  };
+
+  const updateTimerMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string; data: Partial<Omit<TimerPreset, "id">> }) => {
+      const res = await axios.patch(`/api/timer/${id}`, data);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["timers"] });
+    },
+  });
+  const updatePreset = async (id: string, data: Partial<Omit<TimerPreset, "id">>) => {
+    return await updateTimerMutation.mutateAsync({ id, data });
+  };
+
+  const deleteTimerMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await axios.delete(`/api/timer/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["timers"] });
+    },
+  });
+  const deletePreset = async (id: string) => {
+    return await deleteTimerMutation.mutateAsync(id);
   };
 
   // Load state (simplified for new logic)
@@ -754,6 +782,8 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         formatTime,
         presets,
         addPreset,
+        updatePreset,
+        deletePreset,
         isLoadingPresets,
         alarmSound,
         setAlarmSound,

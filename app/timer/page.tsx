@@ -15,6 +15,9 @@ import {
   Target,
   PictureInPicture2,
   X,
+  Pencil,
+  Trash2,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -32,15 +35,18 @@ import {
   CartesianGrid,
 } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import SetAlarmDialog from "@/components/tasks/set-alarm-dialog";
 import SegmentedControlButton from "@/components/analytics/segmentedControlButton";
 import CreateTimerDialog from "@/components/tasks/create-timer-dialog";
+import EditTimerDialog from "@/components/tasks/edit-timer-dialog";
 import ResetTimerDialog from "@/components/tasks/reset-timer-dialog";
 import DateNavButtons from "@/components/analytics/dateNavButtons";
 import { useDateNavigator } from "@/hooks/useDateNavigation";
+import { TimerPreset } from "@/components/providers/timer-context";
 
 export default function TimerPage() {
   const {
@@ -51,6 +57,8 @@ export default function TimerPage() {
     setSession,
     presets,
     addPreset,
+    updatePreset,
+    deletePreset,
     isLoadingPresets,
     alarmSound,
     setAlarmSound,
@@ -69,6 +77,22 @@ export default function TimerPage() {
     name: string;
     id: string;
   } | null>(null);
+
+  const [editingPreset, setEditingPreset] = useState<TimerPreset | null>(null);
+  const [deletingPresetId, setDeletingPresetId] = useState<string | null>(null);
+
+  const handleDeletePreset = async (e: React.MouseEvent, presetId: string) => {
+    e.stopPropagation();
+    setDeletingPresetId(presetId);
+    try {
+      await deletePreset(presetId);
+      toast.success("Timer deleted");
+    } catch {
+      toast.error("Failed to delete timer");
+    } finally {
+      setDeletingPresetId(null);
+    }
+  };
 
   // Fetch Analytics Data
   const { data: analyticsData = [], isLoading: isLoadingAnalytics } = useQuery({
@@ -257,42 +281,84 @@ export default function TimerPage() {
                           <Skeleton className="absolute top-4 right-4 h-2 w-2 rounded-full bg-zinc-800" />
                         </div>
                       ))
-                  : presets.map((preset) => (
-                      <button
-                        key={preset.id}
-                        onClick={() => {
-                          if (isActive) {
-                            setPendingPreset({
-                              duration: preset.duration,
-                              type: preset.type,
-                              name: preset.name,
-                              id: preset.id,
-                            });
-                            setShowResetConfirm(true);
-                          } else {
-                            setSession(
-                              preset.duration,
-                              preset.type as SessionType,
-                              preset.name,
-                              preset.id,
-                            );
-                          }
-                        }}
-                        className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
-                      >
-                        <div
-                          className={`absolute top-4 right-4 h-2 w-2 rounded-full ${preset.color} opacity-50 group-hover:opacity-100 transition-opacity`}
-                        />
-                        <span className="text-sm font-bold text-zinc-300 group-hover:text-white mb-1">
-                          {preset.name}
-                        </span>
-                        <span className="text-xs text-zinc-500 font-mono">
-                          {Math.floor(preset.duration / 60)}m
-                        </span>
-                      </button>
-                    ))}
+                  : presets.map((preset) => {
+                      const isDefault = preset.id === "1";
+                      return (
+                        <button
+                          key={preset.id}
+                          onClick={() => {
+                            if (isActive) {
+                              setPendingPreset({
+                                duration: preset.duration,
+                                type: preset.type,
+                                name: preset.name,
+                                id: preset.id,
+                              });
+                              setShowResetConfirm(true);
+                            } else {
+                              setSession(
+                                preset.duration,
+                                preset.type as SessionType,
+                                preset.name,
+                                preset.id,
+                              );
+                            }
+                          }}
+                          className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
+                        >
+                          {/* Color dot + hover actions */}
+                          <div className="absolute top-3 right-3 flex items-center gap-1">
+                            {!isDefault && (
+                              <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span
+                                  role="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditingPreset(preset);
+                                  }}
+                                  className="p-1 rounded-md text-zinc-500 hover:text-white hover:bg-white/10 transition-colors"
+                                >
+                                  <Pencil className="h-3 w-3" />
+                                </span>
+                                <span
+                                  role="button"
+                                  onClick={(e) => handleDeletePreset(e, preset.id)}
+                                  className="p-1 rounded-md text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                                >
+                                  {deletingPresetId === preset.id ? (
+                                    <Loader2 className="h-3 w-3 animate-spin" />
+                                  ) : (
+                                    <Trash2 className="h-3 w-3" />
+                                  )}
+                                </span>
+                              </div>
+                            )}
+                            <div
+                              className={`h-2 w-2 rounded-full ${preset.color} opacity-50 group-hover:opacity-100 transition-opacity`}
+                            />
+                          </div>
+                          <span className="text-sm font-bold text-zinc-300 group-hover:text-white mb-1 pr-12">
+                            {preset.name}
+                          </span>
+                          <span className="text-xs text-zinc-500 font-mono">
+                            {Math.floor(preset.duration / 60)}m
+                          </span>
+                        </button>
+                      );
+                    })}
 
                 <CreateTimerDialog addPreset={addPreset} />
+
+                {editingPreset && (
+                  <EditTimerDialog
+                    preset={editingPreset}
+                    open={!!editingPreset}
+                    onOpenChange={(open) => {
+                      if (!open) setEditingPreset(null);
+                    }}
+                    onSave={updatePreset}
+                  />
+                )}
 
                 <ResetTimerDialog
                   open={showResetConfirm}
