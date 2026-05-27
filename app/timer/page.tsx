@@ -52,6 +52,9 @@ export default function TimerPage() {
   const {
     isActive,
     timeLeft,
+    duration,
+    sessionType,
+    sessionName,
     reset,
     formatTime,
     setSession,
@@ -80,6 +83,21 @@ export default function TimerPage() {
 
   const [editingPreset, setEditingPreset] = useState<TimerPreset | null>(null);
   const [deletingPresetId, setDeletingPresetId] = useState<string | null>(null);
+
+  const colorMap: Record<string, string> = {
+    "bg-blue-500": "59, 130, 246",
+    "bg-purple-500": "168, 85, 247",
+    "bg-emerald-500": "16, 185, 129",
+    "bg-amber-500": "245, 158, 11",
+    "bg-pink-500": "236, 72, 153",
+    "bg-rose-500": "244, 63, 94",
+    "bg-cyan-500": "6, 182, 212",
+  };
+
+  const activePreset = presets.find(
+    (p) => p.duration === duration && p.type === sessionType && p.name === sessionName,
+  ) || presets.find((p) => p.duration === duration && p.type === sessionType);
+  const activeRgb = colorMap[activePreset?.color ?? "bg-blue-500"] || "59, 130, 246";
 
   const handleDeletePreset = async (e: React.MouseEvent, presetId: string) => {
     e.stopPropagation();
@@ -165,16 +183,28 @@ export default function TimerPage() {
 
   return (
     <div className="flex flex-col h-full bg-black min-h-screen text-white p-6 md:p-12 relative overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.15),transparent_50%)]" />
+      {/* Background Ambience — tinted to active preset color */}
+      <div className="absolute inset-0 pointer-events-none transition-all duration-1000">
+        <div
+          className="absolute top-0 left-0 w-full h-full transition-all duration-1000"
+          style={{
+            background: `radial-gradient(circle at 50% 0%, rgba(${activeRgb}, 0.15), transparent 50%)`,
+          }}
+        />
+        <div
+          className="absolute inset-0 transition-all duration-1000"
+          style={{ backgroundColor: `rgba(${activeRgb}, 0.03)` }}
+        />
         <div
           className={cn(
             "absolute inset-0 transition-opacity duration-1000",
             isActive ? "opacity-30" : "opacity-0",
           )}
         >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/10 blur-[120px] rounded-full animate-pulse" />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] blur-[120px] rounded-full animate-pulse transition-all duration-1000"
+            style={{ backgroundColor: `rgba(${activeRgb}, 0.1)` }}
+          />
         </div>
       </div>
 
@@ -283,6 +313,7 @@ export default function TimerPage() {
                       ))
                   : presets.map((preset) => {
                       const isDefault = preset.id === "1";
+                      const rgb = colorMap[preset.color] || "161, 161, 170";
                       return (
                         <button
                           key={preset.id}
@@ -304,7 +335,26 @@ export default function TimerPage() {
                               );
                             }
                           }}
-                          className="group relative flex flex-col items-start p-4 rounded-xl border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900/80 hover:border-zinc-700 transition-all text-left"
+                          className="group relative flex flex-col items-start p-4 rounded-xl border transition-all duration-200 text-left"
+                          style={{
+                            borderColor: `rgba(${rgb}, 0.15)`,
+                            borderLeftWidth: "3px",
+                            borderLeftColor: `rgba(${rgb}, 0.4)`,
+                            backgroundColor: `rgba(${rgb}, 0.05)`,
+                            boxShadow: "none",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = `rgba(${rgb}, 0.12)`;
+                            e.currentTarget.style.borderColor = `rgba(${rgb}, 0.25)`;
+                            e.currentTarget.style.borderLeftColor = `rgba(${rgb}, 0.7)`;
+                            e.currentTarget.style.boxShadow = `0 0 20px rgba(${rgb}, 0.08)`;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = `rgba(${rgb}, 0.05)`;
+                            e.currentTarget.style.borderColor = `rgba(${rgb}, 0.15)`;
+                            e.currentTarget.style.borderLeftColor = `rgba(${rgb}, 0.4)`;
+                            e.currentTarget.style.boxShadow = "none";
+                          }}
                         >
                           {/* Color dot + hover actions */}
                           <div className="absolute top-3 right-3 flex items-center gap-1">
@@ -334,7 +384,8 @@ export default function TimerPage() {
                               </div>
                             )}
                             <div
-                              className={`h-2 w-2 rounded-full ${preset.color} opacity-50 group-hover:opacity-100 transition-opacity`}
+                              className="h-2 w-2 rounded-full opacity-60 group-hover:opacity-100 transition-opacity"
+                              style={{ backgroundColor: `rgb(${rgb})` }}
                             />
                           </div>
                           <span className="text-sm font-bold text-zinc-300 group-hover:text-white mb-1 pr-12">
