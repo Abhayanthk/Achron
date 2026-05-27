@@ -20,7 +20,7 @@ import {
   Loader2,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { usePipWindow } from "@/hooks/usePipWindow";
 import { PipPortal } from "@/components/timer/PipPortal";
 import { TimerDisplay } from "@/components/timer/TimerDisplay";
@@ -151,17 +151,17 @@ export default function TimerPage() {
     return data;
   };
 
-  const rawData = fillData(analyticsData, timeRange);
-  const currentData = rawData.map((d: any) => ({
+  const rawData = useMemo(() => fillData(analyticsData, timeRange), [analyticsData, timeRange]);
+  const currentData = useMemo(() => rawData.map((d: any) => ({
     ...d,
     value: unit === "mins" ? Number((d.hours * 60).toFixed(0)) : d.hours,
-  }));
+  })), [rawData, unit]);
 
   // Calculate Stats
-  const totalHours = currentData.reduce(
+  const totalHours = useMemo(() => currentData.reduce(
     (acc: number, curr: any) => acc + curr.hours,
     0,
-  );
+  ), [currentData]);
 
   return (
     <div className="flex flex-col h-full bg-black min-h-screen text-white p-6 md:p-12 relative overflow-hidden">

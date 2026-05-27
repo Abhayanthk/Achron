@@ -115,11 +115,8 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   const [startTime, setStartTime] = useState<number | null>(null); // When current segment started
   const [accumulatedTime, setAccumulatedTime] = useState(0); // Seconds elapsed before current segment
   const [timeLeft, setTimeLeft] = useState(DEFAULT_DURATION);
-  //   A Web Worker is a browser feature that lets you run JavaScript
-  // in a separate thread from the UI thread, so you can do work without
-  // blocking or disrupting the user interface.
-  // Simple words -> backGround worker in the browser
   const workerRef = useRef<Worker | null>(null);
+  const isFinishingRef = useRef(false);
 
   const [activeSessionId, setActiveSessionId] = useState<string | null>(null);
 
@@ -301,7 +298,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
 
     // Control Worker
     if (status === "RUNNING") {
-      workerRef.current?.postMessage({ command: "START", interval: 100 });
+      workerRef.current?.postMessage({ command: "START", interval: 1000 });
     } else {
       workerRef.current?.postMessage({ command: "STOP" });
     }
@@ -333,7 +330,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
       workerRef.current?.terminate();
     };
   }, []); // Bind once. Uses refs for latest data.
-  // Save state
+  // Save state (excludes timeLeft — derived from startTime + accumulatedTime on reload)
   useEffect(() => {
     localStorage.setItem(
       "achron-timer-state",
@@ -341,26 +338,22 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         status,
         startTime,
         accumulatedTime,
-        timeLeft,
         duration,
         sessionType,
         sessionName,
         activeSessionId,
         currentTimerId,
-        // alarmSound can be saved here too but we prefer the dedicated key or server
       })
     );
   }, [
     status,
     startTime,
     accumulatedTime,
-    timeLeft,
     duration,
     sessionType,
     sessionName,
     activeSessionId,
     currentTimerId,
-    alarmSound,
   ]);
 
   // End Session Helper (unchanged mostly, but we might use PATCH inside logic)
@@ -630,6 +623,9 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   };
 
   const finish = async () => {
+    if (isFinishingRef.current) return;
+    isFinishingRef.current = true;
+
     // Calculate final time
     const now = Date.now();
     let finalDuration = accumulatedTimeRef.current;
@@ -672,6 +668,8 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
         });
       }
     }
+
+    isFinishingRef.current = false;
   };
 
   const reset = async () => {
