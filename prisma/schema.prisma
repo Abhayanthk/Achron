@@ -35,6 +35,25 @@ model User {
       workLogs       WorkLog[]
       xpLogs         XpLog[]
       recoverySessions RecoverySession[]
+      trainerReports TrainerReport[]
+}
+
+model TrainerReport {
+      id         String   @id @default(cuid())
+      userId     String
+      user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+      scope      String   // "contest" | "overall"
+      contest_id String?  // set when scope == "contest"
+      status     String   @default("PENDING") // PENDING | RUNNING | DONE | FAILED
+      report     Json?    // final CoachingReport
+      metrics    Json?    // deterministic metrics snapshot
+      trace      Json?    // tool-call trace
+      model      String?
+      error      String?
+      created_at DateTime @default(now())
+      updated_at DateTime @updatedAt
+
+      @@index([userId, created_at])
 }
 
 model Timer {
@@ -240,6 +259,8 @@ model Note {
       parentId  String?
       createdAt DateTime @default(now())
       updatedAt DateTime @updatedAt
+      embedding   Unsupported("vector")?
+      sourceFiles String[]
       parent    Note?    @relation("NoteHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
       children  Note[]   @relation("NoteHierarchy")
       user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
