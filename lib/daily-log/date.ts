@@ -143,6 +143,32 @@ export function daysEndingAt(end: CalendarDate, length: number): CalendarDate[] 
       return Array.from({ length }, (_, index) => addDays(end, index - (length - 1)));
 }
 
+/**
+ * Human-readable rendering of a calendar day.
+ *
+ * Forces `timeZone: "UTC"` because the value is a UTC midnight standing in for
+ * a wall date — letting the browser localise it would shift "6 August" to the
+ * 5th for anyone west of UTC. Display goes through here so no component has to
+ * remember that.
+ */
+export function formatCalendarDate(
+      date: CalendarDate,
+      options: Intl.DateTimeFormatOptions,
+): string {
+      return toUtcDate(date).toLocaleDateString(undefined, {
+            ...options,
+            timeZone: "UTC",
+      });
+}
+
+/**
+ * Day of the week as `0`–`6`, Monday first — the offset a calendar grid needs
+ * to pad its first row. Read in UTC, like every other day-level operation here.
+ */
+export function weekdayIndex(date: CalendarDate): number {
+      return (toUtcDate(date).getUTCDay() + 6) % 7;
+}
+
 /** Every day from `start` to `end` inclusive, oldest first. Empty if inverted. */
 export function daysBetween(start: CalendarDate, end: CalendarDate): CalendarDate[] {
       const span = differenceInDays(end, start);

@@ -8,11 +8,9 @@ import {
   Flame,
   Layout,
   Plus,
-  Settings,
 } from "lucide-react";
 import { BentoCard } from "./bento-card";
 import { ActivityChart } from "./activity-chart";
-import { NonNegotiables } from "./non-negotiables";
 import { TaskList } from "./task-list";
 import { ReminderList } from "./reminder-list";
 import { ProjectCard } from "./project-card";
@@ -75,18 +73,6 @@ export function DashboardGrid() {
       {/* ROW 3: Daily Log (4) + Non-Negotiables (4) + Habit Mastery (4) */}
       <BentoCard title="Reminders" className="md:col-span-2 lg:col-span-4">
         <ReminderList />
-      </BentoCard>
-
-      <BentoCard
-        title="Non-Negotiables"
-        className="md:col-span-2 lg:col-span-4"
-        action={
-          <Link href="/non-negotiables">
-            <Settings className="size-4 text-zinc-600 hover:text-white cursor-pointer" />
-          </Link>
-        }
-      >
-        <NonNegotiables />
       </BentoCard>
 
       <BentoCard

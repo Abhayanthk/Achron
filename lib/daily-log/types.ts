@@ -7,6 +7,7 @@
  */
 
 import type { CalendarDate } from "./date";
+import type { PageMode, RollingConsistency } from "./domain";
 
 /** A core item's state on one particular card. */
 export interface CoreStateSnapshot {
@@ -42,4 +43,27 @@ export interface CardCoreProgress {
       date: CalendarDate;
       coreDone: number;
       coreTotal: number;
+}
+
+/**
+ * The whole page in one payload — what `GET /api/daily-log` returns.
+ *
+ * Lives here rather than beside the service so client components can import
+ * the type without pulling the repository (and Prisma) into the bundle.
+ */
+export interface DailyLogPageData {
+      /** Server's authoritative "today", in the app timezone. */
+      today: CalendarDate;
+      mode: PageMode;
+      /** The core items to render on today's card. */
+      coreItems: CoreItemRecord[];
+      todayCard: DailyCardRecord | null;
+      /**
+       * Everything below is empty or null in `"re-entry"` mode — the client is
+       * never given the history it would otherwise draw a gap with.
+       */
+      cardSummaries: CardCoreProgress[];
+      recentCards: DailyCardRecord[];
+      emptyBackfillDays: CalendarDate[];
+      consistency: RollingConsistency | null;
 }

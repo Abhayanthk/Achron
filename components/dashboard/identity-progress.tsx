@@ -27,7 +27,8 @@ export function IdentityProgress() {
       logsCount: 0,
       tasksCount: 0,
       deepHours: 0,
-      nonNegoScore: 0, // Changed from nonNegoPoints to match API
+      daysLogged: 0,
+      daysLoggedWindow: 30,
       projectsCompleted: 0,
       habitsActive: 0,
     },
@@ -57,11 +58,11 @@ export function IdentityProgress() {
       bg: "bg-purple-500/10",
     },
     {
-      label: "Non-Nego Pts",
-      value: stats.nonNegoScore,
+      label: "Days Logged",
+      value: `${stats.daysLogged}/${stats.daysLoggedWindow}`,
       icon: Target,
-      color: "text-red-500",
-      bg: "bg-red-500/10",
+      color: "text-indigo-400",
+      bg: "bg-indigo-500/10",
     },
     {
       label: "Projects Done",

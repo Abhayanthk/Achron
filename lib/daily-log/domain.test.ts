@@ -9,6 +9,7 @@ import {
       emptyBackfillDays,
       heatmapLevel,
       mostRecentCardDate,
+      normalizeDidBullets,
       pageMode,
       recentWindow,
       rollingConsistency,
@@ -20,6 +21,32 @@ const TODAY = "2026-08-06";
 
 /** Card `n` days before TODAY. */
 const daysAgo = (n: number) => addDays(TODAY, -n);
+
+describe("normalizeDidBullets", () => {
+      it("splits a textarea value on newlines", () => {
+            expect(normalizeDidBullets("one\ntwo\nthree")).toEqual(["one", "two", "three"]);
+      });
+
+      it("drops blank lines and trims whitespace", () => {
+            expect(normalizeDidBullets("  one  \n\n\t\n two\n")).toEqual(["one", "two"]);
+      });
+
+      it("accepts an array as well as a string", () => {
+            expect(normalizeDidBullets(["  a ", "", "b"])).toEqual(["a", "b"]);
+      });
+
+      it("returns nothing for empty input", () => {
+            expect(normalizeDidBullets("")).toEqual([]);
+            expect(normalizeDidBullets("   \n  ")).toEqual([]);
+            expect(normalizeDidBullets([])).toEqual([]);
+      });
+
+      it("preserves the content of a bullet verbatim", () => {
+            expect(normalizeDidBullets(["  solved 1873C — took 40m, WA twice  "])).toEqual([
+                  "solved 1873C — took 40m, WA twice",
+            ]);
+      });
+});
 
 describe("summarizeCard", () => {
       it("counts completed core states", () => {
@@ -246,8 +273,11 @@ describe("emptyBackfillDays", () => {
 });
 
 describe("pageMode", () => {
-      it("shows only an empty card when there is no history at all", () => {
-            expect(pageMode(null, TODAY)).toBe("re-entry");
+      it("shows the full page when there is no history at all", () => {
+            // Re-entry describes a return, and a return needs something to return
+            // from. A first-time user has no absence to be shown — and needs the
+            // page's controls to set their core items up in the first place.
+            expect(pageMode(null, TODAY)).toBe("full");
       });
 
       it("shows the full page while the gap is within the threshold", () => {

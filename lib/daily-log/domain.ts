@@ -32,6 +32,18 @@ import type { CardCoreProgress, DailyCardRecord } from "./types";
 // Adapters
 // ---------------------------------------------------------------------------
 
+/**
+ * Clean up the `Did` bullets: trim each line and drop the blank ones.
+ *
+ * The editor is a plain textarea split on newlines, so trailing returns and
+ * stray whitespace are normal input, not user error. Content is never
+ * otherwise altered — bullets are evidence, and evidence is quoted verbatim.
+ */
+export function normalizeDidBullets(input: string | readonly string[]): string[] {
+      const lines = typeof input === "string" ? input.split("\n") : input;
+      return lines.map((line) => line.trim()).filter((line) => line.length > 0);
+}
+
 /** Reduce a full card to what the heatmap and metrics actually read. */
 export function summarizeCard(card: DailyCardRecord): CardCoreProgress {
       return {
@@ -246,17 +258,19 @@ export type PageMode = "re-entry" | "full";
 /**
  * Which page to render, from the most recent card's date.
  *
- * Re-entry when the gap exceeds `thresholdDays`, and also when there is no
- * history at all: a first-time user gets the same single empty box rather than
- * a grid of gray. Once today's card is saved the gap is 0 and the next load is
- * `"full"`.
+ * Re-entry only ever describes a *return*: it needs a gap, and a gap needs a
+ * previous card. Empty history is therefore `"full"` — someone who has never
+ * logged has no absence to be confronted with, and hiding the page from them
+ * would also hide the controls they need to set the thing up.
+ *
+ * Once today's card is saved the gap is 0 and the next load is `"full"`.
  */
 export function pageMode(
       mostRecentCardDate: CalendarDate | null,
       today: CalendarDate,
       thresholdDays: number = RE_ENTRY_THRESHOLD_DAYS,
 ): PageMode {
-      if (mostRecentCardDate === null) return "re-entry";
+      if (mostRecentCardDate === null) return "full";
 
       const gap = differenceInDays(today, mostRecentCardDate);
       // A future-dated card means no gap to speak of; don't hide the page.

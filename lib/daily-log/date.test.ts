@@ -8,11 +8,13 @@ import {
       daysBetween,
       daysEndingAt,
       differenceInDays,
+      formatCalendarDate,
       fromUtcDate,
       isCalendarDate,
       toCalendarDateInTimeZone,
       today,
       toUtcDate,
+      weekdayIndex,
 } from "./date";
 
 describe("isCalendarDate", () => {
@@ -142,6 +144,32 @@ describe("arithmetic", () => {
             expect(compareCalendarDates("2026-08-05", "2026-08-06")).toBe(-1);
             expect(compareCalendarDates("2026-08-06", "2026-08-06")).toBe(0);
             expect(compareCalendarDates("2026-08-07", "2026-08-06")).toBe(1);
+      });
+});
+
+describe("weekdayIndex", () => {
+      it("is Monday-first", () => {
+            // 2026-08-03 is a Monday.
+            expect(weekdayIndex("2026-08-03")).toBe(0);
+            expect(weekdayIndex("2026-08-06")).toBe(3); // Thursday
+            expect(weekdayIndex("2026-08-08")).toBe(5); // Saturday
+            expect(weekdayIndex("2026-08-09")).toBe(6); // Sunday
+      });
+
+      it("does not shift for the viewer's timezone", () => {
+            // Read in UTC, so the answer is the same wherever this runs.
+            expect(weekdayIndex("2026-01-01")).toBe(3); // Thursday
+      });
+});
+
+describe("formatCalendarDate", () => {
+      it("renders the day it was given, not the day before", () => {
+            // Would read "5" if the UTC midnight were localised westward.
+            expect(formatCalendarDate("2026-08-06", { day: "numeric" })).toBe("6");
+      });
+
+      it("passes through Intl options", () => {
+            expect(formatCalendarDate("2026-08-06", { weekday: "long" })).toBe("Thursday");
       });
 });
 

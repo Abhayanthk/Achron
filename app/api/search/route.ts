@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ results: [] });
   }
 
-  const [tasks, notes, projects, logs, habits, nonNegotiables, problems, brainstorms, events] =
+  const [tasks, notes, projects, logs, habits, problems, brainstorms, events] =
     await Promise.all([
       prisma.task.findMany({
         where: { userId },
@@ -80,10 +80,6 @@ export async function POST(req: NextRequest) {
       prisma.habit.findMany({
         where: { userId, archived: false },
         select: { id: true, name: true },
-      }),
-      prisma.nonNegotiable.findMany({
-        where: { userId },
-        select: { id: true, title: true },
       }),
       prisma.problemLog.findMany({
         where: { userId },
@@ -174,17 +170,6 @@ export async function POST(req: NextRequest) {
       subtitle: "Habit",
       url: "/habits",
       text: h.name,
-    });
-  }
-
-  for (const nn of nonNegotiables) {
-    items.push({
-      id: nn.id,
-      type: "non-negotiable",
-      title: nn.title,
-      subtitle: "Non-Negotiable",
-      url: "/non-negotiables",
-      text: nn.title,
     });
   }
 

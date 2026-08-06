@@ -95,8 +95,8 @@ const navMain = [
     icon: Timer,
   },
   {
-    title: "Non-Negotiable",
-    url: "/non-negotiables",
+    title: "Evidence Log",
+    url: "/daily-log",
     icon: ShieldCheck,
   },
   {

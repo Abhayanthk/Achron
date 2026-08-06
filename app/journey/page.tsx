@@ -16,7 +16,6 @@ import { TasksAnalytics } from "@/components/analytics/tasks-analytics";
 import { TimerAnalytics } from "@/components/analytics/timer-analytics";
 import { XpHistoryGraph } from "@/components/analytics/xp-line-graph";
 import { ProjectStatusChart } from "@/components/analytics/project-status-chart";
-import { ConfidenceMountain } from "@/components/non-negotiable/confidence-mountain";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
@@ -31,14 +30,6 @@ export default function JourneyPage() {
     queryKey: ["analyze-day"],
     queryFn: async () => {
       const res = await axios.get("/api/analyze");
-      return res.data;
-    },
-  });
-
-  const { data: nonNegotiables = [] } = useQuery({
-    queryKey: ["non-negotiables"],
-    queryFn: async () => {
-      const res = await axios.get("/api/non-negotiables");
       return res.data;
     },
   });
@@ -187,9 +178,6 @@ export default function JourneyPage() {
           </div>
           <div className="lg:col-span-1">
             <TimerAnalytics />
-          </div>
-          <div className="lg:col-span-3 border border-white/10 p-4 rounded-xl">
-            <ConfidenceMountain items={nonNegotiables} />
           </div>
         </section>
       </div>

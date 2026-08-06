@@ -1,6 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { today } from "@/lib/daily-log/date";
+import { rollingConsistency } from "@/lib/daily-log/domain";
+import { getCardSummaries } from "@/lib/daily-log/repository";
 
 // Helper to get start of current week (Monday)
 function getStartOfWeek(date: Date) {
@@ -185,56 +188,21 @@ export async function GET(request: NextRequest) {
              } 
         });
 
-        // Non-Negotiable Score Calculation
-        const items = await prisma.nonNegotiable.findMany({
-            where: { userId }
-        });
-        
-        // Check confidence mountain logic reuse. 
-        // Simplified scoring for the API to return a single current number.
-        // Copying simplified logic from ConfidenceMountain component:
-        let currentScore = 0;
-        if (items.length > 0) {
-             const earliestStart = items.reduce((earliest, item) => {
-                const itemDate = new Date(item.createdAt)
-                return itemDate < earliest ? itemDate : earliest
-            }, new Date())
-            earliestStart.setHours(0, 0, 0, 0)
-    
-            const today = new Date()
-            today.setHours(0, 0, 0, 0)
-            
-            let simulationDate = new Date(earliestStart)
+        // Rolling consistency from the Daily Evidence Log. Replaces the old
+        // non-negotiable points score, which could go down as a penalty.
+        const summaries = await getCardSummaries(userId);
+        const consistency = rollingConsistency(
+            summaries.map(s => s.date),
+            today()
+        );
 
-            while (simulationDate <= today) {
-                const dateStr = simulationDate.toDateString()
-                // Active items created before or on simulation date
-                const activeItems = items.filter(i => new Date(i.createdAt).setHours(0,0,0,0) <= simulationDate.getTime())
-                
-                let change = 0
-                if (activeItems.length > 0) {
-                    const completedCount = activeItems.filter(item => 
-                        item.completedDates.some(d => new Date(d).toDateString() === dateStr)
-                    ).length
-    
-                    const dailyPerformance = completedCount / activeItems.length
-    
-                    if (dailyPerformance === 1) change = 5
-                    else if (dailyPerformance >= 0.5) change = 2
-                    else if (dailyPerformance > 0) change = -2
-                    else change = -5
-                }
-                currentScore = Math.max(0, Math.min(100, currentScore + change))
-                simulationDate.setDate(simulationDate.getDate() + 1)
-            }
-        }
-        
         return NextResponse.json({
             likes: 0, // Deprecated/Removed from UI but keeping for type safety in frontend if needed temporary
             logsCount,
             tasksCount,
             deepHours,
-            nonNegoScore: Math.round(currentScore),
+            daysLogged: consistency.daysLogged,
+            daysLoggedWindow: consistency.windowDays,
             projectsCompleted,
             habitsActive
         });
