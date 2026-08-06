@@ -36,6 +36,8 @@ model User {
       xpLogs         XpLog[]
       recoverySessions RecoverySession[]
       trainerReports TrainerReport[]
+      coreItems      CoreItem[]
+      dailyCards     DailyCard[]
 }
 
 model TrainerReport {
@@ -362,4 +364,56 @@ model RecoverySession {
 enum NoteType {
       FOLDER
       CANVAS
+}
+
+// ---------------------------------------------------------------------------
+// Daily Evidence Log
+// Replaces the Non-Negotiables points/confidence-score module. No scores, no
+// penalties: a card is a record of what was actually done on a given day.
+// ---------------------------------------------------------------------------
+
+/// A pre-committed binary item ("the spine"). Never hard-deleted - `active`
+/// soft-disables it so historical cards keep their meaning.
+model CoreItem {
+      id         String               @id @default(cuid())
+      userId     String
+      label      String
+      active     Boolean              @default(true)
+      sortOrder  Int                  @default(0)
+      createdAt  DateTime             @default(now())
+      user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+      cardStates DailyCardCoreState[]
+
+      @@index([userId, active, sortOrder])
+}
+
+/// Exactly one card per user per calendar day. `date` is a date-only column;
+/// always read/write it as UTC midnight (see lib/daily-log/date.ts).
+model DailyCard {
+      id         String               @id @default(cuid())
+      userId     String
+      date       DateTime             @db.Date
+      did        String[]
+      avoided    String?
+      createdAt  DateTime             @default(now())
+      updatedAt  DateTime             @updatedAt
+      user       User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+      coreStates DailyCardCoreState[]
+
+      @@unique([userId, date])
+}
+
+/// Per-card snapshot of a core item. `labelSnapshot` is copied at card-creation
+/// time so renaming or deactivating a CoreItem never rewrites history - hence
+/// onDelete: Restrict on coreItem (a hard delete would destroy that history).
+model DailyCardCoreState {
+      id            String    @id @default(cuid())
+      dailyCardId   String
+      coreItemId    String
+      labelSnapshot String
+      done          Boolean   @default(false)
+      dailyCard     DailyCard @relation(fields: [dailyCardId], references: [id], onDelete: Cascade)
+      coreItem      CoreItem  @relation(fields: [coreItemId], references: [id], onDelete: Restrict)
+
+      @@unique([dailyCardId, coreItemId])
 }

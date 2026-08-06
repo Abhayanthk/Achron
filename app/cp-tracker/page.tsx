@@ -10,7 +10,7 @@ import { RevisionQueue } from "@/components/cp-tracker/RevisionQueue";
 import { CodeforcesRatingChart } from "@/components/cp-tracker/CodeforcesRatingChart";
 import { CodeforcesHandlePrompt } from "@/components/cp-tracker/CodeforcesHandlePrompt";
 import { Button } from "@/components/ui/button";
-import { Plus, List, Trophy } from "lucide-react";
+import { Plus, List, Trophy, Brain } from "lucide-react";
 import Link from "next/link";
 import { isRevisionDue } from "@/lib/revision";
 
@@ -117,6 +117,15 @@ export default async function CPTrackerPage() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Link href="/cp-tracker/trainer">
+            <Button
+              variant="outline"
+              className="border-indigo-500/40 bg-indigo-500/10 text-indigo-200 hover:text-white hover:bg-indigo-500/20"
+            >
+              <Brain className="mr-2 h-4 w-4" />
+              Trainer
+            </Button>
+          </Link>
           <Link href="/cp-tracker/library">
             <Button
               variant="outline"

@@ -47,3 +47,6 @@ thingsToFix.txt
 agentd.md
 
 generated/
+
+# db backups (contain real data - never commit)
+/backups/

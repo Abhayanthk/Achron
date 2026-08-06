@@ -1,5 +1,8 @@
+import { Prisma } from "@prisma/client";
 import { inngest } from "./client";
 import { prisma } from "@/lib/prisma";
+import { runTrainerAgent } from "@/lib/cp-trainer/agent";
+import type { Scope } from "@/lib/cp-trainer/metrics";
 
 export const syncUser = inngest.createFunction(
   {
@@ -56,4 +59,71 @@ export const syncUser = inngest.createFunction(
 
     return { user };
   }
+);
+
+/**
+ * CP Trainer background analysis.
+ *
+ * Triggered by `cp-trainer/analyze.requested` (sent from the trainer POST route).
+ * Runs the deterministic metrics + AgentKit agent loop, then persists the
+ * CoachingReport onto the pre-created `TrainerReport` row.
+ *
+ * `runTrainerAgent` is called in the function body — NOT inside step.run —
+ * because AgentKit creates its own durable steps (step.ai.infer per model call,
+ * step.run for embeddings/finalize) and Inngest forbids nested steps. 429s from
+ * the Gemini free tier surface as step failures and are absorbed by `retries`
+ * with exponential backoff; `throttle` keeps concurrent Analyze clicks from
+ * stampeding the 5-requests/minute quota.
+ */
+export const runTrainerAnalysis = inngest.createFunction(
+  {
+    id: "cp-trainer-analysis",
+    retries: 4,
+    throttle: { limit: 2, period: "1m" },
+    triggers: [{ event: "cp-trainer/analyze.requested" }],
+  },
+  async ({ event, step }) => {
+    const { reportId, userId, scope, contestId } = event.data as {
+      reportId: string;
+      userId: string;
+      scope: Scope;
+      contestId: string | null;
+    };
+
+    await step.run("mark-running", async () => {
+      await prisma.trainerReport.update({
+        where: { id: reportId },
+        data: { status: "RUNNING" },
+      });
+    });
+
+    try {
+      const result = await runTrainerAgent(userId, scope, contestId);
+
+      await step.run("persist-done", async () => {
+        await prisma.trainerReport.update({
+          where: { id: reportId },
+          data: {
+            status: "DONE",
+            model: result.model,
+            report: result.report as unknown as Prisma.InputJsonValue,
+            metrics: result.metrics as unknown as Prisma.InputJsonValue,
+            trace: result.trace as unknown as Prisma.InputJsonValue,
+            error: null,
+          },
+        });
+      });
+
+      return { reportId, status: "DONE" };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      await step.run("persist-failed", async () => {
+        await prisma.trainerReport.update({
+          where: { id: reportId },
+          data: { status: "FAILED", error: message },
+        });
+      });
+      return { reportId, status: "FAILED", error: message };
+    }
+  },
 );
