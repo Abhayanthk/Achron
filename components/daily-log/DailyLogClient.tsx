@@ -8,23 +8,22 @@ import { Settings2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-      differenceInDays,
-      formatCalendarDate,
-      type CalendarDate,
-} from "@/lib/daily-log/date";
+import { cn } from "@/lib/utils";
+import { formatCalendarDate, type CalendarDate } from "@/lib/daily-log/date";
 import type { DailyLogPageData } from "@/lib/daily-log/types";
 
 import { CardEditor } from "./CardEditor";
 import { ConsistencyMeter } from "./ConsistencyMeter";
 import { CoreItemsDialog } from "./CoreItemsDialog";
+import { CoreLately } from "./CoreLately";
 import { DayDialog } from "./DayDialog";
 import { EvidenceHeatmap } from "./EvidenceHeatmap";
+import { EvidenceSummary } from "./EvidenceSummary";
 import { Panel } from "./primitives";
 import { RecentCards } from "./RecentCards";
 import { DAILY_LOG_QUERY_KEY } from "./use-save-card";
 
-/** Staggered on load: the card settles first, history follows. */
+/** Staggered on load: the card settles first, the record follows. */
 const reveal = {
       hidden: { opacity: 0, y: 8 },
       show: (index: number) => ({
@@ -54,8 +53,8 @@ export function DailyLogClient() {
 
       if (isError || !data) {
             return (
-                  <Shell>
-                        <Panel className="space-y-4 text-center">
+                  <Shell narrow>
+                        <Panel className="items-center gap-4 text-center">
                               <p className="text-sm text-zinc-400">Could not load your log.</p>
                               <Button
                                     variant="outline"
@@ -91,7 +90,9 @@ export function DailyLogClient() {
        *
        * The server has already withheld the history, so there is nothing here to
        * accidentally render — no heatmap, no metric, no mention of how long it has
-       * been. The first thing seen on returning is a box to fill, not a gap.
+       * been. The first thing seen on returning is a box to fill, not a gap. It
+       * stays a single narrow column on purpose: the grid is the page that shows a
+       * record, and on this day there is deliberately no record on screen.
        */
       if (data.mode === "re-entry") {
             return (
@@ -114,7 +115,7 @@ export function DailyLogClient() {
                         animate="show"
                         custom={0}
                         variants={reveal}
-                        className="mb-8 flex flex-wrap items-end justify-between gap-6"
+                        className="mb-5 flex flex-wrap items-end justify-between gap-4"
                   >
                         <div>
                               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-600">
@@ -125,57 +126,66 @@ export function DailyLogClient() {
                               </h1>
                         </div>
 
-                        <div className="flex items-end gap-6">
-                              {data.consistency && (
-                                    <ConsistencyMeter consistency={data.consistency} />
-                              )}
-                              <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setCoreItemsOpen(true)}
-                                    className="h-9 text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
-                              >
-                                    <Settings2 className="mr-2 size-4" />
-                                    Core
-                              </Button>
-                        </div>
+                        <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setCoreItemsOpen(true)}
+                              className="h-9 text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
+                        >
+                              <Settings2 className="mr-2 size-4" />
+                              Core
+                        </Button>
                   </motion.header>
 
-                  <div className="space-y-5">
-                        <motion.div initial="hidden" animate="show" custom={1} variants={reveal}>
-                              <Panel>
-                                    {editor}
-                                    {data.emptyBackfillDays.length > 0 && (
-                                          <BackfillPrompt
-                                                days={data.emptyBackfillDays}
-                                                today={data.today}
-                                                onSelectDay={setSelectedDay}
-                                          />
-                                    )}
-                              </Panel>
-                        </motion.div>
+                  {/*
+                   * Bento: today's card holds the tall left block and everything that
+                   * looks backwards fills the space beside and beneath it. Writing
+                   * stays the largest thing on the page at every breakpoint — the
+                   * grid gives the history more room, never more weight.
+                   */}
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-6 xl:grid-cols-12">
+                        <Tile index={1} className="md:col-span-6 xl:col-span-5 xl:row-span-2">
+                              <Panel>{editor}</Panel>
+                        </Tile>
 
-                        <motion.div initial="hidden" animate="show" custom={2} variants={reveal}>
+                        {data.consistency && (
+                              <Tile index={2} className="md:col-span-3 xl:col-span-3">
+                                    <ConsistencyMeter consistency={data.consistency} />
+                              </Tile>
+                        )}
+
+                        <Tile index={3} className="md:col-span-3 xl:col-span-4">
+                              <EvidenceSummary
+                                    summaries={data.cardSummaries}
+                                    emptyBackfillDays={data.emptyBackfillDays}
+                                    today={data.today}
+                                    onSelectDay={setSelectedDay}
+                              />
+                        </Tile>
+
+                        <Tile index={4} className="md:col-span-3 xl:col-span-4">
                               <EvidenceHeatmap
                                     summaries={data.cardSummaries}
                                     today={data.today}
                                     onSelectDay={setSelectedDay}
                               />
-                        </motion.div>
+                        </Tile>
+
+                        <Tile index={5} className="md:col-span-3 xl:col-span-3">
+                              <CoreLately
+                                    cards={data.recentCards}
+                                    coreItems={data.coreItems}
+                              />
+                        </Tile>
 
                         {data.recentCards.length > 0 && (
-                              <motion.div
-                                    initial="hidden"
-                                    animate="show"
-                                    custom={3}
-                                    variants={reveal}
-                              >
+                              <Tile index={6} className="md:col-span-6 xl:col-span-12">
                                     <RecentCards
                                           cards={data.recentCards}
                                           today={data.today}
                                           onSelectDay={setSelectedDay}
                                     />
-                              </motion.div>
+                              </Tile>
                         )}
                   </div>
 
@@ -189,7 +199,37 @@ export function DailyLogClient() {
       );
 }
 
-/** Page frame: a single centred column with a faint wash behind it. */
+/**
+ * One cell of the bento. Carries the stagger and the span, and nothing else —
+ * the tile's own component decides what it looks like inside.
+ */
+function Tile({
+      index,
+      className,
+      children,
+}: {
+      index: number;
+      className?: string;
+      children: ReactNode;
+}) {
+      return (
+            <motion.div
+                  initial="hidden"
+                  animate="show"
+                  custom={index}
+                  variants={reveal}
+                  className={cn("min-w-0", className)}
+            >
+                  {children}
+            </motion.div>
+      );
+}
+
+/**
+ * Page frame. Full-bleed by default so the grid can use the whole viewport;
+ * `narrow` is the deliberate exception for the one-card views, where a wide
+ * column would only stretch a single input across the screen.
+ */
 function Shell({
       children,
       narrow = false,
@@ -204,9 +244,10 @@ function Shell({
                         className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(ellipse_60%_100%_at_50%_0%,rgba(99,102,241,0.06),transparent)]"
                   />
                   <div
-                        className={`relative mx-auto w-full px-5 py-10 sm:py-14 ${
-                              narrow ? "max-w-xl" : "max-w-2xl"
-                        }`}
+                        className={cn(
+                              "relative w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8",
+                              narrow && "mx-auto max-w-xl",
+                        )}
                   >
                         {children}
                   </div>
@@ -214,52 +255,22 @@ function Shell({
       );
 }
 
-/**
- * Plain statement that a fillable day is empty, in ordinary text colour.
- * Not a warning, not a count of what was missed — an offer.
- */
-function BackfillPrompt({
-      days,
-      today,
-      onSelectDay,
-}: {
-      days: CalendarDate[];
-      today: CalendarDate;
-      onSelectDay: (date: CalendarDate) => void;
-}) {
-      // Nearest empty day: "yesterday" is the one worth naming.
-      const nearest = days[days.length - 1];
-
-      return (
-            <p className="mt-7 border-t border-white/[0.07] pt-5 text-[13px] text-zinc-500">
-                  {describeGap(nearest, today)} is still empty —{" "}
-                  <button
-                        type="button"
-                        onClick={() => onSelectDay(nearest)}
-                        className="text-zinc-300 underline decoration-zinc-700 underline-offset-4 transition-colors hover:text-white hover:decoration-zinc-400"
-                  >
-                        add it
-                  </button>
-                  .
-            </p>
-      );
-}
-
-function describeGap(date: CalendarDate, today: CalendarDate): string {
-      if (differenceInDays(today, date) === 1) return "Yesterday";
-      return formatCalendarDate(date, { weekday: "long" });
-}
-
 function LoadingState() {
       return (
             <Shell>
-                  <div className="mb-8 space-y-2">
+                  <div className="mb-5 space-y-2">
                         <Skeleton className="h-3 w-40 bg-white/5" />
                         <Skeleton className="h-7 w-52 bg-white/5" />
                   </div>
-                  <div className="space-y-5">
-                        <Skeleton className="h-80 w-full rounded-2xl bg-white/5" />
-                        <Skeleton className="h-56 w-full rounded-2xl bg-white/5" />
+
+                  {/* Same spans as the real grid, so nothing jumps when data lands. */}
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-6 xl:grid-cols-12">
+                        <Skeleton className="h-[28rem] rounded-2xl bg-white/5 md:col-span-6 xl:col-span-5 xl:row-span-2" />
+                        <Skeleton className="h-40 rounded-2xl bg-white/5 md:col-span-3 xl:col-span-3" />
+                        <Skeleton className="h-40 rounded-2xl bg-white/5 md:col-span-3 xl:col-span-4" />
+                        <Skeleton className="h-[17rem] rounded-2xl bg-white/5 md:col-span-3 xl:col-span-4" />
+                        <Skeleton className="h-[17rem] rounded-2xl bg-white/5 md:col-span-3 xl:col-span-3" />
+                        <Skeleton className="h-56 rounded-2xl bg-white/5 md:col-span-6 xl:col-span-12" />
                   </div>
             </Shell>
       );

@@ -104,8 +104,10 @@ export function CardEditor({
       };
 
       return (
-            <div className="space-y-7">
-                  <section className="space-y-2.5">
+            // A column, not a stack: dropped into a tall grid cell the writing
+            // area takes the slack rather than leaving the tile half empty.
+            <div className="flex h-full flex-col gap-7">
+                  <section className="flex grow flex-col gap-2.5">
                         <FieldLabel htmlFor={`did-${date}`}>Did</FieldLabel>
                         <Textarea
                               id={`did-${date}`}
@@ -114,7 +116,7 @@ export function CardEditor({
                               onChange={(event) => editDid(event.target.value)}
                               placeholder={"One line per thing.\nNothing is too small to write."}
                               rows={5}
-                              className="resize-y rounded-xl border-white/10 bg-white/[0.02] px-4 py-3 text-[15px] leading-relaxed text-zinc-100 shadow-none transition-colors placeholder:text-zinc-600 focus-visible:border-indigo-500/50 focus-visible:ring-[3px] focus-visible:ring-indigo-500/10"
+                              className="grow resize-none rounded-xl border-white/10 bg-white/[0.02] px-4 py-3 text-[15px] leading-relaxed text-zinc-100 shadow-none transition-colors placeholder:text-zinc-600 focus-visible:border-indigo-500/50 focus-visible:ring-[3px] focus-visible:ring-indigo-500/10"
                         />
                   </section>
 

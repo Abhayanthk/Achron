@@ -71,8 +71,8 @@ export function EvidenceHeatmap({
       const leadingBlanks = cells.length > 0 ? weekdayIndex(cells[0].date) : 0;
 
       return (
-            <Panel>
-                  <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <Panel className="gap-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
                         <FieldLabel>The record</FieldLabel>
                         <Tabs
                               value={scope}
@@ -95,57 +95,66 @@ export function EvidenceHeatmap({
                         </Tabs>
                   </div>
 
-                  <TooltipProvider delayDuration={120}>
-                        <div className="grid grid-cols-7 gap-1.5">
+                  {/*
+                   * Capped and centred: a wide tile would otherwise inflate the cells
+                   * into buttons. All-time can run to many weeks, so the calendar
+                   * scrolls inside the tile instead of stretching the whole grid row.
+                   */}
+                  <div className="mx-auto w-full max-w-[23rem]">
+                        <div className="grid grid-cols-7 gap-1.5 pb-1.5">
                               {WEEKDAYS.map((day, index) => (
                                     <span
                                           key={`${day}-${index}`}
-                                          className="pb-1.5 text-center text-[10px] font-medium text-zinc-700"
+                                          className="text-center text-[10px] font-medium text-zinc-700"
                                     >
                                           {day}
                                     </span>
                               ))}
-
-                              {Array.from({ length: leadingBlanks }, (_, index) => (
-                                    <div key={`blank-${index}`} aria-hidden />
-                              ))}
-
-                              {cells.map((cell) => {
-                                    const description = describeCell(
-                                          cell.date,
-                                          cell.hasCard,
-                                          cell.coreDone,
-                                          cell.coreTotal,
-                                    );
-                                    return (
-                                          <Tooltip key={cell.date}>
-                                                <TooltipTrigger asChild>
-                                                      <button
-                                                            type="button"
-                                                            onClick={() => onSelectDay(cell.date)}
-                                                            aria-label={description}
-                                                            className={cn(
-                                                                  "aspect-square w-full rounded-[5px] transition-all duration-150",
-                                                                  "hover:scale-[1.15] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60",
-                                                                  LEVEL_STYLES[cell.level],
-                                                                  cell.date === today &&
-                                                                        "ring-1 ring-white/50",
-                                                            )}
-                                                      />
-                                                </TooltipTrigger>
-                                                <TooltipContent
-                                                      sideOffset={6}
-                                                      className="border-white/10 bg-zinc-900 text-[12px] text-zinc-200"
-                                                >
-                                                      {description}
-                                                </TooltipContent>
-                                          </Tooltip>
-                                    );
-                              })}
                         </div>
-                  </TooltipProvider>
 
-                  <div className="mt-5 flex items-center justify-between gap-4">
+                        <TooltipProvider delayDuration={120}>
+                              <div className="grid max-h-[19rem] grid-cols-7 gap-1.5 overflow-y-auto">
+                                    {Array.from({ length: leadingBlanks }, (_, index) => (
+                                          <div key={`blank-${index}`} aria-hidden />
+                                    ))}
+
+                                    {cells.map((cell) => {
+                                          const description = describeCell(
+                                                cell.date,
+                                                cell.hasCard,
+                                                cell.coreDone,
+                                                cell.coreTotal,
+                                          );
+                                          return (
+                                                <Tooltip key={cell.date}>
+                                                      <TooltipTrigger asChild>
+                                                            <button
+                                                                  type="button"
+                                                                  onClick={() => onSelectDay(cell.date)}
+                                                                  aria-label={description}
+                                                                  className={cn(
+                                                                        "aspect-square w-full rounded-[5px] transition-all duration-150",
+                                                                        "hover:scale-[1.15] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60",
+                                                                        LEVEL_STYLES[cell.level],
+                                                                        cell.date === today &&
+                                                                              "ring-1 ring-white/50",
+                                                                  )}
+                                                            />
+                                                      </TooltipTrigger>
+                                                      <TooltipContent
+                                                            sideOffset={6}
+                                                            className="border-white/10 bg-zinc-900 text-[12px] text-zinc-200"
+                                                      >
+                                                            {description}
+                                                      </TooltipContent>
+                                                </Tooltip>
+                                          );
+                                    })}
+                              </div>
+                        </TooltipProvider>
+                  </div>
+
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-1">
                         {summaries.length === 0 ? (
                               // Says what is true without characterising it.
                               <p className="text-[12px] text-zinc-600">

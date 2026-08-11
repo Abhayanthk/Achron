@@ -11,8 +11,9 @@ export default async function DailyLogPage() {
       const { userId } = await auth();
       if (!userId) redirect("/sign-in");
 
+      // No padding here: the client's own shell is full-bleed and owns its gutters.
       return (
-            <div className="h-full overflow-y-auto p-6">
+            <div className="h-full overflow-y-auto">
                   <DailyLogClient />
             </div>
       );
