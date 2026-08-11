@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Loader2, Plus } from "lucide-react";
+import { Check, Loader2, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -52,6 +52,23 @@ export function CardEditor({
             initialDone(card, coreItems),
       );
 
+      // True right after a successful save; any further edit clears it, so
+      // "Saved" only ever reflects the fields currently on screen.
+      const [justSaved, setJustSaved] = useState(false);
+
+      const editDid: typeof setDid = (value) => {
+            setJustSaved(false);
+            setDid(value);
+      };
+      const editAvoided: typeof setAvoided = (value) => {
+            setJustSaved(false);
+            setAvoided(value);
+      };
+      const editDone: typeof setDone = (value) => {
+            setJustSaved(false);
+            setDone(value);
+      };
+
       const checkboxes = useMemo(
             () =>
                   card
@@ -77,7 +94,12 @@ export function CardEditor({
                               done: done[box.id] ?? false,
                         })),
                   },
-                  { onSuccess: () => onSaved?.() },
+                  {
+                        onSuccess: () => {
+                              setJustSaved(true);
+                              onSaved?.();
+                        },
+                  },
             );
       };
 
@@ -89,7 +111,7 @@ export function CardEditor({
                               id={`did-${date}`}
                               value={did}
                               autoFocus={autoFocus}
-                              onChange={(event) => setDid(event.target.value)}
+                              onChange={(event) => editDid(event.target.value)}
                               placeholder={"One line per thing.\nNothing is too small to write."}
                               rows={5}
                               className="resize-y rounded-xl border-white/10 bg-white/[0.02] px-4 py-3 text-[15px] leading-relaxed text-zinc-100 shadow-none transition-colors placeholder:text-zinc-600 focus-visible:border-indigo-500/50 focus-visible:ring-[3px] focus-visible:ring-indigo-500/10"
@@ -126,7 +148,7 @@ export function CardEditor({
                                                             id={`core-${date}-${box.id}`}
                                                             checked={checked}
                                                             onCheckedChange={(next) =>
-                                                                  setDone((current) => ({
+                                                                  editDone((current) => ({
                                                                         ...current,
                                                                         [box.id]: next === true,
                                                                   }))
@@ -152,7 +174,7 @@ export function CardEditor({
                         <Input
                               id={`avoided-${date}`}
                               value={avoided}
-                              onChange={(event) => setAvoided(event.target.value)}
+                              onChange={(event) => editAvoided(event.target.value)}
                               placeholder="What did you dodge today?"
                               className="h-11 rounded-xl border-white/10 bg-white/[0.02] px-4 text-[15px] text-zinc-100 shadow-none transition-colors placeholder:text-zinc-600 focus-visible:border-indigo-500/50 focus-visible:ring-[3px] focus-visible:ring-indigo-500/10"
                         />
@@ -161,11 +183,12 @@ export function CardEditor({
                   <div className="flex items-center gap-4 pt-1">
                         <Button
                               onClick={handleSave}
-                              disabled={isPending || !hasContent}
+                              disabled={isPending || !hasContent || justSaved}
                               className="h-10 rounded-lg bg-indigo-600 px-6 font-medium text-white transition-colors hover:bg-indigo-500 disabled:opacity-40"
                         >
                               {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
-                              Save
+                              {justSaved && !isPending && <Check className="mr-2 size-4" />}
+                              {justSaved ? "Saved" : "Save"}
                         </Button>
                         <span className="text-[13px] text-zinc-600">
                               {hasContent ? "One tap, done." : "One line is enough."}
